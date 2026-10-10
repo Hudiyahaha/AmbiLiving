@@ -27,7 +27,7 @@ from sklearn.model_selection import StratifiedKFold
 from . import models
 from .data import DATASETS, ML_DIR, load_home
 from .evaluate import write_report
-from .features import encode_sequences, handcrafted_features
+from .features import activity_history, encode_sequences, handcrafted_features
 from .models import classical
 from .train import fit_predict as fit_predict_sequence
 
@@ -47,12 +47,35 @@ def make_splits(home, y, split: str, folds: int, seed: int, train_frac: float):
     raise ValueError(split)
 
 
+def fit_predict_with_history(model, home, X, y, tr, te, classes, seed, balance,
+                             inner_folds: int = 3) -> np.ndarray:
+    """Two-stage model: stage 1 recognises every segment from its own events, stage 2
+    adds ``activity_history`` built from stage-1 *predictions* of earlier segments.
+
+    No ground-truth label of any segment reaches the history features:
+    training segments get out-of-fold stage-1 predictions (inner CV on the training
+    fold), test segments get predictions from the stage-1 model trained on the whole
+    training fold. This mirrors deployment, where only earlier recognitions are known.
+    """
+    labels = np.empty_like(y)
+    inner = StratifiedKFold(n_splits=inner_folds, shuffle=True, random_state=seed)
+    for itr, ite in inner.split(X[tr], y[tr]):
+        labels[tr[ite]] = classical.fit_predict(model, X[tr[itr]], y[tr[itr]], X[tr[ite]],
+                                                seed, balance)
+    labels[te] = classical.fit_predict(model, X[tr], y[tr], X[te], seed, balance)
+    H, _ = activity_history(home, labels, classes)
+    XH = np.hstack([X, H])
+    return classical.fit_predict(model, XH[tr], y[tr], XH[te], seed, balance)
+
+
 def run_one(dataset: str, model: str, args) -> dict:
     home = load_home(dataset)
     classes = home.activities
     y = home.segments["activity"].map({c: i for i, c in enumerate(classes)}).to_numpy()
     splits = make_splits(home, y, args.split, args.folds, args.seed, args.train_frac)
 
+    if args.history and model not in models.CLASSICAL:
+        raise SystemExit("--history is only implemented for the classical models (rf, hgb)")
     if model in models.CLASSICAL:
         X, _ = handcrafted_features(home, preceding=args.context)
     else:
@@ -64,8 +87,12 @@ def run_one(dataset: str, model: str, args) -> dict:
     for k, (tr, te) in enumerate(splits):
         print(f"  [{dataset}/{model}/{args.split}] fold {k + 1}/{len(splits)}: "
               f"{len(tr)} train, {len(te)} test")
-        if model in models.CLASSICAL:
-            y_pred[te] = classical.fit_predict(model, X[tr], y[tr], X[te], args.seed + k)
+        if model in models.CLASSICAL and args.history:
+            y_pred[te] = fit_predict_with_history(model, home, X, y, tr, te, classes,
+                                                  args.seed + k, args.balance)
+        elif model in models.CLASSICAL:
+            y_pred[te] = classical.fit_predict(model, X[tr], y[tr], X[te], args.seed + k,
+                                               args.balance)
         else:
             y_pred[te] = fit_predict_sequence(
                 model, seqs.subset(tr), y[tr], seqs.subset(te), len(classes),
@@ -75,7 +102,8 @@ def run_one(dataset: str, model: str, args) -> dict:
     seconds = time.time() - t0
 
     evaluated = fold_ids >= 0  # temporal split leaves training segments unevaluated
-    tag = model + ("+ctx" if args.context else "")
+    tag = (model + ("+ctx" if args.context else "") + ("+hist" if args.history else "")
+           + ("+bal" if args.balance == "full" and model == "hgb" else ""))
     out_dir = RESULTS_DIR / dataset / args.split / tag
     result = write_report(
         out_dir,
@@ -103,6 +131,10 @@ def main(argv=None):
     p.add_argument("--max-len", type=int, default=128, help="events kept per segment")
     p.add_argument("--context", action="store_true",
                    help="add pre-segment context features (gap before, activity in previous 10 min)")
+    p.add_argument("--history", action="store_true",
+                   help="add features about earlier (predicted) activities; rf/hgb only")
+    p.add_argument("--balance", default="sqrt", choices=["sqrt", "full"],
+                   help="hgb class weighting: sqrt-inverse-frequency (default) or full inverse")
     p.add_argument("--verbose", action="store_true", help="print per-epoch progress")
     args = p.parse_args(argv)
 

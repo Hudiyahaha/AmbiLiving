@@ -28,6 +28,7 @@ python -m har.run --dataset aruba --model rf       # one experiment
 python -m har.run --dataset all --model all        # full comparison (~1-1.5 h on CPU)
 python -m har.run --dataset milan --model bilstm --split temporal --verbose
 python -m har.run --dataset all --model all --context  # + pre-segment context features
+python -m har.run --dataset all --model hgb --context --history  # + activity history (best)
 python -m har.compare                              # rebuild results/summary.md
 ```
 
@@ -89,6 +90,49 @@ so it still works live. Results are stored as `<model>+ctx`.
 Aruba, Gradient Boosting, 5-fold: Enter_Home F1 0.81 → 0.98, Leave_Home 0.80 → 0.98,
 macro-F1 0.845 → 0.876.
 
+### Activity history (`--history`, rf / hgb only)
+
+Wash_Dishes fires the same kitchen sensors (M015/M017/M018/M019) in nearly the same
+proportions as Meal_Preparation, so with segment features alone every model recognises
+only 3-9% of it. What separates them is the routine around them: in Aruba 38 of 65
+Wash_Dishes instances directly follow Eating, and 59 start within two hours of a meal.
+None overlap a Meal_Preparation label.
+
+`--history` adds, for every activity class: log time since it last ended, whether it was
+the most recent activity, and how many times it already happened that day
+(`features.activity_history`). It is a two-stage model, and **no ground-truth label
+reaches the features**: stage 1 recognises each segment from its own events; the history
+is built from stage-1 *predictions* (out-of-fold via an inner 3-fold CV on the training
+fold, and from the full stage-1 model on the test fold). A deployed system works the same
+way: it only knows what it recognised earlier. Results are stored as `<model>+ctx+hist`.
+
+`--balance full` (hgb) uses full instead of square-root inverse-frequency weights. It
+trades precision for recall on rare classes and is stored as `+bal`.
+
+Results with Gradient Boosting (macro-F1, %):
+
+| | Aruba cv | Aruba temporal | Milan cv | Milan temporal |
+|---|---|---|---|---|
+| hgb + ctx | 87.18 | **92.75** | 91.41 | **84.65** |
+| hgb + ctx + hist | **92.92** | 91.47 | **92.52** | 84.05 |
+
+* Aruba cv: Wash_Dishes recall 0.06 -> 0.42 (F1 0.10 -> 0.50), Respirate F1 0.80 -> 0.91.
+  With `--balance full`: Wash_Dishes recall 0.55, F1 0.56, but Respirate precision drops,
+  so macro-F1 is lower (92.24).
+* With true instead of predicted history labels (an upper bound, not committed), Aruba cv
+  reaches 93.4: the stage-1 predictions lose almost nothing, because the activity that
+  matters most (Eating) is recognised at F1 1.00.
+* The temporal split does **not** show the gain. Its Aruba test set (last 30% of days)
+  holds only 6 Wash_Dishes labels: Wash_Dishes annotations fall from ~20/month in
+  Nov 2010 to 0-5/month from March 2011, while Meal_Preparation stays at ~240/month.
+  The history model flags 15 test Meal_Preparation segments as Wash_Dishes; 12 of them
+  start within 30 minutes of Eating ending (vs 4% of all test Meal_Preparation). That
+  is consistent with unlabelled washing-up, but cannot be verified from the data.
+* Random Forest gains much less (Aruba cv Wash_Dishes recall 0.03 -> 0.08): with
+  `max_features="sqrt"` the few history columns are rarely chosen among ~200 features.
+* Per-sensor dwell-time features (time spent at each sensor) were also tried on top of
+  history and added nothing (Wash_Dishes F1 0.54 -> 0.55), so they are not included.
+
 Segments longer than `--max-len` (default 128) events are uniformly subsampled so
 long activities (Sleeping) keep their full sensor footprint.
 
@@ -107,6 +151,12 @@ rare or overlapping classes (Wash_Dishes, Respirate, Eve_Meds).
 
 * Explicit segmentation assumes activity boundaries are known. For the live dashboard,
   a sliding-window (online) variant is needed: classify the last N events at each new event.
+* `--history` relies on earlier recognitions; in a live system one wrong recognition
+  can affect the next. It is only implemented for rf / hgb.
+* Concurrent activities (e.g. washing up while cooking) are not represented in the Aruba
+  labels, which record one activity at a time, so they can be neither learned nor evaluated.
+* Label density drifts over time in Aruba (Wash_Dishes, Eating, Housekeeping) and Milan
+  (Chores only in the first month), which makes temporal-split per-class scores noisy.
 * Temperature sensors are unused.
 * No hyper-parameter search yet. Each approach owner should tune their own model
   using the training folds only.
