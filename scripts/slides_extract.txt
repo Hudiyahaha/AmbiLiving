@@ -1,0 +1,415 @@
+
+===== SLIDE 1 =====
+01
+F26-108-AmbiLiving
+Aleeza Azhar
+Hudiya e Zehra
+Ibrahim Babar
+Supervisor: Dr. Labiba Fahad
+
+===== SLIDE 2 =====
+What is a smart home?
+02
+A smart home is a living environment equipped with ambient sensors that continuously generate sensor sequences.
+In our context:
+Ambient sensors are non-intrusive sensors placed around the home that detect events such as movement, door openings, appliance usage and room presence.
+These sensor readings can then be used to recognize everyday activities such as sleeping, eating, meal preparation or leaving the home.
+
+===== SLIDE 3 =====
+Motivation
+04
+The Problem:
+Caregivers and family members cannot continuously monitor elderly residents throughout the day.
+Travel, work, distance, and other commitments can make regular
+in-person monitoring
+difficult.
+Elders are mostly shifted to
+old homes
+to receive adequate care but the feeling of being at home can never be replicated by an old home.
+
+===== SLIDE 4 =====
+04
+AmbiLiving
+enables them to stay at their comfort spaces and still be under privacy preserving surveillance.
+The Solution:
+Use existing ambient sensor data to recognize residents' daily activities automatically.
+Provide caregivers and family members with remote awareness of activity patterns without requiring
+constant physical presence
+.
+Help them identify unusual activities that may require
+attention
+.
+
+===== SLIDE 5 =====
+03
+Smartphones & Wearables
+User dependency:
+The elderly resident has to remember to wear, carry, and charge the device.
+Forgetting or removing it creates missing data.
+Camera for
+recognition
+Privacy concern:
+Cameras continuously capture images/video of a person's private living space.
+This is especially intrusive in bedrooms, bathrooms, and other personal areas.
+Ambient Sensors
+Our Approach
+Non-intrusive & passive:
+Sensors embedded in the environment can detect movement, doors, temperature, etc., without recording images or requiring the resident to do anything.
+
+===== SLIDE 6 =====
+Existing Solutions
+05
+Feature
+Description
+Zemplee Sense
+OdeCare
+Smart-home sensors
+Uses non-intrusive ambient sensors to monitor presence in the home
+✔️
+Presence monitoring
+Monitors resident presence and movement patterns
+✔️
+Sensor status
+Provides sensor/event information for monitoring
+✔️
+Routine monitoring
+Monitors deviations from an individual's normal routine
+✔️
+Anomaly detection
+Flags deviations from expected/routine behavior
+✔️
+Caregiver dashboard
+Gives caregivers access to the resident's monitoring information
+✔️
+Continuous monitoring
+Continuously collects ambient sensor events
+✔️
+
+===== SLIDE 7 =====
+What is still Missing?
+06
+presence detection ≠ activity recognition
+Existing systems report which sensor triggered and when, not what activity the resident performed
+A semantic gap exists between raw sensor events and meaningful activity understanding
+Dashboards show only tabular sensor logs (on/off, timestamps), not activity insight
+Admins manually monitor and interpret raw sensor logs in real time
+Our Proposed Pipeline:
+Ambient Sensors → Deep Learning Human Activity Recognition → Specific Activity → Routine deviation → Actionable Caregiver Insight
+
+===== SLIDE 8 =====
+Evidence
+07
+
+===== SLIDE 9 =====
+Dataset: CASAS
+08
+Dataset
+Residents
+What it Contains
+Data Description
+Activity Instances
+ARUBA
+1 resident
+Ambient sensor events and annotated daily activities with timestamps.
+Daily Life Activities,
+2010-2011.
+6477 instances, 11 activity classes
+Relax	              2,919
+Meal_Preparation
+1,606
+Leave_Home
+431
+Enter_Home
+431
+Sleeping	  401
+Eating	              257
+Work	              171
+Bed_to_Toilet
+157
+Wash_Dishes
+65
+Housekeeping	  33
+Respirate	  6
+Center for Advanced Studies in Adaptive Systems at Washington State University
+
+===== SLIDE 10 =====
+Dataset: CASAS
+08
+Dataset
+Residents
+What it Contains
+Data Description
+Activity Instances
+MILAN
+1 resident + pet
+Sensor readings collected while the resident performed daily activities.
+Daily Life, 2009.
+2353 instances, 15 activity classes
+Kitchen_Activity
+554
+Guest_Bathroom
+330
+Read	               314
+Master_Bathroom
+306
+Leave_Home
+214
+Sleep	               140
+Master Bedroom Activity
+117
+Watch_TV
+114
+Bed_to_Toilet
+87
+Desk_Activity
+54
+Morning_Meds
+41
+Chores	                 23
+Dining_Rm_Activity
+22
+Eve_Meds
+19
+Meditate	                 17
+Center for Advanced Studies in Adaptive Systems at Washington State University
+
+===== SLIDE 11 =====
+Dataset : CASAS Smart Home
+09
+Aruba Floor Plan
+Raw sensor event
+Timestamp
+Sensor
+Value / State
+Activity Label
+2010-11-04 00:03:50.209589
+M003
+ON
+Sleeping begin
+2010-11-04 00:03:57.399391
+M003
+OFF
+2010-11-04 00:15:08.984841
+T002
+21.5
+2010-11-04 00:30:19.185547
+T003
+21
+2010-11-04 00:30:19.385336
+T004
+21
+⋮
+2010-11-04 05:40:27.708148
+M003
+ON
+2010-11-04 05:40:29.816524
+M002
+ON
+2010-11-04 05:40:32.342225
+M007
+ON
+2010-11-04 05:40:34.522278
+M002
+OFF
+2010-11-04 05:40:40.844463
+M003
+OFF
+Sleeping end
+
+===== SLIDE 12 =====
+Human Activity Recognition
+10
+1. What is the problem
+Not all activities are equally easy for a model to recognize.
+Some activities produce distinctive sensor patterns → easier to recognize.
+Other activities produce similar sensor events and occur in the same locations → their sensor patterns overlap.
+As a result, the model may confuse one activity with another.
+Different activities can look very similar from the sensors’ perspective.
+
+===== SLIDE 13 =====
+Overlapping Activities
+11
+Meal_Preparation (trimmed from Nov 4, 2010, 09:54:58 – 09:56:27)
+Wash Dishes (trimmed from Nov 4, 2010, 10:03:21 – 10:04:25)
+09:54:58  M018 ON   ← Meal_Preparation begins
+09:54:59  M019 ON
+09:55:00  M015 ON
+09:55:06  M015 ON
+09:55:07  M019 ON
+09:55:17  M015 ON
+09:55:38  M018 ON
+09:56:22  M018 ON
+09:56:23  M017 ON
+09:56:27  M018 OFF  ← Meal_Preparation ends
+10:03:21  M018 ON   ← Wash_Dishes begins
+10:03:24  M017 ON
+10:03:43  M017 ON
+10:03:57  M017 ON
+10:03:59  M018 ON
+10:04:05  M019 ON
+10:04:06  M015 ON
+10:04:21  M018 ON
+10:04:25  M018 OFF  ← Wash_Dishes ends
+Same sensors. Same proportions. No clear order pattern.
+Both activities fire M015, M017, M018, M019 in nearly the same relative amounts — the model sees almost identical evidence for two different activities.
+High intra-class variation: within-class spread is wide enough to overlap into another class's feature space
+
+===== SLIDE 14 =====
+Complex Computing Problem
+12
+CCP Characteristic
+How it applies to our FYP
+No obvious solution / depth of analysis
+No single classifier reliably solves HAR. We must compare feature representations, temporal models and classification approaches rather than apply a standard ML pipeline.
+Depth of knowledge
+Requires understanding of IoT sensor data, feature engineering, ML/DL, class imbalance, temporal dependencies, anomaly detection and evaluation.
+Significant consequences
+HAR errors propagate to anomaly detection, potentially causing missed deviations or false alerts. Evaluation must therefore consider false positives and false negatives, not accuracy alone.
+Interdependence
+The pipeline is dependent:
+sensor data → preprocessing → HAR → contextual analysis → anomaly detection → alerts
+. Errors in one stage affect later decisions.
+Unfamiliar issues / beyond standard practice
+Smart-home data is sparse, noisy, imbalanced and ambiguous. Activities may share sensors or overlap, making standard classification unreliable.
+
+===== SLIDE 15 =====
+Existing Research
+Paper
+What they are doing
+Dataset
+Main approach
+Performance
+Zhao et al., 2026 — Deep Learning-Based Human Activity Recognition Using Binary Ambient Sensors
+Improves ambient-sensor activity recognition with noisy, sparse & imbalanced data
+6 CASAS datasets
+Stacking Neural Network + GAN/ASGAN
+~90% Aruba; ~80% Milan accuracy
+Cejudo et al., 2025 — Smart Home-Assisted Anomaly Detection System for Older Adults
+Learns daily routines and detects deviations from normal behaviour
+CASAS: Aruba, Cairo, Milan
+RNN,
+BiRNN
+,
+ConvLSTM
+, Attention-RNN
+4.38% MSE
+Fahad & Tahir, 2020 — Activity Recognition and Anomaly Detection in Smart Homes
+Recognizes daily activities and detects activity/day anomalies
+CASAS: Aruba & Milan
+PNN + H2O Autoencoder
+Accuracy reported across datasets
+; 96.19% Aruba, 90.06% Cairo, 94.90% Tulum, 96.33% Milan
+
+===== SLIDE 16 =====
+Proposed Solution
+System Architecture
+AMBIENT SENSOR DATA
+Data Processing &
+Feature Extraction
+Activity Recognition
+Model(s)
+Anomaly Detection
+Model(s)
+AmbiLiving
+Backend +
+Data & Analytics
+AmbiLiving Dashboard
+Monitoring
+Floor Plan
+History
+Reports
+Routine Deviation
+Alerts
+Which sensors were triggered?  to “What is happening in the home, is it normal, and does it require
+attention?”
+14
+
+===== SLIDE 17 =====
+10
+What is Anomaly?
+
+===== SLIDE 18 =====
+Proof of Concept
+
+===== SLIDE 19 =====
+Evaluation plan and risks
+15
+Success
+Activity Recognition: Accuracy, Precision, Recall, F1
+Anomaly Detection: Precision, Recall, F1
+Alerts: False-alert rate + response time
+System: Reliability + response time
+Deployment: Successful operation outside development environment
+RISKS
+Sensor noise / missing data
+Imbalanced activity classes
+False anomaly alerts
+Model performance
+Integration complexity
+External service failure
+Overlapping Activities
+
+===== SLIDE 20 =====
+Work Division & Iteration Plan - FYP Phase 1
+16
+Iteration 1: Research & Planning
+Objective: Prepare the dataset, identify candidate approaches, and design the overall system.
+Member 1:
+Explore and analyze the selected dataset, understand sensor data, activities, features and preprocessing requirements.
+Member 2:
+Research and shortlist suitable approaches for activity recognition and unusual activity detection.
+Member 3:
+Define system requirements, design the overall architecture, data flow, dashboard and alert requirements.
+Milestone: Dataset prepared + Candidate approaches shortlisted + Initial system architecture designed
+
+===== SLIDE 21 =====
+Iteration 2: Experimentation & Model Comparison
+17
+Objective: Implement and evaluate the shortlisted approaches using the prepared dataset.
+Member 1:
+Approach 1 Implementation
+Implement and train the first shortlisted approach for activity recognition.
+Member 2:
+Approach 2 Implementation
+Implement and train the second shortlisted approach for activity recognition.
+Member 3:
+Approach 3 Implementation
+Implement and train the third shortlisted approach for activity recognition.
+Team Task:
+Compare the performance of all approaches using Accuracy, Precision, Recall and F1-Score and analyze their results.
+Milestone: Approaches implemented + Experimental results compared + Best-  performing approach selected
+
+===== SLIDE 22 =====
+Iteration 3: System Integration & Prototype Development
+18
+Objective: Integrate the selected approach into a complete working system.
+Member 1:
+Optimize and finalize the selected activity-recognition model for integration.
+Member 2:
+Define and implement the logic for identifying unusual activity patterns and triggering alerts.
+Member 3:
+Develop the dashboard and integrate sensor data, model outputs and alerts into the system.
+Team Task: Perform end-to-end integration, testing and evaluation of the complete prototype.
+Milestone: Integrated working prototype: Sensor Data → Activity Recognition →   Unusual Activity Detection → Alerts & Dashboard
+
+===== SLIDE 23 =====
+Dei, ethics and legal consideration
+19
+DEI
+Evaluate performance across different household and activity patterns.
+Avoid assumptions about how users perform activities.
+Make the system accessible and understandable to diverse users.
+Check for unequal performance across different user/activity patterns.
+Ethics
+Protect the privacy of users and their daily routines.
+Obtain informed consent for sensor-data collection and use.
+Minimize the collection and retention of sensor data.
+Clearly communicate system limitations and prediction errors.
+Legal
+Comply with applicable data-protection and privacy regulations.
+Follow the dataset’s licensing and research-use requirements.
+Securely store and anonymize/pseudonymize data where possible.
+Avoid using predictions for high-stakes decisions without human oversight.
+
+===== SLIDE 24 =====
+THANK YOU

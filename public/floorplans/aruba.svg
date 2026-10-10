@@ -1,0 +1,129 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 910 646" fill="none" aria-label="Aruba home floor plan">
+  <title>Aruba Home Floor Plan</title>
+
+  <!-- Soft room fills -->
+  <g id="rooms">
+    <rect x="50" y="22" width="330" height="188" fill="#eef4f0"/>
+    <rect x="50" y="210" width="330" height="150" fill="#f5f7f4"/>
+    <rect x="50" y="360" width="330" height="262" fill="#eef4f0"/>
+    <rect x="380" y="22" width="150" height="183" fill="#e8eef2"/>
+    <rect x="530" y="22" width="328" height="208" fill="#f3f0ea"/>
+    <rect x="530" y="230" width="328" height="200" fill="#f5f7f4"/>
+    <rect x="380" y="430" width="340" height="192" fill="#eef4f0"/>
+    <rect x="720" y="430" width="138" height="112" fill="#e8eef2"/>
+    <rect x="720" y="542" width="138" height="80" fill="#f0ebe4"/>
+    <rect x="380" y="205" width="150" height="225" fill="#f7f8f6"/>
+  </g>
+
+  <!-- Furniture traced from Aruba reference -->
+  <g id="furniture" stroke="#8f9e95" stroke-width="1.5" fill="#ffffff">
+    <!-- Kitchen -->
+    <rect x="62" y="36" width="150" height="28" rx="2"/>
+    <rect x="62" y="78" width="28" height="100" rx="2"/>
+    <rect x="250" y="36" width="90" height="28" rx="2"/>
+    <rect x="300" y="78" width="48" height="70" rx="2"/>
+    <rect x="110" y="150" width="70" height="36" rx="2"/>
+
+    <!-- Dining oval -->
+    <ellipse cx="165" cy="285" rx="70" ry="42"/>
+
+    <!-- Living -->
+    <rect x="70" y="400" width="100" height="36" rx="2"/>
+    <rect x="70" y="470" width="120" height="50" rx="2"/>
+    <rect x="210" y="480" width="55" height="40" rx="2"/>
+    <rect x="70" y="545" width="90" height="28" rx="2"/>
+    <rect x="270" y="430" width="70" height="28" rx="2"/>
+    <rect x="270" y="500" width="70" height="28" rx="2"/>
+    <rect x="270" y="560" width="70" height="28" rx="2"/>
+
+    <!-- Office -->
+    <rect x="560" y="50" width="200" height="36" rx="2"/>
+    <rect x="700" y="110" width="120" height="50" rx="2"/>
+    <rect x="560" y="160" width="90" height="36" rx="2"/>
+
+    <!-- Middle bedroom bed -->
+    <rect x="620" y="280" width="160" height="100" rx="3"/>
+
+    <!-- Bottom bedroom -->
+    <rect x="480" y="500" width="170" height="90" rx="3"/>
+    <rect x="400" y="460" width="50" height="28" rx="2"/>
+    <rect x="640" y="460" width="50" height="28" rx="2"/>
+    <rect x="400" y="560" width="40" height="40" rx="2"/>
+
+    <!-- Top bathroom -->
+    <rect x="400" y="50" width="50" height="28" rx="2"/>
+    <rect x="470" y="50" width="40" height="40" rx="2"/>
+    <ellipse cx="430" cy="140" rx="22" ry="16"/>
+
+    <!-- Bottom bathroom -->
+    <rect x="740" y="450" width="40" height="28" rx="2"/>
+    <ellipse cx="800" cy="490" rx="20" ry="14"/>
+  </g>
+
+  <!-- Walls -->
+  <g id="walls" stroke="#1e2a24" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" fill="none">
+    <!-- Outer shell with door gaps (D002 top kitchen, D004 top bath, D001 bottom) -->
+    <path d="M50 22 H195"/>
+    <path d="M245 22 H470"/>
+    <path d="M530 22 H858"/>
+    <path d="M858 22 V622"/>
+    <path d="M50 622 H320"/>
+    <path d="M380 622 H858"/>
+    <path d="M50 622 V22"/>
+
+    <!-- Kitchen / dining -->
+    <path d="M50 210 H300"/>
+
+    <!-- Dining / living -->
+    <path d="M50 360 H300"/>
+
+    <!-- Left column right wall with openings -->
+    <path d="M380 22 V90"/>
+    <path d="M380 140 V210"/>
+    <path d="M380 210 V250"/>
+    <path d="M380 300 V360"/>
+    <path d="M380 360 V430"/>
+    <path d="M380 470 V622"/>
+
+    <!-- Bathroom / office split -->
+    <path d="M530 22 V90"/>
+    <path d="M530 140 V230"/>
+
+    <!-- Office / middle bedroom -->
+    <path d="M530 230 H620"/>
+    <path d="M700 230 H858"/>
+
+    <!-- Top bathroom bottom (D003 gap) -->
+    <path d="M380 205 H420"/>
+    <path d="M480 205 H530"/>
+
+    <!-- Middle bedroom / bottom bedroom -->
+    <path d="M530 430 H700"/>
+    <path d="M760 430 H858"/>
+
+    <!-- Bottom bedroom / bath+closet -->
+    <path d="M720 430 V500"/>
+    <path d="M720 560 V622"/>
+
+    <!-- Closet split -->
+    <path d="M720 542 H858"/>
+
+    <!-- Door swing hints -->
+    <path d="M380 430 Q400 450 380 470" stroke-width="1.5" stroke="#5d6e64"/>
+    <path d="M530 140 Q550 160 530 180" stroke-width="1.5" stroke="#5d6e64"/>
+    <path d="M620 230 Q640 250 660 230" stroke-width="1.5" stroke="#5d6e64"/>
+    <path d="M700 430 Q720 450 740 430" stroke-width="1.5" stroke="#5d6e64"/>
+  </g>
+
+  <g id="labels" fill="#5d6e64" font-family="system-ui, sans-serif" font-size="13" letter-spacing="0.04em">
+    <text x="160" y="120" text-anchor="middle" opacity="0.55">Kitchen</text>
+    <text x="165" y="250" text-anchor="middle" opacity="0.55">Dining</text>
+    <text x="175" y="390" text-anchor="middle" opacity="0.55">Living</text>
+    <text x="455" y="110" text-anchor="middle" opacity="0.55">Bath</text>
+    <text x="700" y="120" text-anchor="middle" opacity="0.55">Office</text>
+    <text x="700" y="340" text-anchor="middle" opacity="0.55">Bedroom</text>
+    <text x="550" y="480" text-anchor="middle" opacity="0.55">Bedroom</text>
+    <text x="790" y="490" text-anchor="middle" opacity="0.5">Bath</text>
+    <text x="790" y="585" text-anchor="middle" opacity="0.5">Closet</text>
+  </g>
+</svg>
