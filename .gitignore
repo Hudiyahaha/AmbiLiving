@@ -39,3 +39,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# ML: raw CASAS data and parse cache are large / redistributable from the source
+/ml/data/raw/
+/ml/data/cache/
+/ml/*.log
+__pycache__/

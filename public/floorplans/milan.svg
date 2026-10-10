@@ -1,0 +1,115 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 848" fill="none" aria-label="Milan home floor plan">
+  <title>Milan Home Floor Plan</title>
+
+  <g id="rooms">
+    <!-- NW bedroom -->
+    <rect x="40" y="40" width="280" height="280" fill="#eef4f0"/>
+    <!-- Top bathroom -->
+    <rect x="320" y="40" width="140" height="200" fill="#e8eef2"/>
+    <!-- Living / open plan -->
+    <rect x="460" y="40" width="520" height="560" fill="#f5f7f4"/>
+    <!-- Middle-left baths -->
+    <rect x="40" y="360" width="280" height="220" fill="#e8eef2"/>
+    <!-- SW office -->
+    <rect x="40" y="620" width="220" height="180" fill="#f3f0ea"/>
+    <!-- South bedroom -->
+    <rect x="300" y="620" width="360" height="180" fill="#eef4f0"/>
+    <!-- Entrance -->
+    <rect x="860" y="640" width="120" height="160" fill="#f0ebe4"/>
+  </g>
+
+  <g id="furniture" stroke="#8f9e95" stroke-width="1.5" fill="#ffffff">
+    <!-- NW bed + desk -->
+    <rect x="70" y="70" width="160" height="100" rx="3"/>
+    <rect x="55" y="200" width="40" height="70" rx="2"/>
+    <ellipse cx="230" cy="120" rx="18" ry="14"/>
+
+    <!-- Top bath fixtures -->
+    <rect x="340" y="70" width="40" height="70" rx="2"/>
+    <ellipse cx="400" cy="160" rx="20" ry="14"/>
+
+    <!-- Living furniture -->
+    <rect x="900" y="280" width="50" height="160" rx="2"/>
+    <rect x="520" y="360" width="50" height="30" rx="2"/>
+    <rect x="520" y="410" width="50" height="30" rx="2"/>
+
+    <!-- Middle-left -->
+    <rect x="80" y="420" width="60" height="40" rx="2"/>
+    <rect x="280" y="480" width="50" height="50" rx="2"/>
+
+    <!-- SW office -->
+    <rect x="60" y="660" width="40" height="90" rx="2"/>
+    <rect x="130" y="650" width="70" height="40" rx="2"/>
+    <rect x="60" y="760" width="90" height="28" rx="2"/>
+    <rect x="200" y="700" width="40" height="70" rx="2"/>
+
+    <!-- South bedroom -->
+    <rect x="420" y="650" width="180" height="50" rx="3"/>
+    <rect x="330" y="700" width="40" height="40" rx="2"/>
+    <rect x="500" y="760" width="50" height="28" rx="2"/>
+
+    <!-- Entrance -->
+    <rect x="880" y="680" width="28" height="90" rx="2"/>
+  </g>
+
+  <g id="walls" stroke="#1e2a24" stroke-width="3" stroke-linecap="square" fill="none">
+    <!-- Outer shell with door gaps -->
+    <path d="M40 40 H600"/>
+    <path d="M660 40 H980"/>
+    <path d="M980 40 V800"/>
+    <path d="M40 800 H340"/>
+    <path d="M400 800 H920"/>
+    <path d="M980 800 H1000"/>
+    <path d="M40 800 V40"/>
+
+    <!-- NW bedroom right / bath left -->
+    <path d="M320 40 V120"/>
+    <path d="M320 180 V320"/>
+
+    <!-- Bath bottom -->
+    <path d="M320 240 H400"/>
+    <path d="M440 240 H460"/>
+
+    <!-- Living left divider -->
+    <path d="M460 40 V200"/>
+    <path d="M460 280 V360"/>
+
+    <!-- Middle-left horizontal -->
+    <path d="M40 360 H200"/>
+    <path d="M260 360 H320"/>
+
+    <!-- Middle-left internals -->
+    <path d="M200 360 V480"/>
+    <path d="M280 420 V580"/>
+    <path d="M40 520 H160"/>
+    <path d="M200 520 H320"/>
+    <path d="M40 620 H220"/>
+    <path d="M280 620 H300"/>
+
+    <!-- South bedroom walls -->
+    <path d="M300 620 V800"/>
+    <path d="M300 620 H480"/>
+    <path d="M560 620 H660"/>
+    <path d="M660 620 V800"/>
+
+    <!-- Entrance vestibule -->
+    <path d="M860 640 V800"/>
+    <path d="M860 640 H980"/>
+
+    <!-- Door swings -->
+    <path d="M600 40 Q630 70 660 40" stroke-width="1.5" stroke="#5d6e64"/>
+    <path d="M320 120 Q350 150 320 180" stroke-width="1.5" stroke="#5d6e64"/>
+    <path d="M480 620 Q520 650 560 620" stroke-width="1.5" stroke="#5d6e64"/>
+    <path d="M340 800 Q370 770 400 800" stroke-width="1.5" stroke="#5d6e64"/>
+  </g>
+
+  <g id="labels" fill="#5d6e64" font-family="system-ui, sans-serif" font-size="14" letter-spacing="0.04em">
+    <text x="180" y="200" text-anchor="middle" opacity="0.5">Bedroom</text>
+    <text x="390" y="140" text-anchor="middle" opacity="0.5">Bath</text>
+    <text x="720" y="300" text-anchor="middle" opacity="0.5">Living</text>
+    <text x="180" y="470" text-anchor="middle" opacity="0.5">Bath</text>
+    <text x="150" y="720" text-anchor="middle" opacity="0.5">Office</text>
+    <text x="480" y="720" text-anchor="middle" opacity="0.5">Bedroom</text>
+    <text x="920" y="740" text-anchor="middle" opacity="0.5">Entrance</text>
+  </g>
+</svg>

@@ -1,0 +1,101 @@
+{
+  "dataset": "milan",
+  "model": "rf+ctx",
+  "split": "cv",
+  "n_segments": 2352,
+  "n_classes": 15,
+  "classes": [
+    "Bed_to_Toilet",
+    "Chores",
+    "Desk_Activity",
+    "Dining_Rm_Activity",
+    "Eve_Meds",
+    "Guest_Bathroom",
+    "Kitchen_Activity",
+    "Leave_Home",
+    "Master_Bathroom",
+    "Master_Bedroom_Activity",
+    "Meditate",
+    "Morning_Meds",
+    "Read",
+    "Sleep",
+    "Watch_TV"
+  ],
+  "per_fold": [
+    {
+      "accuracy": 0.9681528662420382,
+      "macro_f1": 0.883977522188804,
+      "weighted_f1": 0.9629324484890481,
+      "macro_precision": 0.90474935692327,
+      "macro_recall": 0.8715374465374466
+    },
+    {
+      "accuracy": 0.9639065817409767,
+      "macro_f1": 0.8991300906146097,
+      "weighted_f1": 0.9598963928806463,
+      "macro_precision": 0.9727335642903666,
+      "macro_recall": 0.8757531205891861
+    },
+    {
+      "accuracy": 0.9680851063829787,
+      "macro_f1": 0.8948135764080107,
+      "weighted_f1": 0.9642295965771809,
+      "macro_precision": 0.9814165912859942,
+      "macro_recall": 0.8612597414899206
+    },
+    {
+      "accuracy": 0.9638297872340426,
+      "macro_f1": 0.8754058762486283,
+      "weighted_f1": 0.9571799883458225,
+      "macro_precision": 0.9124981825236349,
+      "macro_recall": 0.8520319934206145
+    },
+    {
+      "accuracy": 0.9531914893617022,
+      "macro_f1": 0.8397364371536654,
+      "weighted_f1": 0.947302955296394,
+      "macro_precision": 0.8866847283213727,
+      "macro_recall": 0.8201069216766526
+    }
+  ],
+  "summary": {
+    "accuracy": {
+      "mean": 0.9634331661923475,
+      "std": 0.005462407727953622
+    },
+    "macro_f1": {
+      "mean": 0.8786127005227437,
+      "std": 0.02113698447086174
+    },
+    "weighted_f1": {
+      "mean": 0.9583082763178183,
+      "std": 0.006022578195965537
+    },
+    "macro_precision": {
+      "mean": 0.9316164846689278,
+      "std": 0.0381493895478373
+    },
+    "macro_recall": {
+      "mean": 0.8561378447427641,
+      "std": 0.01981527713825972
+    }
+  },
+  "pooled": {
+    "accuracy": 0.9634353741496599,
+    "macro_f1": 0.8808416612932451,
+    "weighted_f1": 0.9585227790981128,
+    "macro_precision": 0.9704210171471493,
+    "macro_recall": 0.855524387451516
+  },
+  "config": {
+    "split": "cv",
+    "folds": 5,
+    "train_frac": 0.7,
+    "seed": 42,
+    "epochs": 40,
+    "max_len": 128,
+    "context": true,
+    "verbose": false
+  },
+  "train_seconds": 22.0
+}
