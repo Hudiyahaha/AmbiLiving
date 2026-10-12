@@ -1,0 +1,97 @@
+{
+  "dataset": "aruba",
+  "model": "cnn+ctx",
+  "split": "cv",
+  "n_segments": 6476,
+  "n_classes": 11,
+  "classes": [
+    "Bed_to_Toilet",
+    "Eating",
+    "Enter_Home",
+    "Housekeeping",
+    "Leave_Home",
+    "Meal_Preparation",
+    "Relax",
+    "Respirate",
+    "Sleeping",
+    "Wash_Dishes",
+    "Work"
+  ],
+  "per_fold": [
+    {
+      "accuracy": 0.9722222222222222,
+      "macro_f1": 0.9001631633435164,
+      "weighted_f1": 0.9728637489151045,
+      "macro_precision": 0.9074519220039999,
+      "macro_recall": 0.8946289036765943
+    },
+    {
+      "accuracy": 0.9837837837837838,
+      "macro_f1": 0.9014572956596535,
+      "weighted_f1": 0.9792583007145803,
+      "macro_precision": 0.9007656986383871,
+      "macro_recall": 0.9022647098608846
+    },
+    {
+      "accuracy": 0.9737451737451738,
+      "macro_f1": 0.8934167009745252,
+      "weighted_f1": 0.9728343827421427,
+      "macro_precision": 0.8852787866819978,
+      "macro_recall": 0.9049550158125274
+    },
+    {
+      "accuracy": 0.9799227799227799,
+      "macro_f1": 0.8042838480828916,
+      "weighted_f1": 0.975025047050526,
+      "macro_precision": 0.8006501471347061,
+      "macro_recall": 0.8081464399542394
+    },
+    {
+      "accuracy": 0.9791505791505791,
+      "macro_f1": 0.8080497267378484,
+      "weighted_f1": 0.97587170398828,
+      "macro_precision": 0.8323822118303259,
+      "macro_recall": 0.7997065244036263
+    }
+  ],
+  "summary": {
+    "accuracy": {
+      "mean": 0.9777649077649077,
+      "std": 0.0042351621122193595
+    },
+    "macro_f1": {
+      "mean": 0.861474146959687,
+      "std": 0.045256420290074865
+    },
+    "weighted_f1": {
+      "mean": 0.9751706366821267,
+      "std": 0.002366495408511449
+    },
+    "macro_precision": {
+      "mean": 0.8653057532578833,
+      "std": 0.04170596195704582
+    },
+    "macro_recall": {
+      "mean": 0.8619403187415745,
+      "std": 0.047564042765491386
+    }
+  },
+  "pooled": {
+    "accuracy": 0.9777640518838789,
+    "macro_f1": 0.8740492751649647,
+    "weighted_f1": 0.9753681123220064,
+    "macro_precision": 0.8837513333031466,
+    "macro_recall": 0.8681045477517579
+  },
+  "config": {
+    "split": "cv",
+    "folds": 5,
+    "train_frac": 0.7,
+    "seed": 42,
+    "epochs": 40,
+    "max_len": 128,
+    "context": true,
+    "verbose": false
+  },
+  "train_seconds": 416.4
+}

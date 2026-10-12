@@ -60,10 +60,56 @@ def preceding_context(home: Home, window_s: float = 600.0) -> tuple[np.ndarray, 
     return X, ["log_gap_before_s", "log_events_prev_10min", "distinct_sensors_prev_10min"]
 
 
-def segment_context(home: Home, preceding: bool = False) -> tuple[np.ndarray, list[str]]:
+def preceding_profile(home: Home, window_s: float = 600.0) -> tuple[np.ndarray, list[str]]:
+    """*Which* sensors fired just before each segment (past only, no lookahead).
+
+    Motivation: ``preceding_context`` collapses the pre-segment window to a
+    count of distinct sensors, which cannot separate Wash_Dishes from
+    Meal_Preparation — both are short kitchen bursts with near-identical
+    durations (median 4.8 vs 5.3 min) and sensor proportions. What separates
+    them is that Wash_Dishes follows a *meal*: 38 of 65 Aruba Wash_Dishes
+    segments are preceded by Eating, against 39 of 1,606 Meal_Preparation
+    segments. That shows up in the dining-area sensor M014, which holds 24.5%
+    of pre-window events before Wash_Dishes but only 6.0% before
+    Meal_Preparation.
+
+    Two blocks, both derived from sensor events alone (never from labels, so
+    there is no leakage and it still works live):
+
+    * per-sensor share of events in the preceding ``window_s``;
+    * one-hot of the single most recent sensor before the segment starts.
+    """
+    sensors = home.sensor_list
+    s_idx = {s: i for i, s in enumerate(sensors)}
+    S = len(sensors)
+    sensor_ids = np.array([s_idx[s] for s in home.sensors], dtype=np.int32)
+
+    t_sec = home.times.astype("datetime64[ms]").astype(np.float64) / 1000.0
+    lo = home.segments["lo"].to_numpy()
+    start = home.segments["start"].to_numpy().astype("datetime64[ms]").astype(np.float64) / 1000.0
+
+    n = len(lo)
+    share = np.zeros((n, S), np.float32)
+    prev_last = np.zeros((n, S), np.float32)
+    w_lo = np.searchsorted(t_sec, start - window_s, side="left")
+    for i in range(n):
+        ids = sensor_ids[w_lo[i]:lo[i]]
+        if len(ids):
+            share[i] = np.bincount(ids, minlength=S) / len(ids)
+        if lo[i] > 0:
+            prev_last[i, sensor_ids[lo[i] - 1]] = 1
+
+    names = ([f"prev_frac_{s}" for s in sensors] + [f"prev_last_{s}" for s in sensors])
+    return np.hstack([share, prev_last]), names
+
+
+def segment_context(
+    home: Home, preceding: bool = False, profile: bool = False
+) -> tuple[np.ndarray, list[str]]:
     """Time-of-day, weekday, duration and size of each segment.
 
-    With ``preceding=True`` also appends ``preceding_context``.
+    With ``preceding=True`` also appends ``preceding_context``, and with
+    ``profile=True`` also appends ``preceding_profile``.
     """
     seg = home.segments
     start = seg["start"].to_numpy()
