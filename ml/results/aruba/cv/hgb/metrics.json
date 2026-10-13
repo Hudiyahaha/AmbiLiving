@@ -95,10 +95,6 @@
     "balance": "sqrt",
     "verbose": false
   },
-<<<<<<< HEAD
-  "train_seconds": 19.2,
+  "train_seconds": 193.4,
   "macro_over": "activities present in the test fold"
-=======
-  "train_seconds": 193.4
->>>>>>> 25c39847dead9fe1d908935a5e67c04c70c31791
 }
