@@ -24,10 +24,10 @@
   "per_fold": [
     {
       "accuracy": 0.9640371229698376,
-      "macro_f1": 0.8464670856740301,
+      "macro_f1": 0.9069290203650323,
       "weighted_f1": 0.9631538636453567,
-      "macro_precision": 0.8821647318721509,
-      "macro_recall": 0.8422659637436435
+      "macro_precision": 0.9451764984344474,
+      "macro_recall": 0.902427818296761
     }
   ],
   "summary": {
@@ -36,7 +36,7 @@
       "std": 0.0
     },
     "macro_f1": {
-      "mean": 0.8464670856740301,
+      "mean": 0.9069290203650323,
       "std": 0.0
     },
     "weighted_f1": {
@@ -44,20 +44,20 @@
       "std": 0.0
     },
     "macro_precision": {
-      "mean": 0.8821647318721509,
+      "mean": 0.9451764984344474,
       "std": 0.0
     },
     "macro_recall": {
-      "mean": 0.8422659637436435,
+      "mean": 0.902427818296761,
       "std": 0.0
     }
   },
   "pooled": {
     "accuracy": 0.9640371229698376,
-    "macro_f1": 0.8464670856740301,
+    "macro_f1": 0.9069290203650323,
     "weighted_f1": 0.9631538636453567,
-    "macro_precision": 0.8821647318721509,
-    "macro_recall": 0.8422659637436435
+    "macro_precision": 0.9451764984344474,
+    "macro_recall": 0.902427818296761
   },
   "config": {
     "split": "temporal",
@@ -71,5 +71,6 @@
     "balance": "sqrt",
     "verbose": false
   },
-  "train_seconds": 6.9
+  "train_seconds": 6.9,
+  "macro_over": "activities present in the test fold"
 }
