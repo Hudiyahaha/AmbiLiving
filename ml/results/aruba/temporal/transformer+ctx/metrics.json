@@ -1,0 +1,69 @@
+{
+  "dataset": "aruba",
+  "model": "transformer+ctx",
+  "split": "temporal",
+  "n_segments": 1925,
+  "n_classes": 11,
+  "classes": [
+    "Bed_to_Toilet",
+    "Eating",
+    "Enter_Home",
+    "Housekeeping",
+    "Leave_Home",
+    "Meal_Preparation",
+    "Relax",
+    "Respirate",
+    "Sleeping",
+    "Wash_Dishes",
+    "Work"
+  ],
+  "per_fold": [
+    {
+      "accuracy": 0.9896103896103896,
+      "macro_f1": 0.7651332078146602,
+      "weighted_f1": 0.9885748232927445,
+      "macro_precision": 0.8110609898375856,
+      "macro_recall": 0.7495436228178175
+    }
+  ],
+  "summary": {
+    "accuracy": {
+      "mean": 0.9896103896103896,
+      "std": 0.0
+    },
+    "macro_f1": {
+      "mean": 0.7651332078146602,
+      "std": 0.0
+    },
+    "weighted_f1": {
+      "mean": 0.9885748232927445,
+      "std": 0.0
+    },
+    "macro_precision": {
+      "mean": 0.8110609898375856,
+      "std": 0.0
+    },
+    "macro_recall": {
+      "mean": 0.7495436228178175,
+      "std": 0.0
+    }
+  },
+  "pooled": {
+    "accuracy": 0.9896103896103896,
+    "macro_f1": 0.7651332078146602,
+    "weighted_f1": 0.9885748232927445,
+    "macro_precision": 0.8110609898375856,
+    "macro_recall": 0.7495436228178175
+  },
+  "config": {
+    "split": "temporal",
+    "folds": 5,
+    "train_frac": 0.7,
+    "seed": 42,
+    "epochs": 40,
+    "max_len": 128,
+    "context": true,
+    "verbose": false
+  },
+  "train_seconds": 127.8
+}

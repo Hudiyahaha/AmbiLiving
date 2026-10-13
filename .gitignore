@@ -45,3 +45,4 @@ next-env.d.ts
 /ml/data/cache/
 /ml/*.log
 __pycache__/
+.venv/
