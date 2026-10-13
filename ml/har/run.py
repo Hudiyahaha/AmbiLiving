@@ -6,6 +6,13 @@ Examples (from the ml/ directory):
     python -m har.run --dataset milan --model bilstm --split temporal
     python -m har.run --dataset all --model all          # full comparison
 
+Tuning / repeated runs (saved under results/<dataset>/<split>/experiments/,
+so they never touch the main comparison table; summarise them with
+``python -m har.experiments``):
+
+    python -m har.run --dataset aruba --model cnn --split temporal --seeds 1 2 3
+    python -m har.run --dataset aruba --model cnn --split temporal --lr 3e-4 --tag lr3e-4 --seeds 1 2 3
+
 Splits
 ------
 cv        Stratified k-fold over segments (default, k=5). Comparable to most
@@ -70,6 +77,7 @@ def run_one(dataset: str, model: str, args) -> dict:
             y_pred[te] = fit_predict_sequence(
                 model, seqs.subset(tr), y[tr], seqs.subset(te), len(classes),
                 seed=args.seed + k, max_epochs=args.epochs, verbose=args.verbose,
+                lr=args.lr, patience=args.patience, batch_size=args.batch_size,
             )
         fold_ids[te] = k
     seconds = time.time() - t0
@@ -77,6 +85,10 @@ def run_one(dataset: str, model: str, args) -> dict:
     evaluated = fold_ids >= 0  # temporal split leaves training segments unevaluated
     tag = model + ("+ctx" if args.context else "")
     out_dir = RESULTS_DIR / dataset / args.split / tag
+    if args.tag or args.run_seed is not None:  # tuning / repeated run: keep it separate
+        tag += (f"+{args.tag}" if args.tag else "") + (
+            f"+s{args.run_seed}" if args.run_seed is not None else "")
+        out_dir = RESULTS_DIR / dataset / args.split / "experiments" / tag
     result = write_report(
         out_dir,
         dataset=dataset, model=tag, split=args.split, classes=classes,
@@ -104,16 +116,32 @@ def main(argv=None):
     p.add_argument("--context", action="store_true",
                    help="add pre-segment context features (gap before, activity in previous 10 min)")
     p.add_argument("--verbose", action="store_true", help="print per-epoch progress")
+    # Neural-model training settings (bilstm / cnn / transformer).
+    p.add_argument("--lr", type=float, default=1e-3, help="learning rate (AdamW)")
+    p.add_argument("--patience", type=int, default=6, help="early-stopping patience (epochs)")
+    p.add_argument("--batch-size", type=int, default=64)
+    p.add_argument("--tag", default="",
+                   help="name for a tuning run, e.g. lr3e-4; saved under results/.../experiments/")
+    p.add_argument("--seeds", type=int, nargs="+",
+                   help="repeat the run once per seed, e.g. --seeds 1 2 3 (saved under experiments/)")
     args = p.parse_args(argv)
+    args.run_seed = None
 
     datasets = list(DATASETS) if args.dataset == "all" else [args.dataset]
     model_names = list(models.ALL) if args.model == "all" else [args.model]
     for ds in datasets:
         for m in model_names:
-            run_one(ds, m, args)
+            for seed in (args.seeds or [None]):
+                if seed is not None:
+                    args.seed, args.run_seed = seed, seed
+                run_one(ds, m, args)
 
-    from .compare import write_summary
-    print("\n" + write_summary())
+    if args.tag or args.seeds:
+        from .experiments import write_experiments
+        print("\n" + write_experiments())
+    else:
+        from .compare import write_summary
+        print("\n" + write_summary())
 
 
 if __name__ == "__main__":
