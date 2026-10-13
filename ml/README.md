@@ -147,6 +147,36 @@ long activities (Sleeping) keep their full sensor footprint.
 Kitchen_Activity; macro-F1 weights every activity equally, so it exposes failures on
 rare or overlapping classes (Wash_Dishes, Respirate, Eve_Meds).
 
+## Results (5-fold CV, macro-F1 %)
+
+Full table with accuracy / weighted-F1 / P / R / timing: [`results/summary.md`](results/summary.md).
+
+| Approach | Aruba | Aruba +ctx | Milan | Milan +ctx | CPU time (Aruba) |
+|---|---|---|---|---|---|
+| 1 - Features + Gradient Boosting | 84.5 | **87.6** | **91.0** | **91.0** | 19 s |
+| 1 - Features + Random Forest | 83.2 | 86.1 | 87.3 | 87.9 | 23 s |
+| 2 - BiLSTM | 82.3 | 85.5 | 89.0 | 90.6 | 24 min |
+| 3 - 1D-CNN | 82.8 | 86.2 | 86.6 | 86.4 | 11 min |
+| 3 - Transformer | 83.3 | - | 89.2 | - | ~4 h (CPU) |
+
+Accuracy is 95-98.6% for every model; macro-F1 is what separates them.
+
+Findings:
+
+1. **All approaches land within ~3 macro-F1 points.** The representation matters more
+   than the architecture: adding pre-segment context improves every model on Aruba
+   by +3 points, more than switching between any two models.
+2. **Gradient Boosting on hand-crafted features is the strongest and by far the
+   cheapest** (seconds vs. minutes/hours on CPU), which matters for a deployable system.
+3. **Remaining hard cases are the overlap classes the slides predicted:**
+   * Aruba Wash_Dishes: F1 ≈ 0.15 for every model. 59 of 65 instances are predicted as
+     Meal_Preparation (same kitchen sensors, same proportions, 65 vs 1,606 samples).
+   * Milan Chores: F1 ≈ 0.35-0.42 (23 samples, spread across many rooms).
+   * Aruba Respirate: 6 samples only; per-fold scores are unstable (hence the ±5 std).
+4. Context fixes Enter_Home / Leave_Home (Aruba F1 0.81 → 0.98) but does not fix
+   Wash_Dishes, whose distinguishing cue (it usually follows a meal) needs more than an
+   event count. See `preceding_profile` in `features.py` (work in progress).
+
 ## Known limitations / next steps
 
 * Explicit segmentation assumes activity boundaries are known. For the live dashboard,
