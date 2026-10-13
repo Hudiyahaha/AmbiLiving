@@ -31,12 +31,14 @@ def build(name: str, seed: int):
     raise ValueError(f"unknown classical model {name!r}")
 
 
-def fit_predict(name: str, X_tr, y_tr, X_te, seed: int) -> np.ndarray:
+def fit_predict(name: str, X_tr, y_tr, X_te, seed: int, balance: str = "sqrt") -> np.ndarray:
+    """``balance`` (HGB only): "sqrt" softens inverse-frequency weights, "full" uses
+    them as-is. "full" raises recall on rare classes at the cost of precision."""
     model = build(name, seed)
     if name == "hgb":
         # HGB has no class_weight="balanced_subsample"; weight samples instead.
-        w = compute_sample_weight("balanced", y_tr) ** 0.5
-        model.fit(X_tr, y_tr, sample_weight=w)
+        w = compute_sample_weight("balanced", y_tr)
+        model.fit(X_tr, y_tr, sample_weight=w ** 0.5 if balance == "sqrt" else w)
     else:
         model.fit(X_tr, y_tr)
     return model.predict(X_te)

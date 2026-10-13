@@ -60,6 +60,64 @@ def preceding_context(home: Home, window_s: float = 600.0) -> tuple[np.ndarray, 
     return X, ["log_gap_before_s", "log_events_prev_10min", "distinct_sensors_prev_10min"]
 
 
+def activity_history(home: Home, labels: np.ndarray, classes: list[str],
+                     cap_s: float = SECONDS_PER_DAY) -> tuple[np.ndarray, list[str]]:
+    """Which activities happened *before* each segment, according to ``labels``.
+
+    Motivation: in Aruba, Wash_Dishes fires the same kitchen sensors in the same
+    proportions as Meal_Preparation. What separates them is the routine around
+    them: 38 of 65 Wash_Dishes instances directly follow Eating, and 59 start
+    within two hours of a meal ending.
+
+    ``labels`` should be *predicted* activities (see ``run.py --history``): a
+    deployed system only knows what it recognised earlier, never the ground truth.
+    Only segments that ended before this one started are used.
+
+    Per segment, for every class c:
+      * log seconds since the last c ended (capped at ``cap_s``)
+      * 1 if c is the most recent activity, else 0
+      * number of c already finished on the same calendar day
+    plus log seconds since the previous activity ended.
+    """
+    seg = home.segments
+    C = len(classes)
+    start = seg["start"].to_numpy().astype("datetime64[ms]").astype(np.float64) / 1000.0
+    end = seg["end"].to_numpy().astype("datetime64[ms]").astype(np.float64) / 1000.0
+    day = seg["start"].dt.normalize().to_numpy()
+
+    n = len(seg)
+    X = np.zeros((n, 3 * C + 1), np.float32)
+    by_end = np.argsort(end, kind="stable")
+    last_end = np.full(C, -np.inf)
+    today = np.zeros(C)
+    today_date = None
+    prev_label, prev_end = -1, -np.inf
+    p = 0
+    for i in np.argsort(start, kind="stable"):
+        if day[i] != today_date:
+            today_date, today = day[i], np.zeros(C)
+            # Re-count activities of this day that already ended (pointer only moves forward).
+            done = by_end[:p]
+            same = done[day[done] == today_date]
+            if len(same):
+                today = np.bincount(labels[same], minlength=C).astype(float)
+        while p < n and end[by_end[p]] <= start[i]:
+            j = by_end[p]
+            last_end[labels[j]] = end[j]
+            prev_end, prev_label = end[j], labels[j]
+            if day[j] == today_date:
+                today[labels[j]] += 1
+            p += 1
+        X[i, :C] = np.log1p(np.minimum(start[i] - last_end, cap_s))
+        if prev_label >= 0:
+            X[i, C + prev_label] = 1
+        X[i, 2 * C:3 * C] = today
+        X[i, 3 * C] = np.log1p(min(start[i] - prev_end, cap_s))
+    names = ([f"log_since_{c}" for c in classes] + [f"prev_is_{c}" for c in classes]
+             + [f"n_today_{c}" for c in classes] + ["log_since_prev_activity"])
+    return X, names
+
+
 def preceding_profile(home: Home, window_s: float = 600.0) -> tuple[np.ndarray, list[str]]:
     """*Which* sensors fired just before each segment (past only, no lookahead).
 
