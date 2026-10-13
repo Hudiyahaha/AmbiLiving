@@ -74,6 +74,14 @@ function ActivityDetail({
             {Math.round(activity.confidence * 100)}%
           </dd>
         </div>
+        {activity.annotatedActivityId ? (
+          <div className="col-span-2">
+            <dt className="text-xs text-muted">Annotated in dataset</dt>
+            <dd className="font-medium">
+              <AnnotatedCell activity={activity} />
+            </dd>
+          </div>
+        ) : null}
       </dl>
 
       <div className="mt-4">
@@ -128,6 +136,21 @@ function ActivityDetail({
   );
 }
 
+/** Ground-truth label with a match mark against the model's prediction. */
+function AnnotatedCell({ activity }: { activity: RecognizedActivity }) {
+  if (!activity.annotatedActivityId) return <span className="text-muted">—</span>;
+  const match = activity.annotatedActivityId === activity.activityId;
+  return (
+    <span
+      className={match ? "text-foreground" : "font-semibold text-red-600"}
+      title={match ? "Prediction matches the annotation" : "Prediction differs from the annotation"}
+    >
+      {match ? "✓ " : "✗ "}
+      {activity.annotatedLabel}
+    </span>
+  );
+}
+
 export default function ActivitiesPage() {
   const { currentHome } = useEnvironment();
   const [selectedId, setSelectedId] = useState<string | null>(null);
@@ -143,6 +166,7 @@ export default function ActivitiesPage() {
   }, [currentHome.activityHistory]);
 
   const selected = rows.find((r) => r.id === selectedId) ?? null;
+  const source = currentHome.dataSource;
 
   return (
     <div className="mx-auto max-w-6xl space-y-4">
@@ -150,6 +174,19 @@ export default function ActivitiesPage() {
         Recognized activities for {currentHome.name} — chronological history
         from ambient sensor streams.
       </p>
+      {source ? (
+        <div className="rounded-2xl border border-border bg-surface p-4 text-sm shadow-sm">
+          <p className="font-medium text-foreground">
+            Real data: {source.dataset}, {source.date} ·{" "}
+            {source.correct} of {source.total} activities recognised correctly
+          </p>
+          <p className="mt-1 text-muted">
+            {source.model}, trained on {source.trainedOn}. This day was not
+            used for training. Activity start and end times come from the
+            dataset annotations; the model decides which activity it is.
+          </p>
+        </div>
+      ) : null}
 
       <div className="grid gap-4 lg:grid-cols-[1fr_minmax(260px,320px)]">
         <div className="overflow-hidden rounded-2xl border border-border bg-surface shadow-sm">
@@ -161,7 +198,11 @@ export default function ActivitiesPage() {
                   <th className="px-4 py-3 font-medium">Activity</th>
                   <th className="px-4 py-3 font-medium">Duration</th>
                   <th className="px-4 py-3 font-medium">Confidence</th>
-                  <th className="px-4 py-3 font-medium">Day</th>
+                  {source ? (
+                    <th className="px-4 py-3 font-medium">Annotated</th>
+                  ) : (
+                    <th className="px-4 py-3 font-medium">Day</th>
+                  )}
                 </tr>
               </thead>
               <tbody>
@@ -188,9 +229,15 @@ export default function ActivitiesPage() {
                       <td className="px-4 py-3 text-muted">
                         {Math.round(row.confidence * 100)}%
                       </td>
-                      <td className="px-4 py-3 text-muted">
-                        {row.dayLabel ?? "—"}
-                      </td>
+                      {source ? (
+                        <td className="px-4 py-3">
+                          <AnnotatedCell activity={row} />
+                        </td>
+                      ) : (
+                        <td className="px-4 py-3 text-muted">
+                          {row.dayLabel ?? "—"}
+                        </td>
+                      )}
                     </tr>
                   );
                 })}
