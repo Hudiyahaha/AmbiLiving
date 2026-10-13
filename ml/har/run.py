@@ -56,6 +56,8 @@ def fit_predict_with_history(model, home, X, y, tr, te, classes, seed, balance,
     training segments get out-of-fold stage-1 predictions (inner CV on the training
     fold), test segments get predictions from the stage-1 model trained on the whole
     training fold. This mirrors deployment, where only earlier recognitions are known.
+
+    Returns stage-2 class probabilities for the test segments.
     """
     labels = np.empty_like(y)
     inner = StratifiedKFold(n_splits=inner_folds, shuffle=True, random_state=seed)
@@ -65,7 +67,7 @@ def fit_predict_with_history(model, home, X, y, tr, te, classes, seed, balance,
     labels[te] = classical.fit_predict(model, X[tr], y[tr], X[te], seed, balance)
     H, _ = activity_history(home, labels, classes)
     XH = np.hstack([X, H])
-    return classical.fit_predict(model, XH[tr], y[tr], XH[te], seed, balance)
+    return classical.fit_predict_proba(model, XH[tr], y[tr], XH[te], seed, len(classes), balance)
 
 
 def run_one(dataset: str, model: str, args) -> dict:
@@ -82,22 +84,26 @@ def run_one(dataset: str, model: str, args) -> dict:
         seqs = encode_sequences(home, max_len=args.max_len, preceding=args.context)
 
     y_pred = np.full_like(y, -1)
+    confidence = np.zeros(len(y))  # model's probability for the class it predicted
     fold_ids = np.full_like(y, -1)
     t0 = time.time()
     for k, (tr, te) in enumerate(splits):
         print(f"  [{dataset}/{model}/{args.split}] fold {k + 1}/{len(splits)}: "
               f"{len(tr)} train, {len(te)} test")
         if model in models.CLASSICAL and args.history:
-            y_pred[te] = fit_predict_with_history(model, home, X, y, tr, te, classes,
-                                                  args.seed + k, args.balance)
+            proba = fit_predict_with_history(model, home, X, y, tr, te, classes,
+                                             args.seed + k, args.balance)
         elif model in models.CLASSICAL:
-            y_pred[te] = classical.fit_predict(model, X[tr], y[tr], X[te], args.seed + k,
-                                               args.balance)
+            proba = classical.fit_predict_proba(model, X[tr], y[tr], X[te], args.seed + k,
+                                                len(classes), args.balance)
         else:
-            y_pred[te] = fit_predict_sequence(
+            proba = fit_predict_sequence(
                 model, seqs.subset(tr), y[tr], seqs.subset(te), len(classes),
                 seed=args.seed + k, max_epochs=args.epochs, verbose=args.verbose,
+                return_proba=True,
             )
+        y_pred[te] = proba.argmax(1)
+        confidence[te] = proba.max(1)
         fold_ids[te] = k
     seconds = time.time() - t0
 
@@ -109,6 +115,7 @@ def run_one(dataset: str, model: str, args) -> dict:
         out_dir,
         dataset=dataset, model=tag, split=args.split, classes=classes,
         y_true=y[evaluated], y_pred=y_pred[evaluated], fold_ids=fold_ids[evaluated],
+        confidence=confidence[evaluated],
         segments=home.segments[evaluated], seconds=seconds,
         config={k: v for k, v in vars(args).items() if k not in ("dataset", "model")},
     )
