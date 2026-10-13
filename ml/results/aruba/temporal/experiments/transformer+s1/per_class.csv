@@ -1,0 +1,12 @@
+activity,precision,recall,f1,support
+Relax,1.0,0.9941,0.997,846
+Meal_Preparation,0.9894,0.9052,0.9455,517
+Enter_Home,0.8153,0.8951,0.8533,143
+Leave_Home,0.8837,0.7972,0.8382,143
+Sleeping,1.0,1.0,1.0,116
+Eating,1.0,0.9828,0.9913,58
+Work,0.9811,0.9811,0.9811,53
+Bed_to_Toilet,1.0,1.0,1.0,40
+Wash_Dishes,0.0577,0.5,0.1034,6
+Respirate,0.6667,0.6667,0.6667,3
+Housekeeping,0.0,0.0,0.0,0
