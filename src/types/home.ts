@@ -57,6 +57,19 @@ export interface RecognizedActivity {
   sensorIds: string[];
   /** Optional date label for history grouping, e.g. "Today" */
   dayLabel?: string;
+  /** Ground-truth activity from the dataset annotation, when known (real-data exports) */
+  annotatedActivityId?: string;
+  annotatedLabel?: string;
+}
+
+/** Where a home's events and activities come from, when they are real model output */
+export interface DataSource {
+  dataset: string;
+  date: string;
+  model: string;
+  trainedOn: string;
+  correct: number;
+  total: number;
 }
 
 export interface SensorEvent {
@@ -103,4 +116,6 @@ export interface HomeEnvironment {
   /** Optional activity at “current” monitoring time */
   currentActivityId: string | null;
   datasetStats?: DatasetStats;
+  /** Set when events and activity history are a real dataset day with model predictions */
+  dataSource?: DataSource;
 }

@@ -1,18 +1,15 @@
 import type { HomeEnvironment } from "@/types/home";
-import {
-  arubaActivityClasses,
-  arubaActivityHistory,
-  arubaAnomalies,
-  arubaEvents,
-} from "@/data/homes/arubaMock";
+import { arubaActivityClasses, arubaAnomalies } from "@/data/homes/arubaMock";
 import { arubaSensors } from "@/data/homes/arubaSensors";
-import {
-  milanActivityClasses,
-  milanActivityHistory,
-  milanAnomalies,
-  milanEvents,
-} from "@/data/homes/milanMock";
+import { milanActivityClasses, milanAnomalies } from "@/data/homes/milanMock";
 import { milanSensors } from "@/data/homes/milanSensors";
+import { arubaRealDay, milanRealDay } from "@/data/homes/realData";
+
+// Sensor events and recognised activities are one real dataset day with model
+// predictions (see realData.ts). Anomalies are still sample data: anomaly
+// detection is not built yet.
+const aruba = arubaRealDay(arubaActivityClasses);
+const milan = milanRealDay(milanActivityClasses);
 
 /**
  * Centralized environment registry (Aruba + Milan from CASAS / defense slides).
@@ -34,10 +31,11 @@ export const homes: HomeEnvironment[] = [
     },
     sensors: arubaSensors,
     activityClasses: arubaActivityClasses,
-    events: arubaEvents,
-    activityHistory: arubaActivityHistory,
+    events: aruba.events,
+    activityHistory: aruba.activityHistory,
     anomalies: arubaAnomalies,
-    currentActivityId: "aruba-relax-1",
+    currentActivityId: aruba.currentActivityId,
+    dataSource: aruba.dataSource,
     datasetStats: {
       activityInstances: 6477,
       activityClasses: 11,
@@ -60,10 +58,11 @@ export const homes: HomeEnvironment[] = [
     },
     sensors: milanSensors,
     activityClasses: milanActivityClasses,
-    events: milanEvents,
-    activityHistory: milanActivityHistory,
+    events: milan.events,
+    activityHistory: milan.activityHistory,
     anomalies: milanAnomalies,
-    currentActivityId: "milan-tv",
+    currentActivityId: milan.currentActivityId,
+    dataSource: milan.dataSource,
     datasetStats: {
       activityInstances: 2353,
       activityClasses: 15,
