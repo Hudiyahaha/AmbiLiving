@@ -24,10 +24,10 @@
   "per_fold": [
     {
       "accuracy": 0.9605568445475638,
-      "macro_f1": 0.8691037397528901,
+      "macro_f1": 0.931182578306668,
       "weighted_f1": 0.9642145440109702,
-      "macro_precision": 0.8888151312008677,
-      "macro_recall": 0.8526395950591468
+      "macro_precision": 0.952301926286644,
+      "macro_recall": 0.9135424232776572
     }
   ],
   "summary": {
@@ -36,7 +36,7 @@
       "std": 0.0
     },
     "macro_f1": {
-      "mean": 0.8691037397528901,
+      "mean": 0.931182578306668,
       "std": 0.0
     },
     "weighted_f1": {
@@ -44,20 +44,20 @@
       "std": 0.0
     },
     "macro_precision": {
-      "mean": 0.8888151312008677,
+      "mean": 0.952301926286644,
       "std": 0.0
     },
     "macro_recall": {
-      "mean": 0.8526395950591468,
+      "mean": 0.9135424232776572,
       "std": 0.0
     }
   },
   "pooled": {
     "accuracy": 0.9605568445475638,
-    "macro_f1": 0.8691037397528901,
+    "macro_f1": 0.931182578306668,
     "weighted_f1": 0.9642145440109702,
-    "macro_precision": 0.8888151312008677,
-    "macro_recall": 0.8526395950591468
+    "macro_precision": 0.952301926286644,
+    "macro_recall": 0.9135424232776572
   },
   "config": {
     "split": "temporal",
@@ -69,5 +69,6 @@
     "context": true,
     "verbose": false
   },
-  "train_seconds": 43.1
+  "train_seconds": 43.1,
+  "macro_over": "activities present in the test fold"
 }

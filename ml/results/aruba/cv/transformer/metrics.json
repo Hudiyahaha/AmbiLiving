@@ -92,5 +92,6 @@
     "max_len": 128,
     "verbose": false
   },
-  "train_seconds": 14228.1
+  "train_seconds": 14228.1,
+  "macro_over": "activities present in the test fold"
 }

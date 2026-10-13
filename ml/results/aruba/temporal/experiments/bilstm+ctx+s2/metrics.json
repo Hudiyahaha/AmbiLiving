@@ -74,5 +74,6 @@
     ],
     "run_seed": 2
   },
-  "train_seconds": 201.6
+  "train_seconds": 201.6,
+  "macro_over": "activities present in the test fold"
 }
