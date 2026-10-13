@@ -19,15 +19,21 @@ APPROACH = {
     "transformer": "3 - Transformer",
 }
 
-CTX_SUFFIX = " + pre-segment context"
+SUFFIXES = {
+    "ctx": "pre-segment context",
+    "hist": "activity history",
+    "bal": "full class balancing",
+}
 
 
 def _approach(model: str) -> str:
-    base, ctx = model.removesuffix("+ctx"), model.endswith("+ctx")
-    return APPROACH.get(base, base) + (CTX_SUFFIX if ctx else "")
+    base, *tags = model.split("+")
+    return " + ".join([APPROACH.get(base, base), *(SUFFIXES.get(t, t) for t in tags)])
 
 
-def _fmt(s: dict) -> str:
+def _fmt(s: dict, split: str = "cv") -> str:
+    if split == "temporal":  # single hold-out: no spread to report
+        return f"{s['mean'] * 100:.2f}"
     return f"{s['mean'] * 100:.2f} ± {s['std'] * 100:.2f}"
 
 
@@ -51,11 +57,12 @@ def write_summary() -> str:
                           f"{r['n_classes']} classes)", "",
                       "| Approach | Accuracy | Macro-F1 | Weighted-F1 | Macro-P | Macro-R | Time (s) |",
                       "|---|---|---|---|---|---|---|"]
-        s = r["summary"]
+        s, sp = r["summary"], r["split"]
         lines.append(
-            f"| {_approach(r['model'])} | {_fmt(s['accuracy'])} | "
-            f"**{_fmt(s['macro_f1'])}** | {_fmt(s['weighted_f1'])} | "
-            f"{_fmt(s['macro_precision'])} | {_fmt(s['macro_recall'])} | {r['train_seconds']:.0f} |"
+            f"| {_approach(r['model'])} | {_fmt(s['accuracy'], sp)} | "
+            f"**{_fmt(s['macro_f1'], sp)}** | {_fmt(s['weighted_f1'], sp)} | "
+            f"{_fmt(s['macro_precision'], sp)} | {_fmt(s['macro_recall'], sp)} | "
+            f"{r['train_seconds']:.0f} |"
         )
     text = "\n".join(lines) + "\n"
     RESULTS_DIR.mkdir(parents=True, exist_ok=True)
