@@ -67,15 +67,23 @@ def _bucketed_batches(lengths: torch.Tensor, batch_size: int, g: torch.Generator
 
 
 @torch.no_grad()
-def _predict(model, tensors, batch_size=256) -> np.ndarray:
+def _predict_proba(model, tensors, batch_size=256) -> np.ndarray:
+    """Softmax class probabilities, shape (n, n_classes)."""
     model.eval()
     lengths = tensors[2].sum(1)
     order = torch.argsort(lengths)
-    pred = torch.empty(len(order), dtype=torch.long)
+    proba = None
     for s in range(0, len(order), batch_size):
         idx = order[s:s + batch_size]
-        pred[idx] = model(*_batch(tensors, idx)).argmax(1)
-    return pred.numpy()
+        p = torch.softmax(model(*_batch(tensors, idx)), dim=1)
+        if proba is None:
+            proba = torch.empty(len(order), p.shape[1])
+        proba[idx] = p
+    return proba.numpy()
+
+
+def _predict(model, tensors, batch_size=256) -> np.ndarray:
+    return _predict_proba(model, tensors, batch_size).argmax(1)
 
 
 def fit_predict(
@@ -90,7 +98,10 @@ def fit_predict(
     batch_size: int = 64,
     lr: float = 1e-3,
     verbose: bool = True,
+    return_proba: bool = False,
 ) -> np.ndarray:
+    """Train on ``train`` and predict ``test``: class ids, or with
+    ``return_proba=True`` softmax probabilities of shape (len(test), n_classes)."""
     set_seed(seed)
 
     # Hold out 10% of the training fold for early stopping (never the test fold).
@@ -139,4 +150,5 @@ def fit_predict(
                 break
 
     model.load_state_dict(best_state)
-    return _predict(model, te_t)
+    proba = _predict_proba(model, te_t)
+    return proba if return_proba else proba.argmax(1)

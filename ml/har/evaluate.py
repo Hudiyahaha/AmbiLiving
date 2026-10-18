@@ -49,6 +49,25 @@ def scalar_metrics(y_true, y_pred) -> dict[str, float]:
     }
 
 
+def confidence_summary(y_true, y_pred, confidence, thresholds=(0.6, 0.8)) -> dict:
+    """How sure the model was, and whether low confidence flags its mistakes.
+
+    For each threshold: share of predictions below it, and accuracy of the
+    predictions at or above it (what an "Unknown below X%" rule would keep).
+    """
+    right = y_true == y_pred
+    out = {
+        "mean_when_correct": float(confidence[right].mean()) if right.any() else None,
+        "mean_when_wrong": float(confidence[~right].mean()) if (~right).any() else None,
+    }
+    for th in thresholds:
+        keep = confidence >= th
+        out[f"below_{th}"] = float((~keep).mean())
+        out[f"accuracy_at_or_above_{th}"] = float(right[keep].mean()) if keep.any() else None
+        out[f"wrong_caught_below_{th}"] = float((~keep[~right]).mean()) if (~right).any() else None
+    return out
+
+
 def per_class_table(y_true, y_pred, classes: list[str]) -> pd.DataFrame:
     labels = np.arange(len(classes))
     p, r, f, s = precision_recall_fscore_support(y_true, y_pred, labels=labels, zero_division=0)
@@ -92,6 +111,7 @@ def write_report(
     segments: pd.DataFrame,
     config: dict,
     seconds: float,
+    confidence: np.ndarray | None = None,
 ) -> dict:
     out_dir.mkdir(parents=True, exist_ok=True)
     folds = [scalar_metrics(y_true[fold_ids == k], y_pred[fold_ids == k])
@@ -118,6 +138,8 @@ def write_report(
         "config": config,
         "train_seconds": round(seconds, 1),
     }
+    if confidence is not None:
+        result["confidence"] = confidence_summary(y_true, y_pred, confidence)
     (out_dir / "metrics.json").write_text(json.dumps(result, indent=2))
     per_class.round(4).to_csv(out_dir / "per_class.csv", index=False)
     pd.DataFrame(
@@ -127,6 +149,7 @@ def write_report(
             "fold": fold_ids,
             "true": np.asarray(classes)[y_true],
             "pred": np.asarray(classes)[y_pred],
+            **({"confidence": np.round(confidence, 4)} if confidence is not None else {}),
         }
     ).to_csv(out_dir / "predictions.csv", index=False)
     plot_confusion(
