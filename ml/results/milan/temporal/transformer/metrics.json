@@ -1,0 +1,74 @@
+{
+  "dataset": "milan",
+  "model": "transformer",
+  "split": "temporal",
+  "n_segments": 862,
+  "n_classes": 15,
+  "classes": [
+    "Bed_to_Toilet",
+    "Chores",
+    "Desk_Activity",
+    "Dining_Rm_Activity",
+    "Eve_Meds",
+    "Guest_Bathroom",
+    "Kitchen_Activity",
+    "Leave_Home",
+    "Master_Bathroom",
+    "Master_Bedroom_Activity",
+    "Meditate",
+    "Morning_Meds",
+    "Read",
+    "Sleep",
+    "Watch_TV"
+  ],
+  "per_fold": [
+    {
+      "accuracy": 0.9524361948955916,
+      "macro_f1": 0.9163243980287721,
+      "weighted_f1": 0.9546497093910424,
+      "macro_precision": 0.9534426734321675,
+      "macro_recall": 0.9037331063357767
+    }
+  ],
+  "summary": {
+    "accuracy": {
+      "mean": 0.9524361948955916,
+      "std": 0.0
+    },
+    "macro_f1": {
+      "mean": 0.9163243980287721,
+      "std": 0.0
+    },
+    "weighted_f1": {
+      "mean": 0.9546497093910424,
+      "std": 0.0
+    },
+    "macro_precision": {
+      "mean": 0.9534426734321675,
+      "std": 0.0
+    },
+    "macro_recall": {
+      "mean": 0.9037331063357767,
+      "std": 0.0
+    }
+  },
+  "pooled": {
+    "accuracy": 0.9524361948955916,
+    "macro_f1": 0.9163243980287721,
+    "weighted_f1": 0.9546497093910424,
+    "macro_precision": 0.9534426734321675,
+    "macro_recall": 0.9037331063357767
+  },
+  "config": {
+    "split": "temporal",
+    "folds": 5,
+    "train_frac": 0.7,
+    "seed": 42,
+    "epochs": 40,
+    "max_len": 128,
+    "context": false,
+    "verbose": false
+  },
+  "train_seconds": 73.1,
+  "macro_over": "activities present in the test fold"
+}

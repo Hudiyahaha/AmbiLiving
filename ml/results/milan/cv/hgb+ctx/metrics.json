@@ -97,5 +97,6 @@
     "context": true,
     "verbose": false
   },
-  "train_seconds": 20.3
+  "train_seconds": 20.3,
+  "macro_over": "activities present in the test fold"
 }

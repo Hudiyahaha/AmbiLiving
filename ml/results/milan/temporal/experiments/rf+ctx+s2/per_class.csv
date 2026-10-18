@@ -1,0 +1,16 @@
+activity,precision,recall,f1,support
+Kitchen_Activity,0.8982,0.9902,0.942,205
+Master_Bathroom,0.9276,0.993,0.9592,142
+Guest_Bathroom,0.9669,0.9915,0.9791,118
+Read,1.0,1.0,1.0,93
+Sleep,0.9831,0.9831,0.9831,59
+Master_Bedroom_Activity,1.0,0.9661,0.9828,59
+Watch_TV,1.0,1.0,1.0,43
+Bed_to_Toilet,0.9615,0.6757,0.7937,37
+Leave_Home,1.0,0.9655,0.9825,29
+Desk_Activity,1.0,1.0,1.0,29
+Morning_Meds,1.0,0.6111,0.7586,18
+Dining_Rm_Activity,1.0,0.6667,0.8,15
+Eve_Meds,1.0,0.1667,0.2857,12
+Meditate,1.0,1.0,1.0,3
+Chores,0.0,0.0,0.0,0

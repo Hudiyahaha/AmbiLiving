@@ -23,13 +23,29 @@ from sklearn.metrics import (
 SCALARS = ("accuracy", "macro_f1", "weighted_f1", "macro_precision", "macro_recall")
 
 
+MACRO_OVER = "activities present in the test fold"
+
+
 def scalar_metrics(y_true, y_pred) -> dict[str, float]:
+    """Macro scores average over the activities that occur in the test fold.
+
+    sklearn's default averages over every label in y_true *or* y_pred. On the
+    temporal split some activities have no test instances at all (Aruba
+    Housekeeping, Milan Chores: their labels stop part-way through the
+    recording). With the default, a single false prediction of such an
+    activity adds a class with F1 = 0 and drops macro-F1 by ~8 points, so the
+    score depended on whether a model happened to make that one mistake.
+    Such a mistake is still penalised: the segment is a missed instance of
+    its true activity, which lowers that activity's recall and F1.
+    """
+    labels = np.unique(y_true)
+    macro = dict(labels=labels, average="macro", zero_division=0)
     return {
         "accuracy": accuracy_score(y_true, y_pred),
-        "macro_f1": f1_score(y_true, y_pred, average="macro", zero_division=0),
+        "macro_f1": f1_score(y_true, y_pred, **macro),
         "weighted_f1": f1_score(y_true, y_pred, average="weighted", zero_division=0),
-        "macro_precision": precision_score(y_true, y_pred, average="macro", zero_division=0),
-        "macro_recall": recall_score(y_true, y_pred, average="macro", zero_division=0),
+        "macro_precision": precision_score(y_true, y_pred, **macro),
+        "macro_recall": recall_score(y_true, y_pred, **macro),
     }
 
 
@@ -118,6 +134,7 @@ def write_report(
         "per_fold": folds,
         "summary": summary,
         "pooled": pooled,
+        "macro_over": MACRO_OVER,
         "config": config,
         "train_seconds": round(seconds, 1),
     }
