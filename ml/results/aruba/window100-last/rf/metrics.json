@@ -1,0 +1,89 @@
+{
+  "dataset": "aruba",
+  "model": "rf",
+  "split": "window100-last",
+  "n_segments": 322880,
+  "n_classes": 11,
+  "classes": [
+    "Bed_to_Toilet",
+    "Eating",
+    "Enter_Home",
+    "Housekeeping",
+    "Leave_Home",
+    "Meal_Preparation",
+    "Relax",
+    "Respirate",
+    "Sleeping",
+    "Wash_Dishes",
+    "Work"
+  ],
+  "per_fold": [
+    {
+      "accuracy": 0.7208932111000991,
+      "macro_f1": 0.3495474239993339,
+      "weighted_f1": 0.6997260580696991,
+      "macro_precision": 0.6100595861061364,
+      "macro_recall": 0.3031549149975935
+    }
+  ],
+  "summary": {
+    "accuracy": {
+      "mean": 0.7208932111000991,
+      "std": 0.0
+    },
+    "macro_f1": {
+      "mean": 0.3495474239993339,
+      "std": 0.0
+    },
+    "weighted_f1": {
+      "mean": 0.6997260580696991,
+      "std": 0.0
+    },
+    "macro_precision": {
+      "mean": 0.6100595861061364,
+      "std": 0.0
+    },
+    "macro_recall": {
+      "mean": 0.3031549149975935,
+      "std": 0.0
+    }
+  },
+  "pooled": {
+    "accuracy": 0.7208932111000991,
+    "macro_f1": 0.3495474239993339,
+    "weighted_f1": 0.6997260580696991,
+    "macro_precision": 0.6100595861061364,
+    "macro_recall": 0.3031549149975935
+  },
+  "macro_over": "activities present in the test fold",
+  "config": {
+    "size": 100,
+    "train_stride": 50,
+    "test_stride": 1,
+    "label": "last",
+    "train_frac": 0.6,
+    "test_frac": 0.2,
+    "context": false,
+    "balance": "sqrt",
+    "seed": 42,
+    "seeds": null,
+    "epochs": 40,
+    "verbose": false,
+    "run_seed": null,
+    "train_windows": 19138,
+    "test_windows": 322880,
+    "train_until": "2011-03-16",
+    "test_from": "2011-04-29"
+  },
+  "train_seconds": 36.6,
+  "confidence": {
+    "mean_when_correct": 0.7021638325843567,
+    "mean_when_wrong": 0.5207013471226614,
+    "below_0.6": 0.4587958374628345,
+    "accuracy_at_or_above_0.6": 0.8634745685116513,
+    "wrong_caught_below_0.6": 0.735269313566657,
+    "below_0.8": 0.7211316897918731,
+    "accuracy_at_or_above_0.8": 0.9480681023089481,
+    "wrong_caught_below_0.8": 0.9481124747553208
+  }
+}
