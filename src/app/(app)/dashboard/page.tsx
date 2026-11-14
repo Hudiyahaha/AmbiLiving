@@ -5,7 +5,8 @@ import { AlertTriangle, ArrowRight, Clock } from "lucide-react";
 import { useEnvironment } from "@/context/EnvironmentContext";
 import { formatClock, timeToSeconds } from "@/lib/sensorState";
 
-function formatDuration(minutes: number): string {
+function formatDuration(rawMinutes: number): string {
+  const minutes = Math.round(rawMinutes);
   if (minutes <= 0) return "< 1 min";
   if (minutes < 60) return `${minutes} min`;
   const h = Math.floor(minutes / 60);
