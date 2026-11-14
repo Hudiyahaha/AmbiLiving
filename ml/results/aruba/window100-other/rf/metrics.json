@@ -1,0 +1,90 @@
+{
+  "dataset": "aruba",
+  "model": "rf",
+  "split": "window100-other",
+  "n_segments": 322880,
+  "n_classes": 12,
+  "classes": [
+    "Bed_to_Toilet",
+    "Eating",
+    "Enter_Home",
+    "Housekeeping",
+    "Leave_Home",
+    "Meal_Preparation",
+    "Relax",
+    "Respirate",
+    "Sleeping",
+    "Wash_Dishes",
+    "Work",
+    "Other"
+  ],
+  "per_fold": [
+    {
+      "accuracy": 0.7840157333994053,
+      "macro_f1": 0.35093343715248015,
+      "weighted_f1": 0.7702315047294881,
+      "macro_precision": 0.6023082947712498,
+      "macro_recall": 0.30150041199065186
+    }
+  ],
+  "summary": {
+    "accuracy": {
+      "mean": 0.7840157333994053,
+      "std": 0.0
+    },
+    "macro_f1": {
+      "mean": 0.35093343715248015,
+      "std": 0.0
+    },
+    "weighted_f1": {
+      "mean": 0.7702315047294881,
+      "std": 0.0
+    },
+    "macro_precision": {
+      "mean": 0.6023082947712498,
+      "std": 0.0
+    },
+    "macro_recall": {
+      "mean": 0.30150041199065186,
+      "std": 0.0
+    }
+  },
+  "pooled": {
+    "accuracy": 0.7840157333994053,
+    "macro_f1": 0.35093343715248015,
+    "weighted_f1": 0.7702315047294881,
+    "macro_precision": 0.6023082947712498,
+    "macro_recall": 0.30150041199065186
+  },
+  "macro_over": "activities present in the test fold",
+  "config": {
+    "size": 100,
+    "train_stride": 50,
+    "test_stride": 1,
+    "label": "other",
+    "train_frac": 0.6,
+    "test_frac": 0.2,
+    "context": false,
+    "balance": "sqrt",
+    "seed": 42,
+    "seeds": null,
+    "epochs": 40,
+    "verbose": false,
+    "run_seed": null,
+    "train_windows": 19138,
+    "test_windows": 322880,
+    "train_until": "2011-03-16",
+    "test_from": "2011-04-29"
+  },
+  "train_seconds": 38.7,
+  "confidence": {
+    "mean_when_correct": 0.7652882599953386,
+    "mean_when_wrong": 0.6315625851413167,
+    "below_0.6": 0.22176969772051536,
+    "accuracy_at_or_above_0.6": 0.8490060690478559,
+    "wrong_caught_below_0.6": 0.4559416091888094,
+    "below_0.8": 0.6107965807730427,
+    "accuracy_at_or_above_0.8": 0.9372463514395302,
+    "wrong_caught_below_0.8": 0.886917991883792
+  }
+}

@@ -1,0 +1,97 @@
+{
+  "dataset": "milan",
+  "model": "hgb+hist",
+  "split": "window100-last",
+  "n_segments": 107934,
+  "n_classes": 15,
+  "classes": [
+    "Bed_to_Toilet",
+    "Chores",
+    "Desk_Activity",
+    "Dining_Rm_Activity",
+    "Eve_Meds",
+    "Guest_Bathroom",
+    "Kitchen_Activity",
+    "Leave_Home",
+    "Master_Bathroom",
+    "Master_Bedroom_Activity",
+    "Meditate",
+    "Morning_Meds",
+    "Read",
+    "Sleep",
+    "Watch_TV"
+  ],
+  "per_fold": [
+    {
+      "accuracy": 0.5515500213093186,
+      "macro_f1": 0.34259889914203745,
+      "weighted_f1": 0.5095322318322109,
+      "macro_precision": 0.4475919992022606,
+      "macro_recall": 0.33478430561692524
+    }
+  ],
+  "summary": {
+    "accuracy": {
+      "mean": 0.5515500213093186,
+      "std": 0.0
+    },
+    "macro_f1": {
+      "mean": 0.34259889914203745,
+      "std": 0.0
+    },
+    "weighted_f1": {
+      "mean": 0.5095322318322109,
+      "std": 0.0
+    },
+    "macro_precision": {
+      "mean": 0.4475919992022606,
+      "std": 0.0
+    },
+    "macro_recall": {
+      "mean": 0.33478430561692524,
+      "std": 0.0
+    }
+  },
+  "pooled": {
+    "accuracy": 0.5515500213093186,
+    "macro_f1": 0.34259889914203745,
+    "weighted_f1": 0.5095322318322109,
+    "macro_precision": 0.4475919992022606,
+    "macro_recall": 0.33478430561692524
+  },
+  "macro_over": "activities present in the test fold",
+  "config": {
+    "size": 100,
+    "train_stride": 50,
+    "test_stride": 1,
+    "label": "last",
+    "train_frac": 0.6,
+    "test_frac": 0.2,
+    "context": false,
+    "balance": "sqrt",
+    "history": true,
+    "history_step": 10,
+    "min_run": 3,
+    "smooth": 1,
+    "seed": 42,
+    "seeds": null,
+    "epochs": 40,
+    "verbose": false,
+    "run_seed": null,
+    "train_windows": 4591,
+    "test_windows": 107934,
+    "train_until": "2009-12-12",
+    "test_from": "2009-12-25"
+  },
+  "train_seconds": 66.9,
+  "confidence": {
+    "mean_when_correct": 0.8157725693520541,
+    "mean_when_wrong": 0.6741112019140886,
+    "below_0.6": 0.2555357903904238,
+    "accuracy_at_or_above_0.6": 0.6239219444202456,
+    "wrong_caught_below_0.6": 0.37567919343842326,
+    "below_0.8": 0.5072636981859284,
+    "accuracy_at_or_above_0.8": 0.718481469642555,
+    "wrong_caught_below_0.8": 0.6906803297316282
+  }
+}
