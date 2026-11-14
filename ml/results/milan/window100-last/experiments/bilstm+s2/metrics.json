@@ -2,7 +2,7 @@
   "dataset": "milan",
   "model": "bilstm+s2",
   "split": "window100-last",
-  "n_segments": 10794,
+  "n_segments": 107934,
   "n_classes": 15,
   "classes": [
     "Bed_to_Toilet",
@@ -23,47 +23,47 @@
   ],
   "per_fold": [
     {
-      "accuracy": 0.5776357235501204,
-      "macro_f1": 0.4516806332342297,
-      "weighted_f1": 0.588149857685829,
-      "macro_precision": 0.49759371243814504,
-      "macro_recall": 0.4668865400263051
+      "accuracy": 0.578909333481572,
+      "macro_f1": 0.4498508995862133,
+      "weighted_f1": 0.589596750335073,
+      "macro_precision": 0.49532564751890373,
+      "macro_recall": 0.4649599595642323
     }
   ],
   "summary": {
     "accuracy": {
-      "mean": 0.5776357235501204,
+      "mean": 0.578909333481572,
       "std": 0.0
     },
     "macro_f1": {
-      "mean": 0.4516806332342297,
+      "mean": 0.4498508995862133,
       "std": 0.0
     },
     "weighted_f1": {
-      "mean": 0.588149857685829,
+      "mean": 0.589596750335073,
       "std": 0.0
     },
     "macro_precision": {
-      "mean": 0.49759371243814504,
+      "mean": 0.49532564751890373,
       "std": 0.0
     },
     "macro_recall": {
-      "mean": 0.4668865400263051,
+      "mean": 0.4649599595642323,
       "std": 0.0
     }
   },
   "pooled": {
-    "accuracy": 0.5776357235501204,
-    "macro_f1": 0.4516806332342297,
-    "weighted_f1": 0.588149857685829,
-    "macro_precision": 0.49759371243814504,
-    "macro_recall": 0.4668865400263051
+    "accuracy": 0.578909333481572,
+    "macro_f1": 0.4498508995862133,
+    "weighted_f1": 0.589596750335073,
+    "macro_precision": 0.49532564751890373,
+    "macro_recall": 0.4649599595642323
   },
   "macro_over": "activities present in the test fold",
   "config": {
     "size": 100,
     "train_stride": 50,
-    "test_stride": 10,
+    "test_stride": 1,
     "label": "last",
     "train_frac": 0.6,
     "test_frac": 0.2,
@@ -84,19 +84,19 @@
     "verbose": false,
     "run_seed": 2,
     "train_windows": 4591,
-    "test_windows": 10794,
+    "test_windows": 107934,
     "train_until": "2009-12-12",
     "test_from": "2009-12-25"
   },
-  "train_seconds": 154.0,
+  "train_seconds": 314.6,
   "confidence": {
-    "mean_when_correct": 0.5038072466850281,
-    "mean_when_wrong": 0.39270997047424316,
-    "below_0.6": 0.8123031313692792,
-    "accuracy_at_or_above_0.6": 0.8079960513326753,
-    "wrong_caught_below_0.6": 0.9146742706733932,
-    "below_0.8": 0.9496016305354826,
-    "accuracy_at_or_above_0.8": 0.9136029411764706,
-    "wrong_caught_below_0.8": 0.9896907216494846
+    "mean_when_correct": 0.5056577324867249,
+    "mean_when_wrong": 0.39320802688598633,
+    "below_0.6": 0.8074564085459632,
+    "accuracy_at_or_above_0.6": 0.8061784236358387,
+    "wrong_caught_below_0.6": 0.9113751375137513,
+    "below_0.8": 0.9480145273963718,
+    "accuracy_at_or_above_0.8": 0.9215826055961505,
+    "wrong_caught_below_0.8": 0.9903190319031904
   }
 }

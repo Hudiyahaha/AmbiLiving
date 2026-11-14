@@ -75,8 +75,6 @@ def features(wh, model, args):
 def run_one(dataset: str, model: str, seed: int, args) -> dict:
     home = load_home(dataset)
     train, test, train_cut, test_cut, train_end = build(home, args)
-    if args.history and model not in models.CLASSICAL:
-        raise SystemExit("--history is only implemented for rf / hgb")
     classes = home.activities + ([OTHER] if args.label == "other" else [])
     cidx = {c: i for i, c in enumerate(classes)}
     y_tr = train.segments["activity"].map(cidx).to_numpy()
@@ -98,14 +96,21 @@ def run_one(dataset: str, model: str, seed: int, args) -> dict:
     t0 = time.time()
     X_tr, X_te = features(train, model, args), features(test, model, args)
     if args.history:
+        # Stage 1 is always the gradient-boosting model on handcrafted features;
+        # its prediction stream is turned into history features for stage 2.
         hi_tr = train.segments["hi"].to_numpy()
-        s_ends, s_lab = stream_predictions(home, hi_tr, y_tr, X_tr, train_end, args.size,
+        X1 = X_tr if model in models.CLASSICAL else handcrafted_features(train, preceding=False)[0]
+        s_ends, s_lab = stream_predictions(home, hi_tr, y_tr, X1, train_end, args.size,
                                            args.history_step, len(classes), args.label, seed)
         H_tr, _ = history_features(home, hi_tr, s_ends, s_lab, classes, args.min_run,
                                    ongoing=args.history_mode == "full")
         H_te, _ = history_features(home, test.segments["hi"].to_numpy(), s_ends, s_lab,
                                    classes, args.min_run, ongoing=args.history_mode == "full")
-        X_tr, X_te = np.hstack([X_tr, H_tr]), np.hstack([X_te, H_te])
+        if model in models.CLASSICAL:
+            X_tr, X_te = np.hstack([X_tr, H_tr]), np.hstack([X_te, H_te])
+        else:  # sequence models read history next to the window's context vector
+            X_tr.context = np.hstack([X_tr.context, H_tr]).astype(np.float32)
+            X_te.context = np.hstack([X_te.context, H_te]).astype(np.float32)
     if model in models.CLASSICAL:
         proba = classical.fit_predict_proba(model, X_tr, y_tr, X_te, seed, len(classes),
                                             args.balance)
@@ -122,6 +127,7 @@ def run_one(dataset: str, model: str, seed: int, args) -> dict:
            + (("+hist" if args.history_mode == "full" else "+histpast") if args.history else "")
            + ("+bal" if args.balance == "full" else "")
            + (f"+tr{args.train_stride}" if args.train_stride != 50 else "")
+           + (f"+te{args.test_stride}" if args.test_stride != 1 else "")
            + (f"+sm{args.smooth}" if args.smooth > 1 else ""))
     split = f"window{args.size}-{args.label}"
     out_dir = RESULTS_DIR / dataset / split / tag
@@ -162,7 +168,7 @@ def main(argv=None):
                    help="add the past-only context features (activity in the 10 min before)")
     p.add_argument("--balance", default="sqrt", choices=["sqrt", "full"])
     p.add_argument("--history", action="store_true",
-                   help="add routine-history features built from stage-1 predictions (rf/hgb)")
+                   help="add routine-history features built from stage-1 (hgb) predictions")
     p.add_argument("--history-mode", default="full", choices=["full", "past"],
                    help="full: include the activity in progress; past: completed activities only")
     p.add_argument("--history-step", type=int, default=10,
