@@ -93,6 +93,25 @@ def _fmt_min(m: float) -> str:
     return f"{m / 60:.1f} h" if m >= 90 else f"{max(m, 1):.0f} min"
 
 
+def _circular_span(hours: np.ndarray) -> tuple[float, float]:
+    """Central 80 % range of times of day, cut at the largest gap so that activities
+    spanning midnight (sleep) get e.g. 22:30-02:10 instead of 00:17-23:27."""
+    h = np.sort(np.asarray(hours) % 24)
+    gaps = np.diff(np.concatenate([h, [h[0] + 24]]))
+    cut = h[(int(np.argmax(gaps)) + 1) % len(h)]  # first time after the largest gap
+    shifted = (h - cut) % 24
+    return (float((np.quantile(shifted, 0.1) + cut) % 24),
+            float((np.quantile(shifted, 0.9) + cut) % 24))
+
+
+def _overnight(first: np.ndarray) -> bool:
+    """True for activities whose first occurrence of the calendar day is usually the tail
+    of the previous night (>= 20 % before 04:00). For them 'not yet today' and 'first time
+    today' are undefined, so missed and drift checks skip them."""
+    f = first[np.isfinite(first)]
+    return len(f) > 0 and float((f < 4.0).mean()) >= 0.2
+
+
 def _states(eps: pd.DataFrame, day: pd.Timestamp) -> list[str]:
     """Activity going on at the middle of each half-hour bin (latest started wins)."""
     st = eps["start"].to_numpy()
@@ -138,7 +157,7 @@ class RoutineModel:
             h = np.bincount((hrs[m] * BINS / 24).astype(int) % BINS, minlength=BINS).astype(float)
             sm = sum(np.roll(h, s) * w for s, w in zip(range(-6, 7), k))
             self.dens[act] = (sm + 0.05) / (sm + 0.05).sum()
-            self.span[act] = (float(np.quantile(hrs[m], 0.1)), float(np.quantile(hrs[m], 0.9)))
+            self.span[act] = _circular_span(hrs[m])
 
         # daily counts and first occurrences
         counts, first = {}, {}
@@ -148,7 +167,8 @@ class RoutineModel:
                 first.setdefault(act, np.full(n, np.inf))[i] = _hour(grp["start"].iloc[:1])[0]
         self.mu = {a: c / n for a, c in counts.items()}
         self.p_day = {a: float(np.isfinite(f).mean()) for a, f in first.items()}
-        self.first = {a: f for a, f in first.items() if self.p_day[a] >= DAILY}
+        self.first = {a: f for a, f in first.items()
+                      if self.p_day[a] >= DAILY and not _overnight(f)}
         # S(h) = P(first occurrence later than h, or none): a smoothed skip probability plus
         # a normal curve over the usual first-occurrence time. A parametric tail keeps the
         # score continuous, so "a little later than ever seen" and "hours later / not at
@@ -398,7 +418,7 @@ class RoutineDrift:
                 counts.setdefault(act, np.zeros(n))[i] = len(grp)
         self.stats = {}
         for act, f in first.items():
-            if np.isfinite(f).mean() < DAILY:
+            if np.isfinite(f).mean() < DAILY or _overnight(f):
                 continue
             ff = f[np.isfinite(f)]
             self.stats[act] = (float(ff.mean()), max(float(ff.std()), 0.25),

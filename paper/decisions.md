@@ -126,10 +126,26 @@ Template:
 2. *E12, Aruba first run*: that lateness score used one threshold across activities, so often-skipped activities (Leave_Home absent on 23 % of observation days) used up the budget and **no** missed meal was detected. Replaced by the per-activity first-occurrence survival score above. At the same time the work was reframed as routine deviation (order, timeline and drift added; the autoencoder became a stand-alone generic baseline instead of sharing the absence rules).
 
 3. *E13, Milan rerun*: the empirical first-occurrence survival is a step function; leave-one-day-out calibration (12 days) and monitoring (13 days) then have different score ceilings, so "later than on any observed day" exceeded the threshold on monitoring days but only tied it during calibration — the budget was not respected. Replaced by a smooth survival (smoothed skip probability + normal curve over the usual first-occurrence time). A code bug found at the same time (`-log(S).max()` instead of `-log(S.min())`) had made `missed` fire on nothing.
+4. *E14, first full run*: overnight activities (≥ 20 % of first occurrences before 04:00, e.g. Sleeping) are excluded from `missed` and `drift`, since "not yet today" is undefined for them; usual-time ranges in explanations are computed circularly.
 
 **Why**: Calibrating by alerts per normal day fixes the false-alert rate in caregiver terms and makes all aspects comparable.
 
+## D15 — Alert routing: notify now, daily summary, or insight  (19 Nov 2026, written before measuring it)
+**Decision**: Detection (D14) and *what reaches the caregiver* are separate. Every routine deviation is routed by what it may mean for the resident's safety:
+
+| Tier | Delivered as | Deviations |
+|---|---|---|
+| **Notify now** | push notification | `inactivity` (possible fall); `prolonged` bathroom or Bed_to_Toilet visit (possible fall/illness); `unusual_time` between 00:00 and 05:00 for leaving home or cooking (wandering, stove left on); `missed` medication |
+| **Daily summary** | one message each evening, at most 3 items, most surprising first | other `missed`, other `prolonged`, other `unusual_time`, `frequency` (e.g. night-time toilet trips), `drift` |
+| **Insight** | shown on the dashboard only | `timeline`, `unusual_order` |
+
+- **Cool-down**: the same deviation type for the same activity notifies at most once per 2 hours; `drift` is reported once per run of consecutive days.
+- **Summary cap**: the daily summary keeps 3 deviations, by priority `missed` > `prolonged` > `frequency` > `drift` > `unusual_time`, earliest first within a type (scores of different aspects are on different scales, so they are not compared directly).
+- **No confidence floor yet**: the activity streams do not carry per-episode recognition confidence; a floor (E8) is left for the live system.
+**Metrics** (operating point, all three streams): notifications per clean day; summary items per clean day; share of injected *urgent* deviations (inactivity, prolonged bathroom visits, night-time leaving/cooking) that trigger a **notification**, and notification delay; share of injected *non-urgent* deviations (missed meal, night toilet trips, drift) that appear in **some** tier.
+**Why**: At 0.1 alerts per normal day per aspect, detection raises ~1.3 alerts per day on Aruba — too many to push. Caregivers act on urgency, and most aspects (a different afternoon, a slow drift) are informative, not urgent. Routing keeps detection sensitive while limiting interruptions.
+**Implemented in**: `ml/har/alerts.py`, evaluation in `python -m har.alerts`.
+
 ## Open decisions (make these before the matching ROADMAP step)
 
-- **D15 — Alert rules**: which deviations notify a caregiver at once vs only appear in the daily summary, confidence floor, cool-down (ROADMAP 3.1)
 - **D16 — Backend technology** (ROADMAP 4.1)

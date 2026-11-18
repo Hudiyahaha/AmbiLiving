@@ -1,0 +1,87 @@
+vid,day_kind,kind,activity,time,score,title,observed,expected,reason,severity
+2,prolonged,outlier,Bed_to_Toilet,2011-04-29 03:03:24.129419549,0.094,Unusual bed to toilet,Bed to toilet at 01:45 (78 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+29,prolonged,outlier,Bed_to_Toilet,2011-05-01 04:26:32.231086265,0.112,Unusual bed to toilet,Bed to toilet at 02:47 (1.6 h),(none: generic outlier score),Reconstruction error 0.11 above the threshold.,low
+30,unusual_time,outlier,Enter_Home,2011-05-01 01:24:46.827019303,0.099,Unusual enter home,Enter home at 01:24 (1 min),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+32,unusual_time,outlier,Enter_Home,2011-05-01 01:15:51.215126397,0.101,Unusual enter home,Enter home at 01:15 (1 min),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+52,prolonged,outlier,Bed_to_Toilet,2011-05-03 04:53:32.589139629,0.108,Unusual bed to toilet,Bed to toilet at 03:31 (82 min),(none: generic outlier score),Reconstruction error 0.11 above the threshold.,low
+56,unusual_time,outlier,Enter_Home,2011-05-03 02:21:28.836594806,0.089,Unusual enter home,Enter home at 02:21 (1 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+66,unusual_time,outlier,Enter_Home,2011-05-04 02:18:28.265647958,0.088,Unusual enter home,Enter home at 02:18 (1 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+104,unusual_time,outlier,Enter_Home,2011-05-07 02:27:09.207084193,0.086,Unusual enter home,Enter home at 02:27 (1 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+115,prolonged,outlier,Bed_to_Toilet,2011-05-08 04:46:10.908915925,0.103,Unusual bed to toilet,Bed to toilet at 03:31 (75 min),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+117,prolonged,outlier,Bed_to_Toilet,2011-05-08 04:52:33.981594847,0.107,Unusual bed to toilet,Bed to toilet at 03:31 (81 min),(none: generic outlier score),Reconstruction error 0.11 above the threshold.,low
+118,unusual_time,outlier,Enter_Home,2011-05-08 02:04:47.266928198,0.091,Unusual enter home,Enter home at 02:04 (1 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+165,prolonged,outlier,Bed_to_Toilet,2011-05-12 05:33:31.209522702,0.119,Unusual bed to toilet,Bed to toilet at 03:39 (1.9 h),(none: generic outlier score),Reconstruction error 0.12 above the threshold.,low
+166,prolonged,outlier,Bed_to_Toilet,2011-05-12 05:31:52.102197835,0.119,Unusual bed to toilet,Bed to toilet at 03:39 (1.9 h),(none: generic outlier score),Reconstruction error 0.12 above the threshold.,low
+167,prolonged,outlier,Bed_to_Toilet,2011-05-12 05:36:21.429134674,0.12,Unusual bed to toilet,Bed to toilet at 03:39 (2.0 h),(none: generic outlier score),Reconstruction error 0.12 above the threshold.,low
+178,prolonged,outlier,Bed_to_Toilet,2011-05-13 05:25:24.245031120,0.11,Unusual bed to toilet,Bed to toilet at 04:01 (83 min),(none: generic outlier score),Reconstruction error 0.11 above the threshold.,low
+179,unusual_time,outlier,Enter_Home,2011-05-13 02:02:46.290298258,0.091,Unusual enter home,Enter home at 02:02 (1 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+180,unusual_time,outlier,Enter_Home,2011-05-13 02:24:14.325678361,0.087,Unusual enter home,Enter home at 02:24 (1 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+187,prolonged,outlier,Bed_to_Toilet,2011-05-14 06:06:24.452002706,0.113,Unusual bed to toilet,Bed to toilet at 04:40 (86 min),(none: generic outlier score),Reconstruction error 0.11 above the threshold.,low
+188,prolonged,outlier,Bed_to_Toilet,2011-05-14 06:09:07.794601372,0.114,Unusual bed to toilet,Bed to toilet at 04:40 (89 min),(none: generic outlier score),Reconstruction error 0.11 above the threshold.,low
+189,prolonged,outlier,Bed_to_Toilet,2011-05-14 06:32:52.173985898,0.119,Unusual bed to toilet,Bed to toilet at 04:40 (1.9 h),(none: generic outlier score),Reconstruction error 0.12 above the threshold.,low
+202,prolonged,outlier,Bed_to_Toilet,2011-05-15 06:09:32.894438900,0.118,Unusual bed to toilet,Bed to toilet at 04:22 (1.8 h),(none: generic outlier score),Reconstruction error 0.12 above the threshold.,low
+215,prolonged,outlier,Work,2011-05-16 21:00:44.243346430,0.088,Unusual work,Work at 20:49 (11 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+216,prolonged,outlier,Work,2011-05-16 21:43:02.134952533,0.086,Unusual work,Work at 21:32 (11 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+217,prolonged,outlier,Work,2011-05-16 21:02:21.814141218,0.088,Unusual work,Work at 20:51 (11 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+245,unusual_time,outlier,Enter_Home,2011-05-18 02:00:54.643341255,0.091,Unusual enter home,Enter home at 02:00 (1 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+258,unusual_time,outlier,Enter_Home,2011-05-19 02:27:07.246273090,0.087,Unusual enter home,Enter home at 02:27 (1 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+268,unusual_time,outlier,Enter_Home,2011-05-20 02:02:12.874751654,0.091,Unusual enter home,Enter home at 02:02 (1 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+269,unusual_time,outlier,Enter_Home,2011-05-20 02:04:25.101088384,0.091,Unusual enter home,Enter home at 02:04 (1 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+277,prolonged,outlier,Wash_Dishes,2011-05-21 11:49:58.621532189,0.102,Unusual wash dishes,Wash dishes at 09:54 (1.9 h),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+281,unusual_time,outlier,Enter_Home,2011-05-21 01:28:51.889740791,0.097,Unusual enter home,Enter home at 01:28 (1 min),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+290,prolonged,outlier,Bed_to_Toilet,2011-05-22 03:47:21.945445756,0.097,Unusual bed to toilet,Bed to toilet at 02:34 (73 min),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+292,prolonged,outlier,Bed_to_Toilet,2011-05-22 03:46:25.256742213,0.097,Unusual bed to toilet,Bed to toilet at 02:34 (72 min),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+302,clean,outlier,Enter_Home,2011-05-23 14:45:26.637603000,0.088,Unusual enter home,Enter home at 14:44 (1 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+302,clean,outlier,Enter_Home,2011-05-23 14:45:26.637603000,0.096,Unusual enter home,Enter home at 14:44 (1 min),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+303,missed,outlier,Enter_Home,2011-05-23 14:45:26.637603000,0.088,Unusual enter home,Enter home at 14:44 (1 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+303,missed,outlier,Enter_Home,2011-05-23 14:45:26.637603000,0.096,Unusual enter home,Enter home at 14:44 (1 min),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+305,prolonged,outlier,Enter_Home,2011-05-23 14:45:26.637603000,0.088,Unusual enter home,Enter home at 14:44 (1 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+305,prolonged,outlier,Enter_Home,2011-05-23 14:45:26.637603000,0.096,Unusual enter home,Enter home at 14:44 (1 min),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+306,prolonged,outlier,Wash_Dishes,2011-05-23 11:49:15.318711981,0.104,Unusual wash dishes,Wash dishes at 09:42 (2.1 h),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+307,unusual_time,outlier,Enter_Home,2011-05-23 14:41:38.191451000,0.092,Unusual enter home,Enter home at 14:41 (1 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+307,unusual_time,outlier,Enter_Home,2011-05-23 14:45:26.637603000,0.095,Unusual enter home,Enter home at 14:44 (1 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+307,unusual_time,outlier,Enter_Home,2011-05-23 14:45:26.637603000,0.102,Unusual enter home,Enter home at 14:44 (1 min),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+308,unusual_time,outlier,Enter_Home,2011-05-23 14:45:26.637603000,0.088,Unusual enter home,Enter home at 14:44 (1 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+308,unusual_time,outlier,Enter_Home,2011-05-23 14:45:26.637603000,0.096,Unusual enter home,Enter home at 14:44 (1 min),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+309,unusual_time,outlier,Enter_Home,2011-05-23 14:45:26.637603000,0.088,Unusual enter home,Enter home at 14:44 (1 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+309,unusual_time,outlier,Enter_Home,2011-05-23 14:45:26.637603000,0.096,Unusual enter home,Enter home at 14:44 (1 min),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+310,night_frequency,outlier,Enter_Home,2011-05-23 14:45:26.637603000,0.088,Unusual enter home,Enter home at 14:44 (1 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+310,night_frequency,outlier,Enter_Home,2011-05-23 14:45:26.637603000,0.096,Unusual enter home,Enter home at 14:44 (1 min),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+311,night_frequency,outlier,Enter_Home,2011-05-23 03:30:38.868249733,0.091,Unusual enter home,Enter home at 03:26 (4 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+311,night_frequency,outlier,Enter_Home,2011-05-23 14:41:38.191451000,0.092,Unusual enter home,Enter home at 14:41 (1 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+311,night_frequency,outlier,Enter_Home,2011-05-23 14:45:26.637603000,0.095,Unusual enter home,Enter home at 14:44 (1 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+311,night_frequency,outlier,Enter_Home,2011-05-23 14:45:26.637603000,0.102,Unusual enter home,Enter home at 14:44 (1 min),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+312,night_frequency,outlier,Enter_Home,2011-05-23 14:45:26.637603000,0.088,Unusual enter home,Enter home at 14:44 (1 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+312,night_frequency,outlier,Enter_Home,2011-05-23 14:45:26.637603000,0.096,Unusual enter home,Enter home at 14:44 (1 min),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+334,night_frequency,outlier,Housekeeping,2011-05-25 05:16:59.340109392,0.103,Unusual housekeeping,Housekeeping at 05:13 (3 min),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+354,prolonged,outlier,Bed_to_Toilet,2011-05-27 06:04:59.620703293,0.113,Unusual bed to toilet,Bed to toilet at 04:41 (84 min),(none: generic outlier score),Reconstruction error 0.11 above the threshold.,low
+355,prolonged,outlier,Bed_to_Toilet,2011-05-27 05:44:30.307793930,0.098,Unusual bed to toilet,Bed to toilet at 04:41 (63 min),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+357,unusual_time,outlier,Enter_Home,2011-05-27 01:20:20.397656399,0.099,Unusual enter home,Enter home at 01:20 (1 min),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+359,unusual_time,outlier,Enter_Home,2011-05-27 01:07:14.344474327,0.104,Unusual enter home,Enter home at 01:06 (1 min),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+379,prolonged,outlier,Bed_to_Toilet,2011-05-29 05:04:41.487441320,0.113,Unusual bed to toilet,Bed to toilet at 03:33 (1.5 h),(none: generic outlier score),Reconstruction error 0.11 above the threshold.,low
+381,prolonged,outlier,Bed_to_Toilet,2011-05-29 05:09:08.019975255,0.116,Unusual bed to toilet,Bed to toilet at 03:33 (1.6 h),(none: generic outlier score),Reconstruction error 0.12 above the threshold.,low
+389,prolonged,outlier,Bed_to_Toilet,2011-05-30 04:13:43.484708212,0.111,Unusual bed to toilet,Bed to toilet at 02:32 (1.7 h),(none: generic outlier score),Reconstruction error 0.11 above the threshold.,low
+390,prolonged,outlier,Bed_to_Toilet,2011-05-30 03:40:38.459643520,0.094,Unusual bed to toilet,Bed to toilet at 02:32 (68 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+391,prolonged,outlier,Bed_to_Toilet,2011-05-30 04:23:04.605768399,0.113,Unusual bed to toilet,Bed to toilet at 02:32 (1.8 h),(none: generic outlier score),Reconstruction error 0.11 above the threshold.,low
+400,prolonged,outlier,Bed_to_Toilet,2011-05-31 05:46:35.114785342,0.118,Unusual bed to toilet,Bed to toilet at 04:02 (1.7 h),(none: generic outlier score),Reconstruction error 0.12 above the threshold.,low
+429,prolonged,outlier,Bed_to_Toilet,2011-06-02 05:03:25.258422591,0.099,Unusual bed to toilet,Bed to toilet at 03:56 (67 min),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+430,prolonged,outlier,Bed_to_Toilet,2011-06-02 05:32:35.937280542,0.116,Unusual bed to toilet,Bed to toilet at 03:56 (1.6 h),(none: generic outlier score),Reconstruction error 0.12 above the threshold.,low
+444,prolonged,outlier,Bed_to_Toilet,2011-06-03 03:54:16.414110720,0.094,Unusual bed to toilet,Bed to toilet at 02:50 (64 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+467,prolonged,outlier,Bed_to_Toilet,2011-06-05 05:05:30.010869778,0.107,Unusual bed to toilet,Bed to toilet at 03:46 (79 min),(none: generic outlier score),Reconstruction error 0.11 above the threshold.,low
+468,prolonged,outlier,Bed_to_Toilet,2011-06-05 05:19:39.132266757,0.115,Unusual bed to toilet,Bed to toilet at 03:46 (1.6 h),(none: generic outlier score),Reconstruction error 0.12 above the threshold.,low
+470,unusual_time,outlier,Enter_Home,2011-06-05 01:18:45.979264663,0.1,Unusual enter home,Enter home at 01:18 (1 min),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+471,unusual_time,outlier,Enter_Home,2011-06-05 02:02:14.791361217,0.091,Unusual enter home,Enter home at 02:02 (1 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+472,unusual_time,outlier,Enter_Home,2011-06-05 01:42:03.373417984,0.095,Unusual enter home,Enter home at 01:41 (1 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+481,prolonged,outlier,Bed_to_Toilet,2011-06-06 02:52:34.825300726,0.091,Unusual bed to toilet,Bed to toilet at 01:38 (74 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+482,prolonged,outlier,Bed_to_Toilet,2011-06-06 03:33:59.608873732,0.103,Unusual bed to toilet,Bed to toilet at 01:38 (1.9 h),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+486,unusual_time,outlier,Enter_Home,2011-06-06 01:39:33.771038271,0.094,Unusual enter home,Enter home at 01:39 (1 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+496,prolonged,outlier,Bed_to_Toilet,2011-06-07 04:51:10.947325318,0.105,Unusual bed to toilet,Bed to toilet at 03:33 (77 min),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+497,prolonged,outlier,Bed_to_Toilet,2011-06-07 05:19:12.839390497,0.118,Unusual bed to toilet,Bed to toilet at 03:33 (1.8 h),(none: generic outlier score),Reconstruction error 0.12 above the threshold.,low
+507,prolonged,outlier,Bed_to_Toilet,2011-06-08 04:38:26.371307120,0.114,Unusual bed to toilet,Bed to toilet at 02:53 (1.7 h),(none: generic outlier score),Reconstruction error 0.11 above the threshold.,low
+508,prolonged,outlier,Bed_to_Toilet,2011-06-08 04:21:05.576073554,0.108,Unusual bed to toilet,Bed to toilet at 02:53 (88 min),(none: generic outlier score),Reconstruction error 0.11 above the threshold.,low
+510,unusual_time,outlier,Enter_Home,2011-06-08 01:57:46.292076253,0.092,Unusual enter home,Enter home at 01:57 (1 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+514,night_frequency,outlier,Enter_Home,2011-06-08 03:31:21.050694095,0.089,Unusual enter home,Enter home at 03:27 (4 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+521,prolonged,outlier,Bed_to_Toilet,2011-06-09 03:27:28.378194263,0.099,Unusual bed to toilet,Bed to toilet at 02:04 (83 min),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+522,prolonged,outlier,Bed_to_Toilet,2011-06-09 04:03:19.911601774,0.11,Unusual bed to toilet,Bed to toilet at 02:04 (2.0 h),(none: generic outlier score),Reconstruction error 0.11 above the threshold.,low
+525,unusual_time,outlier,Enter_Home,2011-06-09 02:21:14.882466261,0.088,Unusual enter home,Enter home at 02:21 (1 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+535,unusual_time,outlier,Enter_Home,2011-06-10 01:55:26.812621877,0.091,Unusual enter home,Enter home at 01:55 (1 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low

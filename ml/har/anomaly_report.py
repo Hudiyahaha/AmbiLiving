@@ -63,7 +63,8 @@ def main():
                                   f"{100 * v['accuracy']:.1f}" for k, v in S["har"].items()) + ".",
                       ""]
         lines += ["| Activity stream | Detector | " + " | ".join(TYPE[t] for t in TYPES)
-                  + " | Mean detection | F1 | False alerts / day | Drift runs detected |",
+                  + " | Mean detection | F1 | False alerts / day | Drift runs detected "
+                  "(drift false alerts / day) |",
                   "|---|---|" + "---|" * (len(TYPES) + 4)]
         for key, r in S["results"].items():
             stream, method = key.split("/")
@@ -73,7 +74,8 @@ def main():
                                       for t in TYPES)
                          + f" | **{pct(r['mean_detection_rate'])}** | {pct(r['macro_f1'])} | "
                          f"{r['false_alerts_per_day']:.2f} | "
-                         + (f"{dr['detected']} / {dr['runs']}" if dr else "–") + " |")
+                         + (f"{dr['detected']} / {dr['runs']} ({dr['false_alerts_per_day']:.2f})"
+                            if dr else "–") + " |")
         lines += ["", "Median detection delay, routine model (minutes after the deviation "
                   "starts; drift: days into the run):", "",
                   "| Activity stream | " + " | ".join(TYPE[t] for t in TYPES) + " | Drift |",
@@ -95,6 +97,19 @@ def main():
                       + ", ".join(f"{k} {v}" for k, v in c.items()) + "."]
         sw = pd.read_csv(RESULTS_DIR / ds / "anomaly" / "sweep.csv")
         st = sw[sw["method"] == "routine"]
+        lines += ["", "Matched false-alert comparison: the generic baseline at its most sensitive "
+                  "setting (budget 1) vs the routine model's best detection at no more false "
+                  "alerts per clean day.", "",
+                  "| Activity stream | Generic AD: detection @ false alerts/day | "
+                  "Routine model: detection @ false alerts/day |", "|---|---|---|"]
+        for s_ in sw["stream"].unique():
+            g = sw[(sw["stream"] == s_) & (sw["method"] == "generic")].sort_values("budget").iloc[-1]
+            r = st[(st["stream"] == s_) & (st["false_alerts_per_day"] <= g["false_alerts_per_day"])]
+            rt = (f"{100 * r['mean_detection_rate'].max():.0f} % @ "
+                  f"{r.loc[r['mean_detection_rate'].idxmax(), 'false_alerts_per_day']:.2f}"
+                  if len(r) else "no setting this quiet")
+            lines.append(f"| {SHORT[s_]} | {100 * g['mean_detection_rate']:.0f} % @ "
+                         f"{g['false_alerts_per_day']:.2f} | {rt} |")
         lines += ["", "Budget sweep, routine model: mean detection % / false alerts per clean day.",
                   "", "| Budget per aspect | " + " | ".join(SHORT[s] for s in st["stream"].unique())
                   + " |", "|---|" + "---|" * st["stream"].nunique()]

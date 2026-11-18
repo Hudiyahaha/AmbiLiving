@@ -1,0 +1,39 @@
+vid,day_kind,kind,activity,time,score,title,observed,expected,reason,severity
+9,night_frequency,outlier,Bed_to_Toilet,2011-04-29 05:16:33.186290760,0.1,Unusual bed to toilet,Bed to toilet at 05:11 (5 min),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+29,prolonged,outlier,Bed_to_Toilet,2011-05-01 04:26:32.231086265,0.099,Unusual bed to toilet,Bed to toilet at 02:47 (1.6 h),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+52,prolonged,outlier,Bed_to_Toilet,2011-05-03 04:53:32.589139629,0.096,Unusual bed to toilet,Bed to toilet at 03:31 (82 min),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+117,prolonged,outlier,Bed_to_Toilet,2011-05-08 04:52:33.981594847,0.096,Unusual bed to toilet,Bed to toilet at 03:31 (81 min),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+165,prolonged,outlier,Bed_to_Toilet,2011-05-12 05:33:31.209522702,0.104,Unusual bed to toilet,Bed to toilet at 03:39 (1.9 h),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+166,prolonged,outlier,Bed_to_Toilet,2011-05-12 05:31:52.102197835,0.104,Unusual bed to toilet,Bed to toilet at 03:39 (1.9 h),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+167,prolonged,outlier,Bed_to_Toilet,2011-05-12 05:36:21.429134674,0.105,Unusual bed to toilet,Bed to toilet at 03:39 (2.0 h),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+178,prolonged,outlier,Bed_to_Toilet,2011-05-13 05:25:24.245031120,0.099,Unusual bed to toilet,Bed to toilet at 04:01 (83 min),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+187,prolonged,outlier,Bed_to_Toilet,2011-05-14 06:06:24.452002706,0.101,Unusual bed to toilet,Bed to toilet at 04:40 (86 min),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+188,prolonged,outlier,Bed_to_Toilet,2011-05-14 06:09:07.794601372,0.102,Unusual bed to toilet,Bed to toilet at 04:40 (89 min),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+189,prolonged,outlier,Bed_to_Toilet,2011-05-14 06:32:52.173985898,0.105,Unusual bed to toilet,Bed to toilet at 04:40 (1.9 h),(none: generic outlier score),Reconstruction error 0.11 above the threshold.,low
+202,prolonged,outlier,Bed_to_Toilet,2011-05-15 06:09:32.894438900,0.104,Unusual bed to toilet,Bed to toilet at 04:22 (1.8 h),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+302,clean,outlier,Wash_Dishes,2011-05-23 18:24:47.765218000,0.097,Unusual wash dishes,Wash dishes at 18:23 (2 min),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+303,missed,outlier,Wash_Dishes,2011-05-23 18:24:47.765218000,0.097,Unusual wash dishes,Wash dishes at 18:23 (2 min),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+304,prolonged,outlier,Wash_Dishes,2011-05-23 19:54:00.490376946,0.102,Unusual wash dishes,Wash dishes at 19:52 (2 min),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+305,prolonged,outlier,Wash_Dishes,2011-05-23 20:23:58.932591536,0.103,Unusual wash dishes,Wash dishes at 20:22 (2 min),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+306,prolonged,outlier,Wash_Dishes,2011-05-23 20:17:37.397193981,0.103,Unusual wash dishes,Wash dishes at 20:15 (2 min),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+307,unusual_time,outlier,Wash_Dishes,2011-05-23 18:24:47.765218000,0.097,Unusual wash dishes,Wash dishes at 18:23 (2 min),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+308,unusual_time,outlier,Wash_Dishes,2011-05-23 18:24:47.765218000,0.097,Unusual wash dishes,Wash dishes at 18:23 (2 min),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+309,unusual_time,outlier,Wash_Dishes,2011-05-23 18:24:47.765218000,0.097,Unusual wash dishes,Wash dishes at 18:23 (2 min),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+310,night_frequency,outlier,Wash_Dishes,2011-05-23 18:24:47.765218000,0.097,Unusual wash dishes,Wash dishes at 18:23 (2 min),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+311,night_frequency,outlier,Wash_Dishes,2011-05-23 18:24:47.765218000,0.097,Unusual wash dishes,Wash dishes at 18:23 (2 min),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+312,night_frequency,outlier,Wash_Dishes,2011-05-23 18:24:47.765218000,0.097,Unusual wash dishes,Wash dishes at 18:23 (2 min),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+354,prolonged,outlier,Bed_to_Toilet,2011-05-27 06:04:59.620703293,0.101,Unusual bed to toilet,Bed to toilet at 04:41 (84 min),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+379,prolonged,outlier,Bed_to_Toilet,2011-05-29 05:04:41.487441320,0.101,Unusual bed to toilet,Bed to toilet at 03:33 (1.5 h),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+381,prolonged,outlier,Bed_to_Toilet,2011-05-29 05:09:08.019975255,0.101,Unusual bed to toilet,Bed to toilet at 03:33 (1.6 h),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+389,prolonged,outlier,Bed_to_Toilet,2011-05-30 04:13:43.484708212,0.098,Unusual bed to toilet,Bed to toilet at 02:32 (1.7 h),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+391,prolonged,outlier,Bed_to_Toilet,2011-05-30 04:23:04.605768399,0.099,Unusual bed to toilet,Bed to toilet at 02:32 (1.8 h),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+400,prolonged,outlier,Bed_to_Toilet,2011-05-31 05:46:35.114785342,0.103,Unusual bed to toilet,Bed to toilet at 04:02 (1.7 h),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+430,prolonged,outlier,Bed_to_Toilet,2011-06-02 05:32:35.937280542,0.102,Unusual bed to toilet,Bed to toilet at 03:56 (1.6 h),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+467,prolonged,outlier,Bed_to_Toilet,2011-06-05 05:05:30.010869778,0.096,Unusual bed to toilet,Bed to toilet at 03:46 (79 min),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+468,prolonged,outlier,Bed_to_Toilet,2011-06-05 05:19:39.132266757,0.101,Unusual bed to toilet,Bed to toilet at 03:46 (1.6 h),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+482,prolonged,outlier,Bed_to_Toilet,2011-06-06 03:33:59.608873732,0.095,Unusual bed to toilet,Bed to toilet at 01:38 (1.9 h),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+496,prolonged,outlier,Bed_to_Toilet,2011-06-07 04:51:10.947325318,0.094,Unusual bed to toilet,Bed to toilet at 03:33 (77 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+497,prolonged,outlier,Bed_to_Toilet,2011-06-07 05:19:12.839390497,0.103,Unusual bed to toilet,Bed to toilet at 03:33 (1.8 h),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+507,prolonged,outlier,Bed_to_Toilet,2011-06-08 04:38:26.371307120,0.1,Unusual bed to toilet,Bed to toilet at 02:53 (1.7 h),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+508,prolonged,outlier,Bed_to_Toilet,2011-06-08 04:21:05.576073554,0.095,Unusual bed to toilet,Bed to toilet at 02:53 (88 min),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+522,prolonged,outlier,Bed_to_Toilet,2011-06-09 04:03:19.911601774,0.098,Unusual bed to toilet,Bed to toilet at 02:04 (2.0 h),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low

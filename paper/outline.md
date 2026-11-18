@@ -17,8 +17,8 @@
 | RQ1 | With known activity boundaries, does the choice of model (classical features vs BiLSTM / CNN / Transformer) matter more or less than the input representation? | ✅ | C1, C2 |
 | RQ2 | Can routine context — what happened just before and earlier in the day, taken only from the model's own predictions — separate activities that fire the same sensors (Enter/Leave_Home, Wash_Dishes vs Meal_Preparation)? | ✅ | C3, C4 |
 | RQ3 | How well does recognition work live, without activity boundaries, compared with the state of the art under the same protocol? | ✅ | C5, C6 |
-| RQ4 | How can deviations from a resident's own routine be detected and evaluated when the data has no deviation labels — and how does a routine model compare with generic anomaly detection? | 🟡 | C7 |
-| RQ5 | How much do recognition errors degrade routine-deviation detection and false-alert rates in the full pipeline? | 🟡 | C8 |
+| RQ4 | How can deviations from a resident's own routine be detected and evaluated when the data has no deviation labels — and how does a routine model compare with generic anomaly detection? | ✅ | C7 |
+| RQ5 | How much do recognition errors degrade routine-deviation detection and false-alert rates in the full pipeline? | ✅ | C8 |
 
 RQ5 is likely the most novel contribution: most papers evaluate recognition and routine/anomaly
 detection separately, on ground-truth activities. It also directly tests the "interdependence"
@@ -56,11 +56,11 @@ and "significant consequences" characteristics claimed in the defense (CCP slide
 | 4.7 | System | Replay → live inference → routine deviation → alert → dashboard; dataset-agnostic types | ROADMAP 4.x | 🟡 dashboard exists |
 | 5.1 | Results: segment HAR | Tables T1, T2; per-class; context/history ablation | C1–C4 | ✅ |
 | 5.2 | Results: live HAR | Table T3 vs LastAct / DeepCASAS; per-class | C5, C6 | 🟡 per-class table missing (ROADMAP 1.2) |
-| 5.3 | Results: routine deviation | Per deviation type and drift; routine model vs generic AD; error propagation across 3 activity streams | C7, C8 | 🟡 run in progress |
+| 5.3 | Results: routine deviation | Per deviation type and drift; routine model vs generic AD; error propagation across 3 activity streams | C7, C8 | ✅ drafted (`draft/05-results-routine.md`) |
 | 5.4 | Results: system | False alerts / day, detection delay, latency | C9 | ⬜ |
-| 6 | Discussion | Representation > architecture; why history fails on the temporal split (drift); Milan holiday test period; rare classes; history feedback loop; limits of synthetic deviations; Milan holiday = real routine change | claims.md "limitations" | 🟡 |
+| 6 | Discussion (drafted) | Representation > architecture; why history fails on the temporal split (drift); Milan holiday test period; rare classes; history feedback loop; limits of synthetic deviations; Milan holiday = real routine change | claims.md "limitations" | 🟡 |
 | 7 | Ethics & limitations | Privacy, consent, data minimisation, human oversight; two homes, one resident each; no real deviation labels | Defense slide 23 | 🟡 |
-| 8 | Conclusion | | | ⬜ |
+| 8 | Conclusion | Lessons and next steps | — | ✅ drafted |
 
 ## Planned figures and tables
 
@@ -71,10 +71,10 @@ and "significant consequences" characteristics claimed in the defense (CCP slide
 | F3 | Confusion matrices, best segment model, both homes (before/after history) | `ml/results/<home>/cv/hgb+ctx*/confusion.png` | ✅ |
 | F4 | Live-window confusion matrix, BiLSTM, both homes | `ml/results/<home>/window100-last/experiments/bilstm+s*/confusion.png` | ✅ |
 | F5 | Label drift: annotations per month for selected activities, both homes | `ml/results/label_drift.png` (`python -m har.label_drift`) | ✅ |
-| F6 | Detection vs false alerts per day, per stream and detector | `ml/results/anomaly_curve.png` | 🟡 |
+| F6 | Detection vs false alerts per day, per stream and detector | `ml/results/anomaly_curve.png` | ✅ |
 | F7 | Dashboard screenshot (monitoring page with a live alert) | ROADMAP 4.4 | ⬜ |
 | T1 | All models × homes × {cv, temporal}, macro-F1 & accuracy | `ml/results/summary.md` | ✅ |
 | T2 | Context / history ablation with per-class F1 for the hard classes | `summary.md`, `per_class.csv` | ✅ |
 | T3 | Live window comparison vs LastAct / DeepCASAS | `ml/results/windows.md` | ✅ |
-| T4 | Routine-deviation detection per type, stream and detector | `ml/results/anomaly.md` | 🟡 |
+| T4 | Routine-deviation detection per type, stream and detector | `ml/results/anomaly.md` | ✅ |
 | T5 | System latency / false alerts per day | ROADMAP 3.2, 5.2 | ⬜ |
