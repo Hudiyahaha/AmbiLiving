@@ -5,6 +5,7 @@ from __future__ import annotations
 import copy
 import random
 import time
+from dataclasses import dataclass
 
 import numpy as np
 import torch
@@ -102,6 +103,43 @@ def fit_predict(
 ) -> np.ndarray:
     """Train on ``train`` and predict ``test``: class ids, or with
     ``return_proba=True`` softmax probabilities of shape (len(test), n_classes)."""
+    trained = fit(name, train, y_train, n_classes, seed, max_epochs, patience, batch_size, lr,
+                  verbose)
+    proba = predict_proba(trained, test)
+    return proba if return_proba else proba.argmax(1)
+
+
+@dataclass
+class Trained:
+    """A fitted sequence model plus the context normalisation it was trained with."""
+
+    model: nn.Module
+    ctx_mean: np.ndarray
+    ctx_std: np.ndarray
+
+
+def predict_proba(trained: Trained, data: SequenceData, chunk: int = 50_000) -> np.ndarray:
+    """Softmax probabilities for ``data``, computed in chunks to bound memory."""
+    out = []
+    for s in range(0, len(data.tokens), chunk):
+        part = data.subset(np.arange(s, min(s + chunk, len(data.tokens))))
+        out.append(_predict_proba(trained.model, _tensors(part, trained.ctx_mean, trained.ctx_std)))
+    return np.concatenate(out) if out else np.zeros((0, 0), np.float32)
+
+
+def fit(
+    name: str,
+    train: SequenceData,
+    y_train: np.ndarray,
+    n_classes: int,
+    seed: int,
+    max_epochs: int = 40,
+    patience: int = 6,
+    batch_size: int = 64,
+    lr: float = 1e-3,
+    verbose: bool = True,
+) -> Trained:
+    """Train one sequence model with early stopping on 10 % of ``train``."""
     set_seed(seed)
 
     # Hold out 10% of the training fold for early stopping (never the test fold).
@@ -114,7 +152,7 @@ def fit_predict(
 
     ctx_mean = tr.context.mean(0)
     ctx_std = tr.context.std(0) + 1e-6
-    tr_t, va_t, te_t = (_tensors(d, ctx_mean, ctx_std) for d in (tr, va, test))
+    tr_t, va_t = (_tensors(d, ctx_mean, ctx_std) for d in (tr, va))
     y_tr_t = torch.from_numpy(y_tr)
 
     model = sequence.build(name, len(train.vocab), train.cont.shape[-1],
@@ -150,5 +188,4 @@ def fit_predict(
                 break
 
     model.load_state_dict(best_state)
-    proba = _predict_proba(model, te_t)
-    return proba if return_proba else proba.argmax(1)
+    return Trained(model, ctx_mean, ctx_std)

@@ -369,12 +369,12 @@ export function LandingPage() {
                       <span>Unusual stillness</span>
                     </div>
                     <p>
-                      No motion in living areas since 2:40 AM — longer than her
-                      typical pattern.
+                      No motion in living areas since 2:40 AM — longer than the
+                      usual pattern.
                     </p>
                   </div>
                 </div>
-                <h3>Anomaly alerts</h3>
+                <h3>Routine-deviation alerts</h3>
                 <p>
                   A nudge only when a routine breaks — a missed meal, long
                   stillness, or a 3am wander.

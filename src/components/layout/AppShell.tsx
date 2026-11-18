@@ -10,7 +10,7 @@ const pageTitles: Record<string, string> = {
   "/dashboard": "Dashboard",
   "/monitoring": "Monitoring",
   "/activities": "Activity History",
-  "/anomalies": "Anomalies",
+  "/anomalies": "Routine deviations",
   "/homes": "Homes",
   "/settings": "Settings",
 };
