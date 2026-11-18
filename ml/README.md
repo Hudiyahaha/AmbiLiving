@@ -90,7 +90,7 @@ so it still works live. Results are stored as `<model>+ctx`.
 Aruba, Gradient Boosting, 5-fold: Enter_Home F1 0.81 → 0.98, Leave_Home 0.80 → 0.98,
 macro-F1 0.845 → 0.876.
 
-### Activity history (`--history`, rf / hgb only)
+### Activity history (`--history`)
 
 Wash_Dishes fires the same kitchen sensors (M015/M017/M018/M019) in nearly the same
 proportions as Meal_Preparation, so with segment features alone every model recognises
@@ -146,6 +146,15 @@ long activities (Sleeping) keep their full sensor footprint.
 **Headline metric: macro-F1.** Accuracy is dominated by Relax / Meal_Preparation /
 Kitchen_Activity; macro-F1 weights every activity equally, so it exposes failures on
 rare or overlapping classes (Wash_Dishes, Respirate, Eve_Meds).
+
+## Sliding windows on the raw event stream (`har.run_windows`)
+
+The live product has no activity boundaries, so `har.run_windows` classifies the last
+100 events at every event, with a chronological 60/20/20 day split (LastAct protocol).
+`--history` adds routine-history features built from a first model's own predictions.
+Final numbers and the model choice are in `results/windows.md`.
+
+    python -m har.run_windows --dataset all --model bilstm --seeds 1 2 3
 
 ## Results (5-fold CV, macro-F1 %)
 
