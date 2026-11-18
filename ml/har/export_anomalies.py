@@ -19,9 +19,14 @@ import json
 
 import pandas as pd
 
+from .alerts import SEVERITY, route
 from .data import DATASETS
 from .export_dashboard import OUT_DIR
 from .run import RESULTS_DIR
+
+
+DELIVERY = {"notify": "Sent as notification", "summary": "In evening summary",
+            "insight": "Dashboard only"}
 
 
 def export(home: str, stream: str, method: str) -> None:
@@ -39,6 +44,11 @@ def export(home: str, stream: str, method: str) -> None:
     # A block ending at midnight belongs to the day it describes.
     alerts["time"] = alerts["time"].where(alerts["time"] != alerts["time"].dt.normalize(),
                                           alerts["time"] - pd.Timedelta(minutes=1))
+    alerts = route(alerts)
+    # Repeats suppressed by the notification cool-down, and identical alerts from duplicate
+    # annotation segments, are the same event: list each once.
+    alerts = alerts[~((alerts["tier"] == "notify") & ~alerts["delivered"])]
+    alerts = alerts.drop_duplicates(["title", "observed", "time"])
     alerts = alerts.sort_values("time", ascending=False)
     summary = json.loads((d / "summary.json").read_text())
     days = pd.read_csv(d / "injections.csv")
@@ -51,9 +61,11 @@ def export(home: str, stream: str, method: str) -> None:
             "observed": a.observed,
             "expected": a.expected,
             "reason": a.reason,
-            "severity": a.severity,
+            # Severity follows the delivery tier (decision D15).
+            "severity": SEVERITY[a.tier],
             "timestamp": f"{a.time:%a %d %b %Y} · {a.time:%H:%M}",
-            "requiresAttention": a.severity != "low",
+            "requiresAttention": a.tier == "notify",
+            "delivery": DELIVERY[a.tier] if a.delivered else "Dashboard only",
             "kind": a.kind,
         })
     r = summary["results"][f"{stream}/{method}"]

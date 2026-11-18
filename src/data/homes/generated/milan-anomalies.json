@@ -16,6 +16,7 @@
       "severity": "low",
       "timestamp": "Wed 06 Jan 2010 \u00b7 23:59",
       "requiresAttention": false,
+      "delivery": "Dashboard only",
       "kind": "timeline"
     },
     {
@@ -26,7 +27,8 @@
       "reason": "A daily part of the routine has not happened by the time it nearly always has.",
       "severity": "medium",
       "timestamp": "Wed 06 Jan 2010 \u00b7 19:00",
-      "requiresAttention": true,
+      "requiresAttention": false,
+      "delivery": "In evening summary",
       "kind": "missed"
     },
     {
@@ -37,7 +39,8 @@
       "reason": "A daily part of the routine has not happened by the time it nearly always has.",
       "severity": "medium",
       "timestamp": "Tue 05 Jan 2010 \u00b7 15:30",
-      "requiresAttention": true,
+      "requiresAttention": false,
+      "delivery": "In evening summary",
       "kind": "missed"
     },
     {
@@ -49,6 +52,7 @@
       "severity": "high",
       "timestamp": "Tue 05 Jan 2010 \u00b7 09:09",
       "requiresAttention": true,
+      "delivery": "Sent as notification",
       "kind": "prolonged"
     },
     {
@@ -60,6 +64,7 @@
       "severity": "low",
       "timestamp": "Tue 05 Jan 2010 \u00b7 06:00",
       "requiresAttention": false,
+      "delivery": "Dashboard only",
       "kind": "timeline"
     },
     {
@@ -70,7 +75,8 @@
       "reason": "A sudden change in how often something happens (such as night-time toilet trips) can signal infection or restlessness.",
       "severity": "medium",
       "timestamp": "Mon 04 Jan 2010 \u00b7 18:35",
-      "requiresAttention": true,
+      "requiresAttention": false,
+      "delivery": "In evening summary",
       "kind": "frequency"
     },
     {
@@ -81,7 +87,8 @@
       "reason": "A daily part of the routine has not happened by the time it nearly always has.",
       "severity": "medium",
       "timestamp": "Mon 04 Jan 2010 \u00b7 15:30",
-      "requiresAttention": true,
+      "requiresAttention": false,
+      "delivery": "In evening summary",
       "kind": "missed"
     },
     {
@@ -93,6 +100,7 @@
       "severity": "low",
       "timestamp": "Mon 04 Jan 2010 \u00b7 13:32",
       "requiresAttention": false,
+      "delivery": "Dashboard only",
       "kind": "unusual_order"
     },
     {
@@ -104,6 +112,7 @@
       "severity": "low",
       "timestamp": "Mon 04 Jan 2010 \u00b7 06:00",
       "requiresAttention": false,
+      "delivery": "Dashboard only",
       "kind": "timeline"
     },
     {
@@ -114,7 +123,8 @@
       "reason": "A sudden change in how often something happens (such as night-time toilet trips) can signal infection or restlessness.",
       "severity": "medium",
       "timestamp": "Sun 03 Jan 2010 \u00b7 19:53",
-      "requiresAttention": true,
+      "requiresAttention": false,
+      "delivery": "In evening summary",
       "kind": "frequency"
     },
     {
@@ -126,6 +136,7 @@
       "severity": "low",
       "timestamp": "Sun 03 Jan 2010 \u00b7 04:00",
       "requiresAttention": false,
+      "delivery": "Dashboard only",
       "kind": "timeline"
     },
     {
@@ -136,7 +147,8 @@
       "reason": "A daily part of the routine has not happened by the time it nearly always has.",
       "severity": "medium",
       "timestamp": "Sat 02 Jan 2010 \u00b7 09:25",
-      "requiresAttention": true,
+      "requiresAttention": false,
+      "delivery": "In evening summary",
       "kind": "missed"
     },
     {
@@ -148,6 +160,7 @@
       "severity": "high",
       "timestamp": "Sat 02 Jan 2010 \u00b7 08:13",
       "requiresAttention": true,
+      "delivery": "Sent as notification",
       "kind": "inactivity"
     },
     {
@@ -159,6 +172,7 @@
       "severity": "low",
       "timestamp": "Sat 02 Jan 2010 \u00b7 06:00",
       "requiresAttention": false,
+      "delivery": "Dashboard only",
       "kind": "timeline"
     },
     {
@@ -170,6 +184,7 @@
       "severity": "high",
       "timestamp": "Fri 01 Jan 2010 \u00b7 18:49",
       "requiresAttention": true,
+      "delivery": "Sent as notification",
       "kind": "inactivity"
     },
     {
@@ -180,7 +195,8 @@
       "reason": "A daily part of the routine has not happened by the time it nearly always has.",
       "severity": "medium",
       "timestamp": "Fri 01 Jan 2010 \u00b7 15:30",
-      "requiresAttention": true,
+      "requiresAttention": false,
+      "delivery": "In evening summary",
       "kind": "missed"
     },
     {
@@ -189,9 +205,10 @@
       "observed": "Desk activity 5 times today (by 14:18)",
       "expected": "Usually about 1.1 per day",
       "reason": "A sudden change in how often something happens can signal a change in health.",
-      "severity": "low",
+      "severity": "medium",
       "timestamp": "Fri 01 Jan 2010 \u00b7 14:18",
       "requiresAttention": false,
+      "delivery": "In evening summary",
       "kind": "frequency"
     },
     {
@@ -203,6 +220,7 @@
       "severity": "high",
       "timestamp": "Fri 01 Jan 2010 \u00b7 08:25",
       "requiresAttention": true,
+      "delivery": "Sent as notification",
       "kind": "prolonged"
     },
     {
@@ -213,7 +231,8 @@
       "reason": "A sudden change in how often something happens (such as night-time toilet trips) can signal infection or restlessness.",
       "severity": "medium",
       "timestamp": "Thu 31 Dec 2009 \u00b7 15:18",
-      "requiresAttention": true,
+      "requiresAttention": false,
+      "delivery": "In evening summary",
       "kind": "frequency"
     },
     {
@@ -225,6 +244,7 @@
       "severity": "low",
       "timestamp": "Thu 31 Dec 2009 \u00b7 10:07",
       "requiresAttention": false,
+      "delivery": "Dashboard only",
       "kind": "unusual_order"
     },
     {
@@ -235,7 +255,8 @@
       "reason": "A daily part of the routine has not happened by the time it nearly always has.",
       "severity": "medium",
       "timestamp": "Thu 31 Dec 2009 \u00b7 09:25",
-      "requiresAttention": true,
+      "requiresAttention": false,
+      "delivery": "In evening summary",
       "kind": "missed"
     },
     {
@@ -247,6 +268,7 @@
       "severity": "low",
       "timestamp": "Thu 31 Dec 2009 \u00b7 04:00",
       "requiresAttention": false,
+      "delivery": "Dashboard only",
       "kind": "timeline"
     },
     {
@@ -258,6 +280,7 @@
       "severity": "low",
       "timestamp": "Wed 30 Dec 2009 \u00b7 18:21",
       "requiresAttention": false,
+      "delivery": "Dashboard only",
       "kind": "unusual_order"
     },
     {
@@ -268,7 +291,8 @@
       "reason": "A daily part of the routine has not happened by the time it nearly always has.",
       "severity": "medium",
       "timestamp": "Wed 30 Dec 2009 \u00b7 09:25",
-      "requiresAttention": true,
+      "requiresAttention": false,
+      "delivery": "In evening summary",
       "kind": "missed"
     },
     {
@@ -279,7 +303,8 @@
       "reason": "A daily part of the routine has not happened by the time it nearly always has.",
       "severity": "medium",
       "timestamp": "Tue 29 Dec 2009 \u00b7 09:25",
-      "requiresAttention": true,
+      "requiresAttention": false,
+      "delivery": "In evening summary",
       "kind": "missed"
     },
     {
@@ -288,9 +313,10 @@
       "observed": "Sleep 7 times today (by 23:52)",
       "expected": "Usually about 1.9 per day",
       "reason": "A sudden change in how often something happens can signal a change in health.",
-      "severity": "low",
+      "severity": "medium",
       "timestamp": "Mon 28 Dec 2009 \u00b7 23:52",
       "requiresAttention": false,
+      "delivery": "In evening summary",
       "kind": "frequency"
     },
     {
@@ -301,7 +327,8 @@
       "reason": "A daily part of the routine has not happened by the time it nearly always has.",
       "severity": "medium",
       "timestamp": "Mon 28 Dec 2009 \u00b7 09:25",
-      "requiresAttention": true,
+      "requiresAttention": false,
+      "delivery": "In evening summary",
       "kind": "missed"
     },
     {
@@ -313,6 +340,7 @@
       "severity": "low",
       "timestamp": "Mon 28 Dec 2009 \u00b7 02:00",
       "requiresAttention": false,
+      "delivery": "Dashboard only",
       "kind": "timeline"
     },
     {
@@ -324,6 +352,7 @@
       "severity": "low",
       "timestamp": "Sun 27 Dec 2009 \u00b7 04:00",
       "requiresAttention": false,
+      "delivery": "Dashboard only",
       "kind": "timeline"
     },
     {
@@ -335,6 +364,7 @@
       "severity": "low",
       "timestamp": "Sat 26 Dec 2009 \u00b7 06:00",
       "requiresAttention": false,
+      "delivery": "Dashboard only",
       "kind": "timeline"
     },
     {
@@ -345,7 +375,8 @@
       "reason": "This resident rarely does this at this hour \u2014 night-time activity can be a sign of confusion.",
       "severity": "medium",
       "timestamp": "Sat 26 Dec 2009 \u00b7 03:48",
-      "requiresAttention": true,
+      "requiresAttention": false,
+      "delivery": "In evening summary",
       "kind": "unusual_time"
     },
     {
@@ -357,6 +388,7 @@
       "severity": "low",
       "timestamp": "Fri 25 Dec 2009 \u00b7 02:00",
       "requiresAttention": false,
+      "delivery": "Dashboard only",
       "kind": "timeline"
     }
   ]

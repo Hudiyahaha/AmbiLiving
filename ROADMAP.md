@@ -68,8 +68,8 @@ Decide it before building models, and record the decision in [paper/decisions.md
 
 | # | Step | Done when | Paper |
 |---|---|---|---|
-| ☐ 3.1 | **Alert rules:** which anomalies alert, severity mapping, a confidence floor (from 1.3), de-duplication / cool-down so one event does not alert repeatedly | Rules written in `paper/decisions.md` and implemented in one module | §4.6 |
-| ☐ 3.2 | **Measure false-alert rate** (alerts per normal day) and **detection delay** (time from injected anomaly to alert) on the Phase 2 protocol | Table archived with the anomaly results | Evaluation plan: "Alerts: false-alert rate + response time"; §5.4 |
+| ☑ 3.1 | **Alert rules:** which anomalies alert, severity mapping, a confidence floor (from 1.3), de-duplication / cool-down so one event does not alert repeatedly | Rules written in `paper/decisions.md` and implemented in one module | §4.6 |
+| ☑ 3.2 | **Measure false-alert rate** (alerts per normal day) and **detection delay** (time from injected anomaly to alert) on the Phase 2 protocol | Table archived with the anomaly results | Evaluation plan: "Alerts: false-alert rate + response time"; §5.4 |
 
 ## Phase 4 — Integration
 
