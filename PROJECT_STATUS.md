@@ -3,7 +3,7 @@
 **Project** F26-108-AmbiLiving — *Ambient-sensor human activity recognition and caregiver monitoring*
 **Team** Aleeza Azhar · Hudiya e Zehra · Ibrahim Babar
 **Supervisor** Dr. Labiba Fahad
-**Status date** 18 November 2026 (previous update: 10 October 2026)
+**Status date** 19 November 2026 (previous updates: 18 November, 10 October 2026)
 
 ---
 
@@ -32,7 +32,7 @@ Ambient sensors → HAR model → recognised activity → routine deviation → 
 | Track | Location | State |
 |---|---|---|
 | **Research / ML** — activity recognition | [ml/](ml/) | **Done for both settings.** All five models run on both homes under both protocols, with 3-seed repeats. Known-boundary (segment) results are ~92–95 macro-F1; the live sliding-window setting is finished and a final model chosen (BiLSTM). |
-| **Research / ML** — anomaly detection | — | **Not started.** The largest remaining piece of work. |
+| **Research / ML** — routine deviation + alerts | [ml/har/anomaly.py](ml/har/anomaly.py), [alerts.py](ml/har/alerts.py) | **Done and evaluated.** Per-resident routine model (8 aspects incl. weekly drift) vs a generic anomaly-detection baseline, on three activity streams; alert routing (notify / evening summary / dashboard). Results: [anomaly.md](ml/results/anomaly.md), [alerts.md](ml/results/alerts.md). |
 | **Product / PoC** — caregiver dashboard | [src/](src/) | All six screens built. Monitoring and activity history now play back **one real CASAS day per home** with model predictions. Anomalies are still sample data. No backend. Typecheck clean. |
 | **Poster** | `poster/` | Draft rendered to `AmbiLiving-Poster.pdf`. **Not yet committed.** Concept/architecture only, no results. |
 
@@ -144,9 +144,10 @@ do not duplicate it here). In short:
 
 0. Housekeeping — commit `poster/`, refresh `ml/README.md` tables, real README, tag results.
 1. Freeze activity recognition — save trained models, per-class window table, confidence analysis.
-2. **Anomaly detection** — taxonomy, evaluation protocol (synthetic injection), baseline and
-   learned routine models, error-propagation experiment, caregiver-readable explanations.
-3. Alerts — rules, false-alert rate, detection delay.
+2. ~~Routine-deviation detection~~ — done (D12–D14, E11–E14).
+3. ~~Alert routing~~ — done (D15, E15).
+   Open follow-ups: a fairer missed-meal injection (remove all kitchen movement, not only
+   annotated cooking), better live recognition of Leave_Home / cooking / meds.
 4. Integration — backend, live replay + inference, dashboard on real API data, researcher view.
 5. System evaluation & deployment — end-to-end tests, latency, both-homes fairness, deploy.
 6. Write-up — paper (tracked in [paper/](paper/)), final report, poster, demo.
@@ -157,12 +158,12 @@ do not duplicate it here). In short:
 
 | Risk | Current reality |
 |---|---|
-| **Anomaly detection unstarted** | It is in the project title's promise ("routine deviation → caregiver insight") and nothing exists yet. Highest schedule risk. |
+| **Live pipeline weak on Aruba** | Routine deviations are found 87–92 % of the time with annotated or segment-recognised activities, but only 16 % with the live BiLSTM on Aruba (63 % on Milan): live recognition errors corrupt the learned routine. Biggest technical risk now; frame it as a finding and as the next research step. |
 | **Live accuracy is much lower** | ~42–46 macro-F1 in the window setting vs ~92 with known boundaries. Competitive with the literature, but a reviewer will see the gap; frame it with the LastAct comparison. |
 | **Rare / overlapping classes** | Solved with known boundaries (history), not in the window setting. Respirate has 6 instances in total — say so rather than hiding it in a macro average. |
 | **Label drift** | Aruba stops annotating Wash_Dishes from Mar 2011; Milan's test days are a holiday period (validation ~46 vs test ~38 for GB). Temporal per-class scores are noisy. |
 | **History feedback loop** | History features use the model's own earlier predictions; one wrong recognition can affect the next in a live system. |
-| **Research → product gap** | Narrower than in October (real data in the dashboard), but the app still uses annotation boundaries, sample anomalies and no backend. |
+| **Research → product gap** | Narrower: the dashboard shows a real day and routine deviations found on real days, with how each was delivered. Still no backend or live replay (ROADMAP phase 4). |
 | **Uncommitted work** | `poster/` is not on `main`. |
 
 ---
