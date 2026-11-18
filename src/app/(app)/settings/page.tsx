@@ -34,7 +34,7 @@ export default function SettingsPage() {
         <ul className="mt-4 space-y-3">
           <li>
             <label className="flex cursor-pointer items-center justify-between gap-3 text-sm">
-              <span>Notify on anomalies requiring attention</span>
+              <span>Notify on routine deviations needing attention</span>
               <input
                 type="checkbox"
                 checked={settings.notifyAnomalies}
