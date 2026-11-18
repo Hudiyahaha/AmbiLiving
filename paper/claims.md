@@ -38,10 +38,10 @@ Source for every number below: `ml/results/anomaly.md` (generated from `ml/resul
 
 | ID | Claim (hypothesis until supported) | Evidence | Status |
 |---|---|---|---|
-| C7 | A per-resident routine model detects injected routine deviations far better than a generic anomaly detector at a similar false-alert rate; the generic detector cannot detect absence-type deviations (missed activity, inactivity) at all | `anomaly.md`, routine vs generic rows | 🟡 Milan annotations stream: routine 0.88 vs generic 0.19 mean detection; generic missed 0.00, inactivity 0.00 (E13) — Aruba and live stream pending |
-| C7b | Gradual drift (breakfast 20 min later per day) is detected within a week by the rolling routine comparison | `anomaly.md`, drift column | 🟡 Milan 0 / 2 runs (13 observation days too few); Aruba pending |
-| C8 | Deviation detection degrades from annotations → segment predictions → live window predictions; quantify by type (expected: absence- and timing-based types survive, activity-specific ones such as missed cooking suffer most) | `anomaly.md`, three stream rows | ⬜ pending live stream |
-| C8b | On Milan, many alerts on clean monitoring days are genuine routine changes (Christmas holiday: e.g. no leaving home by 14:00 on 6 of 13 days) | `ml/results/milan/anomaly/alerts_gt_routine.csv` | 🟡 seen in E13; recount on final run |
+| C7 | A per-resident routine model detects injected routine deviations far better than a generic anomaly detector: 87–92 % (Aruba) and 88 % (Milan) vs 4–19 % with annotated or segment activities; at matched false alerts 56 vs 18 %, 55 vs 25 % (Aruba), 88 vs 38 % (Milan), 63 vs 22 % (Milan live). The generic detector finds 0 % of missed meals and inactivity on every stream | `ml/results/anomaly.md` (T4 + matched table) | ✅ |
+| C7b | Gradual drift (breakfast +20 min/day) is detected in 2 / 7 Aruba runs (median 5 days) on annotation and segment streams, 0 / 7 live; Milan 0 / 2 (1 / 2 live). Clean Aruba weeks raise 0.69–0.90 drift alerts per day (May–June vs March–April) | `anomaly.md` drift column | 🟡 weak result; report as such |
+| C8 | Detection degrades little from annotations to segment GB (92 → 87 % Aruba, 88 → 88 % Milan) and sharply to the live BiLSTM on Aruba (→ 16 %), less on Milan (→ 63 %). Mechanisms: wrong learned quiet-spell norm when Leave_Home is missed (188 vs 51 min for Relax; inactivity 93 → 11 %), and unannotated kitchen movement predicted as cooking (missed 98 → 5 %) | `anomaly.md`; diagnosis in experiment log E14 | ✅ |
+| C8b | On Milan's holiday monitoring days, clean-day alerts include genuine routine changes: cooking late on 5 days, no leaving home by mid-afternoon on 3, 10 timeline changes | `ml/results/milan/anomaly/alerts_gt_routine.csv` | ✅ |
 | C9 | The live pipeline runs within an acceptable per-event latency and false-alert rate per day | ROADMAP 3.2, 5.2 | ⬜ |
 
 ## Limitations to state (not claims, but must appear)

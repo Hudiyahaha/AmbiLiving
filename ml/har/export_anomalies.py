@@ -27,7 +27,19 @@ from .run import RESULTS_DIR
 def export(home: str, stream: str, method: str) -> None:
     d = RESULTS_DIR / home / "anomaly"
     alerts = pd.read_csv(d / f"alerts_{stream}_{method}.csv", parse_dates=["time"])
-    alerts = alerts[alerts["day_kind"] == "clean"].sort_values("time", ascending=False)
+    alerts = alerts[alerts["day_kind"] == "clean"].sort_values("time")
+    # A rolling 7-day drift check re-fires every day while the shift lasts; a caregiver
+    # needs it once per run of consecutive days.
+    is_drift = alerts["kind"] == "drift"
+    day = alerts["time"].dt.normalize()
+    key = alerts["title"]
+    prev_day = day.groupby(key).shift()
+    repeat = is_drift & ((day - prev_day) == pd.Timedelta(days=1))
+    alerts = alerts[~repeat]
+    # A block ending at midnight belongs to the day it describes.
+    alerts["time"] = alerts["time"].where(alerts["time"] != alerts["time"].dt.normalize(),
+                                          alerts["time"] - pd.Timedelta(minutes=1))
+    alerts = alerts.sort_values("time", ascending=False)
     summary = json.loads((d / "summary.json").read_text())
     days = pd.read_csv(d / "injections.csv")
     clean = pd.to_datetime(days.loc[days["kind"] == "clean", "day"])

@@ -149,7 +149,9 @@ point). Varying this budget from 0.02 to 1 traces detection against false alerts
 
 **Explanations.** Every alert becomes a record with a title, what was observed, what is usual
 *for this resident*, a plain-language reason and a severity, with no raw scores (spec §11);
-for example *"Bed to toilet is taking much longer than usual — 1.6 h, started 02:10 — usually
-1 min to 4 min."*
+for example (Aruba, segment recogniser) *"Bed to toilet is taking much longer than usual —
+78 min, started 01:45 — usually 1 min to 4 min"* and *"No meal preparation yet today — no meal
+preparation by 09:55 — happens on 100 % of days, usually first around 07:07."*
 
-<!-- TODO: replace the example with a real alert from ml/results/<home>/anomaly/alerts_*.csv. -->
+<!-- Examples from ml/results/aruba/anomaly/alerts_seg_routine.csv. -->
+

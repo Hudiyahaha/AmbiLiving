@@ -1,0 +1,604 @@
+vid,day,kind,target,start,end,seq,pos,note
+0,2011-04-29,clean,,,,-1,0,
+1,2011-04-29,missed,Meal_Preparation,2011-04-29 04:37:16.672370000,2011-04-30 00:00:00.000000000,-1,0,removed 8 Meal_Preparation episodes (950 events)
+2,2011-04-29,prolonged,Bed_to_Toilet,2011-04-29 01:45:00.789311000,2011-04-29 03:03:24.129419549,-1,0,Bed_to_Toilet at 01:45 stretched from 2 to 78 min
+3,2011-04-29,prolonged,Bed_to_Toilet,2011-04-29 01:45:00.789311000,2011-04-29 02:49:40.401936170,-1,0,Bed_to_Toilet at 01:45 stretched from 2 to 65 min
+4,2011-04-29,prolonged,Meal_Preparation,2011-04-29 04:37:16.672370000,2011-04-29 06:31:40.438782120,-1,0,Meal_Preparation at 04:37 stretched from 6 to 114 min
+5,2011-04-29,unusual_time,Leave_Home,2011-04-29 03:07:23.610774666,2011-04-29 03:07:31.619026666,-1,0,Leave_Home moved from 13:00 to 03:07
+6,2011-04-29,unusual_time,Leave_Home,2011-04-29 02:54:09.674892464,2011-04-29 02:54:17.683144464,-1,0,Leave_Home moved from 13:00 to 02:54
+7,2011-04-29,unusual_time,Leave_Home,2011-04-29 03:51:19.754781931,2011-04-29 03:51:27.763033931,-1,0,Leave_Home moved from 13:00 to 03:51
+8,2011-04-29,night_frequency,Bed_to_Toilet,2011-04-29 00:31:45.393372361,2011-04-29 04:42:56.079518687,-1,0,4 extra Bed_to_Toilet trips between 00:31 and 04:42
+9,2011-04-29,night_frequency,Bed_to_Toilet,2011-04-29 00:33:50.206532557,2011-04-29 05:16:33.186290760,-1,0,4 extra Bed_to_Toilet trips between 00:33 and 05:16
+10,2011-04-29,night_frequency,Bed_to_Toilet,2011-04-29 02:15:15.212593485,2011-04-29 04:45:57.230805025,-1,0,4 extra Bed_to_Toilet trips between 02:15 and 04:45
+11,2011-04-30,clean,,,,-1,0,
+12,2011-04-30,missed,Meal_Preparation,2011-04-30 04:24:28.289663000,2011-05-01 00:00:00.000000000,-1,0,removed 5 Meal_Preparation episodes (751 events)
+13,2011-04-30,prolonged,Meal_Preparation,2011-04-30 18:07:59.380215000,2011-04-30 19:37:36.452734311,-1,0,Meal_Preparation at 18:07 stretched from 17 to 90 min
+14,2011-04-30,prolonged,Meal_Preparation,2011-04-30 05:28:25.720034000,2011-04-30 06:36:36.625684100,-1,0,Meal_Preparation at 05:28 stretched from 2 to 68 min
+15,2011-04-30,prolonged,Meal_Preparation,2011-04-30 18:07:59.380215000,2011-04-30 19:25:46.285489958,-1,0,Meal_Preparation at 18:07 stretched from 17 to 78 min
+16,2011-04-30,unusual_time,Leave_Home,2011-04-30 04:28:03.383449839,2011-04-30 04:28:07.929690839,-1,0,Leave_Home moved from 07:03 to 04:28
+17,2011-04-30,unusual_time,Leave_Home,2011-04-30 03:54:26.747745523,2011-04-30 03:54:31.293986523,-1,0,Leave_Home moved from 07:03 to 03:54
+18,2011-04-30,unusual_time,Meal_Preparation,2011-04-30 03:03:08.367270459,2011-04-30 03:10:53.311831459,-1,0,Meal_Preparation moved from 12:26 to 03:03
+19,2011-04-30,night_frequency,Bed_to_Toilet,2011-04-30 03:09:50.000823932,2011-04-30 04:46:04.677909825,-1,0,4 extra Bed_to_Toilet trips between 03:09 and 04:46
+20,2011-04-30,night_frequency,Bed_to_Toilet,2011-04-30 00:35:46.318769391,2011-04-30 05:09:19.428853638,-1,0,4 extra Bed_to_Toilet trips between 00:35 and 05:09
+21,2011-04-30,night_frequency,Bed_to_Toilet,2011-04-30 01:00:51.287751456,2011-04-30 03:04:49.712372998,-1,0,4 extra Bed_to_Toilet trips between 01:00 and 03:04
+22,2011-04-30,inactivity,,2011-04-30 13:53:17.618858933,2011-04-30 17:07:04.829198770,-1,0,"no events 13:53-17:07 (194 min, 520 events removed)"
+23,2011-04-30,inactivity,,2011-04-30 13:54:31.596399623,2011-04-30 17:25:31.709801341,-1,0,"no events 13:54-17:25 (211 min, 520 events removed)"
+24,2011-04-30,inactivity,,2011-04-30 14:08:18.708911891,2011-04-30 17:58:50.242795080,-1,0,"no events 14:08-17:58 (231 min, 480 events removed)"
+25,2011-05-01,clean,,,,-1,0,
+26,2011-05-01,missed,Meal_Preparation,2011-05-01 02:50:22.395151000,2011-05-02 00:00:00.000000000,-1,0,removed 9 Meal_Preparation episodes (1312 events)
+27,2011-05-01,prolonged,Meal_Preparation,2011-05-01 02:50:22.395151000,2011-05-01 04:11:12.947686022,-1,0,Meal_Preparation at 02:50 stretched from 9 to 81 min
+28,2011-05-01,prolonged,Meal_Preparation,2011-05-01 02:59:52.789838000,2011-05-01 04:49:38.124824285,-1,0,Meal_Preparation at 02:59 stretched from 2 to 110 min
+29,2011-05-01,prolonged,Bed_to_Toilet,2011-05-01 02:47:38.464391000,2011-05-01 04:26:32.231086265,-1,0,Bed_to_Toilet at 02:47 stretched from 2 to 99 min
+30,2011-05-01,unusual_time,Leave_Home,2011-05-01 01:24:42.283848303,2011-05-01 01:24:46.827019303,-1,0,Leave_Home moved from 14:23 to 01:24
+31,2011-05-01,unusual_time,Leave_Home,2011-05-01 03:51:15.431123903,2011-05-01 03:51:19.776011903,-1,0,Leave_Home moved from 14:38 to 03:51
+32,2011-05-01,unusual_time,Leave_Home,2011-05-01 01:15:46.671955397,2011-05-01 01:15:51.215126397,-1,0,Leave_Home moved from 14:23 to 01:15
+33,2011-05-01,night_frequency,Bed_to_Toilet,2011-05-01 00:38:12.735963646,2011-05-01 04:23:47.964221869,-1,0,4 extra Bed_to_Toilet trips between 00:38 and 04:23
+34,2011-05-01,night_frequency,Bed_to_Toilet,2011-05-01 01:50:34.967368785,2011-05-01 04:20:51.959424428,-1,0,4 extra Bed_to_Toilet trips between 01:50 and 04:20
+35,2011-05-01,night_frequency,Bed_to_Toilet,2011-05-01 01:23:49.702805338,2011-05-01 03:03:53.393026784,-1,0,4 extra Bed_to_Toilet trips between 01:23 and 03:03
+36,2011-05-01,inactivity,,2011-05-01 09:49:58.973199519,2011-05-01 12:21:04.320844148,-1,0,"no events 09:49-12:21 (151 min, 1430 events removed)"
+37,2011-05-01,inactivity,,2011-05-01 11:22:51.812018531,2011-05-01 14:09:18.458209907,-1,0,"no events 11:22-14:09 (166 min, 1284 events removed)"
+38,2011-05-01,inactivity,,2011-05-01 09:17:00.577326249,2011-05-01 12:13:38.582300099,-1,0,"no events 09:17-12:13 (177 min, 1807 events removed)"
+39,2011-05-02,clean,,,,-1,0,
+40,2011-05-02,missed,Meal_Preparation,2011-05-02 05:48:36.252103000,2011-05-03 00:00:00.000000000,-1,0,removed 11 Meal_Preparation episodes (3129 events)
+41,2011-05-02,prolonged,Meal_Preparation,2011-05-02 18:15:35.630420000,2011-05-02 20:34:28.301496690,-1,0,Meal_Preparation at 18:15 stretched from 44 to 139 min
+42,2011-05-02,prolonged,Meal_Preparation,2011-05-02 07:25:51.348492000,2011-05-02 08:30:57.033980019,-1,0,Meal_Preparation at 07:25 stretched from 4 to 65 min
+43,2011-05-02,prolonged,Meal_Preparation,2011-05-02 07:25:51.348492000,2011-05-02 08:56:09.586096659,-1,0,Meal_Preparation at 07:25 stretched from 4 to 90 min
+44,2011-05-02,unusual_time,Meal_Preparation,2011-05-02 03:08:58.381649160,2011-05-02 03:17:03.970841160,-1,0,Meal_Preparation moved from 17:35 to 03:08
+45,2011-05-02,unusual_time,Meal_Preparation,2011-05-02 03:30:37.235835123,2011-05-02 03:34:56.666882123,-1,0,Meal_Preparation moved from 15:31 to 03:30
+46,2011-05-02,unusual_time,Leave_Home,2011-05-02 04:29:53.717038438,2011-05-02 04:30:00.725325438,-1,0,Leave_Home moved from 09:55 to 04:29
+47,2011-05-02,night_frequency,Bed_to_Toilet,2011-05-02 01:46:59.582345464,2011-05-02 04:26:18.955659650,-1,0,4 extra Bed_to_Toilet trips between 01:46 and 04:26
+48,2011-05-02,night_frequency,Bed_to_Toilet,2011-05-02 01:21:28.483472679,2011-05-02 03:38:08.980978063,-1,0,4 extra Bed_to_Toilet trips between 01:21 and 03:38
+49,2011-05-02,night_frequency,Bed_to_Toilet,2011-05-02 02:16:30.459800858,2011-05-02 05:14:13.400937141,-1,0,4 extra Bed_to_Toilet trips between 02:16 and 05:14
+50,2011-05-03,clean,,,,-1,0,
+51,2011-05-03,missed,Meal_Preparation,2011-05-03 05:21:01.554909000,2011-05-04 00:00:00.000000000,-1,0,removed 18 Meal_Preparation episodes (5691 events)
+52,2011-05-03,prolonged,Bed_to_Toilet,2011-05-03 03:31:29.728755000,2011-05-03 04:53:32.589139629,-1,0,Bed_to_Toilet at 03:31 stretched from 2 to 82 min
+53,2011-05-03,prolonged,Meal_Preparation,2011-05-03 05:21:01.554909000,2011-05-03 06:56:00.668422206,-1,0,Meal_Preparation at 05:21 stretched from 6 to 95 min
+54,2011-05-03,prolonged,Meal_Preparation,2011-05-03 13:25:03.869166000,2011-05-03 14:33:52.030000236,-1,0,Meal_Preparation at 13:25 stretched from 3 to 69 min
+55,2011-05-03,unusual_time,Leave_Home,2011-05-03 03:48:50.296945343,2011-05-03 03:48:54.835208343,-1,0,Leave_Home moved from 07:56 to 03:48
+56,2011-05-03,unusual_time,Leave_Home,2011-05-03 02:21:25.439003806,2011-05-03 02:21:28.836594806,-1,0,Leave_Home moved from 20:53 to 02:21
+57,2011-05-03,unusual_time,Meal_Preparation,2011-05-03 01:58:11.967188204,2011-05-03 02:04:32.157809204,-1,0,Meal_Preparation moved from 18:48 to 01:58
+58,2011-05-03,night_frequency,Bed_to_Toilet,2011-05-03 01:20:08.034407458,2011-05-03 04:50:03.466326511,-1,0,4 extra Bed_to_Toilet trips between 01:20 and 04:50
+59,2011-05-03,night_frequency,Bed_to_Toilet,2011-05-03 02:38:34.102651776,2011-05-03 04:43:17.568027736,-1,0,4 extra Bed_to_Toilet trips between 02:38 and 04:43
+60,2011-05-03,night_frequency,Bed_to_Toilet,2011-05-03 00:34:55.356981637,2011-05-03 04:47:36.159826644,-1,0,4 extra Bed_to_Toilet trips between 00:34 and 04:47
+61,2011-05-04,clean,,,,-1,0,
+62,2011-05-04,missed,Meal_Preparation,2011-05-04 06:55:52.008670000,2011-05-05 00:00:00.000000000,-1,0,removed 9 Meal_Preparation episodes (1838 events)
+63,2011-05-04,prolonged,Meal_Preparation,2011-05-04 18:38:28.438901000,2011-05-04 20:03:28.192535926,-1,0,Meal_Preparation at 18:38 stretched from 22 to 85 min
+64,2011-05-04,prolonged,Meal_Preparation,2011-05-04 06:55:52.008670000,2011-05-04 08:04:55.816241413,-1,0,Meal_Preparation at 06:55 stretched from 4 to 69 min
+65,2011-05-04,prolonged,Meal_Preparation,2011-05-04 08:31:50.542328000,2011-05-04 09:46:35.581342775,-1,0,Meal_Preparation at 08:31 stretched from 6 to 75 min
+66,2011-05-04,unusual_time,Leave_Home,2011-05-04 02:18:23.565890958,2011-05-04 02:18:28.265647958,-1,0,Leave_Home moved from 10:55 to 02:18
+67,2011-05-04,unusual_time,Meal_Preparation,2011-05-04 01:00:55.551715662,2011-05-04 01:16:23.577485662,-1,0,Meal_Preparation moved from 18:15 to 01:00
+68,2011-05-04,unusual_time,Meal_Preparation,2011-05-04 04:27:54.675553474,2011-05-04 04:33:37.442085474,-1,0,Meal_Preparation moved from 08:31 to 04:27
+69,2011-05-04,night_frequency,Bed_to_Toilet,2011-05-04 00:33:53.310911530,2011-05-04 04:21:26.445375149,-1,0,4 extra Bed_to_Toilet trips between 00:33 and 04:21
+70,2011-05-04,night_frequency,Bed_to_Toilet,2011-05-04 00:36:46.211416453,2011-05-04 02:44:02.973018535,-1,0,4 extra Bed_to_Toilet trips between 00:36 and 02:44
+71,2011-05-04,night_frequency,Bed_to_Toilet,2011-05-04 00:34:28.738079123,2011-05-04 04:24:45.831033919,-1,0,4 extra Bed_to_Toilet trips between 00:34 and 04:24
+72,2011-05-04,inactivity,,2011-05-04 08:04:59.510568735,2011-05-04 10:39:42.486288561,-1,0,"no events 08:04-10:39 (155 min, 2134 events removed)"
+73,2011-05-04,inactivity,,2011-05-04 08:01:14.998649905,2011-05-04 10:38:15.092485631,-1,0,"no events 08:01-10:38 (157 min, 2115 events removed)"
+74,2011-05-05,clean,,,,-1,0,
+75,2011-05-05,missed,Meal_Preparation,2011-05-05 04:28:24.504696000,2011-05-06 00:00:00.000000000,-1,0,removed 6 Meal_Preparation episodes (1165 events)
+76,2011-05-05,prolonged,Meal_Preparation,2011-05-05 18:43:29.104555000,2011-05-05 20:13:20.254704992,-1,0,Meal_Preparation at 18:43 stretched from 11 to 90 min
+77,2011-05-05,prolonged,Meal_Preparation,2011-05-05 19:11:38.708669000,2011-05-05 21:23:06.483175348,-1,0,Meal_Preparation at 19:11 stretched from 17 to 131 min
+78,2011-05-05,prolonged,Meal_Preparation,2011-05-05 18:43:29.104555000,2011-05-05 20:04:24.304532621,-1,0,Meal_Preparation at 18:43 stretched from 11 to 81 min
+79,2011-05-05,unusual_time,Meal_Preparation,2011-05-05 02:34:19.084115657,2011-05-05 02:36:21.742517657,-1,0,Meal_Preparation moved from 20:09 to 02:34
+80,2011-05-05,unusual_time,Leave_Home,2011-05-05 03:41:14.148081594,2011-05-05 03:41:18.078965594,-1,0,Leave_Home moved from 07:46 to 03:41
+81,2011-05-05,unusual_time,Leave_Home,2011-05-05 04:06:59.762471783,2011-05-05 04:07:03.673013783,-1,0,Leave_Home moved from 16:05 to 04:06
+82,2011-05-05,night_frequency,Bed_to_Toilet,2011-05-05 00:36:08.033245452,2011-05-05 02:17:29.023563148,-1,0,4 extra Bed_to_Toilet trips between 00:36 and 02:17
+83,2011-05-05,night_frequency,Bed_to_Toilet,2011-05-05 00:36:54.751391822,2011-05-05 05:08:12.413777568,-1,0,4 extra Bed_to_Toilet trips between 00:36 and 05:08
+84,2011-05-05,night_frequency,Bed_to_Toilet,2011-05-05 02:18:30.532249762,2011-05-05 03:53:22.312837473,-1,0,4 extra Bed_to_Toilet trips between 02:18 and 03:53
+85,2011-05-05,inactivity,,2011-05-05 12:32:30.262281284,2011-05-05 15:32:15.436819232,-1,0,"no events 12:32-15:32 (180 min, 774 events removed)"
+86,2011-05-05,inactivity,,2011-05-05 12:31:48.581597956,2011-05-05 15:54:53.777202516,-1,0,"no events 12:31-15:54 (203 min, 927 events removed)"
+87,2011-05-05,inactivity,,2011-05-05 12:48:12.220264122,2011-05-05 15:33:22.390522133,-1,0,"no events 12:48-15:33 (165 min, 574 events removed)"
+88,2011-05-06,clean,,,,-1,0,
+89,2011-05-06,missed,Meal_Preparation,2011-05-06 05:29:31.215577000,2011-05-07 00:00:00.000000000,-1,0,removed 8 Meal_Preparation episodes (1216 events)
+90,2011-05-06,prolonged,Meal_Preparation,2011-05-06 18:29:12.533784000,2011-05-06 20:01:06.474966523,-1,0,Meal_Preparation at 18:29 stretched from 12 to 92 min
+91,2011-05-06,prolonged,Meal_Preparation,2011-05-06 18:57:28.409062000,2011-05-06 20:28:31.948428012,-1,0,Meal_Preparation at 18:57 stretched from 2 to 91 min
+92,2011-05-06,prolonged,Meal_Preparation,2011-05-06 10:09:23.503102000,2011-05-06 11:25:48.803879050,-1,0,Meal_Preparation at 10:09 stretched from 8 to 76 min
+93,2011-05-06,unusual_time,Meal_Preparation,2011-05-06 03:21:54.821166070,2011-05-06 03:24:17.181591070,-1,0,Meal_Preparation moved from 18:57 to 03:21
+94,2011-05-06,unusual_time,Leave_Home,2011-05-06 03:39:58.086591734,2011-05-06 03:40:03.100858734,-1,0,Leave_Home moved from 10:40 to 03:39
+95,2011-05-06,unusual_time,Meal_Preparation,2011-05-06 04:19:04.629286503,2011-05-06 04:31:17.244538503,-1,0,Meal_Preparation moved from 18:29 to 04:19
+96,2011-05-06,night_frequency,Bed_to_Toilet,2011-05-06 01:48:58.090083891,2011-05-06 05:08:54.927762401,-1,0,4 extra Bed_to_Toilet trips between 01:48 and 05:08
+97,2011-05-06,night_frequency,Bed_to_Toilet,2011-05-06 01:53:24.817164972,2011-05-06 04:18:54.814038864,-1,0,4 extra Bed_to_Toilet trips between 01:53 and 04:18
+98,2011-05-06,night_frequency,Bed_to_Toilet,2011-05-06 01:24:17.036251515,2011-05-06 04:23:30.123573852,-1,0,4 extra Bed_to_Toilet trips between 01:24 and 04:23
+99,2011-05-07,clean,,,,-1,0,
+100,2011-05-07,missed,Meal_Preparation,2011-05-07 07:13:20.151103000,2011-05-08 00:00:00.000000000,-1,0,removed 7 Meal_Preparation episodes (985 events)
+101,2011-05-07,prolonged,Meal_Preparation,2011-05-07 07:13:20.151103000,2011-05-07 08:46:04.649601973,-1,0,Meal_Preparation at 07:13 stretched from 5 to 93 min
+102,2011-05-07,prolonged,Meal_Preparation,2011-05-07 10:54:27.601098000,2011-05-07 12:36:34.404385780,-1,0,Meal_Preparation at 10:54 stretched from 3 to 102 min
+103,2011-05-07,prolonged,Meal_Preparation,2011-05-07 17:58:38.661831000,2011-05-07 19:04:52.498440310,-1,0,Meal_Preparation at 17:58 stretched from 3 to 66 min
+104,2011-05-07,unusual_time,Leave_Home,2011-05-07 02:27:03.769689193,2011-05-07 02:27:09.207084193,-1,0,Leave_Home moved from 14:08 to 02:27
+105,2011-05-07,unusual_time,Meal_Preparation,2011-05-07 04:09:39.256356196,2011-05-07 04:13:07.602208196,-1,0,Meal_Preparation moved from 10:54 to 04:09
+106,2011-05-07,unusual_time,Meal_Preparation,2011-05-07 02:20:22.107234433,2011-05-07 02:23:44.955161433,-1,0,Meal_Preparation moved from 17:58 to 02:20
+107,2011-05-07,night_frequency,Bed_to_Toilet,2011-05-07 00:59:32.873568302,2011-05-07 05:14:37.814771056,-1,0,4 extra Bed_to_Toilet trips between 00:59 and 05:14
+108,2011-05-07,night_frequency,Bed_to_Toilet,2011-05-07 01:03:55.722141602,2011-05-07 05:10:36.224363400,-1,0,4 extra Bed_to_Toilet trips between 01:03 and 05:10
+109,2011-05-07,night_frequency,Bed_to_Toilet,2011-05-07 00:59:52.430755086,2011-05-07 03:59:47.254470081,-1,0,4 extra Bed_to_Toilet trips between 00:59 and 03:59
+110,2011-05-07,inactivity,,2011-05-07 09:08:58.577048964,2011-05-07 13:08:30.179674926,-1,0,"no events 09:08-13:08 (240 min, 1960 events removed)"
+111,2011-05-07,inactivity,,2011-05-07 09:53:16.340764904,2011-05-07 12:40:30.287114941,-1,0,"no events 09:53-12:40 (167 min, 1390 events removed)"
+112,2011-05-07,inactivity,,2011-05-07 08:37:38.945048667,2011-05-07 11:57:50.184554342,-1,0,"no events 08:37-11:57 (200 min, 2308 events removed)"
+113,2011-05-08,clean,,,,-1,0,
+114,2011-05-08,missed,Meal_Preparation,2011-05-08 06:14:23.521038000,2011-05-09 00:00:00.000000000,-1,0,removed 4 Meal_Preparation episodes (402 events)
+115,2011-05-08,prolonged,Bed_to_Toilet,2011-05-08 03:31:20.930890000,2011-05-08 04:46:10.908915925,-1,0,Bed_to_Toilet at 03:31 stretched from 2 to 75 min
+116,2011-05-08,prolonged,Meal_Preparation,2011-05-08 06:26:28.929414000,2011-05-08 08:14:54.382695995,-1,0,Meal_Preparation at 06:26 stretched from 3 to 108 min
+117,2011-05-08,prolonged,Bed_to_Toilet,2011-05-08 03:31:20.930890000,2011-05-08 04:52:33.981594847,-1,0,Bed_to_Toilet at 03:31 stretched from 2 to 81 min
+118,2011-05-08,unusual_time,Leave_Home,2011-05-08 02:04:43.021776198,2011-05-08 02:04:47.266928198,-1,0,Leave_Home moved from 10:13 to 02:04
+119,2011-05-08,unusual_time,Meal_Preparation,2011-05-08 02:54:30.352850926,2011-05-08 02:59:58.921149926,-1,0,Meal_Preparation moved from 19:18 to 02:54
+120,2011-05-08,unusual_time,Meal_Preparation,2011-05-08 02:15:20.911173906,2011-05-08 02:20:49.479472906,-1,0,Meal_Preparation moved from 19:18 to 02:15
+121,2011-05-08,night_frequency,Bed_to_Toilet,2011-05-08 01:52:35.811103229,2011-05-08 04:19:55.704041031,-1,0,4 extra Bed_to_Toilet trips between 01:52 and 04:19
+122,2011-05-08,night_frequency,Bed_to_Toilet,2011-05-08 02:40:00.301193329,2011-05-08 04:43:51.988107204,-1,0,4 extra Bed_to_Toilet trips between 02:40 and 04:43
+123,2011-05-08,night_frequency,Bed_to_Toilet,2011-05-08 00:39:13.235737076,2011-05-08 05:08:41.337226137,-1,0,4 extra Bed_to_Toilet trips between 00:39 and 05:08
+124,2011-05-09,clean,,,,-1,0,
+125,2011-05-09,missed,Meal_Preparation,2011-05-09 05:17:48.014689000,2011-05-10 00:00:00.000000000,-1,0,removed 6 Meal_Preparation episodes (1425 events)
+126,2011-05-09,prolonged,Meal_Preparation,2011-05-09 07:30:14.338056000,2011-05-09 09:36:32.806579666,-1,0,Meal_Preparation at 07:30 stretched from 29 to 126 min
+127,2011-05-09,prolonged,Meal_Preparation,2011-05-09 07:00:34.722387000,2011-05-09 08:53:35.020599411,-1,0,Meal_Preparation at 07:00 stretched from 10 to 113 min
+128,2011-05-09,prolonged,Meal_Preparation,2011-05-09 08:06:04.954007000,2011-05-09 10:04:08.775057111,-1,0,Meal_Preparation at 08:06 stretched from 4 to 118 min
+129,2011-05-09,unusual_time,Leave_Home,2011-05-09 02:37:39.365757239,2011-05-09 02:37:51.476604239,-1,0,Leave_Home moved from 11:03 to 02:37
+130,2011-05-09,unusual_time,Meal_Preparation,2011-05-09 01:37:41.612011981,2011-05-09 01:41:22.551105981,-1,0,Meal_Preparation moved from 08:06 to 01:37
+131,2011-05-09,unusual_time,Meal_Preparation,2011-05-09 01:27:43.216630904,2011-05-09 01:31:24.155724904,-1,0,Meal_Preparation moved from 08:06 to 01:27
+132,2011-05-09,night_frequency,Bed_to_Toilet,2011-05-09 01:24:53.482308195,2011-05-09 04:27:58.585096700,-1,0,4 extra Bed_to_Toilet trips between 01:24 and 04:27
+133,2011-05-09,night_frequency,Bed_to_Toilet,2011-05-09 00:30:40.828328577,2011-05-09 04:46:18.368868144,-1,0,4 extra Bed_to_Toilet trips between 00:30 and 04:46
+134,2011-05-09,night_frequency,Bed_to_Toilet,2011-05-09 00:58:26.346351542,2011-05-09 03:32:11.592593329,-1,0,4 extra Bed_to_Toilet trips between 00:58 and 03:32
+135,2011-05-09,inactivity,,2011-05-09 08:00:08.300623648,2011-05-09 10:58:29.477358156,-1,0,"no events 08:00-10:58 (178 min, 1903 events removed)"
+136,2011-05-09,inactivity,,2011-05-09 08:01:34.803115269,2011-05-09 11:02:16.925033844,-1,0,"no events 08:01-11:02 (181 min, 1945 events removed)"
+137,2011-05-09,inactivity,,2011-05-09 08:26:03.469659397,2011-05-09 10:57:43.171441141,-1,0,"no events 08:26-10:57 (152 min, 1488 events removed)"
+138,2011-05-10,clean,,,,-1,0,
+139,2011-05-10,missed,Meal_Preparation,2011-05-10 05:38:58.581130000,2011-05-11 00:00:00.000000000,-1,0,removed 4 Meal_Preparation episodes (1185 events)
+140,2011-05-10,prolonged,Meal_Preparation,2011-05-10 13:41:10.581394000,2011-05-10 15:08:21.849416561,-1,0,Meal_Preparation at 13:41 stretched from 7 to 87 min
+141,2011-05-10,prolonged,Meal_Preparation,2011-05-10 18:35:21.938293000,2011-05-10 20:23:12.223636304,-1,0,Meal_Preparation at 18:35 stretched from 37 to 108 min
+142,2011-05-10,prolonged,Meal_Preparation,2011-05-10 16:10:19.333606000,2011-05-10 17:55:57.243069956,-1,0,Meal_Preparation at 16:10 stretched from 2 to 106 min
+143,2011-05-10,unusual_time,Meal_Preparation,2011-05-10 03:03:14.639281472,2011-05-10 03:10:41.454725472,-1,0,Meal_Preparation moved from 13:41 to 03:03
+144,2011-05-10,unusual_time,Meal_Preparation,2011-05-10 03:51:21.378123301,2011-05-10 03:58:48.193567301,-1,0,Meal_Preparation moved from 13:41 to 03:51
+145,2011-05-10,unusual_time,Leave_Home,2011-05-10 03:52:34.473219378,2011-05-10 03:52:38.743664378,-1,0,Leave_Home moved from 17:27 to 03:52
+146,2011-05-10,night_frequency,Bed_to_Toilet,2011-05-10 02:12:04.865485939,2011-05-10 04:45:22.882251082,-1,0,4 extra Bed_to_Toilet trips between 02:12 and 04:45
+147,2011-05-10,night_frequency,Bed_to_Toilet,2011-05-10 01:04:53.530793537,2011-05-10 03:06:39.383464289,-1,0,4 extra Bed_to_Toilet trips between 01:04 and 03:06
+148,2011-05-10,night_frequency,Bed_to_Toilet,2011-05-10 00:35:38.469798189,2011-05-10 04:17:46.619403991,-1,0,4 extra Bed_to_Toilet trips between 00:35 and 04:17
+149,2011-05-11,clean,,,,-1,0,
+150,2011-05-11,missed,Meal_Preparation,2011-05-11 06:24:34.665275000,2011-05-12 00:00:00.000000000,-1,0,removed 4 Meal_Preparation episodes (738 events)
+151,2011-05-11,prolonged,Meal_Preparation,2011-05-11 06:31:08.648856000,2011-05-11 08:20:07.334053325,-1,0,Meal_Preparation at 06:31 stretched from 7 to 109 min
+152,2011-05-11,prolonged,Meal_Preparation,2011-05-11 08:58:47.716023000,2011-05-11 10:43:06.459406109,-1,0,Meal_Preparation at 08:58 stretched from 9 to 104 min
+153,2011-05-11,prolonged,Meal_Preparation,2011-05-11 06:31:08.648856000,2011-05-11 08:17:13.628244302,-1,0,Meal_Preparation at 06:31 stretched from 7 to 106 min
+154,2011-05-11,unusual_time,Leave_Home,2011-05-11 02:48:26.008023083,2011-05-11 02:48:30.478093083,-1,0,Leave_Home moved from 16:37 to 02:48
+155,2011-05-11,unusual_time,Meal_Preparation,2011-05-11 03:36:09.706553531,2011-05-11 03:49:32.029416531,-1,0,Meal_Preparation moved from 07:50 to 03:36
+156,2011-05-11,unusual_time,Meal_Preparation,2011-05-11 03:54:58.012141221,2011-05-11 04:03:52.288026221,-1,0,Meal_Preparation moved from 08:58 to 03:54
+157,2011-05-11,night_frequency,Bed_to_Toilet,2011-05-11 01:00:11.525651491,2011-05-11 04:26:42.409014132,-1,0,4 extra Bed_to_Toilet trips between 01:00 and 04:26
+158,2011-05-11,night_frequency,Bed_to_Toilet,2011-05-11 00:38:04.184118280,2011-05-11 03:09:11.867693167,-1,0,4 extra Bed_to_Toilet trips between 00:38 and 03:09
+159,2011-05-11,night_frequency,Bed_to_Toilet,2011-05-11 00:33:39.346712191,2011-05-11 03:37:38.171151279,-1,0,4 extra Bed_to_Toilet trips between 00:33 and 03:37
+160,2011-05-11,inactivity,,2011-05-11 08:37:06.945503733,2011-05-11 11:32:51.679168040,-1,0,"no events 08:37-11:32 (176 min, 1927 events removed)"
+161,2011-05-11,inactivity,,2011-05-11 08:04:53.358598749,2011-05-11 11:39:20.360148840,-1,0,"no events 08:04-11:39 (214 min, 2526 events removed)"
+162,2011-05-11,inactivity,,2011-05-11 08:23:08.289927843,2011-05-11 11:31:35.056847864,-1,0,"no events 08:23-11:31 (188 min, 2093 events removed)"
+163,2011-05-12,clean,,,,-1,0,
+164,2011-05-12,missed,Meal_Preparation,2011-05-12 06:40:44.934424000,2011-05-13 00:00:00.000000000,-1,0,removed 5 Meal_Preparation episodes (654 events)
+165,2011-05-12,prolonged,Bed_to_Toilet,2011-05-12 03:39:05.573548000,2011-05-12 05:33:31.209522702,-1,0,Bed_to_Toilet at 03:39 stretched from 2 to 114 min
+166,2011-05-12,prolonged,Bed_to_Toilet,2011-05-12 03:39:05.573548000,2011-05-12 05:31:52.102197835,-1,0,Bed_to_Toilet at 03:39 stretched from 2 to 113 min
+167,2011-05-12,prolonged,Bed_to_Toilet,2011-05-12 03:39:05.573548000,2011-05-12 05:36:21.429134674,-1,0,Bed_to_Toilet at 03:39 stretched from 2 to 117 min
+168,2011-05-12,unusual_time,Leave_Home,2011-05-12 02:34:18.024357451,2011-05-12 02:34:26.493467451,-1,0,Leave_Home moved from 07:58 to 02:34
+169,2011-05-12,unusual_time,Meal_Preparation,2011-05-12 02:36:02.450470748,2011-05-12 02:37:59.551904748,-1,0,Meal_Preparation moved from 07:29 to 02:36
+170,2011-05-12,unusual_time,Meal_Preparation,2011-05-12 02:56:35.288295588,2011-05-12 02:58:32.389729588,-1,0,Meal_Preparation moved from 07:29 to 02:56
+171,2011-05-12,night_frequency,Bed_to_Toilet,2011-05-12 00:38:16.224872966,2011-05-12 04:47:37.604413567,-1,0,4 extra Bed_to_Toilet trips between 00:38 and 04:47
+172,2011-05-12,night_frequency,Bed_to_Toilet,2011-05-12 00:35:02.920205427,2011-05-12 05:14:57.222451455,-1,0,4 extra Bed_to_Toilet trips between 00:35 and 05:14
+173,2011-05-12,night_frequency,Bed_to_Toilet,2011-05-12 01:25:54.487349188,2011-05-12 05:08:22.770059535,-1,0,4 extra Bed_to_Toilet trips between 01:25 and 05:08
+174,2011-05-13,clean,,,,-1,0,
+175,2011-05-13,missed,Meal_Preparation,2011-05-13 06:11:56.152635000,2011-05-14 00:00:00.000000000,-1,0,removed 10 Meal_Preparation episodes (2224 events)
+176,2011-05-13,prolonged,Meal_Preparation,2011-05-13 17:37:57.641493000,2011-05-13 19:07:23.698517066,-1,0,Meal_Preparation at 17:37 stretched from 3 to 89 min
+177,2011-05-13,prolonged,Meal_Preparation,2011-05-13 17:37:57.641493000,2011-05-13 19:15:29.454569575,-1,0,Meal_Preparation at 17:37 stretched from 3 to 98 min
+178,2011-05-13,prolonged,Bed_to_Toilet,2011-05-13 04:01:59.407241000,2011-05-13 05:25:24.245031120,-1,0,Bed_to_Toilet at 04:01 stretched from 3 to 83 min
+179,2011-05-13,unusual_time,Leave_Home,2011-05-13 02:02:41.864809258,2011-05-13 02:02:46.290298258,-1,0,Leave_Home moved from 15:28 to 02:02
+180,2011-05-13,unusual_time,Leave_Home,2011-05-13 02:24:09.900189361,2011-05-13 02:24:14.325678361,-1,0,Leave_Home moved from 15:28 to 02:24
+181,2011-05-13,unusual_time,Meal_Preparation,2011-05-13 03:24:25.427230023,2011-05-13 03:57:36.676529023,-1,0,Meal_Preparation moved from 19:08 to 03:24
+182,2011-05-13,night_frequency,Bed_to_Toilet,2011-05-13 01:49:05.916769267,2011-05-13 04:48:37.889124613,-1,0,4 extra Bed_to_Toilet trips between 01:49 and 04:48
+183,2011-05-13,night_frequency,Bed_to_Toilet,2011-05-13 01:01:06.750413191,2011-05-13 04:49:09.164387737,-1,0,4 extra Bed_to_Toilet trips between 01:01 and 04:49
+184,2011-05-13,night_frequency,Bed_to_Toilet,2011-05-13 00:33:23.402425012,2011-05-13 03:57:09.534703463,-1,0,4 extra Bed_to_Toilet trips between 00:33 and 03:57
+185,2011-05-14,clean,,,,-1,0,
+186,2011-05-14,missed,Meal_Preparation,2011-05-14 06:49:20.462652000,2011-05-15 00:00:00.000000000,-1,0,removed 6 Meal_Preparation episodes (988 events)
+187,2011-05-14,prolonged,Bed_to_Toilet,2011-05-14 04:40:16.670114000,2011-05-14 06:06:24.452002706,-1,0,Bed_to_Toilet at 04:40 stretched from 3 to 86 min
+188,2011-05-14,prolonged,Bed_to_Toilet,2011-05-14 04:40:16.670114000,2011-05-14 06:09:07.794601372,-1,0,Bed_to_Toilet at 04:40 stretched from 3 to 89 min
+189,2011-05-14,prolonged,Bed_to_Toilet,2011-05-14 04:40:16.670114000,2011-05-14 06:32:52.173985898,-1,0,Bed_to_Toilet at 04:40 stretched from 3 to 113 min
+190,2011-05-14,unusual_time,Meal_Preparation,2011-05-14 02:48:22.091438952,2011-05-14 02:52:17.396917952,-1,0,Meal_Preparation moved from 15:33 to 02:48
+191,2011-05-14,unusual_time,Meal_Preparation,2011-05-14 01:08:58.362156302,2011-05-14 01:12:18.915473302,-1,0,Meal_Preparation moved from 08:18 to 01:08
+192,2011-05-14,unusual_time,Meal_Preparation,2011-05-14 02:15:47.067682789,2011-05-14 02:19:42.373161789,-1,0,Meal_Preparation moved from 15:33 to 02:15
+193,2011-05-14,night_frequency,Bed_to_Toilet,2011-05-14 02:39:39.485885752,2011-05-14 04:18:35.097024284,-1,0,4 extra Bed_to_Toilet trips between 02:39 and 04:18
+194,2011-05-14,night_frequency,Bed_to_Toilet,2011-05-14 00:58:18.350658849,2011-05-14 05:13:35.729296910,-1,0,4 extra Bed_to_Toilet trips between 00:58 and 05:13
+195,2011-05-14,night_frequency,Bed_to_Toilet,2011-05-14 01:01:01.635626420,2011-05-14 04:00:51.313434552,-1,0,4 extra Bed_to_Toilet trips between 01:01 and 04:00
+196,2011-05-14,inactivity,,2011-05-14 14:32:52.064877386,2011-05-14 17:26:22.711563817,-1,0,"no events 14:32-17:26 (174 min, 4240 events removed)"
+197,2011-05-14,inactivity,,2011-05-14 14:59:02.052206723,2011-05-14 18:53:39.648846089,-1,0,"no events 14:59-18:53 (235 min, 4844 events removed)"
+198,2011-05-14,inactivity,,2011-05-14 14:29:06.762687084,2011-05-14 17:31:09.083294344,-1,0,"no events 14:29-17:31 (182 min, 4252 events removed)"
+199,2011-05-15,clean,,,,-1,0,
+200,2011-05-15,missed,Meal_Preparation,2011-05-15 06:01:11.961914000,2011-05-16 00:00:00.000000000,-1,0,removed 2 Meal_Preparation episodes (393 events)
+201,2011-05-15,prolonged,Meal_Preparation,2011-05-15 16:05:48.596251000,2011-05-15 17:23:11.280229667,-1,0,Meal_Preparation at 16:05 stretched from 4 to 77 min
+202,2011-05-15,prolonged,Bed_to_Toilet,2011-05-15 04:22:50.398987000,2011-05-15 06:09:32.894438900,-1,0,Bed_to_Toilet at 04:22 stretched from 3 to 107 min
+203,2011-05-15,prolonged,Meal_Preparation,2011-05-15 16:05:48.596251000,2011-05-15 18:07:18.176130724,-1,0,Meal_Preparation at 16:05 stretched from 4 to 121 min
+204,2011-05-15,unusual_time,Meal_Preparation,2011-05-15 01:09:54.351706296,2011-05-15 01:14:08.432948296,-1,0,Meal_Preparation moved from 16:05 to 01:09
+205,2011-05-15,unusual_time,Leave_Home,2011-05-15 03:48:30.392323546,2011-05-15 03:48:37.603115546,-1,0,Leave_Home moved from 09:31 to 03:48
+206,2011-05-15,unusual_time,Leave_Home,2011-05-15 03:35:38.359474925,2011-05-15 03:35:45.570266925,-1,0,Leave_Home moved from 09:31 to 03:35
+207,2011-05-15,night_frequency,Bed_to_Toilet,2011-05-15 00:31:27.311794416,2011-05-15 04:19:29.300409341,-1,0,4 extra Bed_to_Toilet trips between 00:31 and 04:19
+208,2011-05-15,night_frequency,Bed_to_Toilet,2011-05-15 03:28:11.906508657,2011-05-15 05:08:56.181045724,-1,0,4 extra Bed_to_Toilet trips between 03:28 and 05:08
+209,2011-05-15,night_frequency,Bed_to_Toilet,2011-05-15 00:39:31.173800998,2011-05-15 04:23:48.084387299,-1,0,4 extra Bed_to_Toilet trips between 00:39 and 04:23
+210,2011-05-15,inactivity,,2011-05-15 14:57:12.452501877,2011-05-15 18:41:58.041386898,-1,0,"no events 14:57-18:41 (225 min, 1351 events removed)"
+211,2011-05-15,inactivity,,2011-05-15 14:45:46.033406962,2011-05-15 18:39:30.094111551,-1,0,"no events 14:45-18:39 (234 min, 1533 events removed)"
+212,2011-05-15,inactivity,,2011-05-15 14:37:17.989790591,2011-05-15 18:05:32.848709279,-1,0,"no events 14:37-18:05 (208 min, 1639 events removed)"
+213,2011-05-16,clean,,,,-1,0,
+214,2011-05-16,missed,Meal_Preparation,2011-05-16 05:33:21.744711000,2011-05-17 00:00:00.000000000,-1,0,removed 7 Meal_Preparation episodes (516 events)
+215,2011-05-16,prolonged,Meal_Preparation,2011-05-16 05:33:21.744711000,2011-05-16 06:44:30.664134430,-1,0,Meal_Preparation at 05:33 stretched from 6 to 71 min
+216,2011-05-16,prolonged,Meal_Preparation,2011-05-16 09:32:19.564129000,2011-05-16 11:29:02.616979533,-1,0,Meal_Preparation at 09:32 stretched from 9 to 117 min
+217,2011-05-16,prolonged,Meal_Preparation,2011-05-16 09:49:37.895687000,2011-05-16 10:57:05.292460218,-1,0,Meal_Preparation at 09:49 stretched from 1 to 67 min
+218,2011-05-16,unusual_time,Leave_Home,2011-05-16 03:58:18.211709557,2011-05-16 03:58:28.812615557,-1,0,Leave_Home moved from 11:40 to 03:58
+219,2011-05-16,unusual_time,Meal_Preparation,2011-05-16 01:32:18.119872929,2011-05-16 01:33:42.437068929,-1,0,Meal_Preparation moved from 20:01 to 01:32
+220,2011-05-16,unusual_time,Meal_Preparation,2011-05-16 02:58:44.294819494,2011-05-16 03:07:59.794687494,-1,0,Meal_Preparation moved from 09:32 to 02:58
+221,2011-05-16,night_frequency,Bed_to_Toilet,2011-05-16 01:26:52.607531466,2011-05-16 03:56:04.131959200,-1,0,4 extra Bed_to_Toilet trips between 01:26 and 03:56
+222,2011-05-16,night_frequency,Bed_to_Toilet,2011-05-16 00:36:58.658742019,2011-05-16 02:40:59.497852519,-1,0,4 extra Bed_to_Toilet trips between 00:36 and 02:40
+223,2011-05-16,night_frequency,Bed_to_Toilet,2011-05-16 00:38:18.270669574,2011-05-16 03:30:44.826085171,-1,0,4 extra Bed_to_Toilet trips between 00:38 and 03:30
+224,2011-05-16,inactivity,,2011-05-16 08:38:44.800657850,2011-05-16 11:24:17.545331525,-1,0,"no events 08:38-11:24 (166 min, 1702 events removed)"
+225,2011-05-16,inactivity,,2011-05-16 14:58:22.027642454,2011-05-16 18:52:52.096616510,-1,0,"no events 14:58-18:52 (235 min, 918 events removed)"
+226,2011-05-16,inactivity,,2011-05-16 14:54:03.204236570,2011-05-16 17:35:07.312376045,-1,0,"no events 14:54-17:35 (161 min, 552 events removed)"
+227,2011-05-17,clean,,,,-1,0,
+228,2011-05-17,missed,Meal_Preparation,2011-05-17 05:54:40.498725000,2011-05-18 00:00:00.000000000,-1,0,removed 5 Meal_Preparation episodes (826 events)
+229,2011-05-17,prolonged,Meal_Preparation,2011-05-17 18:10:59.990308000,2011-05-17 20:06:29.289876051,-1,0,Meal_Preparation at 18:10 stretched from 5 to 115 min
+230,2011-05-17,prolonged,Meal_Preparation,2011-05-17 05:54:40.498725000,2011-05-17 07:03:04.417713354,-1,0,Meal_Preparation at 05:54 stretched from 4 to 68 min
+231,2011-05-17,prolonged,Meal_Preparation,2011-05-17 11:20:22.926802000,2011-05-17 12:42:31.748144402,-1,0,Meal_Preparation at 11:20 stretched from 9 to 82 min
+232,2011-05-17,unusual_time,Meal_Preparation,2011-05-17 02:17:52.443607423,2011-05-17 02:23:09.080883423,-1,0,Meal_Preparation moved from 18:10 to 02:17
+233,2011-05-17,unusual_time,Meal_Preparation,2011-05-17 02:50:17.548497937,2011-05-17 02:59:51.350408937,-1,0,Meal_Preparation moved from 07:09 to 02:50
+234,2011-05-17,unusual_time,Leave_Home,2011-05-17 04:08:31.808918612,2011-05-17 04:08:36.677219612,-1,0,Leave_Home moved from 14:52 to 04:08
+235,2011-05-17,night_frequency,Bed_to_Toilet,2011-05-17 01:26:11.989737246,2011-05-17 04:02:27.838574865,-1,0,4 extra Bed_to_Toilet trips between 01:26 and 04:02
+236,2011-05-17,night_frequency,Bed_to_Toilet,2011-05-17 00:35:01.165502746,2011-05-17 03:59:27.615898962,-1,0,4 extra Bed_to_Toilet trips between 00:35 and 03:59
+237,2011-05-17,night_frequency,Bed_to_Toilet,2011-05-17 01:03:33.786781721,2011-05-17 04:23:39.084121932,-1,0,4 extra Bed_to_Toilet trips between 01:03 and 04:23
+238,2011-05-18,clean,,,,-1,0,
+239,2011-05-18,missed,Meal_Preparation,2011-05-18 08:20:32.623853000,2011-05-19 00:00:00.000000000,-1,0,removed 10 Meal_Preparation episodes (1096 events)
+240,2011-05-18,prolonged,Meal_Preparation,2011-05-18 14:13:44.548674000,2011-05-18 16:09:22.395552194,-1,0,Meal_Preparation at 14:13 stretched from 5 to 116 min
+241,2011-05-18,prolonged,Meal_Preparation,2011-05-18 14:13:44.548674000,2011-05-18 16:16:30.083227498,-1,0,Meal_Preparation at 14:13 stretched from 5 to 123 min
+242,2011-05-18,prolonged,Meal_Preparation,2011-05-18 14:20:14.865449000,2011-05-18 16:20:02.733932055,-1,0,Meal_Preparation at 14:20 stretched from 3 to 120 min
+243,2011-05-18,unusual_time,Meal_Preparation,2011-05-18 03:39:26.297799644,2011-05-18 03:46:39.304267644,-1,0,Meal_Preparation moved from 19:24 to 03:39
+244,2011-05-18,unusual_time,Meal_Preparation,2011-05-18 01:57:25.154199271,2011-05-18 01:59:32.064447271,-1,0,Meal_Preparation moved from 08:38 to 01:57
+245,2011-05-18,unusual_time,Leave_Home,2011-05-18 02:00:50.072997255,2011-05-18 02:00:54.643341255,-1,0,Leave_Home moved from 16:42 to 02:00
+246,2011-05-18,night_frequency,Bed_to_Toilet,2011-05-18 00:35:37.341583748,2011-05-18 04:17:43.860264245,-1,0,4 extra Bed_to_Toilet trips between 00:35 and 04:17
+247,2011-05-18,night_frequency,Bed_to_Toilet,2011-05-18 00:31:12.079549235,2011-05-18 05:13:14.413037260,-1,0,4 extra Bed_to_Toilet trips between 00:31 and 05:13
+248,2011-05-18,night_frequency,Bed_to_Toilet,2011-05-18 01:02:46.050782406,2011-05-18 04:23:26.667044004,-1,0,4 extra Bed_to_Toilet trips between 01:02 and 04:23
+249,2011-05-18,inactivity,,2011-05-18 08:18:21.097616097,2011-05-18 11:34:07.056875862,-1,0,"no events 08:18-11:34 (196 min, 1757 events removed)"
+250,2011-05-18,inactivity,,2011-05-18 08:40:20.800635931,2011-05-18 11:16:52.849726948,-1,0,"no events 08:40-11:16 (157 min, 952 events removed)"
+251,2011-05-18,inactivity,,2011-05-18 08:12:43.605900917,2011-05-18 11:35:05.709910625,-1,0,"no events 08:12-11:35 (202 min, 1858 events removed)"
+252,2011-05-19,clean,,,,-1,0,
+253,2011-05-19,missed,Meal_Preparation,2011-05-19 05:26:50.236785000,2011-05-20 00:00:00.000000000,-1,0,removed 7 Meal_Preparation episodes (831 events)
+254,2011-05-19,prolonged,Meal_Preparation,2011-05-19 07:10:05.742033000,2011-05-19 08:54:24.843870013,-1,0,Meal_Preparation at 07:10 stretched from 4 to 104 min
+255,2011-05-19,prolonged,Meal_Preparation,2011-05-19 05:39:44.701110000,2011-05-19 07:24:06.403476527,-1,0,Meal_Preparation at 05:39 stretched from 2 to 104 min
+256,2011-05-19,prolonged,Meal_Preparation,2011-05-19 07:10:05.742033000,2011-05-19 09:10:57.545137885,-1,0,Meal_Preparation at 07:10 stretched from 4 to 121 min
+257,2011-05-19,unusual_time,Leave_Home,2011-05-19 03:02:49.664681973,2011-05-19 03:02:54.323033973,-1,0,Leave_Home moved from 11:44 to 03:02
+258,2011-05-19,unusual_time,Leave_Home,2011-05-19 02:27:02.587921090,2011-05-19 02:27:07.246273090,-1,0,Leave_Home moved from 11:44 to 02:27
+259,2011-05-19,unusual_time,Meal_Preparation,2011-05-19 03:48:37.876738581,2011-05-19 03:52:32.234749581,-1,0,Meal_Preparation moved from 07:10 to 03:48
+260,2011-05-19,night_frequency,Bed_to_Toilet,2011-05-19 00:55:08.849939367,2011-05-19 04:52:52.269342919,-1,0,4 extra Bed_to_Toilet trips between 00:55 and 04:52
+261,2011-05-19,night_frequency,Bed_to_Toilet,2011-05-19 01:03:50.196832602,2011-05-19 02:43:20.326224362,-1,0,4 extra Bed_to_Toilet trips between 01:03 and 02:43
+262,2011-05-19,night_frequency,Bed_to_Toilet,2011-05-19 00:38:48.922587100,2011-05-19 03:03:45.435388967,-1,0,4 extra Bed_to_Toilet trips between 00:38 and 03:03
+263,2011-05-20,clean,,,,-1,0,
+264,2011-05-20,missed,Meal_Preparation,2011-05-20 06:06:08.443146000,2011-05-21 00:00:00.000000000,-1,0,removed 8 Meal_Preparation episodes (862 events)
+265,2011-05-20,prolonged,Meal_Preparation,2011-05-20 18:57:57.609957000,2011-05-20 20:09:19.139452396,-1,0,Meal_Preparation at 18:57 stretched from 5 to 71 min
+266,2011-05-20,prolonged,Meal_Preparation,2011-05-20 06:06:08.443146000,2011-05-20 08:04:06.278625224,-1,0,Meal_Preparation at 06:06 stretched from 6 to 118 min
+267,2011-05-20,prolonged,Meal_Preparation,2011-05-20 06:06:08.443146000,2011-05-20 07:36:15.911790620,-1,0,Meal_Preparation at 06:06 stretched from 6 to 90 min
+268,2011-05-20,unusual_time,Leave_Home,2011-05-20 02:02:08.114154654,2011-05-20 02:02:12.874751654,-1,0,Leave_Home moved from 10:50 to 02:02
+269,2011-05-20,unusual_time,Leave_Home,2011-05-20 02:04:20.340491384,2011-05-20 02:04:25.101088384,-1,0,Leave_Home moved from 10:50 to 02:04
+270,2011-05-20,unusual_time,Leave_Home,2011-05-20 04:10:28.640598808,2011-05-20 04:10:33.401195808,-1,0,Leave_Home moved from 10:50 to 04:10
+271,2011-05-20,night_frequency,Bed_to_Toilet,2011-05-20 02:14:07.197958856,2011-05-20 05:07:40.872423162,-1,0,4 extra Bed_to_Toilet trips between 02:14 and 05:07
+272,2011-05-20,night_frequency,Bed_to_Toilet,2011-05-20 01:26:38.642221017,2011-05-20 05:13:35.090271972,-1,0,4 extra Bed_to_Toilet trips between 01:26 and 05:13
+273,2011-05-20,night_frequency,Bed_to_Toilet,2011-05-20 01:02:27.490171999,2011-05-20 04:22:27.897867503,-1,0,4 extra Bed_to_Toilet trips between 01:02 and 04:22
+274,2011-05-21,clean,,,,-1,0,
+275,2011-05-21,missed,Meal_Preparation,2011-05-21 06:23:58.834686000,2011-05-22 00:00:00.000000000,-1,0,removed 6 Meal_Preparation episodes (1325 events)
+276,2011-05-21,prolonged,Meal_Preparation,2011-05-21 18:43:09.215700000,2011-05-21 19:54:10.061419556,-1,0,Meal_Preparation at 18:43 stretched from 9 to 71 min
+277,2011-05-21,prolonged,Meal_Preparation,2011-05-21 09:54:35.081841000,2011-05-21 11:49:58.621532189,-1,0,Meal_Preparation at 09:54 stretched from 5 to 115 min
+278,2011-05-21,prolonged,Meal_Preparation,2011-05-21 09:54:35.081841000,2011-05-21 11:01:26.312991174,-1,0,Meal_Preparation at 09:54 stretched from 5 to 67 min
+279,2011-05-21,unusual_time,Meal_Preparation,2011-05-21 02:05:53.425731439,2011-05-21 02:15:10.391683439,-1,0,Meal_Preparation moved from 18:43 to 02:05
+280,2011-05-21,unusual_time,Meal_Preparation,2011-05-21 02:48:53.813254783,2011-05-21 02:54:09.252862783,-1,0,Meal_Preparation moved from 09:54 to 02:48
+281,2011-05-21,unusual_time,Leave_Home,2011-05-21 01:28:45.596276791,2011-05-21 01:28:51.889740791,-1,0,Leave_Home moved from 09:45 to 01:28
+282,2011-05-21,night_frequency,Bed_to_Toilet,2011-05-21 00:33:06.338213872,2011-05-21 05:06:26.563789868,-1,0,4 extra Bed_to_Toilet trips between 00:33 and 05:06
+283,2011-05-21,night_frequency,Bed_to_Toilet,2011-05-21 01:24:54.682314697,2011-05-21 03:58:22.326407238,-1,0,4 extra Bed_to_Toilet trips between 01:24 and 03:58
+284,2011-05-21,night_frequency,Bed_to_Toilet,2011-05-21 00:38:17.178249296,2011-05-21 04:47:16.718876347,-1,0,4 extra Bed_to_Toilet trips between 00:38 and 04:47
+285,2011-05-21,inactivity,,2011-05-21 11:24:17.522094920,2011-05-21 14:57:11.392555170,-1,0,"no events 11:24-14:57 (213 min, 1807 events removed)"
+286,2011-05-21,inactivity,,2011-05-21 12:37:10.536200235,2011-05-21 15:34:59.107658414,-1,0,"no events 12:37-15:34 (178 min, 1344 events removed)"
+287,2011-05-21,inactivity,,2011-05-21 14:34:49.837591570,2011-05-21 18:26:15.581059426,-1,0,"no events 14:34-18:26 (231 min, 1681 events removed)"
+288,2011-05-22,clean,,,,-1,0,
+289,2011-05-22,missed,Meal_Preparation,2011-05-22 07:27:35.458388000,2011-05-23 00:00:00.000000000,-1,0,removed 17 Meal_Preparation episodes (5581 events)
+290,2011-05-22,prolonged,Bed_to_Toilet,2011-05-22 02:34:51.206085000,2011-05-22 03:47:21.945445756,-1,0,Bed_to_Toilet at 02:34 stretched from 3 to 73 min
+291,2011-05-22,prolonged,Meal_Preparation,2011-05-22 17:00:50.588756000,2011-05-22 18:35:59.098660074,-1,0,Meal_Preparation at 17:00 stretched from 5 to 95 min
+292,2011-05-22,prolonged,Bed_to_Toilet,2011-05-22 02:34:51.206085000,2011-05-22 03:46:25.256742213,-1,0,Bed_to_Toilet at 02:34 stretched from 3 to 72 min
+293,2011-05-22,unusual_time,Meal_Preparation,2011-05-22 02:24:11.335601153,2011-05-22 03:23:19.240114153,-1,0,Meal_Preparation moved from 13:58 to 02:24
+294,2011-05-22,unusual_time,Meal_Preparation,2011-05-22 03:42:59.585694189,2011-05-22 03:48:28.569308189,-1,0,Meal_Preparation moved from 17:00 to 03:42
+295,2011-05-22,unusual_time,Leave_Home,2011-05-22 03:20:07.938446203,2011-05-22 03:20:13.505464203,-1,0,Leave_Home moved from 10:01 to 03:20
+296,2011-05-22,night_frequency,Bed_to_Toilet,2011-05-22 00:59:45.407215156,2011-05-22 05:13:35.335125639,-1,0,4 extra Bed_to_Toilet trips between 00:59 and 05:13
+297,2011-05-22,night_frequency,Bed_to_Toilet,2011-05-22 00:38:43.702653455,2011-05-22 05:16:02.693481770,-1,0,4 extra Bed_to_Toilet trips between 00:38 and 05:16
+298,2011-05-22,night_frequency,Bed_to_Toilet,2011-05-22 00:55:38.281436170,2011-05-22 04:00:22.741207047,-1,0,4 extra Bed_to_Toilet trips between 00:55 and 04:00
+299,2011-05-22,inactivity,,2011-05-22 13:35:41.847118527,2011-05-22 16:19:22.695319454,-1,0,"no events 13:35-16:19 (164 min, 2634 events removed)"
+300,2011-05-22,inactivity,,2011-05-22 13:09:21.228236430,2011-05-22 15:46:22.342509671,-1,0,"no events 13:09-15:46 (157 min, 2660 events removed)"
+301,2011-05-22,inactivity,,2011-05-22 13:38:21.517762132,2011-05-22 16:11:33.609766236,-1,0,"no events 13:38-16:11 (153 min, 2388 events removed)"
+302,2011-05-23,clean,,,,-1,0,
+303,2011-05-23,missed,Meal_Preparation,2011-05-23 03:30:57.351565000,2011-05-24 00:00:00.000000000,-1,0,removed 20 Meal_Preparation episodes (3286 events)
+304,2011-05-23,prolonged,Meal_Preparation,2011-05-23 12:20:38.765285000,2011-05-23 13:55:56.646465946,-1,0,Meal_Preparation at 12:20 stretched from 6 to 95 min
+305,2011-05-23,prolonged,Meal_Preparation,2011-05-23 17:57:11.847869000,2011-05-23 20:11:34.030337536,-1,0,Meal_Preparation at 17:57 stretched from 15 to 134 min
+306,2011-05-23,prolonged,Meal_Preparation,2011-05-23 09:42:25.761671000,2011-05-23 11:49:15.318711981,-1,0,Meal_Preparation at 09:42 stretched from 14 to 127 min
+307,2011-05-23,unusual_time,Leave_Home,2011-05-23 02:53:40.698750362,2011-05-23 02:53:48.329066362,-1,0,Leave_Home moved from 08:45 to 02:53
+308,2011-05-23,unusual_time,Meal_Preparation,2011-05-23 03:32:28.734080600,2011-05-23 03:38:33.890102600,-1,0,Meal_Preparation moved from 12:20 to 03:32
+309,2011-05-23,unusual_time,Meal_Preparation,2011-05-23 04:08:02.537533810,2011-05-23 04:22:02.462598810,-1,0,Meal_Preparation moved from 09:42 to 04:08
+310,2011-05-23,night_frequency,Bed_to_Toilet,2011-05-23 01:48:36.447041575,2011-05-23 05:13:45.390759624,-1,0,4 extra Bed_to_Toilet trips between 01:48 and 05:13
+311,2011-05-23,night_frequency,Bed_to_Toilet,2011-05-23 00:55:38.722270738,2011-05-23 03:30:38.868249733,-1,0,4 extra Bed_to_Toilet trips between 00:55 and 03:30
+312,2011-05-23,night_frequency,Bed_to_Toilet,2011-05-23 00:32:28.012793948,2011-05-23 02:47:44.932758423,-1,0,4 extra Bed_to_Toilet trips between 00:32 and 02:47
+313,2011-05-24,clean,,,,-1,0,
+314,2011-05-24,missed,Meal_Preparation,2011-05-24 16:02:39.795965000,2011-05-25 00:00:00.000000000,-1,0,removed 3 Meal_Preparation episodes (424 events)
+315,2011-05-24,prolonged,Meal_Preparation,2011-05-24 16:02:39.795965000,2011-05-24 17:53:24.062175546,-1,0,Meal_Preparation at 16:02 stretched from 3 to 111 min
+316,2011-05-24,prolonged,Meal_Preparation,2011-05-24 20:13:02.080013000,2011-05-24 22:18:31.724618768,-1,0,Meal_Preparation at 20:13 stretched from 8 to 125 min
+317,2011-05-24,prolonged,Meal_Preparation,2011-05-24 16:02:39.795965000,2011-05-24 17:29:18.998972803,-1,0,Meal_Preparation at 16:02 stretched from 3 to 87 min
+318,2011-05-24,unusual_time,Meal_Preparation,2011-05-24 02:18:18.520890570,2011-05-24 02:26:23.153696570,-1,0,Meal_Preparation moved from 20:13 to 02:18
+319,2011-05-24,unusual_time,Meal_Preparation,2011-05-24 03:09:03.865430815,2011-05-24 03:12:45.562989815,-1,0,Meal_Preparation moved from 17:13 to 03:09
+320,2011-05-24,unusual_time,Leave_Home,2011-05-24 03:43:55.177081619,2011-05-24 03:43:59.346527619,-1,0,Leave_Home moved from 07:28 to 03:43
+321,2011-05-24,night_frequency,Bed_to_Toilet,2011-05-24 02:12:35.435737167,2011-05-24 04:19:25.462696144,-1,0,4 extra Bed_to_Toilet trips between 02:12 and 04:19
+322,2011-05-24,night_frequency,Bed_to_Toilet,2011-05-24 01:01:25.750111310,2011-05-24 04:17:49.772822155,-1,0,4 extra Bed_to_Toilet trips between 01:01 and 04:17
+323,2011-05-24,night_frequency,Bed_to_Toilet,2011-05-24 00:35:17.067437059,2011-05-24 05:14:21.046237256,-1,0,4 extra Bed_to_Toilet trips between 00:35 and 05:14
+324,2011-05-25,clean,,,,-1,0,
+325,2011-05-25,missed,Meal_Preparation,2011-05-25 14:38:35.743265000,2011-05-26 00:00:00.000000000,-1,0,removed 5 Meal_Preparation episodes (878 events)
+326,2011-05-25,prolonged,Meal_Preparation,2011-05-25 18:34:51.192174000,2011-05-25 20:33:03.120143824,-1,0,Meal_Preparation at 18:34 stretched from 4 to 118 min
+327,2011-05-25,prolonged,Meal_Preparation,2011-05-25 18:41:36.758149000,2011-05-25 20:51:11.927359964,-1,0,Meal_Preparation at 18:41 stretched from 24 to 130 min
+328,2011-05-25,prolonged,Meal_Preparation,2011-05-25 14:38:35.743265000,2011-05-25 16:21:23.051929599,-1,0,Meal_Preparation at 14:38 stretched from 6 to 103 min
+329,2011-05-25,unusual_time,Meal_Preparation,2011-05-25 03:44:17.551204652,2011-05-25 03:48:22.252132652,-1,0,Meal_Preparation moved from 18:34 to 03:44
+330,2011-05-25,unusual_time,Meal_Preparation,2011-05-25 02:49:24.139850415,2011-05-25 03:13:46.712090415,-1,0,Meal_Preparation moved from 18:41 to 02:49
+331,2011-05-25,unusual_time,Meal_Preparation,2011-05-25 02:12:33.879961539,2011-05-25 02:13:53.420602539,-1,0,Meal_Preparation moved from 14:45 to 02:12
+332,2011-05-25,night_frequency,Bed_to_Toilet,2011-05-25 03:09:47.163813048,2011-05-25 05:11:05.487928852,-1,0,4 extra Bed_to_Toilet trips between 03:09 and 05:11
+333,2011-05-25,night_frequency,Bed_to_Toilet,2011-05-25 00:31:49.075596026,2011-05-25 04:47:01.041886174,-1,0,4 extra Bed_to_Toilet trips between 00:31 and 04:47
+334,2011-05-25,night_frequency,Bed_to_Toilet,2011-05-25 00:33:28.628485292,2011-05-25 05:16:59.340109392,-1,0,4 extra Bed_to_Toilet trips between 00:33 and 05:16
+335,2011-05-25,inactivity,,2011-05-25 11:23:16.827577806,2011-05-25 15:03:58.277828755,-1,0,"no events 11:23-15:03 (221 min, 621 events removed)"
+336,2011-05-25,inactivity,,2011-05-25 12:42:11.500790121,2011-05-25 15:46:09.247045810,-1,0,"no events 12:42-15:46 (184 min, 817 events removed)"
+337,2011-05-25,inactivity,,2011-05-25 14:04:00.433769302,2011-05-25 17:55:01.714278280,-1,0,"no events 14:04-17:55 (231 min, 1231 events removed)"
+338,2011-05-26,clean,,,,-1,0,
+339,2011-05-26,missed,Meal_Preparation,2011-05-26 07:10:17.612196000,2011-05-27 00:00:00.000000000,-1,0,removed 3 Meal_Preparation episodes (158 events)
+340,2011-05-26,prolonged,Meal_Preparation,2011-05-26 07:10:17.612196000,2011-05-26 09:08:13.189297380,-1,0,Meal_Preparation at 07:10 stretched from 1 to 118 min
+341,2011-05-26,prolonged,Meal_Preparation,2011-05-26 07:10:17.612196000,2011-05-26 09:09:21.719223201,-1,0,Meal_Preparation at 07:10 stretched from 1 to 119 min
+342,2011-05-26,prolonged,Meal_Preparation,2011-05-26 20:14:14.531915000,2011-05-26 21:50:36.880895798,-1,0,Meal_Preparation at 20:14 stretched from 4 to 96 min
+343,2011-05-26,unusual_time,Leave_Home,2011-05-26 02:24:59.461087819,2011-05-26 02:25:06.921536819,-1,0,Leave_Home moved from 08:14 to 02:24
+344,2011-05-26,unusual_time,Leave_Home,2011-05-26 02:47:14.579542411,2011-05-26 02:47:19.137549411,-1,0,Leave_Home moved from 17:46 to 02:47
+345,2011-05-26,unusual_time,Meal_Preparation,2011-05-26 02:58:17.785315688,2011-05-26 02:59:24.308819688,-1,0,Meal_Preparation moved from 07:10 to 02:58
+346,2011-05-26,night_frequency,Bed_to_Toilet,2011-05-26 00:32:29.302354145,2011-05-26 04:18:54.706415672,-1,0,4 extra Bed_to_Toilet trips between 00:32 and 04:18
+347,2011-05-26,night_frequency,Bed_to_Toilet,2011-05-26 00:56:53.156146071,2011-05-26 03:28:43.818298919,-1,0,4 extra Bed_to_Toilet trips between 00:56 and 03:28
+348,2011-05-26,night_frequency,Bed_to_Toilet,2011-05-26 00:33:44.984400504,2011-05-26 05:14:27.283826693,-1,0,4 extra Bed_to_Toilet trips between 00:33 and 05:14
+349,2011-05-26,inactivity,,2011-05-26 13:25:21.995849565,2011-05-26 17:24:57.016431391,-1,0,"no events 13:25-17:24 (240 min, 862 events removed)"
+350,2011-05-26,inactivity,,2011-05-26 13:53:11.700717651,2011-05-26 17:34:35.005690949,-1,0,"no events 13:53-17:34 (221 min, 790 events removed)"
+351,2011-05-26,inactivity,,2011-05-26 13:39:00.444441985,2011-05-26 16:37:17.823857640,-1,0,"no events 13:39-16:37 (178 min, 498 events removed)"
+352,2011-05-27,clean,,,,-1,0,
+353,2011-05-27,missed,Meal_Preparation,2011-05-27 05:26:06.783284000,2011-05-28 00:00:00.000000000,-1,0,removed 8 Meal_Preparation episodes (1056 events)
+354,2011-05-27,prolonged,Bed_to_Toilet,2011-05-27 04:41:18.690933000,2011-05-27 06:04:59.620703293,-1,0,Bed_to_Toilet at 04:41 stretched from 2 to 84 min
+355,2011-05-27,prolonged,Bed_to_Toilet,2011-05-27 04:41:18.690933000,2011-05-27 05:44:30.307793930,-1,0,Bed_to_Toilet at 04:41 stretched from 2 to 63 min
+356,2011-05-27,prolonged,Meal_Preparation,2011-05-27 13:19:15.593347000,2011-05-27 14:28:36.836363776,-1,0,Meal_Preparation at 13:19 stretched from 2 to 69 min
+357,2011-05-27,unusual_time,Leave_Home,2011-05-27 01:20:15.030917399,2011-05-27 01:20:20.397656399,-1,0,Leave_Home moved from 13:59 to 01:20
+358,2011-05-27,unusual_time,Leave_Home,2011-05-27 03:57:23.571085413,2011-05-27 03:58:33.610122413,-1,0,Leave_Home moved from 08:21 to 03:57
+359,2011-05-27,unusual_time,Leave_Home,2011-05-27 01:06:04.305437327,2011-05-27 01:07:14.344474327,-1,0,Leave_Home moved from 08:21 to 01:06
+360,2011-05-27,night_frequency,Bed_to_Toilet,2011-05-27 02:42:15.558669113,2011-05-27 04:23:56.251347946,-1,0,4 extra Bed_to_Toilet trips between 02:42 and 04:23
+361,2011-05-27,night_frequency,Bed_to_Toilet,2011-05-27 00:34:57.246901638,2011-05-27 04:19:37.036385409,-1,0,4 extra Bed_to_Toilet trips between 00:34 and 04:19
+362,2011-05-27,night_frequency,Bed_to_Toilet,2011-05-27 00:31:16.193866789,2011-05-27 03:58:20.487162230,-1,0,4 extra Bed_to_Toilet trips between 00:31 and 03:58
+363,2011-05-28,clean,,,,-1,0,
+364,2011-05-28,missed,Meal_Preparation,2011-05-28 04:38:47.494593000,2011-05-29 00:00:00.000000000,-1,0,removed 13 Meal_Preparation episodes (1400 events)
+365,2011-05-28,prolonged,Meal_Preparation,2011-05-28 11:33:02.374204000,2011-05-28 12:42:07.507000384,-1,0,Meal_Preparation at 11:33 stretched from 6 to 69 min
+366,2011-05-28,prolonged,Meal_Preparation,2011-05-28 16:37:34.981362000,2011-05-28 18:18:56.355584763,-1,0,Meal_Preparation at 16:37 stretched from 7 to 101 min
+367,2011-05-28,prolonged,Meal_Preparation,2011-05-28 12:25:57.942822000,2011-05-28 14:14:22.794948392,-1,0,Meal_Preparation at 12:25 stretched from 2 to 108 min
+368,2011-05-28,unusual_time,Meal_Preparation,2011-05-28 02:51:33.606470661,2011-05-28 02:53:39.164308661,-1,0,Meal_Preparation moved from 19:06 to 02:51
+369,2011-05-28,unusual_time,Meal_Preparation,2011-05-28 03:03:20.840530795,2011-05-28 03:09:31.988622795,-1,0,Meal_Preparation moved from 11:33 to 03:03
+370,2011-05-28,unusual_time,Meal_Preparation,2011-05-28 01:40:38.890915279,2011-05-28 01:45:23.393819279,-1,0,Meal_Preparation moved from 09:18 to 01:40
+371,2011-05-28,night_frequency,Bed_to_Toilet,2011-05-28 01:00:30.330573654,2011-05-28 05:09:51.168833283,-1,0,4 extra Bed_to_Toilet trips between 01:00 and 05:09
+372,2011-05-28,night_frequency,Bed_to_Toilet,2011-05-28 00:59:59.782775190,2011-05-28 05:14:36.224718189,-1,0,4 extra Bed_to_Toilet trips between 00:59 and 05:14
+373,2011-05-28,night_frequency,Bed_to_Toilet,2011-05-28 01:50:09.370703396,2011-05-28 04:41:42.577774635,-1,0,4 extra Bed_to_Toilet trips between 01:50 and 04:41
+374,2011-05-28,inactivity,,2011-05-28 13:30:23.170031486,2011-05-28 16:34:11.509057822,-1,0,"no events 13:30-16:34 (184 min, 275 events removed)"
+375,2011-05-28,inactivity,,2011-05-28 13:22:46.585838021,2011-05-28 17:11:58.818006894,-1,0,"no events 13:22-17:11 (229 min, 1074 events removed)"
+376,2011-05-28,inactivity,,2011-05-28 13:15:57.032505678,2011-05-28 16:30:50.546764727,-1,0,"no events 13:15-16:30 (195 min, 380 events removed)"
+377,2011-05-29,clean,,,,-1,0,
+378,2011-05-29,missed,Meal_Preparation,2011-05-29 06:47:22.524163000,2011-05-30 00:00:00.000000000,-1,0,removed 7 Meal_Preparation episodes (2540 events)
+379,2011-05-29,prolonged,Bed_to_Toilet,2011-05-29 03:33:19.045003000,2011-05-29 05:04:41.487441320,-1,0,Bed_to_Toilet at 03:33 stretched from 2 to 91 min
+380,2011-05-29,prolonged,Meal_Preparation,2011-05-29 12:47:39.340065000,2011-05-29 14:47:43.698727679,-1,0,Meal_Preparation at 12:47 stretched from 4 to 120 min
+381,2011-05-29,prolonged,Bed_to_Toilet,2011-05-29 03:33:19.045003000,2011-05-29 05:09:08.019975255,-1,0,Bed_to_Toilet at 03:33 stretched from 2 to 96 min
+382,2011-05-29,unusual_time,Meal_Preparation,2011-05-29 02:49:49.183234722,2011-05-29 02:53:49.512497722,-1,0,Meal_Preparation moved from 12:47 to 02:49
+383,2011-05-29,unusual_time,Meal_Preparation,2011-05-29 01:23:39.688863695,2011-05-29 01:49:57.805874695,-1,0,Meal_Preparation moved from 18:26 to 01:23
+384,2011-05-29,unusual_time,Meal_Preparation,2011-05-29 01:28:07.084214150,2011-05-29 01:50:07.945319150,-1,0,Meal_Preparation moved from 12:23 to 01:28
+385,2011-05-29,night_frequency,Bed_to_Toilet,2011-05-29 00:32:02.657357031,2011-05-29 02:17:54.176808150,-1,0,4 extra Bed_to_Toilet trips between 00:32 and 02:17
+386,2011-05-29,night_frequency,Bed_to_Toilet,2011-05-29 01:50:59.300320965,2011-05-29 04:01:13.749990287,-1,0,4 extra Bed_to_Toilet trips between 01:50 and 04:01
+387,2011-05-29,night_frequency,Bed_to_Toilet,2011-05-29 01:54:00.773503732,2011-05-29 04:22:21.701898889,-1,0,4 extra Bed_to_Toilet trips between 01:54 and 04:22
+388,2011-05-30,clean,,,,-1,0,
+389,2011-05-30,prolonged,Bed_to_Toilet,2011-05-30 02:32:47.689839000,2011-05-30 04:13:43.484708212,-1,0,Bed_to_Toilet at 02:32 stretched from 2 to 101 min
+390,2011-05-30,prolonged,Bed_to_Toilet,2011-05-30 02:32:47.689839000,2011-05-30 03:40:38.459643520,-1,0,Bed_to_Toilet at 02:32 stretched from 2 to 68 min
+391,2011-05-30,prolonged,Bed_to_Toilet,2011-05-30 02:32:47.689839000,2011-05-30 04:23:04.605768399,-1,0,Bed_to_Toilet at 02:32 stretched from 2 to 110 min
+392,2011-05-30,night_frequency,Bed_to_Toilet,2011-05-30 00:36:33.116126030,2011-05-30 04:25:10.816534441,-1,0,4 extra Bed_to_Toilet trips between 00:36 and 04:25
+393,2011-05-30,night_frequency,Bed_to_Toilet,2011-05-30 01:01:05.499429888,2011-05-30 03:54:09.955016106,-1,0,4 extra Bed_to_Toilet trips between 01:01 and 03:54
+394,2011-05-30,night_frequency,Bed_to_Toilet,2011-05-30 00:32:09.053743671,2011-05-30 04:18:38.663566139,-1,0,4 extra Bed_to_Toilet trips between 00:32 and 04:18
+395,2011-05-30,inactivity,,2011-05-30 14:23:05.762286496,2011-05-30 17:11:20.178628877,-1,0,"no events 14:23-17:11 (168 min, 1244 events removed)"
+396,2011-05-30,inactivity,,2011-05-30 11:37:03.961453994,2011-05-30 14:19:22.227758431,-1,0,"no events 11:37-14:19 (162 min, 2473 events removed)"
+397,2011-05-30,inactivity,,2011-05-30 12:59:27.228730734,2011-05-30 16:38:51.012695066,-1,0,"no events 12:59-16:38 (219 min, 1482 events removed)"
+398,2011-05-31,clean,,,,-1,0,
+399,2011-05-31,missed,Meal_Preparation,2011-05-31 06:53:36.008495000,2011-06-01 00:00:00.000000000,-1,0,removed 6 Meal_Preparation episodes (1762 events)
+400,2011-05-31,prolonged,Bed_to_Toilet,2011-05-31 04:02:29.953621000,2011-05-31 05:46:35.114785342,-1,0,Bed_to_Toilet at 04:02 stretched from 2 to 104 min
+401,2011-05-31,prolonged,Meal_Preparation,2011-05-31 06:53:36.008495000,2011-05-31 08:26:05.263802122,-1,0,Meal_Preparation at 06:53 stretched from 9 to 92 min
+402,2011-05-31,prolonged,Meal_Preparation,2011-05-31 17:23:56.868773000,2011-05-31 18:57:24.673243477,-1,0,Meal_Preparation at 17:23 stretched from 11 to 93 min
+403,2011-05-31,unusual_time,Leave_Home,2011-05-31 02:53:22.450656474,2011-05-31 02:53:29.058673474,-1,0,Leave_Home moved from 08:23 to 02:53
+404,2011-05-31,unusual_time,Meal_Preparation,2011-05-31 04:13:27.045194825,2011-05-31 04:24:33.278695825,-1,0,Meal_Preparation moved from 17:23 to 04:13
+405,2011-05-31,unusual_time,Leave_Home,2011-05-31 04:26:03.491417432,2011-05-31 04:26:10.099434432,-1,0,Leave_Home moved from 08:23 to 04:26
+406,2011-05-31,night_frequency,Bed_to_Toilet,2011-05-31 00:37:10.906666806,2011-05-31 05:09:11.109862183,-1,0,4 extra Bed_to_Toilet trips between 00:37 and 05:09
+407,2011-05-31,night_frequency,Bed_to_Toilet,2011-05-31 01:46:20.537978997,2011-05-31 05:09:46.907319854,-1,0,4 extra Bed_to_Toilet trips between 01:46 and 05:09
+408,2011-05-31,night_frequency,Bed_to_Toilet,2011-05-31 01:21:09.058531974,2011-05-31 05:17:16.975685423,-1,0,4 extra Bed_to_Toilet trips between 01:21 and 05:17
+409,2011-05-31,inactivity,,2011-05-31 14:05:56.962145322,2011-05-31 17:18:24.548487613,-1,0,"no events 14:05-17:18 (192 min, 3311 events removed)"
+410,2011-05-31,inactivity,,2011-05-31 14:52:58.988408800,2011-05-31 17:47:18.713252839,-1,0,"no events 14:52-17:47 (174 min, 3758 events removed)"
+411,2011-05-31,inactivity,,2011-05-31 13:55:57.646135582,2011-05-31 17:29:06.096426514,-1,0,"no events 13:55-17:29 (213 min, 3643 events removed)"
+412,2011-06-01,clean,,,,-1,0,
+413,2011-06-01,missed,Meal_Preparation,2011-06-01 05:45:03.977159000,2011-06-02 00:00:00.000000000,-1,0,removed 7 Meal_Preparation episodes (1109 events)
+414,2011-06-01,prolonged,Meal_Preparation,2011-06-01 07:14:17.582101000,2011-06-01 08:45:11.900783593,-1,0,Meal_Preparation at 07:14 stretched from 7 to 91 min
+415,2011-06-01,prolonged,Meal_Preparation,2011-06-01 06:59:36.855176000,2011-06-01 08:45:18.726743023,-1,0,Meal_Preparation at 06:59 stretched from 10 to 106 min
+416,2011-06-01,prolonged,Meal_Preparation,2011-06-01 06:59:36.855176000,2011-06-01 08:11:01.712658377,-1,0,Meal_Preparation at 06:59 stretched from 10 to 71 min
+417,2011-06-01,unusual_time,Leave_Home,2011-06-01 03:04:47.882309373,2011-06-01 03:04:52.766037373,-1,0,Leave_Home moved from 11:28 to 03:04
+418,2011-06-01,unusual_time,Meal_Preparation,2011-06-01 01:03:29.593683534,2011-06-01 01:07:14.128861534,-1,0,Meal_Preparation moved from 07:46 to 01:03
+419,2011-06-01,unusual_time,Meal_Preparation,2011-06-01 01:04:53.219674348,2011-06-01 01:10:06.301280348,-1,0,Meal_Preparation moved from 18:35 to 01:04
+420,2011-06-01,night_frequency,Bed_to_Toilet,2011-06-01 00:36:48.012694396,2011-06-01 04:45:22.654998542,-1,0,4 extra Bed_to_Toilet trips between 00:36 and 04:45
+421,2011-06-01,night_frequency,Bed_to_Toilet,2011-06-01 02:16:52.006552185,2011-06-01 04:45:58.005305134,-1,0,4 extra Bed_to_Toilet trips between 02:16 and 04:45
+422,2011-06-01,night_frequency,Bed_to_Toilet,2011-06-01 01:29:54.920252190,2011-06-01 03:34:01.344652542,-1,0,4 extra Bed_to_Toilet trips between 01:29 and 03:34
+423,2011-06-01,inactivity,,2011-06-01 14:41:43.307876606,2011-06-01 17:41:56.400296374,-1,0,"no events 14:41-17:41 (180 min, 322 events removed)"
+424,2011-06-01,inactivity,,2011-06-01 08:22:53.420205780,2011-06-01 10:57:09.959253121,-1,0,"no events 08:22-10:57 (154 min, 1733 events removed)"
+425,2011-06-01,inactivity,,2011-06-01 14:57:53.605781520,2011-06-01 18:51:49.596953879,-1,0,"no events 14:57-18:51 (234 min, 501 events removed)"
+426,2011-06-02,clean,,,,-1,0,
+427,2011-06-02,missed,Meal_Preparation,2011-06-02 05:55:25.557386000,2011-06-03 00:00:00.000000000,-1,0,removed 4 Meal_Preparation episodes (531 events)
+428,2011-06-02,prolonged,Meal_Preparation,2011-06-02 06:29:58.984458000,2011-06-02 08:01:40.195036866,-1,0,Meal_Preparation at 06:29 stretched from 10 to 92 min
+429,2011-06-02,prolonged,Bed_to_Toilet,2011-06-02 03:56:11.192200000,2011-06-02 05:03:25.258422591,-1,0,Bed_to_Toilet at 03:56 stretched from 2 to 67 min
+430,2011-06-02,prolonged,Bed_to_Toilet,2011-06-02 03:56:11.192200000,2011-06-02 05:32:35.937280542,-1,0,Bed_to_Toilet at 03:56 stretched from 2 to 96 min
+431,2011-06-02,unusual_time,Leave_Home,2011-06-02 02:35:22.237399924,2011-06-02 02:35:26.941635924,-1,0,Leave_Home moved from 08:09 to 02:35
+432,2011-06-02,unusual_time,Meal_Preparation,2011-06-02 03:35:34.786967563,2011-06-02 03:42:01.538950563,-1,0,Meal_Preparation moved from 11:57 to 03:35
+433,2011-06-02,unusual_time,Leave_Home,2011-06-02 04:04:18.694925688,2011-06-02 04:04:22.995825688,-1,0,Leave_Home moved from 17:17 to 04:04
+434,2011-06-02,night_frequency,Bed_to_Toilet,2011-06-02 01:29:08.987037928,2011-06-02 04:44:58.134352615,-1,0,4 extra Bed_to_Toilet trips between 01:29 and 04:44
+435,2011-06-02,night_frequency,Bed_to_Toilet,2011-06-02 01:23:59.273511374,2011-06-02 04:31:14.215054152,-1,0,4 extra Bed_to_Toilet trips between 01:23 and 04:31
+436,2011-06-02,night_frequency,Bed_to_Toilet,2011-06-02 00:35:05.290092958,2011-06-02 05:13:54.763220204,-1,0,4 extra Bed_to_Toilet trips between 00:35 and 05:13
+437,2011-06-02,inactivity,,2011-06-02 12:49:04.722556129,2011-06-02 15:55:35.369348160,-1,0,"no events 12:49-15:55 (187 min, 1062 events removed)"
+438,2011-06-02,inactivity,,2011-06-02 13:00:45.565269108,2011-06-02 16:02:51.984616312,-1,0,"no events 13:00-16:02 (182 min, 1073 events removed)"
+439,2011-06-02,inactivity,,2011-06-02 12:53:44.464037702,2011-06-02 15:33:45.921639104,-1,0,"no events 12:53-15:33 (160 min, 958 events removed)"
+440,2011-06-03,clean,,,,-1,0,
+441,2011-06-03,missed,Meal_Preparation,2011-06-03 05:02:36.745700000,2011-06-04 00:00:00.000000000,-1,0,removed 5 Meal_Preparation episodes (1875 events)
+442,2011-06-03,prolonged,Meal_Preparation,2011-06-03 18:16:08.094345000,2011-06-03 20:36:14.074209658,-1,0,Meal_Preparation at 18:16 stretched from 53 to 140 min
+443,2011-06-03,prolonged,Meal_Preparation,2011-06-03 18:16:08.094345000,2011-06-03 20:09:24.717614758,-1,0,Meal_Preparation at 18:16 stretched from 53 to 113 min
+444,2011-06-03,prolonged,Bed_to_Toilet,2011-06-03 02:50:28.222282000,2011-06-03 03:54:16.414110720,-1,0,Bed_to_Toilet at 02:50 stretched from 3 to 64 min
+445,2011-06-03,unusual_time,Meal_Preparation,2011-06-03 02:11:02.998181158,2011-06-03 02:34:10.272477158,-1,0,Meal_Preparation moved from 19:12 to 02:11
+446,2011-06-03,unusual_time,Leave_Home,2011-06-03 03:58:22.334070959,2011-06-03 03:58:28.294066959,-1,0,Leave_Home moved from 10:35 to 03:58
+447,2011-06-03,unusual_time,Meal_Preparation,2011-06-03 04:01:55.385663759,2011-06-03 04:12:38.647564759,-1,0,Meal_Preparation moved from 08:22 to 04:01
+448,2011-06-03,night_frequency,Bed_to_Toilet,2011-06-03 02:37:52.239363844,2011-06-03 05:14:03.736710746,-1,0,4 extra Bed_to_Toilet trips between 02:37 and 05:14
+449,2011-06-03,night_frequency,Bed_to_Toilet,2011-06-03 00:39:39.544997623,2011-06-03 04:22:19.797459666,-1,0,4 extra Bed_to_Toilet trips between 00:39 and 04:22
+450,2011-06-03,night_frequency,Bed_to_Toilet,2011-06-03 00:36:17.199255961,2011-06-03 03:58:02.099814521,-1,0,4 extra Bed_to_Toilet trips between 00:36 and 03:58
+451,2011-06-04,clean,,,,-1,0,
+452,2011-06-04,missed,Meal_Preparation,2011-06-04 05:19:47.676568000,2011-06-05 00:00:00.000000000,-1,0,removed 18 Meal_Preparation episodes (2825 events)
+453,2011-06-04,prolonged,Meal_Preparation,2011-06-04 09:41:45.548424000,2011-06-04 11:39:22.153352316,-1,0,Meal_Preparation at 09:41 stretched from 8 to 118 min
+454,2011-06-04,prolonged,Meal_Preparation,2011-06-04 09:58:03.316957000,2011-06-04 11:18:37.492416269,-1,0,Meal_Preparation at 09:58 stretched from 4 to 81 min
+455,2011-06-04,prolonged,Meal_Preparation,2011-06-04 18:06:45.364540000,2011-06-04 19:20:15.787242990,-1,0,Meal_Preparation at 18:06 stretched from 3 to 74 min
+456,2011-06-04,unusual_time,Leave_Home,2011-06-04 04:03:19.037962207,2011-06-04 04:03:23.605864207,-1,0,Leave_Home moved from 12:01 to 04:03
+457,2011-06-04,unusual_time,Leave_Home,2011-06-04 03:53:45.764872588,2011-06-04 03:53:50.507473588,-1,0,Leave_Home moved from 07:54 to 03:53
+458,2011-06-04,unusual_time,Meal_Preparation,2011-06-04 01:05:53.745538275,2011-06-04 01:10:02.310009275,-1,0,Meal_Preparation moved from 13:32 to 01:05
+459,2011-06-04,night_frequency,Bed_to_Toilet,2011-06-04 00:56:34.480510313,2011-06-04 04:26:48.897202614,-1,0,4 extra Bed_to_Toilet trips between 00:56 and 04:26
+460,2011-06-04,night_frequency,Bed_to_Toilet,2011-06-04 00:37:10.955392579,2011-06-04 04:21:41.212272386,-1,0,4 extra Bed_to_Toilet trips between 00:37 and 04:21
+461,2011-06-04,night_frequency,Bed_to_Toilet,2011-06-04 01:20:40.604092734,2011-06-04 05:16:03.131563560,-1,0,4 extra Bed_to_Toilet trips between 01:20 and 05:16
+462,2011-06-04,inactivity,,2011-06-04 14:34:04.176063908,2011-06-04 17:17:26.823020198,-1,0,"no events 14:34-17:17 (163 min, 1049 events removed)"
+463,2011-06-04,inactivity,,2011-06-04 14:32:44.365731311,2011-06-04 17:55:01.054093026,-1,0,"no events 14:32-17:55 (202 min, 1177 events removed)"
+464,2011-06-04,inactivity,,2011-06-04 14:35:01.457309626,2011-06-04 17:16:44.000935206,-1,0,"no events 14:35-17:16 (162 min, 1049 events removed)"
+465,2011-06-05,clean,,,,-1,0,
+466,2011-06-05,missed,Meal_Preparation,2011-06-05 05:48:21.431749000,2011-06-06 00:00:00.000000000,-1,0,removed 2 Meal_Preparation episodes (374 events)
+467,2011-06-05,prolonged,Bed_to_Toilet,2011-06-05 03:46:10.078230000,2011-06-05 05:05:30.010869778,-1,0,Bed_to_Toilet at 03:46 stretched from 2 to 79 min
+468,2011-06-05,prolonged,Bed_to_Toilet,2011-06-05 03:46:10.078230000,2011-06-05 05:19:39.132266757,-1,0,Bed_to_Toilet at 03:46 stretched from 2 to 93 min
+469,2011-06-05,prolonged,Meal_Preparation,2011-06-05 17:11:48.288962000,2011-06-05 18:38:27.157636811,-1,0,Meal_Preparation at 17:11 stretched from 13 to 87 min
+470,2011-06-05,unusual_time,Leave_Home,2011-06-05 01:18:41.674224663,2011-06-05 01:18:45.979264663,-1,0,Leave_Home moved from 09:01 to 01:18
+471,2011-06-05,unusual_time,Leave_Home,2011-06-05 02:02:10.486321217,2011-06-05 02:02:14.791361217,-1,0,Leave_Home moved from 09:01 to 02:02
+472,2011-06-05,unusual_time,Leave_Home,2011-06-05 01:41:59.068377984,2011-06-05 01:42:03.373417984,-1,0,Leave_Home moved from 09:01 to 01:41
+473,2011-06-05,night_frequency,Bed_to_Toilet,2011-06-05 01:25:27.685078402,2011-06-05 04:49:33.665884038,-1,0,4 extra Bed_to_Toilet trips between 01:25 and 04:49
+474,2011-06-05,night_frequency,Bed_to_Toilet,2011-06-05 01:27:48.455809177,2011-06-05 03:36:51.242139125,-1,0,4 extra Bed_to_Toilet trips between 01:27 and 03:36
+475,2011-06-05,night_frequency,Bed_to_Toilet,2011-06-05 00:56:15.671419637,2011-06-05 02:41:10.379670231,-1,0,4 extra Bed_to_Toilet trips between 00:56 and 02:41
+476,2011-06-05,inactivity,,2011-06-05 14:14:51.114369457,2011-06-05 17:58:43.228385264,-1,0,"no events 14:14-17:58 (224 min, 2098 events removed)"
+477,2011-06-05,inactivity,,2011-06-05 13:49:00.197865573,2011-06-05 16:42:37.286657919,-1,0,"no events 13:49-16:42 (174 min, 1708 events removed)"
+478,2011-06-05,inactivity,,2011-06-05 14:10:29.343443286,2011-06-05 18:06:40.824021672,-1,0,"no events 14:10-18:06 (236 min, 2110 events removed)"
+479,2011-06-06,clean,,,,-1,0,
+480,2011-06-06,missed,Meal_Preparation,2011-06-06 05:47:11.723015000,2011-06-07 00:00:00.000000000,-1,0,removed 7 Meal_Preparation episodes (1167 events)
+481,2011-06-06,prolonged,Bed_to_Toilet,2011-06-06 01:38:28.634181000,2011-06-06 02:52:34.825300726,-1,0,Bed_to_Toilet at 01:38 stretched from 3 to 74 min
+482,2011-06-06,prolonged,Bed_to_Toilet,2011-06-06 01:38:28.634181000,2011-06-06 03:33:59.608873732,-1,0,Bed_to_Toilet at 01:38 stretched from 3 to 116 min
+483,2011-06-06,prolonged,Meal_Preparation,2011-06-06 18:15:50.232112000,2011-06-06 19:25:10.839668578,-1,0,Meal_Preparation at 18:15 stretched from 7 to 69 min
+484,2011-06-06,unusual_time,Leave_Home,2011-06-06 03:02:15.275661357,2011-06-06 03:02:24.001451357,-1,0,Leave_Home moved from 15:43 to 03:02
+485,2011-06-06,unusual_time,Leave_Home,2011-06-06 02:58:55.520065490,2011-06-06 02:59:04.245855490,-1,0,Leave_Home moved from 15:43 to 02:58
+486,2011-06-06,unusual_time,Leave_Home,2011-06-06 01:39:25.045248271,2011-06-06 01:39:33.771038271,-1,0,Leave_Home moved from 15:43 to 01:39
+487,2011-06-06,night_frequency,Bed_to_Toilet,2011-06-06 01:52:08.104355877,2011-06-06 03:31:44.579291118,-1,0,4 extra Bed_to_Toilet trips between 01:52 and 03:31
+488,2011-06-06,night_frequency,Bed_to_Toilet,2011-06-06 00:57:59.154395107,2011-06-06 05:08:25.775337001,-1,0,4 extra Bed_to_Toilet trips between 00:57 and 05:08
+489,2011-06-06,night_frequency,Bed_to_Toilet,2011-06-06 01:45:58.194703470,2011-06-06 03:33:42.195892949,-1,0,4 extra Bed_to_Toilet trips between 01:45 and 03:33
+490,2011-06-06,inactivity,,2011-06-06 09:38:33.981904746,2011-06-06 13:29:52.473273653,-1,0,"no events 09:38-13:29 (231 min, 3512 events removed)"
+491,2011-06-06,inactivity,,2011-06-06 10:11:14.030356113,2011-06-06 13:16:17.750131061,-1,0,"no events 10:11-13:16 (185 min, 2722 events removed)"
+492,2011-06-06,inactivity,,2011-06-06 09:39:47.602033939,2011-06-06 13:27:42.561700658,-1,0,"no events 09:39-13:27 (228 min, 3460 events removed)"
+493,2011-06-07,clean,,,,-1,0,
+494,2011-06-07,missed,Meal_Preparation,2011-06-07 05:29:27.073002000,2011-06-08 00:00:00.000000000,-1,0,removed 7 Meal_Preparation episodes (1764 events)
+495,2011-06-07,prolonged,Meal_Preparation,2011-06-07 16:59:45.759119000,2011-06-07 18:19:00.043521893,-1,0,Meal_Preparation at 16:59 stretched from 16 to 79 min
+496,2011-06-07,prolonged,Bed_to_Toilet,2011-06-07 03:33:43.093879000,2011-06-07 04:51:10.947325318,-1,0,Bed_to_Toilet at 03:33 stretched from 2 to 77 min
+497,2011-06-07,prolonged,Bed_to_Toilet,2011-06-07 03:33:43.093879000,2011-06-07 05:19:12.839390497,-1,0,Bed_to_Toilet at 03:33 stretched from 2 to 105 min
+498,2011-06-07,unusual_time,Leave_Home,2011-06-07 02:55:48.178863183,2011-06-07 02:55:55.522756183,-1,0,Leave_Home moved from 18:26 to 02:55
+499,2011-06-07,unusual_time,Meal_Preparation,2011-06-07 01:19:08.967201019,2011-06-07 02:04:21.035688019,-1,0,Meal_Preparation moved from 19:03 to 01:19
+500,2011-06-07,unusual_time,Meal_Preparation,2011-06-07 04:02:29.032755901,2011-06-07 04:18:56.669401901,-1,0,Meal_Preparation moved from 16:59 to 04:02
+501,2011-06-07,night_frequency,Bed_to_Toilet,2011-06-07 00:31:14.884095800,2011-06-07 04:49:00.305331066,-1,0,4 extra Bed_to_Toilet trips between 00:31 and 04:49
+502,2011-06-07,night_frequency,Bed_to_Toilet,2011-06-07 00:56:43.291492954,2011-06-07 04:45:27.499190496,-1,0,4 extra Bed_to_Toilet trips between 00:56 and 04:45
+503,2011-06-07,night_frequency,Bed_to_Toilet,2011-06-07 00:33:46.752780095,2011-06-07 04:03:51.460055068,-1,0,4 extra Bed_to_Toilet trips between 00:33 and 04:03
+504,2011-06-08,clean,,,,-1,0,
+505,2011-06-08,missed,Meal_Preparation,2011-06-08 05:20:42.781303000,2011-06-09 00:00:00.000000000,-1,0,removed 10 Meal_Preparation episodes (1150 events)
+506,2011-06-08,prolonged,Meal_Preparation,2011-06-08 19:33:58.983101000,2011-06-08 20:41:39.044776710,-1,0,Meal_Preparation at 19:33 stretched from 3 to 68 min
+507,2011-06-08,prolonged,Bed_to_Toilet,2011-06-08 02:53:30.864259000,2011-06-08 04:38:26.371307120,-1,0,Bed_to_Toilet at 02:53 stretched from 3 to 105 min
+508,2011-06-08,prolonged,Bed_to_Toilet,2011-06-08 02:53:30.864259000,2011-06-08 04:21:05.576073554,-1,0,Bed_to_Toilet at 02:53 stretched from 3 to 88 min
+509,2011-06-08,unusual_time,Leave_Home,2011-06-08 02:48:09.289075872,2011-06-08 02:48:14.462929872,-1,0,Leave_Home moved from 16:29 to 02:48
+510,2011-06-08,unusual_time,Leave_Home,2011-06-08 01:57:41.814697253,2011-06-08 01:57:46.292076253,-1,0,Leave_Home moved from 11:17 to 01:57
+511,2011-06-08,unusual_time,Meal_Preparation,2011-06-08 03:09:37.293476734,2011-06-08 03:13:33.318257734,-1,0,Meal_Preparation moved from 17:40 to 03:09
+512,2011-06-08,night_frequency,Bed_to_Toilet,2011-06-08 00:39:39.479333053,2011-06-08 05:18:58.901695281,-1,0,4 extra Bed_to_Toilet trips between 00:39 and 05:18
+513,2011-06-08,night_frequency,Bed_to_Toilet,2011-06-08 00:35:51.871400186,2011-06-08 05:12:06.030932484,-1,0,4 extra Bed_to_Toilet trips between 00:35 and 05:12
+514,2011-06-08,night_frequency,Bed_to_Toilet,2011-06-08 02:17:27.214239399,2011-06-08 05:14:27.077023336,-1,0,4 extra Bed_to_Toilet trips between 02:17 and 05:14
+515,2011-06-08,inactivity,,2011-06-08 08:10:38.150019277,2011-06-08 10:50:33.690740408,-1,0,"no events 08:10-10:50 (160 min, 1148 events removed)"
+516,2011-06-08,inactivity,,2011-06-08 08:03:16.803946047,2011-06-08 10:57:10.967544354,-1,0,"no events 08:03-10:57 (174 min, 1294 events removed)"
+517,2011-06-08,inactivity,,2011-06-08 08:08:35.185022071,2011-06-08 11:15:41.181410687,-1,0,"no events 08:08-11:15 (187 min, 1278 events removed)"
+518,2011-06-09,clean,,,,-1,0,
+519,2011-06-09,missed,Meal_Preparation,2011-06-09 05:15:42.217389000,2011-06-10 00:00:00.000000000,-1,0,removed 5 Meal_Preparation episodes (513 events)
+520,2011-06-09,prolonged,Meal_Preparation,2011-06-09 05:15:42.217389000,2011-06-09 06:24:31.386857822,-1,0,Meal_Preparation at 05:15 stretched from 4 to 69 min
+521,2011-06-09,prolonged,Bed_to_Toilet,2011-06-09 02:04:48.336353000,2011-06-09 03:27:28.378194263,-1,0,Bed_to_Toilet at 02:04 stretched from 5 to 83 min
+522,2011-06-09,prolonged,Bed_to_Toilet,2011-06-09 02:04:48.336353000,2011-06-09 04:03:19.911601774,-1,0,Bed_to_Toilet at 02:04 stretched from 5 to 119 min
+523,2011-06-09,unusual_time,Leave_Home,2011-06-09 03:47:41.318817261,2011-06-09 03:47:46.132751261,-1,0,Leave_Home moved from 16:03 to 03:47
+524,2011-06-09,unusual_time,Meal_Preparation,2011-06-09 04:25:28.515963311,2011-06-09 04:35:01.900299311,-1,0,Meal_Preparation moved from 14:57 to 04:25
+525,2011-06-09,unusual_time,Leave_Home,2011-06-09 02:21:10.359484261,2011-06-09 02:21:14.882466261,-1,0,Leave_Home moved from 18:36 to 02:21
+526,2011-06-09,night_frequency,Bed_to_Toilet,2011-06-09 00:59:46.121103298,2011-06-09 05:14:05.360719202,-1,0,4 extra Bed_to_Toilet trips between 00:59 and 05:14
+527,2011-06-09,night_frequency,Bed_to_Toilet,2011-06-09 01:24:45.146855990,2011-06-09 03:08:33.791362181,-1,0,4 extra Bed_to_Toilet trips between 01:24 and 03:08
+528,2011-06-09,night_frequency,Bed_to_Toilet,2011-06-09 01:03:29.758108631,2011-06-09 04:44:35.221507053,-1,0,4 extra Bed_to_Toilet trips between 01:03 and 04:44
+529,2011-06-10,clean,,,,-1,0,
+530,2011-06-10,missed,Meal_Preparation,2011-06-10 05:30:49.864722000,2011-06-11 00:00:00.000000000,-1,0,removed 11 Meal_Preparation episodes (2484 events)
+531,2011-06-10,prolonged,Meal_Preparation,2011-06-10 18:34:27.929845000,2011-06-10 20:06:03.157173426,-1,0,Meal_Preparation at 18:34 stretched from 7 to 92 min
+532,2011-06-10,prolonged,Meal_Preparation,2011-06-10 19:21:32.408132000,2011-06-10 20:36:39.854741435,-1,0,Meal_Preparation at 19:21 stretched from 2 to 75 min
+533,2011-06-10,prolonged,Meal_Preparation,2011-06-10 05:30:49.864722000,2011-06-10 07:31:02.088614606,-1,0,Meal_Preparation at 05:30 stretched from 16 to 120 min
+534,2011-06-10,unusual_time,Meal_Preparation,2011-06-10 03:01:32.251564616,2011-06-10 03:07:47.044740616,-1,0,Meal_Preparation moved from 18:18 to 03:01
+535,2011-06-10,unusual_time,Leave_Home,2011-06-10 01:55:19.387049877,2011-06-10 01:55:26.812621877,-1,0,Leave_Home moved from 10:12 to 01:55
+536,2011-06-10,unusual_time,Meal_Preparation,2011-06-10 02:18:42.344229397,2011-06-10 02:31:26.377478397,-1,0,Meal_Preparation moved from 18:42 to 02:18
+537,2011-06-10,night_frequency,Bed_to_Toilet,2011-06-10 00:33:40.948730061,2011-06-10 04:27:03.776482141,-1,0,4 extra Bed_to_Toilet trips between 00:33 and 04:27
+538,2011-06-10,night_frequency,Bed_to_Toilet,2011-06-10 01:26:39.555127917,2011-06-10 05:10:44.690602827,-1,0,4 extra Bed_to_Toilet trips between 01:26 and 05:10
+539,2011-06-10,night_frequency,Bed_to_Toilet,2011-06-10 02:10:14.027772582,2011-06-10 04:26:20.102196634,-1,0,4 extra Bed_to_Toilet trips between 02:10 and 04:26
+540,2011-06-11,clean,,,,-1,0,
+541,2011-06-11,missed,Meal_Preparation,2011-06-11 05:24:36.288589000,2011-06-12 00:00:00.000000000,-1,0,removed 8 Meal_Preparation episodes (2255 events)
+542,2011-06-11,prolonged,Meal_Preparation,2011-06-11 09:53:54.474267000,2011-06-11 12:13:50.845231341,-1,0,Meal_Preparation at 09:53 stretched from 24 to 140 min
+543,2011-06-11,prolonged,Meal_Preparation,2011-06-11 06:49:29.587245000,2011-06-11 07:55:57.108641446,-1,0,Meal_Preparation at 06:49 stretched from 5 to 66 min
+544,2011-06-11,prolonged,Meal_Preparation,2011-06-11 06:49:29.587245000,2011-06-11 08:52:23.086884922,-1,0,Meal_Preparation at 06:49 stretched from 5 to 123 min
+545,2011-06-11,unusual_time,Meal_Preparation,2011-06-11 03:40:54.185010726,2011-06-11 03:42:07.943671726,-1,0,Meal_Preparation moved from 17:46 to 03:40
+546,2011-06-11,unusual_time,Meal_Preparation,2011-06-11 02:59:34.878813293,2011-06-11 03:06:33.466275293,-1,0,Meal_Preparation moved from 13:35 to 02:59
+547,2011-06-11,unusual_time,Meal_Preparation,2011-06-11 03:07:35.542968161,2011-06-11 03:12:17.979286161,-1,0,Meal_Preparation moved from 17:48 to 03:07
+548,2011-06-11,night_frequency,Bed_to_Toilet,2011-06-11 01:52:58.927116309,2011-06-11 04:45:39.914488810,-1,0,4 extra Bed_to_Toilet trips between 01:52 and 04:45
+549,2011-06-11,night_frequency,Bed_to_Toilet,2011-06-11 03:02:11.959769287,2011-06-11 05:12:14.518929723,-1,0,4 extra Bed_to_Toilet trips between 03:02 and 05:12
+550,2011-06-11,night_frequency,Bed_to_Toilet,2011-06-11 01:28:50.884613735,2011-06-11 05:08:30.915552694,-1,0,4 extra Bed_to_Toilet trips between 01:28 and 05:08
+551,2011-06-11,inactivity,,2011-06-11 12:31:14.353526452,2011-06-11 16:08:26.648110918,-1,0,"no events 12:31-16:08 (217 min, 1256 events removed)"
+552,2011-06-11,inactivity,,2011-06-11 12:29:06.616697019,2011-06-11 16:01:03.686477590,-1,0,"no events 12:29-16:01 (212 min, 1258 events removed)"
+553,2011-06-11,inactivity,,2011-06-11 08:24:17.895023796,2011-06-11 12:15:00.703922029,-1,0,"no events 08:24-12:15 (231 min, 1843 events removed)"
+554,2011-04-29,drift,Meal_Preparation,2011-04-29 06:08:08.419760000,2011-04-29 06:13:26.871831000,0,1,drift run 0 day 1: first Meal_Preparation moved 05:48 -> 06:08
+555,2011-04-30,drift,Meal_Preparation,2011-04-30 06:08:25.720034000,2011-04-30 06:10:55.429642000,0,2,drift run 0 day 2: first Meal_Preparation moved 05:28 -> 06:08
+556,2011-05-01,drift,Meal_Preparation,2011-05-01 06:01:50.488270000,2011-05-01 06:09:26.279730000,0,3,drift run 0 day 3: first Meal_Preparation moved 05:01 -> 06:01
+557,2011-05-02,drift,Meal_Preparation,2011-05-02 07:08:36.252103000,2011-05-02 07:22:13.430036000,0,4,drift run 0 day 4: first Meal_Preparation moved 05:48 -> 07:08
+558,2011-05-03,drift,Meal_Preparation,2011-05-03 07:01:01.554909000,2011-05-03 07:07:03.532983000,0,5,drift run 0 day 5: first Meal_Preparation moved 05:21 -> 07:01
+559,2011-05-04,drift,Meal_Preparation,2011-05-04 08:55:52.008670000,2011-05-04 08:59:55.866815000,0,6,drift run 0 day 6: first Meal_Preparation moved 06:55 -> 08:55
+560,2011-05-05,drift,Meal_Preparation,2011-05-05 16:46:22.609423000,2011-05-05 16:53:39.951579000,0,7,drift run 0 day 7: first Meal_Preparation moved 14:26 -> 16:46
+561,2011-05-06,drift,Meal_Preparation,2011-05-06 05:49:31.215577000,2011-05-06 05:58:54.593298000,1,1,drift run 1 day 1: first Meal_Preparation moved 05:29 -> 05:49
+562,2011-05-07,drift,Meal_Preparation,2011-05-07 07:53:20.151103000,2011-05-07 07:58:25.937852000,1,2,drift run 1 day 2: first Meal_Preparation moved 07:13 -> 07:53
+563,2011-05-08,drift,Meal_Preparation,2011-05-08 07:14:23.521038000,2011-05-08 07:20:07.142204000,1,3,drift run 1 day 3: first Meal_Preparation moved 06:14 -> 07:14
+564,2011-05-09,drift,Meal_Preparation,2011-05-09 06:37:48.014689000,2011-05-09 06:50:37.558667000,1,4,drift run 1 day 4: first Meal_Preparation moved 05:17 -> 06:37
+565,2011-05-10,drift,Meal_Preparation,2011-05-10 07:18:58.581130000,2011-05-10 07:25:34.784657000,1,5,drift run 1 day 5: first Meal_Preparation moved 05:38 -> 07:18
+566,2011-05-11,drift,Meal_Preparation,2011-05-11 08:24:34.665275000,2011-05-11 08:28:53.043351000,1,6,drift run 1 day 6: first Meal_Preparation moved 06:24 -> 08:24
+567,2011-05-12,drift,Meal_Preparation,2011-05-12 09:00:44.934424000,2011-05-12 09:04:20.594355000,1,7,drift run 1 day 7: first Meal_Preparation moved 06:40 -> 09:00
+568,2011-05-13,drift,Meal_Preparation,2011-05-13 06:31:56.152635000,2011-05-13 06:37:40.906043000,2,1,drift run 2 day 1: first Meal_Preparation moved 06:11 -> 06:31
+569,2011-05-14,drift,Meal_Preparation,2011-05-14 07:29:20.462652000,2011-05-14 07:35:39.314370000,2,2,drift run 2 day 2: first Meal_Preparation moved 06:49 -> 07:29
+570,2011-05-15,drift,Meal_Preparation,2011-05-15 07:01:11.961914000,2011-05-15 07:13:54.258510000,2,3,drift run 2 day 3: first Meal_Preparation moved 06:01 -> 07:01
+571,2011-05-16,drift,Meal_Preparation,2011-05-16 06:53:21.744711000,2011-05-16 06:59:21.002758000,2,4,drift run 2 day 4: first Meal_Preparation moved 05:33 -> 06:53
+572,2011-05-17,drift,Meal_Preparation,2011-05-17 07:34:40.498725000,2011-05-17 07:38:55.146435000,2,5,drift run 2 day 5: first Meal_Preparation moved 05:54 -> 07:34
+573,2011-05-18,drift,Meal_Preparation,2011-05-18 10:20:32.623853000,2011-05-18 10:24:22.644347000,2,6,drift run 2 day 6: first Meal_Preparation moved 08:20 -> 10:20
+574,2011-05-19,drift,Meal_Preparation,2011-05-19 07:46:50.236785000,2011-05-19 07:59:06.072649000,2,7,drift run 2 day 7: first Meal_Preparation moved 05:26 -> 07:46
+575,2011-05-20,drift,Meal_Preparation,2011-05-20 06:26:08.443146000,2011-05-20 06:32:32.003786000,3,1,drift run 3 day 1: first Meal_Preparation moved 06:06 -> 06:26
+576,2011-05-21,drift,Meal_Preparation,2011-05-21 07:03:58.834686000,2011-05-21 07:16:45.671130000,3,2,drift run 3 day 2: first Meal_Preparation moved 06:23 -> 07:03
+577,2011-05-22,drift,Meal_Preparation,2011-05-22 08:27:35.458388000,2011-05-22 08:37:03.372275000,3,3,drift run 3 day 3: first Meal_Preparation moved 07:27 -> 08:27
+578,2011-05-23,drift,Meal_Preparation,2011-05-23 08:08:04.334919000,2011-05-23 08:10:30.875921000,3,4,drift run 3 day 4: first Meal_Preparation moved 06:48 -> 08:08
+579,2011-05-24,drift,Meal_Preparation,2011-05-24 17:42:39.795965000,2011-05-24 17:46:04.635010000,3,5,drift run 3 day 5: first Meal_Preparation moved 16:02 -> 17:42
+580,2011-05-25,drift,Meal_Preparation,2011-05-25 16:38:35.743265000,2011-05-25 16:44:17.254831000,3,6,drift run 3 day 6: first Meal_Preparation moved 14:38 -> 16:38
+581,2011-05-26,drift,Meal_Preparation,2011-05-26 09:30:17.612196000,2011-05-26 09:31:24.135700000,3,7,drift run 3 day 7: first Meal_Preparation moved 07:10 -> 09:30
+582,2011-05-27,drift,Meal_Preparation,2011-05-27 05:46:06.783284000,2011-05-27 05:51:42.183545000,4,1,drift run 4 day 1: first Meal_Preparation moved 05:26 -> 05:46
+583,2011-05-28,drift,Meal_Preparation,2011-05-28 09:58:18.202795000,2011-05-28 10:03:02.705699000,4,2,drift run 4 day 2: first Meal_Preparation moved 09:18 -> 09:58
+584,2011-05-29,drift,Meal_Preparation,2011-05-29 07:47:22.524163000,2011-05-29 07:53:18.128305000,4,3,drift run 4 day 3: first Meal_Preparation moved 06:47 -> 07:47
+585,2011-05-30,drift,Meal_Preparation,,,4,4,no cooking to shift
+586,2011-05-31,drift,Meal_Preparation,2011-05-31 08:33:36.008495000,2011-05-31 08:42:28.416769000,4,5,drift run 4 day 5: first Meal_Preparation moved 06:53 -> 08:33
+587,2011-06-01,drift,Meal_Preparation,2011-06-01 07:45:03.977159000,2011-06-01 07:55:55.581863000,4,6,drift run 4 day 6: first Meal_Preparation moved 05:45 -> 07:45
+588,2011-06-02,drift,Meal_Preparation,2011-06-02 08:15:25.557386000,2011-06-02 08:20:49.499831000,4,7,drift run 4 day 7: first Meal_Preparation moved 05:55 -> 08:15
+589,2011-06-03,drift,Meal_Preparation,2011-06-03 05:22:36.745700000,2011-06-03 05:29:19.569054000,5,1,drift run 5 day 1: first Meal_Preparation moved 05:02 -> 05:22
+590,2011-06-04,drift,Meal_Preparation,2011-06-04 05:59:47.676568000,2011-06-04 06:04:36.641011000,5,2,drift run 5 day 2: first Meal_Preparation moved 05:19 -> 05:59
+591,2011-06-05,drift,Meal_Preparation,2011-06-05 06:48:21.431749000,2011-06-05 06:55:10.564452000,5,3,drift run 5 day 3: first Meal_Preparation moved 05:48 -> 06:48
+592,2011-06-06,drift,Meal_Preparation,2011-06-06 07:07:11.723015000,2011-06-06 07:15:29.273523000,5,4,drift run 5 day 4: first Meal_Preparation moved 05:47 -> 07:07
+593,2011-06-07,drift,Meal_Preparation,2011-06-07 07:09:27.073002000,2011-06-07 07:14:29.086962000,5,5,drift run 5 day 5: first Meal_Preparation moved 05:29 -> 07:09
+594,2011-06-08,drift,Meal_Preparation,2011-06-08 07:20:42.781303000,2011-06-08 07:32:16.765541000,5,6,drift run 5 day 6: first Meal_Preparation moved 05:20 -> 07:20
+595,2011-06-09,drift,Meal_Preparation,2011-06-09 07:35:42.217389000,2011-06-09 07:39:51.208599000,5,7,drift run 5 day 7: first Meal_Preparation moved 05:15 -> 07:35
+596,2011-06-05,drift,Meal_Preparation,2011-06-05 06:08:21.431749000,2011-06-05 06:15:10.564452000,6,1,drift run 6 day 1: first Meal_Preparation moved 05:48 -> 06:08
+597,2011-06-06,drift,Meal_Preparation,2011-06-06 06:27:11.723015000,2011-06-06 06:35:29.273523000,6,2,drift run 6 day 2: first Meal_Preparation moved 05:47 -> 06:27
+598,2011-06-07,drift,Meal_Preparation,2011-06-07 06:29:27.073002000,2011-06-07 06:34:29.086962000,6,3,drift run 6 day 3: first Meal_Preparation moved 05:29 -> 06:29
+599,2011-06-08,drift,Meal_Preparation,2011-06-08 06:40:42.781303000,2011-06-08 06:52:16.765541000,6,4,drift run 6 day 4: first Meal_Preparation moved 05:20 -> 06:40
+600,2011-06-09,drift,Meal_Preparation,2011-06-09 06:55:42.217389000,2011-06-09 06:59:51.208599000,6,5,drift run 6 day 5: first Meal_Preparation moved 05:15 -> 06:55
+601,2011-06-10,drift,Meal_Preparation,2011-06-10 07:30:49.864722000,2011-06-10 07:46:41.149858000,6,6,drift run 6 day 6: first Meal_Preparation moved 05:30 -> 07:30
+602,2011-06-11,drift,Meal_Preparation,2011-06-11 07:44:36.288589000,2011-06-11 07:57:42.579137000,6,7,drift run 6 day 7: first Meal_Preparation moved 05:24 -> 07:44

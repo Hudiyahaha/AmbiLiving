@@ -1,13 +1,14 @@
 import type { HomeEnvironment } from "@/types/home";
-import { arubaActivityClasses, arubaAnomalies } from "@/data/homes/arubaMock";
+import { arubaActivityClasses } from "@/data/homes/arubaMock";
 import { arubaSensors } from "@/data/homes/arubaSensors";
-import { milanActivityClasses, milanAnomalies } from "@/data/homes/milanMock";
+import { milanActivityClasses } from "@/data/homes/milanMock";
 import { milanSensors } from "@/data/homes/milanSensors";
 import { arubaRealDay, milanRealDay } from "@/data/homes/realData";
+import { arubaRealAnomalies, milanRealAnomalies } from "@/data/homes/realAnomalies";
 
 // Sensor events and recognised activities are one real dataset day with model
-// predictions (see realData.ts). Anomalies are still sample data: anomaly
-// detection is not built yet.
+// predictions (see realData.ts). Anomalies are the routine model's alerts on the
+// real monitoring days of each home (see realAnomalies.ts).
 const aruba = arubaRealDay(arubaActivityClasses);
 const milan = milanRealDay(milanActivityClasses);
 
@@ -33,7 +34,8 @@ export const homes: HomeEnvironment[] = [
     activityClasses: arubaActivityClasses,
     events: aruba.events,
     activityHistory: aruba.activityHistory,
-    anomalies: arubaAnomalies,
+    anomalies: arubaRealAnomalies.anomalies,
+    anomalySource: arubaRealAnomalies.source,
     currentActivityId: aruba.currentActivityId,
     dataSource: aruba.dataSource,
     datasetStats: {
@@ -60,7 +62,8 @@ export const homes: HomeEnvironment[] = [
     activityClasses: milanActivityClasses,
     events: milan.events,
     activityHistory: milan.activityHistory,
-    anomalies: milanAnomalies,
+    anomalies: milanRealAnomalies.anomalies,
+    anomalySource: milanRealAnomalies.source,
     currentActivityId: milan.currentActivityId,
     dataSource: milan.dataSource,
     datasetStats: {
