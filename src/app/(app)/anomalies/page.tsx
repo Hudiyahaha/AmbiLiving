@@ -36,7 +36,8 @@ export default function AnomaliesPage() {
           testing with injected routine deviations it caught{" "}
           {Math.round(currentHome.anomalySource.detectionRate * 100)}% of them
           with {currentHome.anomalySource.falseAlertsPerDay} alerts per normal
-          day.
+          day. Only possible emergencies are sent as notifications; the rest go
+          into an evening summary or stay on this page.
         </p>
       )}
 
@@ -71,6 +72,11 @@ export default function AnomaliesPage() {
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
+                  {anom.delivery && (
+                    <span className="rounded-md border border-border px-2 py-0.5 text-xs font-medium text-muted">
+                      {anom.delivery}
+                    </span>
+                  )}
                   {anom.requiresAttention && (
                     <span className="rounded-md bg-danger-soft px-2 py-0.5 text-xs font-medium text-danger">
                       Needs attention

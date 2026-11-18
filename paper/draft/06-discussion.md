@@ -57,9 +57,13 @@ is conservative. A deployed system needs a way for caregivers to mark a change a
 
 **Alert budget.** At 0.1 alerts per normal day for each routine aspect, the routine model
 raises about 1.3 alerts per day on Aruba with annotated or segment activities. That is too
-many to send as notifications. The aspects differ in urgency — a long silence or a very long
-bathroom visit warrants a notification; a different afternoon or a slow drift belongs in a
-daily summary — so the next step is to route deviations by severity rather than lower every
-threshold (ROADMAP 3.1).
+many to send as notifications, but the aspects differ in urgency: a long silence or a very long
+bathroom visit warrants a notification, while a different afternoon or a slow drift belongs in a
+daily summary. Routing by urgency instead of lowering every threshold (§5.4) cuts pushes to one
+every one to two weeks on Aruba while keeping most possible emergencies. It also exposes a
+further dependency on recognition: a routing rule conditioned on the activity label ("cooking at
+3 am") fails silently when that label is wrong, even if the deviation itself is still detected.
+Urgent rules should therefore prefer label-independent evidence (silence, the room the
+movement is in) where possible.
 
 <!-- Numbers referenced qualitatively here come from §5.3 / claims C7, C7b, C8, C8b. -->

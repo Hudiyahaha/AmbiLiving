@@ -90,6 +90,8 @@ export interface AnomalyRecord {
   timestamp: string;
   /** Whether caregiver still needs to review */
   requiresAttention?: boolean;
+  /** How the caregiver was told: notification, evening summary or dashboard only */
+  delivery?: string;
 }
 
 /** How a home's anomalies were produced, when they are real detector output */

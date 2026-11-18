@@ -176,6 +176,7 @@ calibrated to 0.1 alerts per normal day per routine aspect. Protocol: decisions 
 
     python -m har.run_anomaly --dataset all     # ~1 h on CPU (BiLSTM inference dominates)
     python -m har.anomaly_report                # -> results/anomaly.md, anomaly_curve.png
+    python -m har.alerts                        # routing: notify / summary / insight -> results/alerts.md
     python -m har.export_anomalies              # deviations found on real days -> dashboard JSON
 
 Results: [`results/anomaly.md`](results/anomaly.md).

@@ -18,5 +18,7 @@ the raw sensor stream, the routine model detects 87–92 % of them with recognis
 a generic autoencoder detects 4–19 % and none of the missed meals or periods of inactivity. With
 the live recogniser, detection drops to 16 % on Aruba and 63 % on Milan; we trace the loss to
 recognition errors that corrupt the *learned routine itself*, not only the monitored day.
+Routing deviations by urgency reduces push notifications to one every one to two weeks on Aruba
+while still notifying 94 % of injected possible emergencies from annotated activities.
 
-<!-- Numbers: C4e, C5, C7, C8. Add one sentence on alert routing (§5.4) once evaluated. -->
+<!-- Numbers: C4e, C5, C7, C8, C10. -->

@@ -1,0 +1,164 @@
+{
+  "gt": {
+    "per_clean_day": {
+      "notify": 0.06818181818181818,
+      "summary": 1.3409090909090908,
+      "insight": 0.3409090909090909
+    },
+    "clean_days_with_notification": 0.06818181818181818,
+    "types": {
+      "inactivity": {
+        "n": 74,
+        "urgent": true,
+        "notified": 0.918918918918919,
+        "surfaced": 0.918918918918919,
+        "median_notify_delay_min": 115.853396175
+      },
+      "missed": {
+        "n": 43,
+        "urgent": false,
+        "notified": 0.0,
+        "surfaced": 1.0,
+        "median_notify_delay_min": null
+      },
+      "night_frequency": {
+        "n": 132,
+        "urgent": false,
+        "notified": 0.045454545454545456,
+        "surfaced": 1.0,
+        "median_notify_delay_min": 117.25469758333332
+      },
+      "prolonged_bathroom": {
+        "n": 37,
+        "urgent": true,
+        "notified": 1.0,
+        "surfaced": 1.0,
+        "median_notify_delay_min": 9.596353316666667
+      },
+      "prolonged_other": {
+        "n": 95,
+        "urgent": false,
+        "notified": 0.021052631578947368,
+        "surfaced": 0.5157894736842106,
+        "median_notify_delay_min": -4.753289058333333
+      },
+      "unusual_time": {
+        "n": 129,
+        "urgent": true,
+        "notified": 0.937984496124031,
+        "surfaced": 0.937984496124031,
+        "median_notify_delay_min": 0.0
+      }
+    },
+    "urgent_notified": 0.9416666666666667,
+    "non_urgent_surfaced": 0.8296296296296296
+  },
+  "seg": {
+    "per_clean_day": {
+      "notify": 0.09090909090909091,
+      "summary": 1.1818181818181819,
+      "insight": 0.3181818181818182
+    },
+    "clean_days_with_notification": 0.09090909090909091,
+    "types": {
+      "inactivity": {
+        "n": 74,
+        "urgent": true,
+        "notified": 0.7702702702702703,
+        "surfaced": 0.7972972972972973,
+        "median_notify_delay_min": 125.50595148333333
+      },
+      "missed": {
+        "n": 43,
+        "urgent": false,
+        "notified": 0.0,
+        "surfaced": 0.9767441860465116,
+        "median_notify_delay_min": null
+      },
+      "night_frequency": {
+        "n": 132,
+        "urgent": false,
+        "notified": 0.045454545454545456,
+        "surfaced": 0.9848484848484849,
+        "median_notify_delay_min": 117.25469758333332
+      },
+      "prolonged_bathroom": {
+        "n": 37,
+        "urgent": true,
+        "notified": 1.0,
+        "surfaced": 1.0,
+        "median_notify_delay_min": 9.596353316666667
+      },
+      "prolonged_other": {
+        "n": 95,
+        "urgent": false,
+        "notified": 0.021052631578947368,
+        "surfaced": 0.45263157894736844,
+        "median_notify_delay_min": -4.753289058333333
+      },
+      "unusual_time": {
+        "n": 129,
+        "urgent": true,
+        "notified": 0.4418604651162791,
+        "surfaced": 0.8914728682170543,
+        "median_notify_delay_min": 0.0
+      }
+    },
+    "urgent_notified": 0.6291666666666667,
+    "non_urgent_surfaced": 0.7962962962962963
+  },
+  "win": {
+    "per_clean_day": {
+      "notify": 0.20454545454545456,
+      "summary": 0.6818181818181818,
+      "insight": 0.4090909090909091
+    },
+    "clean_days_with_notification": 0.20454545454545456,
+    "types": {
+      "inactivity": {
+        "n": 74,
+        "urgent": true,
+        "notified": 0.04054054054054054,
+        "surfaced": 0.10810810810810811,
+        "median_notify_delay_min": 164.5984877
+      },
+      "missed": {
+        "n": 43,
+        "urgent": false,
+        "notified": 0.0,
+        "surfaced": 0.046511627906976744,
+        "median_notify_delay_min": null
+      },
+      "night_frequency": {
+        "n": 132,
+        "urgent": false,
+        "notified": 0.022727272727272728,
+        "surfaced": 0.022727272727272728,
+        "median_notify_delay_min": 91.23850245
+      },
+      "prolonged_bathroom": {
+        "n": 37,
+        "urgent": true,
+        "notified": 0.0,
+        "surfaced": 0.0,
+        "median_notify_delay_min": null
+      },
+      "prolonged_other": {
+        "n": 95,
+        "urgent": false,
+        "notified": 0.042105263157894736,
+        "surfaced": 0.08421052631578947,
+        "median_notify_delay_min": 57.514267241666666
+      },
+      "unusual_time": {
+        "n": 129,
+        "urgent": true,
+        "notified": 0.10077519379844961,
+        "surfaced": 0.13178294573643412,
+        "median_notify_delay_min": 3.23982945
+      }
+    },
+    "urgent_notified": 0.06666666666666667,
+    "non_urgent_surfaced": 0.04814814814814815
+  }
+}

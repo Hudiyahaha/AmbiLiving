@@ -57,7 +57,7 @@ and "significant consequences" characteristics claimed in the defense (CCP slide
 | 5.1 | Results: segment HAR | Tables T1, T2; per-class; context/history ablation | C1–C4 | ✅ |
 | 5.2 | Results: live HAR | Table T3 vs LastAct / DeepCASAS; per-class | C5, C6 | 🟡 per-class table missing (ROADMAP 1.2) |
 | 5.3 | Results: routine deviation | Per deviation type and drift; routine model vs generic AD; error propagation across 3 activity streams | C7, C8 | ✅ drafted (`draft/05-results-routine.md`) |
-| 5.4 | Results: system | False alerts / day, detection delay, latency | C9 | ⬜ |
+| 5.4 | Results: alert routing (+ later: latency) | Notifications vs summary per day; urgent deviations notified; delay | C10, C10b (C9 latency pending) | ✅ routing drafted (`draft/05-results-alerts.md`) |
 | 6 | Discussion (drafted) | Representation > architecture; why history fails on the temporal split (drift); Milan holiday test period; rare classes; history feedback loop; limits of synthetic deviations; Milan holiday = real routine change | claims.md "limitations" | 🟡 |
 | 7 | Ethics & limitations | Privacy, consent, data minimisation, human oversight; two homes, one resident each; no real deviation labels | Defense slide 23 | 🟡 |
 | 8 | Conclusion | Lessons and next steps | — | ✅ drafted |
@@ -77,4 +77,4 @@ and "significant consequences" characteristics claimed in the defense (CCP slide
 | T2 | Context / history ablation with per-class F1 for the hard classes | `summary.md`, `per_class.csv` | ✅ |
 | T3 | Live window comparison vs LastAct / DeepCASAS | `ml/results/windows.md` | ✅ |
 | T4 | Routine-deviation detection per type, stream and detector | `ml/results/anomaly.md` | ✅ |
-| T5 | System latency / false alerts per day | ROADMAP 3.2, 5.2 | ⬜ |
+| T5 | Alert routing per home and stream | `ml/results/alerts.md` | ✅ |
