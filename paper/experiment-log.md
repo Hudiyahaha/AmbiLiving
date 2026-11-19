@@ -106,3 +106,12 @@ Entries E1–E9 were reconstructed on 18 Nov 2026 from the git history and `ml/R
 **Takeaway**: → C10, C10b. Routing works where recognition works; Aruba segment GB loses night-time cooking notifications (91 % detected, 44 % notified) because the moved episode is mis-labelled and routed to the summary.
 **Note**: Aruba's annotations contain duplicate segments that produce identical alerts; the dashboard export lists each once. Evaluation counts are unaffected for detection and slightly inflate alerts per day.
 
+## E16 — Live-demo replay  (19 Nov 2026, Hudiya)
+
+**Setup**: Decision D17. `py -m har.replay` with the cached streams and BiLSTM from E14, routine model on the live (win) stream at 0.1 alerts per normal day per aspect, re-run every 2 minutes of each scenario day.
+**Result**: 12/12 scenarios reproduce the evaluated live stream exactly. In every scenario, every batch alert was also raised live (0 missing).
+- **Milan**: inactivity notified at 15:58, 1 h 45 min into a 170-min silence. Night-time kitchen activity notified at 03:36 (moved to 03:26). Missed kitchen activity reaches the summary (flagged at 09:35). Extra night toilet trips appear only as one "master bathroom at an unusual time" summary item. The prolonged bathroom visit is not caught: on Milan's live stream such visits are detected 33 % of the time and never notified.
+- **Aruba**: the caught examples are rare (inactivity 4 % notified overall). The "extra toilet trips" day is matched only through a mis-recognised "meal preparation at 02:55".
+- **Clean days**: Milan's median clean day has 2 summary items and 1 insight. Aruba's has 1 false notification (41 min of quiet at 08:01 while recognised as sleeping).
+
+**Takeaway**: The demo shows the pipeline working in time, and also its failures. Use Milan for presentations; the Aruba scenarios illustrate C8 (live recognition corrupts the routine).

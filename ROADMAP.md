@@ -76,8 +76,8 @@ Decide it before building models, and record the decision in [paper/decisions.md
 | # | Step | Done when | Paper |
 |---|---|---|---|
 | ☐ 4.1 | **Decide the backend**: FastAPI (Python, loads the models from 1.1 directly) vs Next.js route handlers calling a Python process. FastAPI is the simpler fit since all models are Python | Decision + reason in `paper/decisions.md` | §4.7 System |
-| ☐ 4.2 | **Replay service:** stream a recorded CASAS day event by event (adjustable speed) as if it were live | Endpoint emits events in timestamp order | — |
-| ☐ 4.3 | **Live inference:** window model classifies the last 100 events at each event; anomaly + alert modules run on its output | Endpoints for current activity, activity history, anomalies | §4.7 |
+| ☑ 4.2 | *(Done as a precomputed causal replay, D17: `har.replay` + `/live`; a streaming endpoint is still open with 4.1)* **Replay service:** stream a recorded CASAS day event by event (adjustable speed) as if it were live | Endpoint emits events in timestamp order | — |
+| ◐ 4.3 | *(Offline in `har.replay`: BiLSTM every 10th event + routine model + routing, re-run every 2 min of the day)* **Live inference:** window model classifies the last 100 events at each event; anomaly + alert modules run on its output | Endpoints for current activity, activity history, anomalies | §4.7 |
 | ☐ 4.4 | **Connect the dashboard:** replace the generated JSON ([realData.ts](src/data/homes/realData.ts)) and the sample anomalies (`arubaMock.ts`, `milanMock.ts`) with API calls | Monitoring, Activities, Anomalies and Dashboard pages show live API data | — |
 | ☐ 4.5 | **Researcher / Evaluation view** (spec §13): HAR and anomaly metrics, per-class tables, confusion matrices, kept apart from the caregiver screens | Page reads the archived `metrics.json` files | Demo |
 | ☐ 4.6 | *(Optional)* Kasteren as a placeholder third home (spec §12) | Listed with `status: "placeholder"` | — |

@@ -163,7 +163,7 @@ do not duplicate it here). In short:
 | **Rare / overlapping classes** | Solved with known boundaries (history), not in the window setting. Respirate has 6 instances in total — say so rather than hiding it in a macro average. |
 | **Label drift** | Aruba stops annotating Wash_Dishes from Mar 2011; Milan's test days are a holiday period (validation ~46 vs test ~38 for GB). Temporal per-class scores are noisy. |
 | **History feedback loop** | History features use the model's own earlier predictions; one wrong recognition can affect the next in a live system. |
-| **Research → product gap** | Narrower: the dashboard shows a real day and routine deviations found on real days, with how each was delivered. Still no backend or live replay (ROADMAP phase 4). |
+| **Research → product gap** | Narrower: the dashboard shows a real day and routine deviations found on real days, with how each was delivered. A live demo (`/live`) now replays days through the live BiLSTM and routine model, minute by minute (D17). Still no streaming backend (ROADMAP 4.1). |
 | **Uncommitted work** | `poster/` is not on `main`. |
 
 ---

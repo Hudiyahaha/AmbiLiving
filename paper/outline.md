@@ -53,7 +53,7 @@ and "significant consequences" characteristics claimed in the defense (CCP slide
 | 4.4 | Routine model | Routine aspects and the deviation each can show; routine deviation vs generic anomaly detection | D12 | ✅ |
 | 4.5 | Evaluation protocol | Synthetic routine deviations injected into raw sensor events; three activity streams | D13 | ✅ |
 | 4.6 | Scores, calibration, explanations | Per-aspect scores; alert budget; observed-vs-expected text | D14 | ✅ |
-| 4.7 | System | Replay → live inference → routine deviation → alert → dashboard; dataset-agnostic types | ROADMAP 4.x | 🟡 dashboard exists |
+| 4.7 | System | Replay → live inference → routine deviation → alert → dashboard; dataset-agnostic types | ROADMAP 4.x, D17 | 🟡 dashboard + causal live replay |
 | 5.1 | Results: segment HAR | Tables T1, T2; per-class; context/history ablation | C1–C4 | ✅ |
 | 5.2 | Results: live HAR | Table T3 vs LastAct / DeepCASAS; per-class | C5, C6 | 🟡 per-class table missing (ROADMAP 1.2) |
 | 5.3 | Results: routine deviation | Per deviation type and drift; routine model vs generic AD; error propagation across 3 activity streams | C7, C8 | ✅ drafted (`draft/05-results-routine.md`) |

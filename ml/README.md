@@ -181,6 +181,16 @@ calibrated to 0.1 alerts per normal day per routine aspect. Protocol: decisions 
 
 Results: [`results/anomaly.md`](results/anomaly.md).
 
+### Live demo replay (`har.replay`)
+
+    python -m har.replay                        # after run_anomaly; -> ../public/replay/*.json
+
+Replays a real monitoring day and one injected day per deviation type, for each home, through
+the live BiLSTM and the routine model. Every 2 minutes of the day the routine model is re-run
+on only what has happened so far, so alerts appear when a live system would raise them. The
+exporter checks that the replay reproduces the evaluated live stream and raises every batch
+alert (decision D17). The dashboard plays the files on the **Live demo** page (`/live`).
+
 ## Results (5-fold CV, macro-F1 %)
 
 Full table with accuracy / weighted-F1 / P / R / timing: [`results/summary.md`](results/summary.md).
