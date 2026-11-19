@@ -7,6 +7,7 @@ import {
   AlertTriangle,
   Home,
   LayoutDashboard,
+  PlayCircle,
   Radar,
   Settings,
 } from "lucide-react";
@@ -15,6 +16,7 @@ import { useSettings } from "@/context/SettingsContext";
 const navItems = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { href: "/monitoring", label: "Monitoring", icon: Radar },
+  { href: "/live", label: "Live demo", icon: PlayCircle },
   { href: "/activities", label: "Activity History", icon: Activity },
   { href: "/anomalies", label: "Routine deviations", icon: AlertTriangle },
   { href: "/homes", label: "Homes", icon: Home },

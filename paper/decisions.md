@@ -146,6 +146,14 @@ Template:
 **Why**: At 0.1 alerts per normal day per aspect, detection raises ~1.3 alerts per day on Aruba — too many to push. Caregivers act on urgency, and most aspects (a different afternoon, a slow drift) are informative, not urgent. Routing keeps detection sensitive while limiting interruptions.
 **Implemented in**: `ml/har/alerts.py`, evaluation in `python -m har.alerts`.
 
+## D17 — Live demo as a causal replay, not a streaming backend  (19 Nov 2026)
+
+**Decision**: The live demo replays recorded days through the live pipeline offline and plays the result back in the dashboard (`/live`). It does not stream events from a server. `python -m har.replay` feeds a day's sensor events to the live BiLSTM (last 100 events, every 10th event). Every 2 minutes of the day it re-runs the routine model (fitted on the observation days of the live stream, operating point 0.1) on **only what had happened by then**: events up to that minute, with the clock counting as an observation so that an ongoing silence is visible, and predictions grouped into episodes cut at that minute. An alert appears from the first minute it is raised this way, with the text it had then. Routing follows D15, with the evening summary sent at 21:00.
+**Checks**: the re-run must reproduce the evaluated live stream episode for episode, and every alert the batch evaluation raised for that day must also be raised live. Both hold for all 12 scenarios (E16).
+**Scenarios**: per home, the clean monitoring day with the median number of caregiver-facing alerts, plus one injected day per deviation type. Each injected day is picked among the copies whose deviation reached the caregiver in the batch routing (fewest other alerts first); if none did, an uncaught one is shown. Every scenario shows the *overall* detection and notification rate for its type, so a picked example is not mistaken for a typical one.
+**Why**: It shows the system working over time, including absence and silence, which only become deviations as time passes. It needs no server, and its causality is checked rather than assumed. A real streaming backend (D16) is still needed for deployment, but adds nothing to the evidence.
+**Implemented in**: `ml/har/replay.py` → `public/replay/`; `src/app/(app)/live/page.tsx`.
+
 ## Open decisions (make these before the matching ROADMAP step)
 
 - **D16 — Backend technology** (ROADMAP 4.1)
