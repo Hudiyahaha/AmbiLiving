@@ -75,6 +75,8 @@ def day_events(home: Home, day: pd.Timestamp):
     hi = int(np.searchsorted(t, np.datetime64(day + DAY), side="left"))
     seg = home.segments
     seg = seg[(seg["start"] >= day) & (seg["start"] < day + DAY)][["activity", "start", "end"]]
+    # pandas 3 may store these as datetime64[us]; edits add sub-microsecond offsets.
+    seg = seg.astype({"start": "datetime64[ns]", "end": "datetime64[ns]"})
     return t[lo:hi].copy(), home.sensors[lo:hi].copy(), home.states[lo:hi].copy(), \
         seg.reset_index(drop=True)
 
