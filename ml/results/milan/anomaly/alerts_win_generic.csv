@@ -1,0 +1,175 @@
+vid,day_kind,kind,activity,time,score,title,observed,expected,reason,severity
+42,clean,outlier,Bed_to_Toilet,2009-12-28 00:46:26.000014000,0.092,Unusual bed to toilet,Bed to toilet at 00:42 (4 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+42,clean,outlier,Dining_Rm_Activity,2009-12-28 13:58:07.000084000,0.111,Unusual dining room activity,Dining room activity at 13:57 (1 min),(none: generic outlier score),Reconstruction error 0.11 above the threshold.,low
+43,missed,outlier,Bed_to_Toilet,2009-12-28 00:46:26.000014000,0.092,Unusual bed to toilet,Bed to toilet at 00:42 (4 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+44,prolonged,outlier,Bed_to_Toilet,2009-12-28 00:46:26.000014000,0.092,Unusual bed to toilet,Bed to toilet at 00:42 (4 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+44,prolonged,outlier,Dining_Rm_Activity,2009-12-28 13:58:07.000084000,0.111,Unusual dining room activity,Dining room activity at 13:57 (1 min),(none: generic outlier score),Reconstruction error 0.11 above the threshold.,low
+45,prolonged,outlier,Bed_to_Toilet,2009-12-28 00:46:26.000014000,0.092,Unusual bed to toilet,Bed to toilet at 00:42 (4 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+45,prolonged,outlier,Dining_Rm_Activity,2009-12-28 13:58:07.000084000,0.111,Unusual dining room activity,Dining room activity at 13:57 (1 min),(none: generic outlier score),Reconstruction error 0.11 above the threshold.,low
+46,prolonged,outlier,Bed_to_Toilet,2009-12-28 02:32:28.626816957,0.084,Unusual bed to toilet,Bed to toilet at 00:42 (1.8 h),(none: generic outlier score),Reconstruction error 0.08 above the threshold.,low
+47,unusual_time,outlier,Bed_to_Toilet,2009-12-28 00:46:26.000014000,0.092,Unusual bed to toilet,Bed to toilet at 00:42 (4 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+48,unusual_time,outlier,Bed_to_Toilet,2009-12-28 00:46:26.000014000,0.092,Unusual bed to toilet,Bed to toilet at 00:42 (4 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+49,unusual_time,outlier,Bed_to_Toilet,2009-12-28 00:46:26.000014000,0.092,Unusual bed to toilet,Bed to toilet at 00:42 (4 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+50,night_frequency,outlier,Bed_to_Toilet,2009-12-28 00:46:26.000014000,0.092,Unusual bed to toilet,Bed to toilet at 00:42 (4 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+51,night_frequency,outlier,Bed_to_Toilet,2009-12-28 00:46:26.000014000,0.092,Unusual bed to toilet,Bed to toilet at 00:42 (4 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+52,night_frequency,outlier,Bed_to_Toilet,2009-12-28 00:46:24.000060000,0.092,Unusual bed to toilet,Bed to toilet at 00:42 (4 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+53,inactivity,outlier,Bed_to_Toilet,2009-12-28 00:46:26.000014000,0.092,Unusual bed to toilet,Bed to toilet at 00:42 (4 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+54,inactivity,outlier,Bed_to_Toilet,2009-12-28 00:46:26.000014000,0.092,Unusual bed to toilet,Bed to toilet at 00:42 (4 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+55,inactivity,outlier,Bed_to_Toilet,2009-12-28 00:46:26.000014000,0.092,Unusual bed to toilet,Bed to toilet at 00:42 (4 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+64,night_frequency,outlier,Sleep,2009-12-29 00:40:14.416031725,0.126,Unusual sleep,Sleep at 00:39 (1 min),(none: generic outlier score),Reconstruction error 0.13 above the threshold.,low
+64,night_frequency,outlier,Bed_to_Toilet,2009-12-29 07:51:13.000039000,0.083,Unusual bed to toilet,Bed to toilet at 00:40 (7.2 h),(none: generic outlier score),Reconstruction error 0.08 above the threshold.,low
+76,unusual_time,outlier,Sleep,2009-12-30 02:43:44.162927812,0.088,Unusual sleep,Sleep at 02:40 (3 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+76,unusual_time,outlier,Sleep,2009-12-30 03:00:15.162911812,0.087,Unusual sleep,Sleep at 02:47 (12 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+76,unusual_time,outlier,Sleep,2009-12-30 12:32:26.000070000,0.125,Unusual sleep,Sleep at 12:29 (3 min),(none: generic outlier score),Reconstruction error 0.12 above the threshold.,low
+79,night_frequency,outlier,Bed_to_Toilet,2009-12-30 09:36:39.000076000,0.085,Unusual bed to toilet,Bed to toilet at 05:11 (4.4 h),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+84,clean,outlier,Sleep,2009-12-31 01:57:33.000076000,0.097,Unusual sleep,Sleep at 01:57 (1 min),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+85,missed,outlier,Sleep,2009-12-31 01:57:33.000076000,0.097,Unusual sleep,Sleep at 01:57 (1 min),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+86,prolonged,outlier,Sleep,2009-12-31 01:57:33.000076000,0.097,Unusual sleep,Sleep at 01:57 (1 min),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+87,prolonged,outlier,Sleep,2009-12-31 01:57:33.000076000,0.097,Unusual sleep,Sleep at 01:57 (1 min),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+88,prolonged,outlier,Sleep,2009-12-31 01:57:33.000076000,0.097,Unusual sleep,Sleep at 01:57 (1 min),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+89,unusual_time,outlier,Bed_to_Toilet,2009-12-31 01:18:02.388062295,0.101,Unusual bed to toilet,Bed to toilet at 01:17 (1 min),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+90,unusual_time,outlier,Sleep,2009-12-31 01:57:33.000076000,0.097,Unusual sleep,Sleep at 01:57 (1 min),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+93,night_frequency,outlier,Sleep,2009-12-31 01:57:33.000076000,0.097,Unusual sleep,Sleep at 01:57 (1 min),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+95,inactivity,outlier,Sleep,2009-12-31 01:57:33.000076000,0.097,Unusual sleep,Sleep at 01:57 (1 min),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+96,inactivity,outlier,Sleep,2009-12-31 01:57:33.000076000,0.097,Unusual sleep,Sleep at 01:57 (1 min),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+97,inactivity,outlier,Sleep,2009-12-31 01:57:33.000076000,0.097,Unusual sleep,Sleep at 01:57 (1 min),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+100,prolonged,outlier,Master_Bedroom_Activity,2010-01-01 18:08:48.560955124,0.085,Unusual master bedroom activity,Master bedroom activity at 18:07 (1 min),(none: generic outlier score),Reconstruction error 0.08 above the threshold.,low
+126,clean,outlier,Bed_to_Toilet,2010-01-03 01:08:00.000065000,0.087,Unusual bed to toilet,Bed to toilet at 01:03 (4 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+127,missed,outlier,Bed_to_Toilet,2010-01-03 01:08:00.000065000,0.087,Unusual bed to toilet,Bed to toilet at 01:03 (4 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+128,prolonged,outlier,Bed_to_Toilet,2010-01-03 01:08:00.000065000,0.087,Unusual bed to toilet,Bed to toilet at 01:03 (4 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+129,prolonged,outlier,Bed_to_Toilet,2010-01-03 01:08:00.000065000,0.087,Unusual bed to toilet,Bed to toilet at 01:03 (4 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+130,prolonged,outlier,Bed_to_Toilet,2010-01-03 01:08:00.000065000,0.087,Unusual bed to toilet,Bed to toilet at 01:03 (4 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+131,unusual_time,outlier,Bed_to_Toilet,2010-01-03 01:08:00.000065000,0.087,Unusual bed to toilet,Bed to toilet at 01:03 (4 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+132,unusual_time,outlier,Bed_to_Toilet,2010-01-03 01:08:00.000065000,0.087,Unusual bed to toilet,Bed to toilet at 01:03 (4 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+133,unusual_time,outlier,Bed_to_Toilet,2010-01-03 01:08:00.000065000,0.087,Unusual bed to toilet,Bed to toilet at 01:03 (4 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+134,night_frequency,outlier,Bed_to_Toilet,2010-01-03 01:08:00.000065000,0.087,Unusual bed to toilet,Bed to toilet at 01:03 (4 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+134,night_frequency,outlier,Bed_to_Toilet,2010-01-03 08:38:17.000058000,0.087,Unusual bed to toilet,Bed to toilet at 04:44 (3.9 h),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+134,night_frequency,outlier,Dining_Rm_Activity,2010-01-03 16:13:57.000012000,0.092,Unusual dining room activity,Dining room activity at 16:13 (1 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+135,night_frequency,outlier,Bed_to_Toilet,2010-01-03 01:08:00.000065000,0.087,Unusual bed to toilet,Bed to toilet at 01:03 (4 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+136,night_frequency,outlier,Bed_to_Toilet,2010-01-03 01:15:48.000054000,0.085,Unusual bed to toilet,Bed to toilet at 01:04 (11 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+137,inactivity,outlier,Bed_to_Toilet,2010-01-03 01:08:00.000065000,0.087,Unusual bed to toilet,Bed to toilet at 01:03 (4 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+137,inactivity,outlier,Dining_Rm_Activity,2010-01-03 16:13:57.000012000,0.092,Unusual dining room activity,Dining room activity at 16:13 (1 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+137,inactivity,outlier,Master_Bedroom_Activity,2010-01-03 17:06:29.000002000,0.085,Unusual master bedroom activity,Master bedroom activity at 17:01 (5 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+138,inactivity,outlier,Bed_to_Toilet,2010-01-03 01:08:00.000065000,0.087,Unusual bed to toilet,Bed to toilet at 01:03 (4 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+138,inactivity,outlier,Master_Bedroom_Activity,2010-01-03 17:06:18.000064000,0.085,Unusual master bedroom activity,Master bedroom activity at 17:01 (4 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+139,inactivity,outlier,Bed_to_Toilet,2010-01-03 01:08:00.000065000,0.087,Unusual bed to toilet,Bed to toilet at 01:03 (4 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+139,inactivity,outlier,Master_Bedroom_Activity,2010-01-03 17:06:18.000064000,0.085,Unusual master bedroom activity,Master bedroom activity at 17:01 (4 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+140,clean,outlier,Desk_Activity,2010-01-04 19:02:43.000098000,0.085,Unusual desk activity,Desk activity at 18:59 (3 min),(none: generic outlier score),Reconstruction error 0.08 above the threshold.,low
+141,missed,outlier,Dining_Rm_Activity,2010-01-04 13:43:20.000050000,0.085,Unusual dining room activity,Dining room activity at 13:42 (1 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+141,missed,outlier,Sleep,2010-01-04 17:24:28.000005000,0.089,Unusual sleep,Sleep at 17:23 (1 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+141,missed,outlier,Desk_Activity,2010-01-04 19:03:06.000067000,0.084,Unusual desk activity,Desk activity at 18:59 (3 min),(none: generic outlier score),Reconstruction error 0.08 above the threshold.,low
+142,prolonged,outlier,Desk_Activity,2010-01-04 18:57:32.274663692,0.101,Unusual desk activity,Desk activity at 18:50 (7 min),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+142,prolonged,outlier,Desk_Activity,2010-01-04 20:09:51.274682692,0.092,Unusual desk activity,Desk activity at 20:07 (3 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+143,prolonged,outlier,Desk_Activity,2010-01-04 19:27:49.022156044,0.106,Unusual desk activity,Desk activity at 19:21 (7 min),(none: generic outlier score),Reconstruction error 0.11 above the threshold.,low
+143,prolonged,outlier,Desk_Activity,2010-01-04 20:40:08.022175044,0.093,Unusual desk activity,Desk activity at 20:37 (3 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+144,prolonged,outlier,Desk_Activity,2010-01-04 19:02:43.000098000,0.085,Unusual desk activity,Desk activity at 18:59 (3 min),(none: generic outlier score),Reconstruction error 0.08 above the threshold.,low
+145,unusual_time,outlier,Desk_Activity,2010-01-04 19:02:43.000098000,0.085,Unusual desk activity,Desk activity at 18:59 (3 min),(none: generic outlier score),Reconstruction error 0.08 above the threshold.,low
+146,unusual_time,outlier,Dining_Rm_Activity,2010-01-04 13:43:20.000050000,0.085,Unusual dining room activity,Dining room activity at 13:42 (1 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+146,unusual_time,outlier,Desk_Activity,2010-01-04 19:02:42.000038000,0.085,Unusual desk activity,Desk activity at 18:59 (3 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+147,unusual_time,outlier,Desk_Activity,2010-01-04 19:02:43.000098000,0.085,Unusual desk activity,Desk activity at 18:59 (3 min),(none: generic outlier score),Reconstruction error 0.08 above the threshold.,low
+148,night_frequency,outlier,Sleep,2010-01-04 17:24:28.000005000,0.089,Unusual sleep,Sleep at 17:23 (1 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+148,night_frequency,outlier,Desk_Activity,2010-01-04 19:03:06.000067000,0.084,Unusual desk activity,Desk activity at 18:59 (3 min),(none: generic outlier score),Reconstruction error 0.08 above the threshold.,low
+149,night_frequency,outlier,Desk_Activity,2010-01-04 19:02:43.000098000,0.085,Unusual desk activity,Desk activity at 18:59 (3 min),(none: generic outlier score),Reconstruction error 0.08 above the threshold.,low
+150,night_frequency,outlier,Desk_Activity,2010-01-04 17:37:31.000019000,0.095,Unusual desk activity,Desk activity at 17:34 (3 min),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+151,inactivity,outlier,Sleep,2010-01-04 17:24:28.000005000,0.089,Unusual sleep,Sleep at 17:23 (1 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+151,inactivity,outlier,Desk_Activity,2010-01-04 19:03:06.000067000,0.084,Unusual desk activity,Desk activity at 18:59 (3 min),(none: generic outlier score),Reconstruction error 0.08 above the threshold.,low
+152,inactivity,outlier,Sleep,2010-01-04 17:24:28.000005000,0.089,Unusual sleep,Sleep at 17:23 (1 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+152,inactivity,outlier,Desk_Activity,2010-01-04 19:03:06.000067000,0.084,Unusual desk activity,Desk activity at 18:59 (3 min),(none: generic outlier score),Reconstruction error 0.08 above the threshold.,low
+154,clean,outlier,Chores,2010-01-05 12:48:56.000068000,0.085,Unusual chores,Chores at 12:45 (3 min),(none: generic outlier score),Reconstruction error 0.08 above the threshold.,low
+154,clean,outlier,Chores,2010-01-05 13:02:23.000027000,0.091,Unusual chores,Chores at 12:57 (5 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+154,clean,outlier,Chores,2010-01-05 13:38:23.000030000,0.09,Unusual chores,Chores at 13:35 (3 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+154,clean,outlier,Chores,2010-01-05 15:57:43.000031000,0.094,Unusual chores,Chores at 15:55 (2 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+154,clean,outlier,Meditate,2010-01-05 16:35:16.000078000,0.087,Unusual meditate,Meditate at 16:30 (5 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+154,clean,outlier,Meditate,2010-01-05 20:36:52.000088000,0.094,Unusual meditate,Meditate at 20:34 (3 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+155,missed,outlier,Chores,2010-01-05 12:38:42.000025000,0.087,Unusual chores,Chores at 12:35 (4 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+155,missed,outlier,Chores,2010-01-05 12:49:20.000000000,0.09,Unusual chores,Chores at 12:46 (3 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+155,missed,outlier,Chores,2010-01-05 13:00:33.000021000,0.092,Unusual chores,Chores at 12:58 (2 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+155,missed,outlier,Chores,2010-01-05 13:38:26.000058000,0.095,Unusual chores,Chores at 13:36 (2 min),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+155,missed,outlier,Chores,2010-01-05 16:00:35.000048000,0.101,Unusual chores,Chores at 15:54 (6 min),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+155,missed,outlier,Meditate,2010-01-05 20:36:36.000070000,0.097,Unusual meditate,Meditate at 20:34 (2 min),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+156,prolonged,outlier,Chores,2010-01-05 12:48:56.000068000,0.085,Unusual chores,Chores at 12:45 (3 min),(none: generic outlier score),Reconstruction error 0.08 above the threshold.,low
+156,prolonged,outlier,Chores,2010-01-05 13:02:23.000027000,0.091,Unusual chores,Chores at 12:57 (5 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+156,prolonged,outlier,Chores,2010-01-05 13:38:23.000030000,0.09,Unusual chores,Chores at 13:35 (3 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+156,prolonged,outlier,Chores,2010-01-05 15:57:43.000031000,0.094,Unusual chores,Chores at 15:55 (2 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+156,prolonged,outlier,Meditate,2010-01-05 16:36:56.144207479,0.083,Unusual meditate,Meditate at 16:30 (6 min),(none: generic outlier score),Reconstruction error 0.08 above the threshold.,low
+156,prolonged,outlier,Meditate,2010-01-05 21:35:42.805427636,0.107,Unusual meditate,Meditate at 21:34 (1 min),(none: generic outlier score),Reconstruction error 0.11 above the threshold.,low
+157,prolonged,outlier,Meditate,2010-01-05 17:52:49.910780150,0.103,Unusual meditate,Meditate at 17:48 (5 min),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+157,prolonged,outlier,Meditate,2010-01-05 21:52:42.910799150,0.106,Unusual meditate,Meditate at 21:52 (1 min),(none: generic outlier score),Reconstruction error 0.11 above the threshold.,low
+158,prolonged,outlier,Meditate,2010-01-05 18:33:29.617942294,0.112,Unusual meditate,Meditate at 18:28 (5 min),(none: generic outlier score),Reconstruction error 0.11 above the threshold.,low
+159,unusual_time,outlier,Chores,2010-01-05 12:20:50.000030000,0.086,Unusual chores,Chores at 12:18 (2 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+159,unusual_time,outlier,Chores,2010-01-05 12:39:05.000091000,0.093,Unusual chores,Chores at 12:35 (4 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+159,unusual_time,outlier,Chores,2010-01-05 12:49:13.000077000,0.096,Unusual chores,Chores at 12:46 (3 min),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+159,unusual_time,outlier,Chores,2010-01-05 13:00:32.000007000,0.098,Unusual chores,Chores at 12:58 (2 min),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+159,unusual_time,outlier,Chores,2010-01-05 13:38:25.000074000,0.102,Unusual chores,Chores at 13:36 (2 min),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+159,unusual_time,outlier,Chores,2010-01-05 15:57:28.000083000,0.107,Unusual chores,Chores at 15:54 (3 min),(none: generic outlier score),Reconstruction error 0.11 above the threshold.,low
+159,unusual_time,outlier,Meditate,2010-01-05 16:35:22.000086000,0.093,Unusual meditate,Meditate at 16:32 (3 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+159,unusual_time,outlier,Meditate,2010-01-05 20:36:13.000011000,0.098,Unusual meditate,Meditate at 20:34 (2 min),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+160,unusual_time,outlier,Chores,2010-01-05 12:48:56.000068000,0.085,Unusual chores,Chores at 12:45 (3 min),(none: generic outlier score),Reconstruction error 0.08 above the threshold.,low
+160,unusual_time,outlier,Chores,2010-01-05 13:02:23.000027000,0.091,Unusual chores,Chores at 12:57 (5 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+160,unusual_time,outlier,Chores,2010-01-05 13:38:23.000030000,0.09,Unusual chores,Chores at 13:35 (3 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+160,unusual_time,outlier,Chores,2010-01-05 15:57:43.000031000,0.094,Unusual chores,Chores at 15:55 (2 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+160,unusual_time,outlier,Meditate,2010-01-05 16:35:16.000078000,0.087,Unusual meditate,Meditate at 16:30 (5 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+160,unusual_time,outlier,Meditate,2010-01-05 20:36:52.000088000,0.094,Unusual meditate,Meditate at 20:34 (3 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+161,unusual_time,outlier,Chores,2010-01-05 12:49:01.000081000,0.084,Unusual chores,Chores at 12:45 (3 min),(none: generic outlier score),Reconstruction error 0.08 above the threshold.,low
+161,unusual_time,outlier,Chores,2010-01-05 12:53:07.000075000,0.09,Unusual chores,Chores at 12:52 (1 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+161,unusual_time,outlier,Chores,2010-01-05 13:00:40.000056000,0.093,Unusual chores,Chores at 12:58 (2 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+161,unusual_time,outlier,Chores,2010-01-05 13:39:02.000066000,0.096,Unusual chores,Chores at 13:36 (3 min),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+161,unusual_time,outlier,Chores,2010-01-05 15:57:43.000031000,0.1,Unusual chores,Chores at 15:55 (2 min),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+162,night_frequency,outlier,Chores,2010-01-05 12:20:43.000017000,0.086,Unusual chores,Chores at 12:18 (2 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+162,night_frequency,outlier,Chores,2010-01-05 12:38:42.000025000,0.093,Unusual chores,Chores at 12:35 (4 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+162,night_frequency,outlier,Chores,2010-01-05 12:49:20.000000000,0.097,Unusual chores,Chores at 12:46 (3 min),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+162,night_frequency,outlier,Chores,2010-01-05 13:00:33.000021000,0.099,Unusual chores,Chores at 12:58 (2 min),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+162,night_frequency,outlier,Chores,2010-01-05 13:38:26.000058000,0.102,Unusual chores,Chores at 13:36 (2 min),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+162,night_frequency,outlier,Chores,2010-01-05 15:58:01.000008000,0.107,Unusual chores,Chores at 15:54 (3 min),(none: generic outlier score),Reconstruction error 0.11 above the threshold.,low
+162,night_frequency,outlier,Chores,2010-01-05 16:22:09.000070000,0.098,Unusual chores,Chores at 16:21 (1 min),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+162,night_frequency,outlier,Meditate,2010-01-05 16:35:23.000036000,0.087,Unusual meditate,Meditate at 16:30 (4 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+162,night_frequency,outlier,Meditate,2010-01-05 20:31:04.000002000,0.085,Unusual meditate,Meditate at 20:25 (5 min),(none: generic outlier score),Reconstruction error 0.08 above the threshold.,low
+162,night_frequency,outlier,Sleep,2010-01-05 20:36:51.000085000,0.083,Unusual sleep,Sleep at 20:36 (1 min),(none: generic outlier score),Reconstruction error 0.08 above the threshold.,low
+163,night_frequency,outlier,Chores,2010-01-05 12:20:50.000030000,0.086,Unusual chores,Chores at 12:18 (2 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+163,night_frequency,outlier,Chores,2010-01-05 12:39:05.000091000,0.093,Unusual chores,Chores at 12:35 (4 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+163,night_frequency,outlier,Chores,2010-01-05 12:49:13.000077000,0.096,Unusual chores,Chores at 12:46 (3 min),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+163,night_frequency,outlier,Chores,2010-01-05 13:00:32.000007000,0.098,Unusual chores,Chores at 12:58 (2 min),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+163,night_frequency,outlier,Chores,2010-01-05 13:38:25.000074000,0.102,Unusual chores,Chores at 13:36 (2 min),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+163,night_frequency,outlier,Chores,2010-01-05 15:57:28.000083000,0.107,Unusual chores,Chores at 15:54 (3 min),(none: generic outlier score),Reconstruction error 0.11 above the threshold.,low
+163,night_frequency,outlier,Meditate,2010-01-05 16:35:22.000086000,0.093,Unusual meditate,Meditate at 16:32 (3 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+163,night_frequency,outlier,Meditate,2010-01-05 20:36:13.000011000,0.098,Unusual meditate,Meditate at 20:34 (2 min),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+164,night_frequency,outlier,Meditate,2010-01-05 16:35:17.000026000,0.087,Unusual meditate,Meditate at 16:30 (5 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+164,night_frequency,outlier,Meditate,2010-01-05 20:35:10.000042000,0.107,Unusual meditate,Meditate at 20:34 (1 min),(none: generic outlier score),Reconstruction error 0.11 above the threshold.,low
+165,inactivity,outlier,Meditate,2010-01-05 16:35:16.000078000,0.087,Unusual meditate,Meditate at 16:30 (5 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+165,inactivity,outlier,Meditate,2010-01-05 20:36:52.000088000,0.094,Unusual meditate,Meditate at 20:34 (3 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+166,inactivity,outlier,Chores,2010-01-05 12:48:56.000068000,0.085,Unusual chores,Chores at 12:45 (3 min),(none: generic outlier score),Reconstruction error 0.08 above the threshold.,low
+166,inactivity,outlier,Chores,2010-01-05 13:02:23.000027000,0.091,Unusual chores,Chores at 12:57 (5 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+166,inactivity,outlier,Meditate,2010-01-05 20:31:07.000054000,0.083,Unusual meditate,Meditate at 20:27 (3 min),(none: generic outlier score),Reconstruction error 0.08 above the threshold.,low
+166,inactivity,outlier,Meditate,2010-01-05 20:35:24.000090000,0.124,Unusual meditate,Meditate at 20:34 (1 min),(none: generic outlier score),Reconstruction error 0.12 above the threshold.,low
+167,inactivity,outlier,Chores,2010-01-05 12:48:56.000068000,0.085,Unusual chores,Chores at 12:45 (3 min),(none: generic outlier score),Reconstruction error 0.08 above the threshold.,low
+167,inactivity,outlier,Chores,2010-01-05 13:02:23.000027000,0.091,Unusual chores,Chores at 12:57 (5 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+167,inactivity,outlier,Chores,2010-01-05 13:38:23.000030000,0.09,Unusual chores,Chores at 13:35 (3 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+167,inactivity,outlier,Meditate,2010-01-05 20:30:35.000079000,0.083,Unusual meditate,Meditate at 20:25 (5 min),(none: generic outlier score),Reconstruction error 0.08 above the threshold.,low
+167,inactivity,outlier,Meditate,2010-01-05 20:36:52.000088000,0.143,Unusual meditate,Meditate at 20:34 (3 min),(none: generic outlier score),Reconstruction error 0.14 above the threshold.,low
+167,inactivity,outlier,Meditate,2010-01-05 21:25:51.000084000,0.097,Unusual meditate,Meditate at 21:24 (2 min),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+168,clean,outlier,Sleep,2010-01-06 06:57:17.000019000,0.092,Unusual sleep,Sleep at 06:56 (1 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+168,clean,outlier,Guest_Bathroom,2010-01-06 12:41:16.000020000,0.084,Unusual guest bathroom,Guest bathroom at 12:34 (7 min),(none: generic outlier score),Reconstruction error 0.08 above the threshold.,low
+170,prolonged,outlier,Sleep,2010-01-06 06:57:17.000019000,0.092,Unusual sleep,Sleep at 06:56 (1 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+171,prolonged,outlier,Sleep,2010-01-06 06:57:17.000019000,0.092,Unusual sleep,Sleep at 06:56 (1 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+171,prolonged,outlier,Guest_Bathroom,2010-01-06 09:03:47.522404025,0.083,Unusual guest bathroom,Guest bathroom at 09:02 (1 min),(none: generic outlier score),Reconstruction error 0.08 above the threshold.,low
+172,prolonged,outlier,Sleep,2010-01-06 08:01:46.772883316,0.087,Unusual sleep,Sleep at 07:59 (2 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+173,unusual_time,outlier,Sleep,2010-01-06 06:52:33.000042000,0.094,Unusual sleep,Sleep at 06:45 (7 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+173,unusual_time,outlier,Sleep,2010-01-06 06:57:17.000019000,0.101,Unusual sleep,Sleep at 06:56 (1 min),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+173,unusual_time,outlier,Guest_Bathroom,2010-01-06 07:13:26.000031000,0.096,Unusual guest bathroom,Guest bathroom at 07:09 (4 min),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+173,unusual_time,outlier,Guest_Bathroom,2010-01-06 07:39:53.000010000,0.091,Unusual guest bathroom,Guest bathroom at 07:38 (1 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+174,unusual_time,outlier,Sleep,2010-01-06 06:52:33.000042000,0.094,Unusual sleep,Sleep at 06:45 (7 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+174,unusual_time,outlier,Sleep,2010-01-06 06:57:17.000019000,0.101,Unusual sleep,Sleep at 06:56 (1 min),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+174,unusual_time,outlier,Guest_Bathroom,2010-01-06 07:13:26.000031000,0.096,Unusual guest bathroom,Guest bathroom at 07:09 (4 min),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+174,unusual_time,outlier,Guest_Bathroom,2010-01-06 07:39:53.000010000,0.091,Unusual guest bathroom,Guest bathroom at 07:38 (1 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+175,unusual_time,outlier,Sleep,2010-01-06 06:52:33.000042000,0.094,Unusual sleep,Sleep at 06:45 (7 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+175,unusual_time,outlier,Sleep,2010-01-06 06:57:17.000019000,0.101,Unusual sleep,Sleep at 06:56 (1 min),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+175,unusual_time,outlier,Guest_Bathroom,2010-01-06 07:13:26.000031000,0.096,Unusual guest bathroom,Guest bathroom at 07:09 (4 min),(none: generic outlier score),Reconstruction error 0.10 above the threshold.,low
+175,unusual_time,outlier,Guest_Bathroom,2010-01-06 07:39:53.000010000,0.091,Unusual guest bathroom,Guest bathroom at 07:38 (1 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+176,night_frequency,outlier,Bed_to_Toilet,2010-01-06 04:00:26.000057000,0.083,Unusual bed to toilet,Bed to toilet at 00:39 (3.3 h),(none: generic outlier score),Reconstruction error 0.08 above the threshold.,low
+176,night_frequency,outlier,Sleep,2010-01-06 06:51:02.000026000,0.083,Unusual sleep,Sleep at 06:45 (5 min),(none: generic outlier score),Reconstruction error 0.08 above the threshold.,low
+176,night_frequency,outlier,Sleep,2010-01-06 06:57:17.000017000,0.092,Unusual sleep,Sleep at 06:56 (1 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+177,night_frequency,outlier,Sleep,2010-01-06 06:57:17.000019000,0.092,Unusual sleep,Sleep at 06:56 (1 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+177,night_frequency,outlier,Guest_Bathroom,2010-01-06 12:41:16.000020000,0.084,Unusual guest bathroom,Guest bathroom at 12:34 (7 min),(none: generic outlier score),Reconstruction error 0.08 above the threshold.,low
+178,night_frequency,outlier,Bed_to_Toilet,2010-01-06 04:00:26.000057000,0.083,Unusual bed to toilet,Bed to toilet at 00:37 (3.4 h),(none: generic outlier score),Reconstruction error 0.08 above the threshold.,low
+178,night_frequency,outlier,Sleep,2010-01-06 06:57:17.000019000,0.092,Unusual sleep,Sleep at 06:56 (1 min),(none: generic outlier score),Reconstruction error 0.09 above the threshold.,low
+178,night_frequency,outlier,Guest_Bathroom,2010-01-06 12:41:16.000020000,0.084,Unusual guest bathroom,Guest bathroom at 12:34 (7 min),(none: generic outlier score),Reconstruction error 0.08 above the threshold.,low

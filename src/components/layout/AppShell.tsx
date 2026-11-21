@@ -9,8 +9,9 @@ import { SettingsProvider } from "@/context/SettingsContext";
 const pageTitles: Record<string, string> = {
   "/dashboard": "Dashboard",
   "/monitoring": "Monitoring",
+  "/live": "Live demo",
   "/activities": "Activity History",
-  "/anomalies": "Anomalies",
+  "/anomalies": "Routine deviations",
   "/homes": "Homes",
   "/settings": "Settings",
 };

@@ -1,0 +1,43 @@
+[aruba] train < 2011-03-16 <= observe < 2011-04-29 <= monitor; 44 monitoring days, 603 day copies, 6,688,592 events
+  seg stream ready (9s), clean-day macro-F1 0.895
+  BiLSTM trained (533s) -> D:\AmbiLiving\ml\results\aruba\anomaly\bilstm.pt
+    predicted 40/603 day copies (553s)
+    predicted 80/603 day copies (566s)
+    predicted 120/603 day copies (575s)
+    predicted 160/603 day copies (585s)
+    predicted 200/603 day copies (595s)
+    predicted 240/603 day copies (604s)
+    predicted 280/603 day copies (613s)
+    predicted 320/603 day copies (626s)
+    predicted 360/603 day copies (634s)
+    predicted 400/603 day copies (647s)
+    predicted 440/603 day copies (658s)
+    predicted 480/603 day copies (667s)
+    predicted 520/603 day copies (678s)
+    predicted 560/603 day copies (689s)
+    predicted 600/603 day copies (699s)
+    predicted 603/603 day copies (703s)
+  win stream ready (703s), clean-day macro-F1 0.429
+   gt/routine detection 0.92  F1 0.73  false alerts/day 1.34  missed 1.00  prolon 0.70  unusua 0.95  night_ 1.00  inacti 0.93  drift 2/7  (82s)
+   gt/generic detection 0.04  F1 0.07  false alerts/day 0.02  missed 0.00  prolon 0.20  unusua 0.00  night_ 0.01  inacti 0.00  (76s)
+  seg/routine detection 0.87  F1 0.71  false alerts/day 1.32  missed 0.98  prolon 0.68  unusua 0.91  night_ 1.00  inacti 0.80  drift 2/7  (89s)
+  seg/generic detection 0.10  F1 0.15  false alerts/day 0.05  missed 0.00  prolon 0.29  unusua 0.17  night_ 0.02  inacti 0.00  (48s)
+  win/routine detection 0.15  F1 0.16  false alerts/day 1.30  missed 0.02  prolon 0.11  unusua 0.13  night_ 0.39  inacti 0.09  drift 0/7  (119s)
+  win/generic detection 0.01  F1 0.01  false alerts/day 0.11  missed 0.00  prolon 0.02  unusua 0.02  night_ 0.00  inacti 0.00  (73s)
+  -> D:\AmbiLiving\ml\results\aruba\anomaly
+[milan] train < 2009-12-12 <= observe < 2009-12-25 <= monitor; 13 monitoring days, 193 day copies, 2,176,646 events
+  seg stream ready (5s), clean-day macro-F1 0.845
+  BiLSTM trained (145s) -> D:\AmbiLiving\ml\results\milan\anomaly\bilstm.pt
+    predicted 40/193 day copies (156s)
+    predicted 80/193 day copies (167s)
+    predicted 120/193 day copies (176s)
+    predicted 160/193 day copies (189s)
+    predicted 193/193 day copies (198s)
+  win stream ready (198s), clean-day macro-F1 0.433
+   gt/routine detection 0.88  F1 0.61  false alerts/day 2.77  missed 1.00  prolon 0.74  unusua 0.64  night_ 1.00  inacti 1.00  drift 0/2  (37s)
+   gt/generic detection 0.19  F1 0.20  false alerts/day 0.54  missed 0.00  prolon 0.05  unusua 0.23  night_ 0.69  inacti 0.00  (27s)
+  seg/routine detection 0.88  F1 0.61  false alerts/day 2.46  missed 0.92  prolon 0.77  unusua 0.69  night_ 1.00  inacti 1.00  drift 0/2  (37s)
+  seg/generic detection 0.18  F1 0.20  false alerts/day 0.46  missed 0.00  prolon 0.05  unusua 0.21  night_ 0.67  inacti 0.00  (26s)
+  win/routine detection 0.63  F1 0.48  false alerts/day 3.08  missed 0.77  prolon 0.33  unusua 0.56  night_ 0.49  inacti 1.00  drift 1/2  (47s)
+  win/generic detection 0.08  F1 0.10  false alerts/day 1.00  missed 0.00  prolon 0.10  unusua 0.08  night_ 0.15  inacti 0.06  (41s)
+  -> D:\AmbiLiving\ml\results\milan\anomaly

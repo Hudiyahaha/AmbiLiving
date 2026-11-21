@@ -1,0 +1,30 @@
+{
+  "format": 1,
+  "model": "bilstm",
+  "dataset": "aruba",
+  "seed": 1,
+  "size": 100,
+  "label_rule": "last",
+  "train_stride": 50,
+  "train_frac": 0.6,
+  "test_frac": 0.2,
+  "train_until": "2011-03-16",
+  "test_from": "2011-04-29",
+  "train_windows": 19138,
+  "n_cont": 4,
+  "n_context": 9,
+  "train_seconds": 1580.4,
+  "classes": [
+    "Bed_to_Toilet",
+    "Eating",
+    "Enter_Home",
+    "Housekeeping",
+    "Leave_Home",
+    "Meal_Preparation",
+    "Relax",
+    "Respirate",
+    "Sleeping",
+    "Wash_Dishes",
+    "Work"
+  ]
+}

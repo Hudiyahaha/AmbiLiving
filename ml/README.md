@@ -156,6 +156,41 @@ Final numbers and the model choice are in `results/windows.md`.
 
     python -m har.run_windows --dataset all --model bilstm --seeds 1 2 3
 
+## Routine-deviation detection (`har.run_anomaly`)
+
+The goal is **routine deviation**, not generic anomaly detection: `har.anomaly.RoutineModel`
+learns *this resident's* routine — which activities happen daily and by when, how long, at
+what time, how often, in what order, what each part of the day looks like, how long the home
+is usually quiet — and `RoutineDrift` tracks how it evolves over a week. Alerts say what was
+observed vs what is usual for this person. A generic autoencoder (`GenericAD`) is kept only
+as a baseline.
+
+CASAS has no deviation labels, so `har.anomaly_inject` copies every monitoring day and plants
+one of five deviations (missed activity, prolonged activity, unusual time, extra night-time
+toilet trips, long inactivity) directly into the **raw sensor events**, plus 7-day drift runs
+(breakfast 20 min later each day). Three activity streams are produced for the same days —
+annotations, the segment recogniser (GB + context) and the live window BiLSTM — and each
+routine is learned from that stream on the observation period (middle 20 % of days),
+calibrated to 0.1 alerts per normal day per routine aspect. Protocol: decisions D12–D14 in
+`../paper/decisions.md`.
+
+    python -m har.run_anomaly --dataset all     # ~1 h on CPU (BiLSTM inference dominates)
+    python -m har.anomaly_report                # -> results/anomaly.md, anomaly_curve.png
+    python -m har.alerts                        # routing: notify / summary / insight -> results/alerts.md
+    python -m har.export_anomalies              # deviations found on real days -> dashboard JSON
+
+Results: [`results/anomaly.md`](results/anomaly.md).
+
+### Live demo replay (`har.replay`)
+
+    python -m har.replay                        # after run_anomaly; -> ../public/replay/*.json
+
+Replays a real monitoring day and one injected day per deviation type, for each home, through
+the live BiLSTM and the routine model. Every 2 minutes of the day the routine model is re-run
+on only what has happened so far, so alerts appear when a live system would raise them. The
+exporter checks that the replay reproduces the evaluated live stream and raises every batch
+alert (decision D17). The dashboard plays the files on the **Live demo** page (`/live`).
+
 ## Results (5-fold CV, macro-F1 %)
 
 Full table with accuracy / weighted-F1 / P / R / timing: [`results/summary.md`](results/summary.md).

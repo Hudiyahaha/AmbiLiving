@@ -46,3 +46,7 @@ next-env.d.ts
 /ml/*.log
 __pycache__/
 .venv/
+# ML caches
+ml/data/cache/
+ml/results/*/anomaly/streams.pkl
+ml/results/*/anomaly/bilstm.pt

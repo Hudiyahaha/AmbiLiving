@@ -98,7 +98,7 @@ export default function DashboardPage() {
           <p className="mt-1 font-display text-3xl font-semibold text-foreground">
             {attentionOrAll.length}
           </p>
-          <p className="mt-1 text-sm text-muted">Open anomaly alerts</p>
+          <p className="mt-1 text-sm text-muted">Open routine-deviation alerts</p>
         </section>
       </div>
 
@@ -143,7 +143,7 @@ export default function DashboardPage() {
         <section className="rounded-2xl border border-border bg-surface p-5 shadow-sm">
           <div className="mb-4 flex items-center justify-between">
             <h2 className="font-display text-lg font-semibold text-foreground">
-              Anomalies requiring attention
+              Routine deviations needing attention
             </h2>
             <Link
               href="/anomalies"
@@ -174,7 +174,7 @@ export default function DashboardPage() {
               </div>
             </div>
           ) : (
-            <p className="text-sm text-muted">No anomalies flagged.</p>
+            <p className="text-sm text-muted">No routine deviations flagged.</p>
           )}
 
           {attentionOrAll.length > 1 && (

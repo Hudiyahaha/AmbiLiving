@@ -90,6 +90,19 @@ export interface AnomalyRecord {
   timestamp: string;
   /** Whether caregiver still needs to review */
   requiresAttention?: boolean;
+  /** How the caregiver was told: notification, evening summary or dashboard only */
+  delivery?: string;
+}
+
+/** How a home's anomalies were produced, when they are real detector output */
+export interface AnomalySource {
+  detector: string;
+  recogniser: string;
+  routineLearnedFrom: string;
+  period: string;
+  days: number;
+  falseAlertsPerDay: number;
+  detectionRate: number;
 }
 
 export interface DatasetStats {
@@ -118,4 +131,6 @@ export interface HomeEnvironment {
   datasetStats?: DatasetStats;
   /** Set when events and activity history are a real dataset day with model predictions */
   dataSource?: DataSource;
+  /** Set when anomalies are real detector output rather than sample data */
+  anomalySource?: AnomalySource;
 }

@@ -1,0 +1,130 @@
+{
+  "milan": {
+    "recogniser": "BiLSTM, last 100 events, every 10th event",
+    "recogniserMacroF1": 0.433,
+    "routineLearnedFrom": "13 observation days",
+    "falseAlertsPerDay": 3.08,
+    "detectionRate": 0.631,
+    "urgentNotified": 0.5098039215686274,
+    "scenarios": [
+      {
+        "id": "normal",
+        "title": "A real day, nothing injected",
+        "day": "Tue 29 Dec 2009",
+        "kind": "clean",
+        "file": "milan-normal.json",
+        "reproduced": true,
+        "notRaisedLive": 0
+      },
+      {
+        "id": "inactivity",
+        "title": "Long silence at home",
+        "day": "Fri 25 Dec 2009",
+        "kind": "inactivity",
+        "file": "milan-inactivity.json",
+        "reproduced": true,
+        "notRaisedLive": 0
+      },
+      {
+        "id": "bathroom",
+        "title": "Very long bathroom visit",
+        "day": "Fri 25 Dec 2009",
+        "kind": "prolonged",
+        "file": "milan-bathroom.json",
+        "reproduced": true,
+        "notRaisedLive": 0
+      },
+      {
+        "id": "night",
+        "title": "Out of bed and active at night",
+        "day": "Wed 30 Dec 2009",
+        "kind": "unusual_time",
+        "file": "milan-night.json",
+        "reproduced": true,
+        "notRaisedLive": 0
+      },
+      {
+        "id": "missed-meal",
+        "title": "Meal not prepared",
+        "day": "Fri 25 Dec 2009",
+        "kind": "missed",
+        "file": "milan-missed-meal.json",
+        "reproduced": true,
+        "notRaisedLive": 0
+      },
+      {
+        "id": "toilet-trips",
+        "title": "Extra night-time toilet trips",
+        "day": "Fri 25 Dec 2009",
+        "kind": "night_frequency",
+        "file": "milan-toilet-trips.json",
+        "reproduced": true,
+        "notRaisedLive": 0
+      }
+    ]
+  },
+  "aruba": {
+    "recogniser": "BiLSTM, last 100 events, every 10th event",
+    "recogniserMacroF1": 0.429,
+    "routineLearnedFrom": "44 observation days",
+    "falseAlertsPerDay": 1.3,
+    "detectionRate": 0.157,
+    "urgentNotified": 0.06666666666666667,
+    "scenarios": [
+      {
+        "id": "normal",
+        "title": "A real day, nothing injected",
+        "day": "Tue 10 May 2011",
+        "kind": "clean",
+        "file": "aruba-normal.json",
+        "reproduced": true,
+        "notRaisedLive": 0
+      },
+      {
+        "id": "inactivity",
+        "title": "Long silence at home",
+        "day": "Thu 26 May 2011",
+        "kind": "inactivity",
+        "file": "aruba-inactivity.json",
+        "reproduced": true,
+        "notRaisedLive": 0
+      },
+      {
+        "id": "bathroom",
+        "title": "Very long bathroom visit",
+        "day": "Sun 08 May 2011",
+        "kind": "prolonged",
+        "file": "aruba-bathroom.json",
+        "reproduced": true,
+        "notRaisedLive": 0
+      },
+      {
+        "id": "night",
+        "title": "Out of bed and active at night",
+        "day": "Mon 02 May 2011",
+        "kind": "unusual_time",
+        "file": "aruba-night.json",
+        "reproduced": true,
+        "notRaisedLive": 0
+      },
+      {
+        "id": "missed-meal",
+        "title": "Meal not prepared",
+        "day": "Thu 09 Jun 2011",
+        "kind": "missed",
+        "file": "aruba-missed-meal.json",
+        "reproduced": true,
+        "notRaisedLive": 0
+      },
+      {
+        "id": "toilet-trips",
+        "title": "Extra night-time toilet trips",
+        "day": "Sun 01 May 2011",
+        "kind": "night_frequency",
+        "file": "aruba-toilet-trips.json",
+        "reproduced": true,
+        "notRaisedLive": 0
+      }
+    ]
+  }
+}

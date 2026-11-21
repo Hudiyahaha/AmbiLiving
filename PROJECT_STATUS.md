@@ -3,7 +3,7 @@
 **Project** F26-108-AmbiLiving — *Ambient-sensor human activity recognition and caregiver monitoring*
 **Team** Aleeza Azhar · Hudiya e Zehra · Ibrahim Babar
 **Supervisor** Dr. Labiba Fahad
-**Status date** 10 October 2026
+**Status date** 19 November 2026 (previous updates: 18 November, 10 October 2026)
 
 ---
 
@@ -22,23 +22,25 @@ when*. They do not report *what the resident was doing*. Our pipeline:
 Ambient sensors → HAR model → recognised activity → routine deviation → caregiver insight
 ```
 
-**Datasets** CASAS (Washington State University) — Aruba (1 resident, 6,477 activity instances,
-11 classes, 2010–2011) and Milan (1 resident + pet, 2,353 instances, 15 classes, 2009).
+**Datasets** CASAS (Washington State University) — Aruba (1 resident, 6,476 activity segments,
+11 classes, 2010–2011) and Milan (1 resident + pet, 2,352 segments, 15 classes, 2009–2010).
 
 ---
 
 ## 2. Where we are right now
 
-Two tracks exist in this repository and both have real substance:
-
 | Track | Location | State |
 |---|---|---|
-| **Research / ML** — HAR model comparison | [ml/](ml/) | Framework complete; Approach 1 fully evaluated on Aruba. Approaches 2 & 3 implemented but not yet archived. Anomaly detection not started. |
-| **Product / PoC** — caregiver dashboard | [src/](src/) | All six screens built and interactive on mock data. Typecheck clean. Not yet connected to the ML track. |
+| **Research / ML** — activity recognition | [ml/](ml/) | **Done for both settings.** All five models run on both homes under both protocols, with 3-seed repeats. Known-boundary (segment) results are ~92–95 macro-F1; the live sliding-window setting is finished and a final model chosen (BiLSTM). |
+| **Research / ML** — routine deviation + alerts | [ml/har/anomaly.py](ml/har/anomaly.py), [alerts.py](ml/har/alerts.py) | **Done and evaluated.** Per-resident routine model (8 aspects incl. weekly drift) vs a generic anomaly-detection baseline, on three activity streams; alert routing (notify / evening summary / dashboard). Results: [anomaly.md](ml/results/anomaly.md), [alerts.md](ml/results/alerts.md). |
+| **Product / PoC** — caregiver dashboard | [src/](src/) | All six screens built. Monitoring and activity history now play back **one real CASAS day per home** with model predictions. Anomalies are still sample data. No backend. Typecheck clean. |
+| **Poster** | `poster/` | Draft rendered to `AmbiLiving-Poster.pdf`. **Not yet committed.** Concept/architecture only, no results. |
 
-**The single most urgent item is not technical: almost none of this work is committed to git.**
-The repository has one commit (`3a2cf91 Initial commit from Create Next App`). Everything
-described below is untracked or unstaged working-tree state. See [§6](#6-immediate-housekeeping).
+**Git state.** All ML and app work is on `main` (PR #1 `babar`, 18 Oct; PRs #2 and #3 `aleeza`,
+14–18 Nov, including the final sliding-window results). Working branch for the roadmap and paper
+tracking: `hudiya`.
+
+**What to do next, in order:** [ROADMAP.md](ROADMAP.md). **Paper tracking:** [paper/](paper/).
 
 ---
 
@@ -52,151 +54,103 @@ described below is untracked or unstaged working-tree state. See [§6](#6-immedi
 | Member 2 | Shortlist HAR + anomaly-detection approaches | Literature table (Zhao 2026, Cejudo 2025, Fahad & Tahir 2020); three approaches chosen |
 | Member 3 | System requirements, architecture, dashboard & alert design | [smart-home-activity-recognition-poc-spec.md](smart-home-activity-recognition-poc-spec.md) — a full 17-section PoC specification |
 
-Also delivered in this phase: the Complex Computing Problem justification, the overlapping-activity
-problem statement (Meal_Preparation vs Wash_Dishes fire the *same* sensors in the *same*
-proportions), the evaluation plan, risk register, and the DEI / ethics / legal analysis.
+### Iteration 2 — Experimentation & Model Comparison ✅ Complete
 
-### Iteration 2 — Experimentation & Model Comparison 🟡 In progress
+**Shared framework** ([ml/har/](ml/har/)): CASAS parser with per-activity begin/end pairing
+(`data.py`), hand-crafted features and token sequences (`features.py`), RF / Gradient Boosting
+(`models/classical.py`), BiLSTM / 1D-CNN / Transformer (`models/sequence.py`), shared training loop
+(`train.py`), evaluation and summary tables (`evaluate.py`, `compare.py`, `experiments.py`,
+`rescore.py`). Two protocols: stratified 5-fold CV and a temporal split (first 70% of days train,
+last 30% test). Macro-F1 ignores activities absent from the test set (fixed and rescored 13 Oct).
 
-**The shared experiment framework is done** — this was the hard part, and it means all three
-approaches are compared on identical data, identical splits and identical metrics.
+**Every model × {Aruba, Milan} × {cv, temporal} is archived** in [ml/results/summary.md](ml/results/summary.md),
+with 3-seed repeats and a learning-rate tuning pass (lr 3e-4) in [ml/results/experiments.md](ml/results/experiments.md).
 
-- [ml/har/data.py](ml/har/data.py) — CASAS parser. Normalises corrupted Aruba states
-  (`ONc`, `OFF5`, `OFcF`, `28.55c`), drops non-sensor lines, and pairs `begin`/`end` annotations
-  **per activity name** — necessary because Milan has 421 activities that begin while another is
-  still open, which a single global stack would mis-pair. Output: Aruba 6,476 segments / 11 classes,
-  Milan 2,352 segments / 15 classes.
-- [ml/har/features.py](ml/har/features.py) — two representations from one segment definition:
-  ~160 hand-crafted features (cyclic time-of-day, weekday, duration, event rate, per-sensor event
-  share, first/last sensor, transitions) and token-encoded event sequences
-  (`<sensor>_<state>` + time gap + time since start + time of day).
-- [ml/har/models/classical.py](ml/har/models/classical.py) — Approach 1: Random Forest, HistGradientBoosting.
-- [ml/har/models/sequence.py](ml/har/models/sequence.py) — Approaches 2 & 3: BiLSTM, multi-width 1D-CNN,
-  Transformer encoder. All share one input encoding and one classifier head, so the comparison is fair.
-- [ml/har/train.py](ml/har/train.py) — shared neural training loop: sqrt-inverse-frequency class
-  weights, label smoothing 0.05, AdamW, early stopping on a 10% validation slice **of the training
-  fold** (the test fold is never used for model selection).
-- [ml/har/evaluate.py](ml/har/evaluate.py) / [ml/har/compare.py](ml/har/compare.py) — every run writes
-  `metrics.json`, `per_class.csv`, `confusion.png`, `predictions.csv`; `compare.py` rebuilds
-  [ml/results/summary.md](ml/results/summary.md) from all runs on disk.
-- Two evaluation protocols: `--split cv` (stratified 5-fold, comparable to the papers) and
-  `--split temporal` (first 70% of days train, last 30% test — closer to deployment).
+**Two feature additions solved the overlap problems from the defense slides:**
 
-**Results archived so far** (Aruba, 5-fold CV, 6,476 segments, 11 classes):
+- **Pre-segment context** (`--context`): gap since the previous event, events and distinct sensors in
+  the 10 minutes before. Past-only, so it works live. Fixes Enter_Home vs Leave_Home on Aruba
+  (F1 0.81 → 0.98 each).
+- **Activity history** (`--history`): a two-stage model. Stage 1 recognises each segment; its
+  *predictions* (never ground-truth labels) become routine features — time since each activity
+  last ended, whether it was the most recent, how often it happened today. Wash_Dishes usually
+  follows a meal, so on Aruba cv its recall goes 0.06 → 0.42 (F1 0.10 → 0.50).
 
-| Approach | Accuracy | **Macro-F1** | Weighted-F1 | Time |
+**Best results, known activity boundaries** (macro-F1 %, single run unless noted):
+
+| | Aruba cv | Aruba temporal | Milan cv | Milan temporal |
 |---|---|---|---|---|
-| 1 — Features + Gradient Boosting | 96.26 ± 0.25 | **84.52 ± 4.24** | 95.92 ± 0.26 | 19 s |
-| 1 — Features + Random Forest | 96.36 ± 0.24 | **83.15 ± 4.14** | 95.88 ± 0.26 | 23 s |
+| Best model | GB + ctx + history | GB + ctx | GB + ctx + history | BiLSTM |
+| Macro-F1 | **92.92 ± 3.74** | **92.75** (3 seeds: 90.19 ± 1.05) | **92.52 ± 1.73** | **93.55** (3 seeds: 94.89 ± 0.79) |
+| Accuracy | 98.98 | 99.17 | 97.45 | 94.78 |
 
-Macro-F1 is our headline metric: accuracy is dominated by Relax (2,919) and Meal_Preparation
-(1,606), so it hides exactly the failures we care about.
+Findings worth stating in the report:
 
-**This is already competitive** — Fahad & Tahir (2020) report 96.19% accuracy on Aruba; we are at
-96.3% with a far simpler model. But the per-class breakdown shows the real story:
+1. All approaches land within a few points of each other; **the representation matters more than the
+   architecture** (context adds ~3 points to every model on Aruba).
+2. Gradient Boosting is the strongest or close to it and runs in seconds, against minutes for the
+   BiLSTM/CNN and hours for the Transformer on CPU.
+3. History helps on cv but **not on the temporal split** — Aruba's last 30% of days has only 6
+   Wash_Dishes labels because annotation of it fades out from March 2011.
+4. Milan, which looked much harder in early runs (~29 macro-F1 in October), now scores on par with Aruba.
 
-| Activity | Support | RF recall | HGB recall | Reading |
-|---|---|---|---|---|
-| Relax, Sleeping, Eating, Bed_to_Toilet, Work | 171–2,919 | 1.00 | ≥0.99 | Solved |
-| Meal_Preparation | 1,606 | 0.999 | 0.994 | Solved |
-| Housekeeping | 33 | 0.94 | 0.94 | Good |
-| Enter_Home / Leave_Home | 431 / 431 | 0.83 / 0.79 | 0.83 / 0.78 | **Confused with each other** |
-| Respirate | 6 | 0.50 | 0.67 | Too few instances to learn |
-| **Wash_Dishes** | 65 | **0.03** | **0.09** | **Essentially undetected** |
+### Iteration 3 (ML side) — live sliding-window recognition ✅ Complete
 
-Wash_Dishes is the overlapping-activity problem from the defense slides, confirmed numerically:
-it fires M015/M017/M018/M019 in nearly the same proportions as Meal_Preparation, and the model
-absorbs it into the majority class. **Fixing this is the core research contribution of
-Iteration 2** — it is precisely the "no obvious solution" characteristic we claimed as our CCP.
+The live product has no activity boundaries. `har.run_windows` ([ml/har/windows.py](ml/har/windows.py),
+[ml/har/run_windows.py](ml/har/run_windows.py), [ml/har/window_history.py](ml/har/window_history.py))
+classifies the **last 100 events at every event**, with a chronological 60/20/20 day split matching
+the LastAct protocol (Liu et al., 2026) so results are comparable with published work.
 
-### Product PoC — delivered ahead of schedule ✅
+Final results (macro-F1 %, mean ± std over 3 seeds; full table in [ml/results/windows.md](ml/results/windows.md)):
 
-Iteration 3 assigns dashboard development to Member 3; a high-fidelity functional PoC already
-exists (~3,700 lines of TypeScript, Next.js 16 / React 19 / Tailwind v4). All 12 acceptance
-criteria in the spec are met:
+| Model | Aruba | Milan |
+|---|---|---|
+| **BiLSTM — chosen as the window model** | 41.9 ± 1.5 | **45.6 ± 0.6** |
+| Gradient Boosting + routine history | **43.8 ± 0.4** | 37.9 (1 run) |
+| Gradient Boosting | 39.1 ± 0.2 | 38.1 ± 1.0 |
+| LastAct (reported) | 44.6 ± 1.9 | 40.1 ± 0.5 |
+| DeepCASAS (reported by LastAct) | 38.6 | 36.7 |
 
-- **Dataset-agnostic architecture**, which was the spec's central demand.
-  [src/types/home.ts](src/types/home.ts) defines generic domain types (`HomeEnvironment`,
-  `SensorDefinition`, `SensorEvent`, `RecognizedActivity`, `AnomalyRecord`);
-  [src/data/homes.ts](src/data/homes.ts) is a registry of environment configs. No component knows
-  it is rendering Aruba — adding Kasteren means adding data, not changing UI.
-- **Monitoring page** ([src/app/(app)/monitoring/page.tsx](src/app/(app)/monitoring/page.tsx)) — the
-  centrepiece. Time-controlled floor plan: zoom/pan, play/pause/step, draggable timeline, sensor
-  state derived from the event stream at the current timestamp, hover/click sensor detail panel,
-  "show sensor IDs" toggle, switchable raster-reference / SVG base layer.
-- **Floor plans and sensor coordinates** — 40 Aruba sensors and 32 Milan sensors positioned in the
-  SVG coordinate system, derived from the reference images by the computer-vision helpers in
-  [scripts/](scripts/) (`detect_sensors.py`, `detect_markers.py`, `detect_gray_markers.py`,
-  `calibrate_sensors.py`, `grid_aruba.py`) rather than placed by hand.
-- **Dashboard** — current activity, recent activities, today's count, anomalies needing attention.
-  Deliberately *not* a metrics screen, per spec §7.
-- **Activity History**, **Anomalies** (caregiver-readable: observed vs expected vs reason, no raw
-  scores), **Homes/Environments**, **Settings**, plus a landing page and persistent sidebar/header
-  with the environment selector.
-- Mock data is centralised in [src/data/homes/](src/data/homes/) in shapes that map 1:1 onto future
-  API responses: 59 Aruba / 46 Milan sensor events, 11 / 15 activity-history entries, 3 anomalies each.
-- `npx tsc --noEmit` passes clean.
+- We **beat LastAct on Milan** and are within its error bar on Aruba (with GB + history).
+- The model choice followed a rule fixed in advance: BiLSTM + history only if history helped on
+  both homes. It did not (Milan 45.4 → 38.0), so the final model is plain BiLSTM.
+- Smoothing over the last k windows always hurt; validation picked k = 1.
+- With unannotated events labelled "Other" (the real product setting), GB reaches Aruba 51.3
+  macro-F1 / 81.2 accuracy and Milan 35.3 (`window100-other/`).
+- **These numbers are not comparable with the segment results above**, which get activity
+  boundaries for free. Report both settings.
+
+### Product PoC ✅ Built, partially connected
+
+- Next.js 16 / React 19 / Tailwind v4, dataset-agnostic types ([src/types/home.ts](src/types/home.ts))
+  and an environment registry ([src/data/homes.ts](src/data/homes.ts)).
+- Screens: Dashboard, Monitoring (time-controlled floor plan with zoom/pan/playback and sensor
+  detail), Activity History, Anomalies, Homes, Settings, plus a landing page.
+- Floor plans with 40 Aruba / 32 Milan sensors positioned by the CV helpers in [scripts/](scripts/).
+- **Real data:** `py -m har.export_dashboard` trains GB + context on the first 70% of days and
+  exports one unseen test day per home to [src/data/homes/generated/](src/data/homes/generated/)
+  ([realData.ts](src/data/homes/realData.ts) loads it), with per-activity confidence:
+  - Aruba 2011-04-20 — 5,957 sensor events, 31 / 32 activities recognised correctly.
+  - Milan 2010-01-03 — 9,126 sensor events, 64 / 67 correct.
+  - Boundaries still come from the annotations; the dashboard does not yet run the window model.
+- `npx tsc --noEmit` passes clean (checked 18 Nov).
 
 ---
 
 ## 4. To do
 
-### Iteration 2 — finish the comparison
+The ordered, step-by-step plan lives in **[ROADMAP.md](ROADMAP.md)** (single source of truth —
+do not duplicate it here). In short:
 
-- [ ] **Run Approaches 2 and 3 to completion and archive the results.** Only `aruba/cv/rf` and
-      `aruba/cv/hgb` exist on disk. BiLSTM, CNN and Transformer are implemented but have no
-      archived run. Target: every model × {aruba, milan} × {cv, temporal}.
-- [ ] **Run the `temporal` split for everything.** No temporal results exist yet. This is the
-      honest, deployment-like number and the one a reviewer will ask about.
-- [ ] **Attack the Wash_Dishes / Enter_Home-vs-Leave_Home failures.** Candidate directions:
-      sensor-transition and ordering features, duration priors, hierarchical or two-stage
-      classification within the kitchen-sensor group, over/under-sampling, focal loss,
-      or the GAN-based augmentation Zhao et al. (2026) use for exactly this problem.
-- [ ] **Per-member hyper-parameter tuning**, on training folds only — none has been done yet.
-- [ ] **Use the temperature sensors.** They are parsed and kept but currently unused.
-- [ ] **Regenerate [ml/results/summary.md](ml/results/summary.md)** — it is stale. It lists Milan
-      BiLSTM/Transformer rows whose result directories no longer exist, and omits the `hgb` run
-      that does. One `py -m har.compare` fixes it.
-- [ ] **Write up the comparison and select the winning approach** — the Iteration 2 milestone.
-      Report Accuracy, Precision, Recall and F1 per the evaluation plan, with confusion analysis.
-
-### Iteration 3 — integration
-
-- [ ] **Online / sliding-window inference.** Everything so far assumes activity boundaries are
-      known (explicit segmentation), because the ground-truth `begin`/`end` labels provide them.
-      A live dashboard has no such labels: it must classify the last N events at every new event.
-      This is flagged in [ml/README.md](ml/README.md) and is **the single biggest gap between the
-      research track and the product**. It also changes the metrics — expect lower numbers, and
-      plan to report both settings.
-- [ ] **Anomaly detection — not started.** Out of scope for Iteration 2 and absent from `ml/`.
-      Needs: a definition of "normal routine" per resident, a deviation model (the shortlisted
-      literature uses autoencoders and RNN-based routine models), and a translation layer that
-      turns a score into caregiver-readable text. The PoC's `AnomalyRecord` shape
-      (observed / expected / reason / severity) is the contract to fill.
-- [ ] **Alert logic** — trigger rules, severity, and the false-alert-rate / response-time
-      measurement promised in the evaluation plan.
-- [ ] **Backend API.** Decide FastAPI vs Next.js route handlers, then serve: environment config,
-      sensor stream, recognised activities, anomalies. The frontend types are already
-      API-shaped, so this is mostly serialisation.
-- [ ] **Replace the frontend mock data with real model output** and prove criterion 4 (sensor state
-      follows the timestamp) against a real log rather than a 59-event mock.
-- [ ] **Researcher / Evaluation view** (spec §13) — surface accuracy, precision, recall, F1,
-      per-class performance and confusion analysis for the research audience, kept clearly
-      separate from the caregiver product. Currently the 84.5% Aruba result lives only in
-      `ml/results/` and is invisible in the app.
-- [ ] **Kasteren as a third environment** (spec §12, optional) — add it as an evaluation-only
-      placeholder. `HomeStatus` already supports `"placeholder"` but no home uses it.
-- [ ] **End-to-end integration testing** of Sensor Data → HAR → Anomaly → Alerts & Dashboard.
-
-### Final deliverables
-
-- [ ] Deployment outside the development environment (an explicit success criterion).
-- [ ] Reliability and response-time measurement.
-- [ ] Performance evaluated across *both* homes and across activity patterns — the DEI commitment
-      to check for unequal performance across user/activity patterns. Milan is the harder home;
-      do not report Aruba alone.
-- [ ] Final report, documentation, and the ethics/legal section (data minimisation, CASAS licensing
-      compliance, human oversight before any high-stakes decision).
+0. Housekeeping — commit `poster/`, refresh `ml/README.md` tables, real README, tag results.
+1. Freeze activity recognition — save trained models, per-class window table, confidence analysis.
+2. ~~Routine-deviation detection~~ — done (D12–D14, E11–E14).
+3. ~~Alert routing~~ — done (D15, E15).
+   Open follow-ups: a fairer missed-meal injection (remove all kitchen movement, not only
+   annotated cooking), better live recognition of Leave_Home / cooking / meds.
+4. Integration — backend, live replay + inference, dashboard on real API data, researcher view.
+5. System evaluation & deployment — end-to-end tests, latency, both-homes fairness, deploy.
+6. Write-up — paper (tracked in [paper/](paper/)), final report, poster, demo.
 
 ---
 
@@ -204,26 +158,13 @@ criteria in the spec are met:
 
 | Risk | Current reality |
 |---|---|
-| **Uncommitted work** | One commit in the repo. A disk failure loses the entire project today. |
-| **Overlapping activities** | Confirmed, not solved. Wash_Dishes recall is 3–9%. Named as our CCP; a reviewer will ask. |
-| **Milan is much harder** | Earlier Milan runs reached only ~29% macro-F1 against ~63% accuracy. 15 classes, pet-contaminated motion data. Zhao et al. report ~80% accuracy on Milan, so there is real headroom — and a real gap to explain. |
-| **CV split is optimistic** | Stratified CV lets segments from the same day fall in both train and test. Already acknowledged in the code; the `temporal` split is implemented but unrun. |
-| **Explicit segmentation** | Reported numbers assume known activity boundaries. The deployed system will not have them. |
-| **Research → product gap** | The two tracks do not touch. Nothing in `src/` reads anything from `ml/results/`. |
-| **Rare classes** | Respirate has 6 instances total. No amount of modelling fixes that; say so rather than hiding it in a macro average. |
-
----
-
-## 6. Immediate housekeeping
-
-1. **Commit everything.** Highest-value action available. Suggested breakdown: the ML pipeline,
-   the frontend PoC, the floor-plan assets and CV scripts, the spec, and the results.
-2. Regenerate `ml/results/summary.md` (stale, as above).
-3. Replace the create-next-app boilerplate in [README.md](README.md) with a real project README.
-4. Delete [src/components/ui/PagePlaceholder.tsx](src/components/ui/PagePlaceholder.tsx) — defined,
-   never imported, left over from scaffolding.
-5. `python` on this machine resolves to the Microsoft Store stub; the `py` launcher works. Use
-   `py -m har.run ...` or create a venv in `ml/`.
+| **Live pipeline weak on Aruba** | Routine deviations are found 87–92 % of the time with annotated or segment-recognised activities, but only 16 % with the live BiLSTM on Aruba (63 % on Milan): live recognition errors corrupt the learned routine. Biggest technical risk now; frame it as a finding and as the next research step. |
+| **Live accuracy is much lower** | ~42–46 macro-F1 in the window setting vs ~92 with known boundaries. Competitive with the literature, but a reviewer will see the gap; frame it with the LastAct comparison. |
+| **Rare / overlapping classes** | Solved with known boundaries (history), not in the window setting. Respirate has 6 instances in total — say so rather than hiding it in a macro average. |
+| **Label drift** | Aruba stops annotating Wash_Dishes from Mar 2011; Milan's test days are a holiday period (validation ~46 vs test ~38 for GB). Temporal per-class scores are noisy. |
+| **History feedback loop** | History features use the model's own earlier predictions; one wrong recognition can affect the next in a live system. |
+| **Research → product gap** | Narrower: the dashboard shows a real day and routine deviations found on real days, with how each was delivered. A live demo (`/live`) now replays days through the live BiLSTM and routine model, minute by minute (D17). Still no streaming backend (ROADMAP 4.1). |
+| **Uncommitted work** | `poster/` is not on `main`. |
 
 ---
 
@@ -238,16 +179,19 @@ npm run lint
 npx tsc --noEmit     # typecheck (currently clean)
 ```
 
-**ML** (from `ml/`; raw CASAS files go in `ml/data/raw/`, git-ignored)
+**ML** (from `ml/`; raw CASAS files go in `ml/data/raw/`, git-ignored). On this machine `python`
+resolves to the Microsoft Store stub; use the `py` launcher or a venv.
 
 ```bash
 py -m pip install -r requirements.txt
-py -m har.data aruba milan                     # parse + class statistics
-py -m har.run --dataset aruba --model rf       # one experiment
-py -m har.run --dataset all --model all        # full comparison (~1–1.5 h CPU)
+py -m har.data aruba milan                                         # parse + class statistics
+py -m har.run --dataset all --model hgb --context --history         # best segment model
 py -m har.run --dataset milan --model bilstm --split temporal --verbose
-py -m har.compare                              # rebuild results/summary.md
+py -m har.run_windows --dataset all --model bilstm --seeds 1 2 3    # live sliding-window model
+py -m har.export_dashboard                                         # real day → src/data/homes/generated/
+py -m har.compare                                                  # rebuild results/summary.md
 ```
 
-Each run writes `ml/results/<dataset>/<split>/<model>/` containing `metrics.json`,
-`per_class.csv`, `confusion.png` and `predictions.csv`.
+Segment runs write `ml/results/<home>/<cv|temporal>/<model>/`; window runs write
+`ml/results/<home>/window100-<last|other>/<tag>/`. Each holds `metrics.json`, `per_class.csv`,
+`confusion.png` and `predictions.csv(.gz)`.
