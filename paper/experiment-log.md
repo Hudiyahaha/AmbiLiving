@@ -12,9 +12,40 @@ Template:
 **Command**: py -m har....
 **Result**: headline numbers + where they are stored
 **Takeaway**: what it means; claim IDs it supports or kills
+**Status**: PASS (worked / adopted) · FAIL (did not help; kept for the record) · PENDING (still running) · OPEN (lead, not yet tested)
 ```
 
 Entries E1–E9 were reconstructed on 18 Nov 2026 from the git history and `ml/README.md`.
+
+---
+
+## At a glance
+
+One line per experiment. Details in the entries below. Update the status when an entry changes.
+
+| # | Experiment | Outcome | Status |
+|---|---|---|---|
+| E1 | Baseline segment recognition (RF, GB), Aruba | GB macro-F1 84.5; Wash_Dishes almost never found | PASS |
+| E2 | Pre-segment context | Enter/Leave_Home 0.81 → 0.98 on Aruba; little change on Milan | PASS |
+| E3 | Activity history (segments) | Aruba cv 87.2 → 92.9; no gain on the temporal split; dwell-time features no gain | PASS (cv) · FAIL (temporal, dwell time) |
+| E4 | All models under cv | all within ~3 macro-F1; GB best and cheapest | PASS |
+| E5 | Temporal split for sequence models | Milan best = BiLSTM 93.6 | PASS |
+| E6 | Seeds and learning rate | lr 3e-4 worse and less stable | FAIL (lr change) |
+| E7 | Macro-F1 scoring fix | older numbers may be stale | PASS |
+| E8 | Prediction confidence stored | input for alerts | PASS |
+| E9 | Live sliding windows (LastAct protocol) | BiLSTM Milan 45.6, Aruba 41.9; GB + history Aruba 43.8 | PASS |
+| E9 | – smoothing over the last k windows | lowers macro-F1 for every k | FAIL |
+| E9 | – history added to the BiLSTM | Milan 45.4 → 38.0, Aruba no gain | FAIL |
+| E10 | Label drift figure | Aruba Wash_Dishes labels fade; Milan training period sparsely labelled | PASS |
+| E11 | First anomaly run, Milan | too many false alerts (2.0–2.4/day); rule changed | FAIL → fixed |
+| E12 | First Aruba run, missed meals | missed detection 0.00; reframed as routine deviation | FAIL → fixed |
+| E13 | Milan reruns with the routine model | bug found and fixed; detection 0.88 | PASS |
+| E14 | Routine deviation, 3 activity streams | 87–92 % with annotations / segment GB; live BiLSTM Aruba 16 %, Milan 63 % | PASS (gt, seg) · FAIL (Aruba live) |
+| E15 | Alert routing | about 1 notification per 11–14 normal days on Aruba | PASS |
+| E16 | Live-demo replay | 12/12 scenarios reproduce the evaluated stream | PASS |
+| E17 | CNN / Transformer on live windows | CNN does not beat BiLSTM | CNN FAIL · Transformer PENDING |
+| E18 | Save the final window model | reloaded model reproduces 100 % of test predictions | PASS |
+| E19 | Episode-level view of live recognition | raw stream flickers 13–14×; with a 2-min cleanup Aruba finds 80 % of episodes; Aruba anomaly-pipeline episodes worse than Milan's | PASS · lead OPEN |
 
 ---
 
@@ -115,3 +146,43 @@ Entries E1–E9 were reconstructed on 18 Nov 2026 from the git history and `ml/R
 - **Clean days**: Milan's median clean day has 2 summary items and 1 insight. Aruba's has 1 false notification (41 min of quiet at 08:01 while recognised as sleeping).
 
 **Takeaway**: The demo shows the pipeline working in time, and also its failures. Use Milan for presentations; the Aruba scenarios illustrate C8 (live recognition corrupts the routine).
+
+## E17 — CNN and Transformer on live windows  (21 Nov 2026, Aleeza)
+**Question**: Does a CNN or Transformer beat the BiLSTM on live windows? (Recent papers use Transformers; we had only tested them with known boundaries.)
+**Setup**: D6 protocol, test window every 10th event (same as the `bilstm+te10` runs), 3 seeds, both homes. Rule fixed before the runs: the final model changes only if a model beats the BiLSTM by more than the seed spread on **both** homes.
+**Command**: `py -m har.run_windows --dataset all --model cnn --test-stride 10 --seeds 1 2 3` (and `--model transformer`)
+**Result**: CNN Milan 43.7 ± 0.6 (BiLSTM 45.4 ± 0.2), Aruba 42.2 ± 0.9 (BiLSTM 42.1 ± 1.4). Transformer: running. Stored in `<home>/window100-last/experiments/{cnn,transformer}+te10+s*`.
+**Takeaway**: CNN does not beat the BiLSTM; ties on Aruba, worse on Milan.
+**Status**: CNN FAIL (BiLSTM kept). Transformer PENDING.
+
+## E18 — Save the final window model  (21 Nov 2026, Aleeza, `16e247b`)
+**Question**: Can the final BiLSTM be stored and reused without retraining (roadmap 1.1)?
+**Setup**: BiLSTM, seed 1, training days only; one file per home with weights, context normalisation, vocabulary, classes and window settings (`ml/models/<home>/window100-bilstm-s1.pt`, about 400 KB).
+**Command**: `py -m har.saved_model --dataset all --model bilstm --seed 1 --check`
+**Result**: reloaded in a fresh process, predictions match the stored test run on 100 % of windows (Milan 107,934, Aruba 322,880).
+**Takeaway**: The replay and a future backend can load `har.saved_model.load(...)` instead of retraining.
+**Status**: PASS
+
+## E19 — Episode-level view of live recognition  (21 Nov 2026, Aleeza)
+**Question**: Per-event macro-F1 (about 42 on Aruba) punishes every boundary error. Routine detection uses episodes. How good are the live predictions at the episode level, and is flickering the reason live routine detection fails on Aruba (16 % vs 63 % on Milan, E14)?
+**Setup**: stored per-event test predictions (`bilstm+s1`; Aruba also `hgb+histpast+bal+tr10+s1`) vs annotated test-day episodes. Episode = run of the same predicted activity. Match = same activity, overlapping within ±15 min. Three versions of the predicted stream: *raw* (every event), *anomaly-pipeline* (exactly what `run_anomaly` uses: every 10th event, runs shorter than 3 points absorbed, per day), *clean2* (runs shorter than 2 min absorbed into the previous one; past only; diagnostic, **not tuned**).
+**Command**: `py -m har.episode_eval --dataset all --run bilstm+s1 hgb+histpast+bal+tr10+s1 --write`
+**Result** (`ml/results/episodes.md`; found = episode recall, precision = share of predicted episodes that are real, mean over activities):
+
+| Home, model | Stream | Found % | Precision % | Episodes/day (true → predicted) |
+|---|---|---|---|---|
+| Aruba BiLSTM | raw | 96.2 | 28.1 | 29.2 → 389.8 |
+| Aruba BiLSTM | anomaly-pipeline | 65.7 | 37.7 | 29.2 → 38.5 |
+| Aruba BiLSTM | clean2 | 79.6 | 53.9 | 29.2 → 29.9 |
+| Aruba GB + history | anomaly-pipeline | 57.0 | 47.3 | 29.2 → 30.0 |
+| Aruba GB + history | clean2 | 68.7 | 55.2 | 29.2 → 26.0 |
+| Milan BiLSTM | raw | 89.8 | 45.6 | 45.3 → 650.9 |
+| Milan BiLSTM | anomaly-pipeline | 69.4 | 64.1 | 45.3 → 53.7 |
+| Milan BiLSTM | clean2 | 66.3 | 63.1 | 45.3 → 45.5 |
+
+**Takeaway**:
+1. The raw live stream flickers badly: 13× (Aruba) to 14× (Milan) more episodes than really happen. Almost every real episode is touched (found 90–96 %), but most predicted episodes are fake.
+2. With a simple 2-min cleanup, Aruba's main activities come out well at the episode level (e.g. Meal_Preparation found 89 % / precision 68 %, Sleeping 95 / 61, Bed_to_Toilet 80 / 83, Leave_Home 78 / 85). Eating, Work, Wash_Dishes and Respirate stay weak. This answers "how can you detect deviations if recognition is 42 F1": per-event F1 understates what the episode-level routine needs.
+3. **Lead**: on Milan the anomaly pipeline's episodes are as good as clean2 (64 vs 63 precision). On Aruba they are clearly worse (38 vs 54 precision, 66 vs 80 found). Milan's live detection works (63 %) and Aruba's does not (16 %), so the episode-building step may be part of the Aruba failure.
+**Status**: PASS (diagnosis). The lead in point 3 is OPEN. Next test: rerun the routine-deviation evaluation (E14) on Aruba with a cleanup chosen on the observation days, not the test days, and see whether live detection rises above 16 %.
+
