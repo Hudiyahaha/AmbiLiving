@@ -43,7 +43,7 @@ One line per experiment. Details in the entries below. Update the status when an
 | E14 | Routine deviation, 3 activity streams | 87–92 % with annotations / segment GB; live BiLSTM Aruba 16 %, Milan 63 % | PASS (gt, seg) · FAIL (Aruba live) |
 | E15 | Alert routing | about 1 notification per 11–14 normal days on Aruba | PASS |
 | E16 | Live-demo replay | 12/12 scenarios reproduce the evaluated stream | PASS |
-| E17 | CNN / Transformer on live windows | CNN does not beat BiLSTM | CNN FAIL · Transformer PENDING |
+| E17 | CNN / Transformer on live windows | neither beats the BiLSTM; Transformer much worse on Aruba (37.1 vs 42.1) | FAIL (BiLSTM kept) |
 | E18 | Save the final window model | reloaded model reproduces 100 % of test predictions | PASS |
 | E19 | Episode-level view of live recognition | raw stream flickers 13–14×; with a 2-min cleanup Aruba finds 80 % of episodes; Aruba anomaly-pipeline episodes worse than Milan's | PASS · lead tested in E20 |
 | E20 | Time-based cleanup of the live stream before routine detection | Aruba live detection 16 % → 45 % at the same false-alert rate; Milan no clear change | PASS (Aruba) · no gain (Milan) |
@@ -152,9 +152,9 @@ One line per experiment. Details in the entries below. Update the status when an
 **Question**: Does a CNN or Transformer beat the BiLSTM on live windows? (Recent papers use Transformers; we had only tested them with known boundaries.)
 **Setup**: D6 protocol, test window every 10th event (same as the `bilstm+te10` runs), 3 seeds, both homes. Rule fixed before the runs: the final model changes only if a model beats the BiLSTM by more than the seed spread on **both** homes.
 **Command**: `py -m har.run_windows --dataset all --model cnn --test-stride 10 --seeds 1 2 3` (and `--model transformer`)
-**Result**: CNN Milan 43.7 ± 0.6 (BiLSTM 45.4 ± 0.2), Aruba 42.2 ± 0.9 (BiLSTM 42.1 ± 1.4). Transformer: running. Stored in `<home>/window100-last/experiments/{cnn,transformer}+te10+s*`.
-**Takeaway**: CNN does not beat the BiLSTM; ties on Aruba, worse on Milan.
-**Status**: CNN FAIL (BiLSTM kept). Transformer PENDING.
+**Result**: CNN Milan 43.7 ± 0.6 (BiLSTM 45.4 ± 0.2), Aruba 42.2 ± 0.9 (BiLSTM 42.1 ± 1.4). Transformer Milan 45.1 ± 0.7, Aruba 37.1 ± 2.4 (seeds 37.1, 34.8, 39.5; about 0.6–3 h per Aruba seed on CPU). Stored in `<home>/window100-last/experiments/{cnn,transformer}+te10+s*`.
+**Takeaway**: Neither beats the BiLSTM. The CNN ties on Aruba and is worse on Milan; the Transformer ties on Milan and is clearly worse and less stable on Aruba. With ~19k (Aruba) and ~4.6k (Milan) training windows and no pretraining, the attention model has too little data; a GPU would make it faster, not more accurate. Answers the defense question "why not a Transformer like recent papers?".
+**Status**: FAIL (BiLSTM kept as the final window model).
 
 ## E18 — Save the final window model  (21 Nov 2026, Aleeza, `16e247b`)
 **Question**: Can the final BiLSTM be stored and reused without retraining (roadmap 1.1)?
