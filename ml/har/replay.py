@@ -23,7 +23,15 @@ injected deviation type, chosen among the copies where the batch evaluation says
 the deviation reached the caregiver. Every scenario carries the *overall* rate for
 its type on the live stream, so the chosen example is never mistaken for typical.
 
-Needs ``python -m har.run_anomaly`` (streams.pkl, bilstm.pt, alert files) first.
+Live stream per home (E20): Aruba uses the time-based cleanup (``winc``: predicted
+runs shorter than the length chosen on the observation days are absorbed), which
+raised live detection from 16 % to 45 %; Milan keeps the original 3-point rule
+(``win``), because the cleanup brought no gain there at matched false alerts and
+tripled notifications. Override with ``--stream``.
+
+Needs ``python -m har.run_anomaly --win-clean auto --tag e20`` and
+``python -m har.alerts --folder anomaly-e20`` first (streams.pkl, alert files,
+routing.json); the BiLSTM comes from ``har.saved_model``.
 Writes ``public/replay/index.json`` and ``public/replay/<home>-<scenario>.json``.
 """
 
@@ -47,7 +55,10 @@ from .features import encode_sequences
 from .anomaly_inject import build_combined
 from .models import sequence
 from .run import RESULTS_DIR
-from .run_anomaly import OPERATING, _windows, points_to_episodes
+from .run_anomaly import (OPERATING, _windows, add_clean_stream, minutes_to_episodes,
+                          points_to_episodes)
+from .saved_model import load as load_saved
+from .saved_model import model_path
 from .train import Trained
 from .train import predict_proba as predict_sequence
 from .windows import day_split
@@ -55,6 +66,8 @@ from .windows import day_split
 OUT_DIR = ML_DIR.parent / "public" / "replay"
 SIZE, STRIDE = 100, 10
 STEP = pd.Timedelta(minutes=2)
+FOLDER = "anomaly-e20"
+DEFAULT_STREAM = {"aruba": "winc", "milan": "win"}  # E20
 SUMMARY_AT = 21 * 3600  # evening summary sent at 21:00 in the demo
 STATE = {"ON": 0, "OFF": 1, "OPEN": 2, "CLOSE": 3}
 STATE_NAMES = ["active", "inactive", "open", "closed"]
@@ -79,9 +92,10 @@ def _sec(t, day) -> int:
 
 # --------------------------------------------------------------------------- choose days
 
-def choose(home: str, variants, inj: pd.DataFrame) -> list[tuple]:
-    d = RESULTS_DIR / home / "anomaly"
-    a = route(pd.read_csv(d / "alerts_win_routine.csv"))
+def choose(home: str, variants, inj: pd.DataFrame, stream: str = "win",
+           folder: str = "anomaly") -> list[tuple]:
+    d = RESULTS_DIR / home / folder
+    a = route(pd.read_csv(d / f"alerts_{stream}_routine.csv"))
     shown = a[a["delivered"] & a["tier"].isin(["notify", "summary"])]
     per_day = shown.groupby("vid").size()
     by_vid = {v.vid: v for v in variants}
@@ -124,11 +138,17 @@ def recognise(home_name: str, chosen: list, out_dir) -> dict[int, tuple]:
     ends = np.concatenate([np.arange(v.lo + 1, v.hi + 1, STRIDE) for v in variants])
     wh = _windows(comb, ends, SIZE)
     data = encode_sequences(wh, max_len=SIZE)
-    ck = torch.load(out_dir / "bilstm.pt", weights_only=False)
-    net = sequence.build("bilstm", len(data.vocab), data.cont.shape[-1],
-                         data.context.shape[-1], len(classes), SIZE)
-    net.load_state_dict(ck["state"])
-    p = predict_sequence(Trained(net, ck["ctx_mean"], ck["ctx_std"]), data)
+    if (out_dir / "bilstm.pt").exists():
+        ck = torch.load(out_dir / "bilstm.pt", weights_only=False)
+        net = sequence.build("bilstm", len(data.vocab), data.cont.shape[-1],
+                             data.context.shape[-1], len(classes), SIZE)
+        net.load_state_dict(ck["state"])
+        trained = Trained(net, ck["ctx_mean"], ck["ctx_std"])
+    else:
+        wm = load_saved(model_path(home_name, "bilstm", 1, SIZE))
+        assert wm.vocab == data.vocab, "saved model vocabulary must match"
+        trained = wm.trained
+    p = predict_sequence(trained, data)
     e_hi = wh.segments["hi"].to_numpy()
     out = {}
     for v in variants:
@@ -141,7 +161,8 @@ def recognise(home_name: str, chosen: list, out_dir) -> dict[int, tuple]:
 
 # --------------------------------------------------------------------------- causal replay
 
-def live_alerts(model: RoutineModel, theta: dict, v, times, labels) -> tuple[list[dict], int]:
+def live_alerts(model: RoutineModel, theta: dict, v, times, labels,
+                to_eps=points_to_episodes) -> tuple[list[dict], int]:
     """Alerts as a live system raises them: re-run on the day so far every STEP."""
     first: dict[tuple, dict] = {}
     g = v.day + STEP
@@ -152,7 +173,7 @@ def live_alerts(model: RoutineModel, theta: dict, v, times, labels) -> tuple[lis
         # The clock is an observation too: a silence lasting until now is a silence.
         ev = np.append(ev, g64) if g < end else ev
         m = times < g64
-        eps = points_to_episodes(times[m], list(labels[m]), g)
+        eps = to_eps(times[m], list(labels[m]), g)
         for a in model.alerts(DayData(v.vid, v.day, ev, eps), theta):
             if a.time > g:
                 continue
@@ -163,7 +184,7 @@ def live_alerts(model: RoutineModel, theta: dict, v, times, labels) -> tuple[lis
         g += STEP
     # Batch alerts (whole day at once) must all have been raised live.
     full = model.alerts(DayData(v.vid, v.day, v.times,
-                                points_to_episodes(times, list(labels), end)), theta)
+                                to_eps(times, list(labels), end)), theta)
     missing = sum((a.kind, a.activity, a.time.floor("min")) not in first for a in full)
     return sorted(first.values(), key=lambda r: r["raisedAt"]), missing
 
@@ -193,22 +214,34 @@ def route_live(alerts: list[dict]) -> list[dict]:
 
 # --------------------------------------------------------------------------- export
 
-def export(home_name: str) -> dict:
+def export(home_name: str, stream: str | None = None, folder: str = FOLDER) -> dict:
     t0 = time.time()
-    out_dir = RESULTS_DIR / home_name / "anomaly"
+    stream = stream or DEFAULT_STREAM.get(home_name, "win")
+    out_dir = RESULTS_DIR / home_name / folder
     with open(out_dir / "streams.pkl", "rb") as f:
         S = pickle.load(f)
     variants, classes = S["variants"], S["classes"]
-    ref, test = S["streams"]["win"]
+    if stream == "winc":
+        add_clean_stream(S, "auto")
+    ref, test = S["streams"][stream]
+    if stream == "winc":
+        mins = S["win_clean"]["minutes"]
+
+        def to_eps(t, l, end):
+            return minutes_to_episodes(t, l, end, mins)
+    else:
+        mins, to_eps = None, points_to_episodes
+    print(f"  [{home_name}] live stream '{stream}'"
+          + (f" (runs shorter than {mins:g} min absorbed)" if mins else " (3-point rule)"))
     inj = pd.read_csv(out_dir / "injections.csv")
     summary = json.loads((out_dir / "summary.json").read_text())
-    routing = json.loads((out_dir / "routing.json").read_text())["win"]
-    res = summary["results"]["win/routine"]
+    routing = json.loads((out_dir / "routing.json").read_text())[stream]
+    res = summary["results"][f"{stream}/routine"]
 
     model = RoutineModel().fit(ref)
     pool = calibrate_routine(ref)
     theta = {k: budget_threshold(pool[k], len(ref), OPERATING) for k in DAILY_KINDS}
-    chosen = choose(home_name, variants, inj)
+    chosen = choose(home_name, variants, inj, stream, folder)
     preds = recognise(home_name, chosen, out_dir)
     lab_idx = {c: i for i, c in enumerate(classes)}
     usual = [model._expected_states([b]) for b in range(BINS)]
@@ -223,11 +256,11 @@ def export(home_name: str) -> dict:
     for sid, title, v, caught in chosen:
         times, labels, conf = preds[v.vid]
         # The re-run must reproduce the live stream the evaluation used.
-        same = points_to_episodes(times, list(labels), v.day + pd.Timedelta(days=1))
+        same = to_eps(times, list(labels), v.day + pd.Timedelta(days=1))
         ref_eps = test[v.vid].eps
         agree = (len(same) == len(ref_eps)
                  and (same["activity"].to_numpy() == ref_eps["activity"].to_numpy()).all())
-        alerts, missing = live_alerts(model, theta, v, times, labels)
+        alerts, missing = live_alerts(model, theta, v, times, labels, to_eps)
         alerts = route_live(alerts)
         if v.kind != "clean":
             lo = pd.Timestamp(v.a_start) - pd.Timedelta(minutes=30)
@@ -279,7 +312,8 @@ def export(home_name: str) -> dict:
         scenarios.append({"id": sid, "title": title, "day": sc["day"], "kind": v.kind,
                           "file": path.name, "reproduced": bool(agree), "notRaisedLive": missing})
     print(f"  [{home_name}] done in {time.time() - t0:.0f}s")
-    return {"recogniser": "BiLSTM, last 100 events, every 10th event",
+    return {"recogniser": "BiLSTM, last 100 events, every 10th event"
+                          + (f"; runs shorter than {mins:g} min absorbed" if mins else ""),
             "recogniserMacroF1": round(summary["har"]["win"]["macro_f1"], 3),
             "routineLearnedFrom": f"{len(ref)} observation days",
             "falseAlertsPerDay": round(res["false_alerts_per_day"], 2),
@@ -292,12 +326,15 @@ def main(argv=None):
     p = argparse.ArgumentParser(description=__doc__,
                                 formatter_class=argparse.RawDescriptionHelpFormatter)
     p.add_argument("--home", default="all", choices=[*DATASETS, "all"])
+    p.add_argument("--stream", default=None, choices=["win", "winc"],
+                   help="live stream to replay (default per home, see DEFAULT_STREAM)")
+    p.add_argument("--folder", default=FOLDER, help="results/<home>/<folder>/ to read")
     args = p.parse_args(argv)
     homes = list(DATASETS) if args.home == "all" else [args.home]
     index_path = OUT_DIR / "index.json"
     index = json.loads(index_path.read_text()) if index_path.exists() else {}
     for h in homes:
-        index[h] = export(h)
+        index[h] = export(h, args.stream, args.folder)
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     index_path.write_text(json.dumps(index, indent=2), encoding="utf8")
     print("->", index_path)

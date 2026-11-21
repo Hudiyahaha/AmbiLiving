@@ -1,0 +1,194 @@
+vid,day,kind,target,start,end,seq,pos,note
+0,2009-12-25,clean,,,,-1,0,
+1,2009-12-25,missed,Kitchen_Activity,2009-12-25 08:43:59.000011000,2009-12-26 00:00:00.000000000,-1,0,removed 11 Kitchen_Activity episodes (1976 events)
+2,2009-12-25,prolonged,Guest_Bathroom,2009-12-25 14:06:08.000086000,2009-12-25 15:23:43.232243549,-1,0,Guest_Bathroom at 14:06 stretched from 1 to 78 min
+3,2009-12-25,prolonged,Kitchen_Activity,2009-12-25 08:43:59.000011000,2009-12-25 09:58:55.499565902,-1,0,Kitchen_Activity at 08:43 stretched from 14 to 75 min
+4,2009-12-25,prolonged,Bed_to_Toilet,2009-12-25 01:58:40.000063000,2009-12-25 03:55:25.920116199,-1,0,Bed_to_Toilet at 01:58 stretched from 2 to 117 min
+5,2009-12-25,unusual_time,Leave_Home,2009-12-25 03:07:23.610774666,2009-12-25 03:21:50.610797666,-1,0,Leave_Home moved from 12:38 to 03:07
+6,2009-12-25,unusual_time,Leave_Home,2009-12-25 02:54:09.674892464,2009-12-25 03:08:36.674915464,-1,0,Leave_Home moved from 12:38 to 02:54
+7,2009-12-25,unusual_time,Leave_Home,2009-12-25 04:16:21.912539725,2009-12-25 04:30:48.912562725,-1,0,Leave_Home moved from 12:38 to 04:16
+8,2009-12-25,night_frequency,Bed_to_Toilet,2009-12-25 00:37:17.793267857,2009-12-25 03:57:27.612296718,-1,0,4 extra Bed_to_Toilet trips between 00:37 and 03:57
+9,2009-12-25,night_frequency,Bed_to_Toilet,2009-12-25 00:36:09.231066888,2009-12-25 05:13:35.325243688,-1,0,4 extra Bed_to_Toilet trips between 00:36 and 05:13
+10,2009-12-25,night_frequency,Bed_to_Toilet,2009-12-25 03:07:12.893004116,2009-12-25 05:15:14.426084573,-1,0,4 extra Bed_to_Toilet trips between 03:07 and 05:15
+11,2009-12-25,inactivity,,2009-12-25 14:13:54.913670520,2009-12-25 17:04:21.564675600,-1,0,"no events 14:13-17:04 (170 min, 1048 events removed)"
+12,2009-12-25,inactivity,,2009-12-25 08:24:35.914477090,2009-12-25 11:24:50.946604036,-1,0,"no events 08:24-11:24 (180 min, 1969 events removed)"
+13,2009-12-25,inactivity,,2009-12-25 09:03:07.042565749,2009-12-25 12:13:38.875145655,-1,0,"no events 09:03-12:13 (191 min, 1884 events removed)"
+14,2009-12-26,clean,,,,-1,0,
+15,2009-12-26,missed,Kitchen_Activity,2009-12-26 08:42:37.000098000,2009-12-27 00:00:00.000000000,-1,0,removed 9 Kitchen_Activity episodes (2310 events)
+16,2009-12-26,prolonged,Guest_Bathroom,2009-12-26 18:13:26.000074000,2009-12-26 19:28:03.311954377,-1,0,Guest_Bathroom at 18:13 stretched from 1 to 75 min
+17,2009-12-26,prolonged,Guest_Bathroom,2009-12-26 17:30:50.000065000,2009-12-26 18:56:31.386667357,-1,0,Guest_Bathroom at 17:30 stretched from 1 to 86 min
+18,2009-12-26,prolonged,Bed_to_Toilet,2009-12-26 03:48:09.000009000,2009-12-26 05:01:43.647028233,-1,0,Bed_to_Toilet at 03:48 stretched from 2 to 74 min
+19,2009-12-26,unusual_time,Leave_Home,2009-12-26 03:01:52.188063434,2009-12-26 03:17:47.188060434,-1,0,Leave_Home moved from 14:16 to 03:01
+20,2009-12-26,unusual_time,Kitchen_Activity,2009-12-26 03:21:07.135462250,2009-12-26 03:26:51.135429250,-1,0,Kitchen_Activity moved from 20:34 to 03:21
+21,2009-12-26,unusual_time,Kitchen_Activity,2009-12-26 04:17:50.625192381,2009-12-26 04:23:34.625159381,-1,0,Kitchen_Activity moved from 20:34 to 04:17
+22,2009-12-26,night_frequency,Bed_to_Toilet,2009-12-26 00:34:24.226292829,2009-12-26 03:37:56.128101209,-1,0,4 extra Bed_to_Toilet trips between 00:34 and 03:37
+23,2009-12-26,night_frequency,Bed_to_Toilet,2009-12-26 01:49:58.453617292,2009-12-26 05:13:06.685736793,-1,0,4 extra Bed_to_Toilet trips between 01:49 and 05:13
+24,2009-12-26,night_frequency,Bed_to_Toilet,2009-12-26 01:29:40.755713954,2009-12-26 04:53:40.326102766,-1,0,4 extra Bed_to_Toilet trips between 01:29 and 04:53
+25,2009-12-26,inactivity,,2009-12-26 09:02:28.853108258,2009-12-26 13:00:01.048702901,-1,0,"no events 09:02-13:00 (238 min, 463 events removed)"
+26,2009-12-26,inactivity,,2009-12-26 11:21:35.695679957,2009-12-26 14:12:30.509446009,-1,0,"no events 11:21-14:12 (171 min, 979 events removed)"
+27,2009-12-26,inactivity,,2009-12-26 09:51:46.482861765,2009-12-26 13:10:16.728662924,-1,0,"no events 09:51-13:10 (199 min, 296 events removed)"
+28,2009-12-27,clean,,,,-1,0,
+29,2009-12-27,missed,Kitchen_Activity,2009-12-27 07:55:39.000030000,2009-12-28 00:00:00.000000000,-1,0,removed 9 Kitchen_Activity episodes (2306 events)
+30,2009-12-27,prolonged,Master_Bathroom,2009-12-27 14:37:46.000053000,2009-12-27 16:43:59.662429532,-1,0,Master_Bathroom at 14:37 stretched from 10 to 126 min
+31,2009-12-27,prolonged,Master_Bathroom,2009-12-27 10:18:26.000067000,2009-12-27 12:11:57.222378363,-1,0,Master_Bathroom at 10:18 stretched from 10 to 114 min
+32,2009-12-27,prolonged,Bed_to_Toilet,2009-12-27 02:31:11.000059000,2009-12-27 03:34:57.115365408,-1,0,Bed_to_Toilet at 02:31 stretched from 2 to 64 min
+33,2009-12-27,unusual_time,Leave_Home,2009-12-27 01:03:21.495791997,2009-12-27 01:19:52.495788997,-1,0,Leave_Home moved from 12:48 to 01:03
+34,2009-12-27,unusual_time,Kitchen_Activity,2009-12-27 02:47:40.759913102,2009-12-27 02:57:33.759996102,-1,0,Kitchen_Activity moved from 18:33 to 02:47
+35,2009-12-27,unusual_time,Leave_Home,2009-12-27 01:13:52.639458723,2009-12-27 01:30:23.639455723,-1,0,Leave_Home moved from 12:48 to 01:13
+36,2009-12-27,night_frequency,Bed_to_Toilet,2009-12-27 00:39:39.637248470,2009-12-27 03:54:32.521731050,-1,0,4 extra Bed_to_Toilet trips between 00:39 and 03:54
+37,2009-12-27,night_frequency,Bed_to_Toilet,2009-12-27 01:03:05.826465547,2009-12-27 04:49:10.872592582,-1,0,4 extra Bed_to_Toilet trips between 01:03 and 04:49
+38,2009-12-27,night_frequency,Bed_to_Toilet,2009-12-27 03:05:56.354520967,2009-12-27 05:07:14.840147140,-1,0,4 extra Bed_to_Toilet trips between 03:05 and 05:07
+39,2009-12-27,inactivity,,2009-12-27 14:50:06.850512788,2009-12-27 18:29:55.582928537,-1,0,"no events 14:50-18:29 (220 min, 1604 events removed)"
+40,2009-12-27,inactivity,,2009-12-27 14:57:51.917173655,2009-12-27 17:56:18.012318640,-1,0,"no events 14:57-17:56 (178 min, 1454 events removed)"
+41,2009-12-27,inactivity,,2009-12-27 14:42:32.023520804,2009-12-27 18:35:50.882237761,-1,0,"no events 14:42-18:35 (233 min, 1776 events removed)"
+42,2009-12-28,clean,,,,-1,0,
+43,2009-12-28,missed,Kitchen_Activity,2009-12-28 09:41:28.000022000,2009-12-29 00:00:00.000000000,-1,0,removed 10 Kitchen_Activity episodes (2164 events)
+44,2009-12-28,prolonged,Guest_Bathroom,2009-12-28 20:56:58.000077000,2009-12-28 22:49:19.525165371,-1,0,Guest_Bathroom at 20:56 stretched from 1 to 112 min
+45,2009-12-28,prolonged,Master_Bathroom,2009-12-28 20:58:19.000053000,2009-12-28 22:07:28.487662843,-1,0,Master_Bathroom at 20:58 stretched from 1 to 69 min
+46,2009-12-28,prolonged,Bed_to_Toilet,2009-12-28 00:44:58.000054000,2009-12-28 02:28:40.626783957,-1,0,Bed_to_Toilet at 00:44 stretched from 1 to 104 min
+47,2009-12-28,unusual_time,Leave_Home,2009-12-28 01:35:04.866902656,2009-12-28 01:48:32.866964656,-1,0,Leave_Home moved from 14:37 to 01:35
+48,2009-12-28,unusual_time,Leave_Home,2009-12-28 04:11:09.222654322,2009-12-28 04:24:37.222716322,-1,0,Leave_Home moved from 14:37 to 04:11
+49,2009-12-28,unusual_time,Kitchen_Activity,2009-12-28 03:01:27.032528071,2009-12-28 03:18:50.032496071,-1,0,Kitchen_Activity moved from 14:05 to 03:01
+50,2009-12-28,night_frequency,Bed_to_Toilet,2009-12-28 01:29:49.165615876,2009-12-28 04:27:21.959350304,-1,0,4 extra Bed_to_Toilet trips between 01:29 and 04:27
+51,2009-12-28,night_frequency,Bed_to_Toilet,2009-12-28 01:46:57.064439074,2009-12-28 04:46:13.983696195,-1,0,4 extra Bed_to_Toilet trips between 01:46 and 04:46
+52,2009-12-28,night_frequency,Bed_to_Toilet,2009-12-28 00:37:15.528518265,2009-12-28 03:56:13.380212050,-1,0,4 extra Bed_to_Toilet trips between 00:37 and 03:56
+53,2009-12-28,inactivity,,2009-12-28 08:30:53.785214331,2009-12-28 11:07:13.546983604,-1,0,"no events 08:30-11:07 (156 min, 1162 events removed)"
+54,2009-12-28,inactivity,,2009-12-28 11:28:33.606683731,2009-12-28 14:13:16.741131191,-1,0,"no events 11:28-14:13 (165 min, 1862 events removed)"
+55,2009-12-28,inactivity,,2009-12-28 08:38:57.185983189,2009-12-28 12:01:02.481901135,-1,0,"no events 08:38-12:01 (202 min, 1478 events removed)"
+56,2009-12-29,clean,,,,-1,0,
+57,2009-12-29,missed,Kitchen_Activity,2009-12-29 10:10:45.000016000,2009-12-30 00:00:00.000000000,-1,0,removed 7 Kitchen_Activity episodes (1844 events)
+58,2009-12-29,prolonged,Kitchen_Activity,2009-12-29 10:48:20.000060000,2009-12-29 12:45:15.292311528,-1,0,Kitchen_Activity at 10:48 stretched from 8 to 117 min
+59,2009-12-29,prolonged,Guest_Bathroom,2009-12-29 11:32:47.000081000,2009-12-29 13:32:18.303298124,-1,0,Guest_Bathroom at 11:32 stretched from 0 to 120 min
+60,2009-12-29,prolonged,Master_Bathroom,2009-12-29 10:06:39.000063000,2009-12-29 12:05:49.868939447,-1,0,Master_Bathroom at 10:06 stretched from 1 to 119 min
+61,2009-12-29,unusual_time,Kitchen_Activity,2009-12-29 02:41:03.882256848,2009-12-29 03:32:30.882255848,-1,0,Kitchen_Activity moved from 18:02 to 02:41
+62,2009-12-29,unusual_time,Leave_Home,2009-12-29 03:06:35.896206038,2009-12-29 03:06:56.896178038,-1,0,Leave_Home moved from 15:57 to 03:06
+63,2009-12-29,unusual_time,Leave_Home,2009-12-29 04:11:52.503610113,2009-12-29 04:11:56.503604113,-1,0,Leave_Home moved from 15:27 to 04:11
+64,2009-12-29,night_frequency,Bed_to_Toilet,2009-12-29 00:39:56.416062725,2009-12-29 04:43:27.088845328,-1,0,4 extra Bed_to_Toilet trips between 00:39 and 04:43
+65,2009-12-29,night_frequency,Bed_to_Toilet,2009-12-29 01:52:57.983509647,2009-12-29 04:47:53.846057178,-1,0,4 extra Bed_to_Toilet trips between 01:52 and 04:47
+66,2009-12-29,night_frequency,Bed_to_Toilet,2009-12-29 01:03:31.125547340,2009-12-29 04:51:01.274259421,-1,0,4 extra Bed_to_Toilet trips between 01:03 and 04:51
+67,2009-12-29,inactivity,,2009-12-29 08:39:24.897866519,2009-12-29 11:44:38.352168564,-1,0,"no events 08:39-11:44 (185 min, 1608 events removed)"
+68,2009-12-29,inactivity,,2009-12-29 08:30:58.273537624,2009-12-29 11:43:49.575138995,-1,0,"no events 08:30-11:43 (193 min, 1626 events removed)"
+69,2009-12-29,inactivity,,2009-12-29 08:53:29.433492426,2009-12-29 12:28:50.500451469,-1,0,"no events 08:53-12:28 (215 min, 2142 events removed)"
+70,2009-12-30,clean,,,,-1,0,
+71,2009-12-30,missed,Kitchen_Activity,2009-12-30 09:43:09.000078000,2009-12-31 00:00:00.000000000,-1,0,removed 8 Kitchen_Activity episodes (3199 events)
+72,2009-12-30,prolonged,Guest_Bathroom,2009-12-30 12:41:02.000005000,2009-12-30 13:54:51.223248454,-1,0,Guest_Bathroom at 12:41 stretched from 2 to 74 min
+73,2009-12-30,prolonged,Kitchen_Activity,2009-12-30 17:58:47.000060000,2009-12-30 19:54:30.886163034,-1,0,Kitchen_Activity at 17:58 stretched from 22 to 116 min
+74,2009-12-30,prolonged,Guest_Bathroom,2009-12-30 13:47:09.000044000,2009-12-30 15:45:18.765642894,-1,0,Guest_Bathroom at 13:47 stretched from 4 to 118 min
+75,2009-12-30,unusual_time,Kitchen_Activity,2009-12-30 03:26:11.546074295,2009-12-30 03:48:03.546021295,-1,0,Kitchen_Activity moved from 17:58 to 03:26
+76,2009-12-30,unusual_time,Kitchen_Activity,2009-12-30 01:36:50.162849812,2009-12-30 03:09:15.162909812,-1,0,Kitchen_Activity moved from 10:56 to 01:36
+77,2009-12-30,unusual_time,Kitchen_Activity,2009-12-30 02:16:11.556580872,2009-12-30 02:38:03.556527872,-1,0,Kitchen_Activity moved from 17:58 to 02:16
+78,2009-12-30,night_frequency,Bed_to_Toilet,2009-12-30 01:45:14.407920402,2009-12-30 04:23:04.101320032,-1,0,4 extra Bed_to_Toilet trips between 01:45 and 04:23
+79,2009-12-30,night_frequency,Bed_to_Toilet,2009-12-30 01:27:10.050408338,2009-12-30 05:11:55.626758858,-1,0,4 extra Bed_to_Toilet trips between 01:27 and 05:11
+80,2009-12-30,night_frequency,Bed_to_Toilet,2009-12-30 01:25:53.976355589,2009-12-30 03:33:47.550661155,-1,0,4 extra Bed_to_Toilet trips between 01:25 and 03:33
+81,2009-12-30,inactivity,,2009-12-30 09:47:34.980539982,2009-12-30 12:24:07.335622682,-1,0,"no events 09:47-12:24 (157 min, 2209 events removed)"
+82,2009-12-30,inactivity,,2009-12-30 08:07:30.863806603,2009-12-30 11:29:42.702781649,-1,0,"no events 08:07-11:29 (202 min, 1492 events removed)"
+83,2009-12-30,inactivity,,2009-12-30 09:20:15.978891193,2009-12-30 13:18:03.856974697,-1,0,"no events 09:20-13:18 (238 min, 3065 events removed)"
+84,2009-12-31,clean,,,,-1,0,
+85,2009-12-31,missed,Kitchen_Activity,2009-12-31 09:50:34.000040000,2010-01-01 00:00:00.000000000,-1,0,removed 11 Kitchen_Activity episodes (2525 events)
+86,2009-12-31,prolonged,Guest_Bathroom,2009-12-31 10:04:53.000027000,2009-12-31 11:34:42.519687977,-1,0,Guest_Bathroom at 10:04 stretched from 3 to 90 min
+87,2009-12-31,prolonged,Kitchen_Activity,2009-12-31 10:58:24.000068000,2009-12-31 12:53:25.321317027,-1,0,Kitchen_Activity at 10:58 stretched from 41 to 115 min
+88,2009-12-31,prolonged,Master_Bathroom,2009-12-31 15:18:49.000068000,2009-12-31 16:59:36.337222489,-1,0,Master_Bathroom at 15:18 stretched from 2 to 101 min
+89,2009-12-31,unusual_time,Kitchen_Activity,2009-12-31 01:17:23.388056295,2009-12-31 01:23:28.388024295,-1,0,Kitchen_Activity moved from 15:21 to 01:17
+90,2009-12-31,unusual_time,Kitchen_Activity,2009-12-31 02:49:09.896736611,2009-12-31 03:30:14.896674611,-1,0,Kitchen_Activity moved from 10:58 to 02:49
+91,2009-12-31,unusual_time,Leave_Home,2009-12-31 01:08:31.781279596,2009-12-31 01:20:36.781333596,-1,0,Leave_Home moved from 13:18 to 01:08
+92,2009-12-31,night_frequency,Bed_to_Toilet,2009-12-31 01:28:13.282295438,2009-12-31 04:23:12.411846342,-1,0,4 extra Bed_to_Toilet trips between 01:28 and 04:23
+93,2009-12-31,night_frequency,Bed_to_Toilet,2009-12-31 02:18:13.684279856,2009-12-31 04:23:04.051127292,-1,0,4 extra Bed_to_Toilet trips between 02:18 and 04:23
+94,2009-12-31,night_frequency,Bed_to_Toilet,2009-12-31 01:23:13.752482198,2009-12-31 04:17:01.868185212,-1,0,4 extra Bed_to_Toilet trips between 01:23 and 04:17
+95,2009-12-31,inactivity,,2009-12-31 09:35:07.809971195,2009-12-31 13:15:06.548240156,-1,0,"no events 09:35-13:15 (220 min, 2673 events removed)"
+96,2009-12-31,inactivity,,2009-12-31 09:11:25.978240694,2009-12-31 12:33:22.847165221,-1,0,"no events 09:11-12:33 (202 min, 2263 events removed)"
+97,2009-12-31,inactivity,,2009-12-31 10:00:26.575409303,2009-12-31 12:51:03.994427285,-1,0,"no events 10:00-12:51 (171 min, 2278 events removed)"
+98,2010-01-01,clean,,,,-1,0,
+99,2010-01-01,missed,Kitchen_Activity,2010-01-01 07:24:34.000028000,2010-01-02 00:00:00.000000000,-1,0,removed 12 Kitchen_Activity episodes (2313 events)
+100,2010-01-01,prolonged,Master_Bathroom,2010-01-01 13:01:13.000056000,2010-01-01 14:47:00.560952124,-1,0,Master_Bathroom at 13:01 stretched from 4 to 106 min
+101,2010-01-01,prolonged,Kitchen_Activity,2010-01-01 20:48:57.000089000,2010-01-01 22:30:02.142846041,-1,0,Kitchen_Activity at 20:48 stretched from 1 to 101 min
+102,2010-01-01,prolonged,Kitchen_Activity,2010-01-01 13:37:35.000074000,2010-01-01 15:37:12.231341561,-1,0,Kitchen_Activity at 13:37 stretched from 9 to 120 min
+103,2010-01-01,unusual_time,Leave_Home,2010-01-01 02:39:56.905363264,2010-01-01 02:45:44.905353264,-1,0,Leave_Home moved from 16:47 to 02:39
+104,2010-01-01,unusual_time,Leave_Home,2010-01-01 01:32:47.307065522,2010-01-01 01:38:35.307055522,-1,0,Leave_Home moved from 16:47 to 01:32
+105,2010-01-01,unusual_time,Kitchen_Activity,2010-01-01 03:57:15.798199811,2010-01-01 04:22:29.798257811,-1,0,Kitchen_Activity moved from 16:03 to 03:57
+106,2010-01-01,night_frequency,Bed_to_Toilet,2010-01-01 01:04:21.939650084,2010-01-01 03:01:50.959348001,-1,0,4 extra Bed_to_Toilet trips between 01:04 and 03:01
+107,2010-01-01,night_frequency,Bed_to_Toilet,2010-01-01 01:21:54.953517675,2010-01-01 05:13:54.240338643,-1,0,4 extra Bed_to_Toilet trips between 01:21 and 05:13
+108,2010-01-01,night_frequency,Bed_to_Toilet,2010-01-01 00:37:43.958758824,2010-01-01 05:12:36.582860497,-1,0,4 extra Bed_to_Toilet trips between 00:37 and 05:12
+109,2010-01-01,inactivity,,2010-01-01 12:02:18.072606529,2010-01-01 15:19:48.301028336,-1,0,"no events 12:02-15:19 (198 min, 2190 events removed)"
+110,2010-01-01,inactivity,,2010-01-01 10:29:14.799365551,2010-01-01 13:56:36.872653437,-1,0,"no events 10:29-13:56 (207 min, 1843 events removed)"
+111,2010-01-01,inactivity,,2010-01-01 12:43:49.339537075,2010-01-01 16:04:04.045856140,-1,0,"no events 12:43-16:04 (200 min, 2244 events removed)"
+112,2010-01-02,clean,,,,-1,0,
+113,2010-01-02,missed,Kitchen_Activity,2010-01-02 10:35:44.000013000,2010-01-03 00:00:00.000000000,-1,0,removed 15 Kitchen_Activity episodes (2329 events)
+114,2010-01-02,prolonged,Kitchen_Activity,2010-01-02 10:35:44.000013000,2010-01-02 12:26:59.050022980,-1,0,Kitchen_Activity at 10:35 stretched from 14 to 111 min
+115,2010-01-02,prolonged,Kitchen_Activity,2010-01-02 13:09:32.000033000,2010-01-02 14:30:25.165926570,-1,0,Kitchen_Activity at 13:09 stretched from 0 to 81 min
+116,2010-01-02,prolonged,Master_Bathroom,2010-01-02 14:00:36.000090000,2010-01-02 15:37:38.696023469,-1,0,Master_Bathroom at 14:00 stretched from 4 to 97 min
+117,2010-01-02,unusual_time,Kitchen_Activity,2010-01-02 03:08:16.060330414,2010-01-02 03:11:14.060289414,-1,0,Kitchen_Activity moved from 21:10 to 03:08
+118,2010-01-02,unusual_time,Leave_Home,2010-01-02 02:20:23.758912112,2010-01-02 02:34:51.758891112,-1,0,Leave_Home moved from 14:16 to 02:20
+119,2010-01-02,unusual_time,Kitchen_Activity,2010-01-02 04:27:00.697403474,2010-01-02 04:31:27.697475474,-1,0,Kitchen_Activity moved from 16:05 to 04:27
+120,2010-01-02,night_frequency,Bed_to_Toilet,2010-01-02 01:04:25.023693317,2010-01-02 04:53:00.978742571,-1,0,4 extra Bed_to_Toilet trips between 01:04 and 04:53
+121,2010-01-02,night_frequency,Bed_to_Toilet,2010-01-02 01:03:19.630709628,2010-01-02 05:12:41.819659979,-1,0,4 extra Bed_to_Toilet trips between 01:03 and 05:12
+122,2010-01-02,night_frequency,Bed_to_Toilet,2010-01-02 01:00:44.646461281,2010-01-02 05:14:26.494354245,-1,0,4 extra Bed_to_Toilet trips between 01:00 and 05:14
+123,2010-01-02,inactivity,,2010-01-02 10:16:08.488670345,2010-01-02 13:50:41.589742540,-1,0,"no events 10:16-13:50 (215 min, 2602 events removed)"
+124,2010-01-02,inactivity,,2010-01-02 09:49:00.632434697,2010-01-02 12:32:43.025234080,-1,0,"no events 09:49-12:32 (164 min, 1582 events removed)"
+125,2010-01-02,inactivity,,2010-01-02 09:23:42.458509496,2010-01-02 12:32:36.689316965,-1,0,"no events 09:23-12:32 (189 min, 1582 events removed)"
+126,2010-01-03,clean,,,,-1,0,
+127,2010-01-03,missed,Kitchen_Activity,2010-01-03 08:40:53.000085000,2010-01-04 00:00:00.000000000,-1,0,removed 17 Kitchen_Activity episodes (3756 events)
+128,2010-01-03,prolonged,Guest_Bathroom,2010-01-03 14:21:35.000037000,2010-01-03 15:34:06.593660836,-1,0,Guest_Bathroom at 14:21 stretched from 1 to 73 min
+129,2010-01-03,prolonged,Master_Bathroom,2010-01-03 08:37:29.000025000,2010-01-03 10:31:26.352169902,-1,0,Master_Bathroom at 08:37 stretched from 2 to 114 min
+130,2010-01-03,prolonged,Guest_Bathroom,2010-01-03 12:44:44.000080000,2010-01-03 14:15:58.031158322,-1,0,Guest_Bathroom at 12:44 stretched from 1 to 91 min
+131,2010-01-03,unusual_time,Kitchen_Activity,2010-01-03 03:31:41.964991532,2010-01-03 03:38:26.964960532,-1,0,Kitchen_Activity moved from 15:07 to 03:31
+132,2010-01-03,unusual_time,Leave_Home,2010-01-03 01:30:58.152926263,2010-01-03 01:46:05.152889263,-1,0,Leave_Home moved from 13:06 to 01:30
+133,2010-01-03,unusual_time,Kitchen_Activity,2010-01-03 03:33:26.895547815,2010-01-03 03:33:52.895627815,-1,0,Kitchen_Activity moved from 14:28 to 03:33
+134,2010-01-03,night_frequency,Bed_to_Toilet,2010-01-03 02:38:03.904330518,2010-01-03 05:10:29.389055391,-1,0,4 extra Bed_to_Toilet trips between 02:38 and 05:10
+135,2010-01-03,night_frequency,Bed_to_Toilet,2010-01-03 02:36:41.993070881,2010-01-03 04:46:39.538613162,-1,0,4 extra Bed_to_Toilet trips between 02:36 and 04:46
+136,2010-01-03,night_frequency,Bed_to_Toilet,2010-01-03 00:59:43.922382833,2010-01-03 04:50:17.122605437,-1,0,4 extra Bed_to_Toilet trips between 00:59 and 04:50
+137,2010-01-03,inactivity,,2010-01-03 08:54:50.441067510,2010-01-03 11:32:22.638816552,-1,0,"no events 08:54-11:32 (158 min, 1688 events removed)"
+138,2010-01-03,inactivity,,2010-01-03 09:51:35.843332161,2010-01-03 12:22:09.198207596,-1,0,"no events 09:51-12:22 (151 min, 1536 events removed)"
+139,2010-01-03,inactivity,,2010-01-03 09:16:47.640549658,2010-01-03 12:24:40.383937712,-1,0,"no events 09:16-12:24 (188 min, 2026 events removed)"
+140,2010-01-04,clean,,,,-1,0,
+141,2010-01-04,missed,Kitchen_Activity,2010-01-04 08:03:56.000052000,2010-01-05 00:00:00.000000000,-1,0,removed 11 Kitchen_Activity episodes (4170 events)
+142,2010-01-04,prolonged,Kitchen_Activity,2010-01-04 15:38:43.000038000,2010-01-04 18:17:25.274670692,-1,0,Kitchen_Activity at 15:38 stretched from 92 to 159 min
+143,2010-01-04,prolonged,Kitchen_Activity,2010-01-04 09:15:41.000087000,2010-01-04 11:20:41.022158044,-1,0,Kitchen_Activity at 09:15 stretched from 28 to 125 min
+144,2010-01-04,prolonged,Kitchen_Activity,2010-01-04 20:10:48.000053000,2010-01-04 21:55:19.598193832,-1,0,Kitchen_Activity at 20:10 stretched from 2 to 105 min
+145,2010-01-04,unusual_time,Kitchen_Activity,2010-01-04 01:48:29.618401766,2010-01-04 02:03:00.618492766,-1,0,Kitchen_Activity moved from 13:18 to 01:48
+146,2010-01-04,unusual_time,Kitchen_Activity,2010-01-04 03:37:16.138040554,2010-01-04 03:40:29.138106554,-1,0,Kitchen_Activity moved from 19:36 to 03:37
+147,2010-01-04,unusual_time,Kitchen_Activity,2010-01-04 03:20:25.974435001,2010-01-04 03:48:00.974429001,-1,0,Kitchen_Activity moved from 09:15 to 03:20
+148,2010-01-04,night_frequency,Bed_to_Toilet,2010-01-04 00:56:38.365591924,2010-01-04 04:44:06.238693140,-1,0,4 extra Bed_to_Toilet trips between 00:56 and 04:44
+149,2010-01-04,night_frequency,Bed_to_Toilet,2010-01-04 01:52:19.248050021,2010-01-04 04:48:57.880317215,-1,0,4 extra Bed_to_Toilet trips between 01:52 and 04:48
+150,2010-01-04,night_frequency,Bed_to_Toilet,2010-01-04 01:03:46.090641959,2010-01-04 04:45:25.023676080,-1,0,4 extra Bed_to_Toilet trips between 01:03 and 04:45
+151,2010-01-04,inactivity,,2010-01-04 11:27:33.819988227,2010-01-04 14:40:05.141920405,-1,0,"no events 11:27-14:40 (193 min, 3276 events removed)"
+152,2010-01-04,inactivity,,2010-01-04 13:45:26.147171078,2010-01-04 16:31:01.376043403,-1,0,"no events 13:45-16:31 (166 min, 2646 events removed)"
+153,2010-01-04,inactivity,,2010-01-04 13:57:37.445048667,2010-01-04 17:47:38.295037041,-1,0,"no events 13:57-17:47 (230 min, 3354 events removed)"
+154,2010-01-05,clean,,,,-1,0,
+155,2010-01-05,missed,Kitchen_Activity,2010-01-05 08:10:07.000061000,2010-01-06 00:00:00.000000000,-1,0,removed 9 Kitchen_Activity episodes (1758 events)
+156,2010-01-05,prolonged,Kitchen_Activity,2010-01-05 16:35:09.000088000,2010-01-05 17:39:56.805339636,-1,0,Kitchen_Activity at 16:35 stretched from 4 to 65 min
+157,2010-01-05,prolonged,Bed_to_Toilet,2010-01-05 04:10:56.000000000,2010-01-05 05:30:47.910713150,-1,0,Bed_to_Toilet at 04:10 stretched from 2 to 80 min
+158,2010-01-05,prolonged,Master_Bathroom,2010-01-05 11:25:36.000000000,2010-01-05 13:29:53.617935294,-1,0,Master_Bathroom at 11:25 stretched from 6 to 124 min
+159,2010-01-05,unusual_time,Kitchen_Activity,2010-01-05 03:44:04.446341876,2010-01-05 03:47:27.446305876,-1,0,Kitchen_Activity moved from 21:17 to 03:44
+160,2010-01-05,unusual_time,Kitchen_Activity,2010-01-05 02:39:50.354415205,2010-01-05 03:15:07.354391205,-1,0,Kitchen_Activity moved from 08:10 to 02:39
+161,2010-01-05,unusual_time,Kitchen_Activity,2010-01-05 02:16:52.611889250,2010-01-05 02:20:20.611927250,-1,0,Kitchen_Activity moved from 14:17 to 02:16
+162,2010-01-05,night_frequency,Bed_to_Toilet,2010-01-05 00:39:37.356836948,2010-01-05 04:42:18.666200143,-1,0,4 extra Bed_to_Toilet trips between 00:39 and 04:42
+163,2010-01-05,night_frequency,Bed_to_Toilet,2010-01-05 00:37:57.219681363,2010-01-05 04:42:53.526138629,-1,0,4 extra Bed_to_Toilet trips between 00:37 and 04:42
+164,2010-01-05,night_frequency,Bed_to_Toilet,2010-01-05 00:35:06.053404490,2010-01-05 05:15:36.114450163,-1,0,4 extra Bed_to_Toilet trips between 00:35 and 05:15
+165,2010-01-05,inactivity,,2010-01-05 12:33:04.974954648,2010-01-05 15:27:45.692522195,-1,0,"no events 12:33-15:27 (175 min, 3420 events removed)"
+166,2010-01-05,inactivity,,2010-01-05 13:17:29.653767240,2010-01-05 16:26:41.030713971,-1,0,"no events 13:17-16:26 (189 min, 3348 events removed)"
+167,2010-01-05,inactivity,,2010-01-05 14:52:45.651418892,2010-01-05 18:01:20.777961309,-1,0,"no events 14:52-18:01 (189 min, 3180 events removed)"
+168,2010-01-06,clean,,,,-1,0,
+169,2010-01-06,missed,Kitchen_Activity,2010-01-06 05:59:41.000046000,2010-01-07 00:00:00.000000000,-1,0,removed 3 Kitchen_Activity episodes (1130 events)
+170,2010-01-06,prolonged,Master_Bathroom,2010-01-06 12:34:19.000047000,2010-01-06 13:40:32.349952899,-1,0,Master_Bathroom at 12:34 stretched from 5 to 66 min
+171,2010-01-06,prolonged,Master_Bathroom,2010-01-06 07:26:21.000019000,2010-01-06 08:54:05.522408025,-1,0,Master_Bathroom at 07:26 stretched from 4 to 88 min
+172,2010-01-06,prolonged,Bed_to_Toilet,2010-01-06 05:29:24.000010000,2010-01-06 06:43:29.772930316,-1,0,Bed_to_Toilet at 05:29 stretched from 2 to 74 min
+173,2010-01-06,unusual_time,Kitchen_Activity,2010-01-06 04:15:11.845072960,2010-01-06 04:33:00.845088960,-1,0,Kitchen_Activity moved from 12:26 to 04:15
+174,2010-01-06,unusual_time,Kitchen_Activity,2010-01-06 02:57:55.992471346,2010-01-06 03:15:44.992487346,-1,0,Kitchen_Activity moved from 12:26 to 02:57
+175,2010-01-06,unusual_time,Kitchen_Activity,2010-01-06 03:05:26.554857067,2010-01-06 03:23:15.554873067,-1,0,Kitchen_Activity moved from 12:26 to 03:05
+176,2010-01-06,night_frequency,Bed_to_Toilet,2010-01-06 00:39:33.800795653,2010-01-06 03:53:02.420480957,-1,0,4 extra Bed_to_Toilet trips between 00:39 and 03:53
+177,2010-01-06,night_frequency,Bed_to_Toilet,2010-01-06 00:56:44.296905974,2010-01-06 05:14:16.100957058,-1,0,4 extra Bed_to_Toilet trips between 00:56 and 05:14
+178,2010-01-06,night_frequency,Bed_to_Toilet,2010-01-06 00:35:39.662325947,2010-01-06 04:18:38.601143834,-1,0,4 extra Bed_to_Toilet trips between 00:35 and 04:18
+179,2009-12-25,drift,Kitchen_Activity,2009-12-25 09:03:59.000011000,2009-12-25 09:17:56.000078000,0,1,drift run 0 day 1: first Kitchen_Activity moved 08:43 -> 09:03
+180,2009-12-26,drift,Kitchen_Activity,2009-12-26 09:22:37.000098000,2009-12-26 09:35:44.000084000,0,2,drift run 0 day 2: first Kitchen_Activity moved 08:42 -> 09:22
+181,2009-12-27,drift,Kitchen_Activity,2009-12-27 08:55:39.000030000,2009-12-27 08:56:27.000094000,0,3,drift run 0 day 3: first Kitchen_Activity moved 07:55 -> 08:55
+182,2009-12-28,drift,Kitchen_Activity,2009-12-28 11:01:28.000022000,2009-12-28 11:08:39.000022000,0,4,drift run 0 day 4: first Kitchen_Activity moved 09:41 -> 11:01
+183,2009-12-29,drift,Kitchen_Activity,2009-12-29 11:50:45.000016000,2009-12-29 12:15:24.000010000,0,5,drift run 0 day 5: first Kitchen_Activity moved 10:10 -> 11:50
+184,2009-12-30,drift,Kitchen_Activity,2009-12-30 11:43:09.000078000,2009-12-30 11:57:08.000094000,0,6,drift run 0 day 6: first Kitchen_Activity moved 09:43 -> 11:43
+185,2009-12-31,drift,Kitchen_Activity,2009-12-31 12:10:34.000040000,2009-12-31 12:11:45.000071000,0,7,drift run 0 day 7: first Kitchen_Activity moved 09:50 -> 12:10
+186,2009-12-31,drift,Kitchen_Activity,2009-12-31 10:10:34.000040000,2009-12-31 10:11:45.000071000,1,1,drift run 1 day 1: first Kitchen_Activity moved 09:50 -> 10:10
+187,2010-01-01,drift,Kitchen_Activity,2010-01-01 08:04:34.000028000,2010-01-01 08:44:12.000016000,1,2,drift run 1 day 2: first Kitchen_Activity moved 07:24 -> 08:04
+188,2010-01-02,drift,Kitchen_Activity,2010-01-02 11:35:44.000013000,2010-01-02 11:49:33.000008000,1,3,drift run 1 day 3: first Kitchen_Activity moved 10:35 -> 11:35
+189,2010-01-03,drift,Kitchen_Activity,2010-01-03 10:00:53.000085000,2010-01-03 11:03:07.000089000,1,4,drift run 1 day 4: first Kitchen_Activity moved 08:40 -> 10:00
+190,2010-01-04,drift,Kitchen_Activity,2010-01-04 09:43:56.000052000,2010-01-04 09:57:25.000021000,1,5,drift run 1 day 5: first Kitchen_Activity moved 08:03 -> 09:43
+191,2010-01-05,drift,Kitchen_Activity,2010-01-05 10:10:07.000061000,2010-01-05 10:45:24.000037000,1,6,drift run 1 day 6: first Kitchen_Activity moved 08:10 -> 10:10
+192,2010-01-06,drift,Kitchen_Activity,2010-01-06 08:19:41.000046000,2010-01-06 09:00:16.000049000,1,7,drift run 1 day 7: first Kitchen_Activity moved 05:59 -> 08:19

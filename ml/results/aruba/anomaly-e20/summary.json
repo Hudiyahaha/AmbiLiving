@@ -1,0 +1,228 @@
+{
+  "dataset": "aruba",
+  "operating_budget": 0.1,
+  "har": {
+    "seg": {
+      "accuracy": 0.9898753894080997,
+      "macro_f1": 0.8946574569706035,
+      "n": 1284
+    },
+    "win": {
+      "accuracy": 0.6482386862228908,
+      "macro_f1": 0.42875400787394585,
+      "n": 31908
+    }
+  },
+  "win_clean": {
+    "minutes": 3,
+    "observation_episode_f1": {
+      "points3": 0.3874282037991381,
+      "0.5": 0.455911161338896,
+      "1": 0.45966707367537907,
+      "2": 0.4930647100409412,
+      "3": 0.4975033857210369,
+      "5": 0.4881824136129872,
+      "10": 0.45660486793276994
+    }
+  },
+  "n_observation_days": 44,
+  "n_monitoring_days": 44,
+  "results": {
+    "gt/routine": {
+      "false_alerts_per_day": 1.3409090909090908,
+      "clean_days_with_alert": 0.5681818181818182,
+      "types": {
+        "missed": {
+          "n": 43,
+          "detection_rate": 1.0,
+          "precision": 0.6376811594202898,
+          "f1": 0.7787610619469026,
+          "median_delay_min": 247.80461641666668
+        },
+        "prolonged": {
+          "n": 132,
+          "detection_rate": 0.696969696969697,
+          "precision": 0.5508982035928144,
+          "f1": 0.6153846153846154,
+          "median_delay_min": 35.49385050833334
+        },
+        "unusual_time": {
+          "n": 129,
+          "detection_rate": 0.9457364341085271,
+          "precision": 0.6246945187943674,
+          "f1": 0.7524003083607821,
+          "median_delay_min": 0.0
+        },
+        "night_frequency": {
+          "n": 132,
+          "detection_rate": 1.0,
+          "precision": 0.6376811594202898,
+          "f1": 0.7787610619469026,
+          "median_delay_min": 168.96023690833334
+        },
+        "inactivity": {
+          "n": 74,
+          "detection_rate": 0.9324324324324325,
+          "precision": 0.621367171510438,
+          "f1": 0.7457627118644067,
+          "median_delay_min": 115.82413751666667
+        }
+      },
+      "macro_f1": 0.7342139519007218,
+      "mean_detection_rate": 0.9150277127021313,
+      "drift": {
+        "runs": 7,
+        "detected": 2,
+        "median_delay_days": 5.0,
+        "false_alerts_per_day": 0.9047619047619048
+      }
+    },
+    "seg/routine": {
+      "false_alerts_per_day": 1.4090909090909092,
+      "clean_days_with_alert": 0.5909090909090909,
+      "types": {
+        "missed": {
+          "n": 43,
+          "detection_rate": 0.9767441860465116,
+          "precision": 0.6230613621038436,
+          "f1": 0.7608069164265129,
+          "median_delay_min": 247.2237103
+        },
+        "prolonged": {
+          "n": 132,
+          "detection_rate": 0.8939393939393939,
+          "precision": 0.6020408163265306,
+          "f1": 0.7195121951219513,
+          "median_delay_min": 71.77218648333334
+        },
+        "unusual_time": {
+          "n": 129,
+          "detection_rate": 0.937984496124031,
+          "precision": 0.6135054159944687,
+          "f1": 0.7418141284659329,
+          "median_delay_min": 0.0
+        },
+        "night_frequency": {
+          "n": 132,
+          "detection_rate": 1.0,
+          "precision": 0.6285714285714286,
+          "f1": 0.7719298245614035,
+          "median_delay_min": 168.96023690833334
+        },
+        "inactivity": {
+          "n": 74,
+          "detection_rate": 0.8243243243243243,
+          "precision": 0.5824652777777778,
+          "f1": 0.6826042726347914,
+          "median_delay_min": 125.30080343333334
+        }
+      },
+      "macro_f1": 0.7353334674421184,
+      "mean_detection_rate": 0.9265984800868521,
+      "drift": {
+        "runs": 7,
+        "detected": 2,
+        "median_delay_days": 5.0,
+        "false_alerts_per_day": 0.6666666666666666
+      }
+    },
+    "win/routine": {
+      "false_alerts_per_day": 1.2954545454545454,
+      "clean_days_with_alert": 0.6818181818181818,
+      "types": {
+        "missed": {
+          "n": 43,
+          "detection_rate": 0.046511627906976744,
+          "precision": 0.06386066763425255,
+          "f1": 0.053822629969418966,
+          "median_delay_min": 372.422580075
+        },
+        "prolonged": {
+          "n": 132,
+          "detection_rate": 0.10606060606060606,
+          "precision": 0.1346153846153846,
+          "f1": 0.11864406779661019,
+          "median_delay_min": 14.388061891666666
+        },
+        "unusual_time": {
+          "n": 129,
+          "detection_rate": 0.13178294573643412,
+          "precision": 0.16197488090082288,
+          "f1": 0.14532737517000194,
+          "median_delay_min": 3.581443833333333
+        },
+        "night_frequency": {
+          "n": 132,
+          "detection_rate": 0.3939393939393939,
+          "precision": 0.36619718309859156,
+          "f1": 0.37956204379562036,
+          "median_delay_min": 179.81032225
+        },
+        "inactivity": {
+          "n": 74,
+          "detection_rate": 0.10810810810810811,
+          "precision": 0.1368584758942457,
+          "f1": 0.12079615648592999,
+          "median_delay_min": 133.21089693333334
+        }
+      },
+      "macro_f1": 0.1636304546435163,
+      "mean_detection_rate": 0.15728053635030378,
+      "drift": {
+        "runs": 7,
+        "detected": 0,
+        "median_delay_days": null,
+        "false_alerts_per_day": 0.0
+      }
+    },
+    "winc/routine": {
+      "false_alerts_per_day": 1.3409090909090908,
+      "clean_days_with_alert": 0.7272727272727273,
+      "types": {
+        "missed": {
+          "n": 43,
+          "detection_rate": 0.20930232558139536,
+          "precision": 0.2234762979683973,
+          "f1": 0.21615720524017465,
+          "median_delay_min": 338.8006347666667
+        },
+        "prolonged": {
+          "n": 132,
+          "detection_rate": 0.19696969696969696,
+          "precision": 0.21311475409836064,
+          "f1": 0.20472440944881892,
+          "median_delay_min": 62.74608908333333
+        },
+        "unusual_time": {
+          "n": 129,
+          "detection_rate": 0.17054263565891473,
+          "precision": 0.18995290423861852,
+          "f1": 0.17972521351652435,
+          "median_delay_min": 4.64669015
+        },
+        "night_frequency": {
+          "n": 132,
+          "detection_rate": 0.8106060606060606,
+          "precision": 0.5270935960591133,
+          "f1": 0.6388059701492537,
+          "median_delay_min": 58.233808583333335
+        },
+        "inactivity": {
+          "n": 74,
+          "detection_rate": 0.8648648648648649,
+          "precision": 0.5432098765432098,
+          "f1": 0.6672985781990521,
+          "median_delay_min": 142.21840619166665
+        }
+      },
+      "macro_f1": 0.38134227531076476,
+      "mean_detection_rate": 0.4504571167361865,
+      "drift": {
+        "runs": 7,
+        "detected": 0,
+        "median_delay_days": null,
+        "false_alerts_per_day": 0.047619047619047616
+      }
+    }
+  }
+}

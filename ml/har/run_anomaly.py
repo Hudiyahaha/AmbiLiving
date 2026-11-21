@@ -273,6 +273,32 @@ def _har_scores(y, p) -> dict:
             "n": int(len(y))}
 
 
+def add_clean_stream(S: dict, how: str = "auto", verbose: bool = True) -> None:
+    """Add the ``winc`` stream to ``S`` (E20): live episodes rebuilt from the raw
+    points with runs shorter than N minutes absorbed; ``how="auto"`` picks N on the
+    observation days only (``choose_clean``), otherwise N = float(how)."""
+    if "win_points" not in S:
+        raise SystemExit("the cleaned stream needs the raw live points; rebuild without --reuse")
+    pts_ref, pts_test = S["win_points"]
+    if how == "auto":
+        m, table = choose_clean(pts_ref, S["streams"]["gt"][0])
+        if verbose:
+            print(f"  cleanup chosen on observation days: {m} min  (episode F1: "
+                  + ", ".join(f"{k}: {v:.3f}" for k, v in table.items()) + ")")
+    else:
+        m, table = float(how), {}
+    ref = [DayData(d.key, d.day, d.times, minutes_to_episodes(t, list(l),
+                                                              day + pd.Timedelta(days=1), m))
+           for d, (day, t, l) in zip(S["streams"]["win"][0], pts_ref)]
+    test = {vid: DayData(d.key, d.day, d.times,
+                         minutes_to_episodes(pts_test[vid][1], list(pts_test[vid][2]),
+                                             pts_test[vid][0] + pd.Timedelta(days=1), m))
+            for vid, d in S["streams"]["win"][1].items()}
+    S["streams"]["winc"] = (ref, test)
+    S["win_clean"] = {"minutes": m, "observation_episode_f1": {str(k): v
+                                                                for k, v in table.items()}}
+
+
 # --------------------------------------------------------------------------- detection
 
 def evaluate(ref: list[DayData], test: dict[int, DayData], variants, classes, method: str,
@@ -392,25 +418,7 @@ def run(dataset: str, args):
             pickle.dump(S, f)
     variants = S["variants"]
     if args.win_clean:
-        if "win_points" not in S:
-            raise SystemExit("--win-clean needs the raw live points; rebuild without --reuse")
-        pts_ref, pts_test = S["win_points"]
-        if args.win_clean == "auto":
-            m, table = choose_clean(pts_ref, S["streams"]["gt"][0])
-            print(f"  cleanup chosen on observation days: {m} min  (episode F1: "
-                  + ", ".join(f"{k}: {v:.3f}" for k, v in table.items()) + ")")
-        else:
-            m, table = float(args.win_clean), {}
-        ref = [DayData(d.key, d.day, d.times, minutes_to_episodes(t, list(l),
-                                                                  day + pd.Timedelta(days=1), m))
-               for d, (day, t, l) in zip(S["streams"]["win"][0], pts_ref)]
-        test = {vid: DayData(d.key, d.day, d.times,
-                             minutes_to_episodes(pts_test[vid][1], list(pts_test[vid][2]),
-                                                 pts_test[vid][0] + pd.Timedelta(days=1), m))
-                for vid, d in S["streams"]["win"][1].items()}
-        S["streams"]["winc"] = (ref, test)
-        S["win_clean"] = {"minutes": m, "observation_episode_f1": {str(k): v
-                                                                    for k, v in table.items()}}
+        add_clean_stream(S, args.win_clean)
     pd.DataFrame([{"vid": v.vid, "day": v.day.date(), "kind": v.kind, "target": v.target,
                    "start": v.a_start, "end": v.a_end, "seq": v.seq, "pos": v.pos,
                    "note": v.note} for v in variants]
