@@ -11,7 +11,9 @@ the resident's own routine — including what should have happened and has not �
 injected deviations and explains each one in the resident's own terms, while a generic outlier
 detector finds few and cannot see absence at all. Third, the weak link is live recognition:
 without activity boundaries, recognition errors corrupt the routine the system learns, so
-deviations that would be obvious with correct activities disappear.
+deviations that would be obvious with correct activities disappear. Part of this loss is cheap
+to recover: building live episodes with a short past-only time-based cleanup more than doubles
+detection on Aruba (16 → 45 %) without more false alerts.
 
 Next steps follow directly: improve live recognition of the few activities that alerts depend
 on (leaving home, cooking, medication), cross-check absence-based alerts against the raw

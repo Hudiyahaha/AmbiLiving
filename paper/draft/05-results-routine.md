@@ -14,12 +14,16 @@ autoencoder baseline).
 | Aruba | Annotations | 100 / 0 | 70 / 20 | 95 / 0 | 100 / 1 | 93 / 0 | **92 / 4** | 1.34 / 0.02 |
 | Aruba | Segment GB | 98 / 0 | 68 / 29 | 91 / 17 | 100 / 2 | 80 / 0 | **87 / 10** | 1.32 / 0.05 |
 | Aruba | Live BiLSTM | 5 / 0 | 11 / 2 | 13 / 2 | 39 / 0 | 11 / 0 | **16 / 1** | 1.30 / 0.11 |
+| Aruba | Live BiLSTM + 3-min cleanup | 21 / – | 20 / – | 17 / – | 81 / – | 86 / – | **45 / –** | 1.34 / – |
 | Milan | Annotations | 100 / 0 | 74 / 5 | 64 / 23 | 100 / 69 | 100 / 0 | **88 / 19** | 2.77 / 0.54 |
 | Milan | Segment GB | 92 / 0 | 77 / 5 | 69 / 21 | 100 / 67 | 100 / 0 | **88 / 18** | 2.46 / 0.46 |
 | Milan | Live BiLSTM | 77 / 0 | 33 / 10 | 56 / 8 | 49 / 15 | 100 / 6 | **63 / 8** | 3.08 / 1.00 |
 
 Recognition quality on the clean monitoring days: segment GB macro-F1 89.5 (Aruba) and 84.5
-(Milan); live BiLSTM 42.9 and 43.3.
+(Milan); live BiLSTM 42.9 and 43.3. The cleanup row comes from E20 (`ml/results/aruba/anomaly-e20/`);
+the generic baseline was not rerun for it.
+<!-- E20 reran all streams with pandas 3: annotation and live rows reproduce this table exactly,
+the Aruba segment row does not (93 vs 87 %). Check with Hudiya before changing that row. -->
 
 **Routine deviation versus generic anomaly detection (RQ4).** The routine model detects
 87–92 % of injected deviations on Aruba and 88 % on Milan when it is given annotated or
@@ -56,6 +60,21 @@ Median detection delays with recognised activities are 0–5 minutes for unusual
 minutes for prolonged activities, about 1–2 hours for inactivity and 2.5–3 hours for night toilet
 trips (the count must build up); the missed-meal alert comes when the meal is about four hours
 overdue on Aruba and 40 minutes on Milan.
+
+**Part of the Aruba loss is episode building, not recognition.** The live stream above merges
+runs shorter than three predictions (30 events). On Aruba this leaves many short fake episodes
+(§5.2, Table T3b: precision 38 % against 54 % for a two-minute cleanup). We added the time-based
+cleanup of §4.5 as a fourth stream, with *N* chosen on the observation days only (Aruba 3 minutes,
+Milan 1 minute) and everything else unchanged. On Aruba, detection rises from 16 % to 45 % at the
+same false-alert rate (1.30 → 1.34 per clean day): inactivity 11 → 86 %, night toilet trips
+39 → 81 %, missed 5 → 21 %, prolonged 11 → 20 % and unusual time 13 → 17 %. The cleaned stream is
+better at every point of the budget sweep, for example 53 against 27 % at about 2.4 false alerts
+per day and 62 against 49 % at about 5. The jump in inactivity is consistent with the first
+mechanism above; we have not yet measured how far the learned quiet-spell norm itself moves.
+Deviations that depend on telling activities apart (a missed meal, an overlong or mistimed
+activity) stay weak and need better recognition of those activities. On Milan, where the live
+stream already worked, the cleanup does not help at matched false alerts (73 % at 5.0 false
+alerts per day against 67 % at 4.1 for the original rule) <!-- C8c, E20 -->.
 
 **False alerts and real change.** Clean-day alerts are 1.3 per day on Aruba and 2.5–3.1 per day
 on Milan. Milan's monitoring days are the Christmas holiday: among the clean-day alerts on

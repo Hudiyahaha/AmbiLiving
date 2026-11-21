@@ -22,7 +22,7 @@ person*, which is also what a caregiver can act on.
 
 **Recognition errors propagate in specific, explainable ways.** With annotated activities or
 the segment recogniser, the routine model detects most injected deviations. With the live
-window recogniser on Aruba, detection collapses. Two mechanisms explain most of it:
+window recogniser on Aruba, detection collapses. Three mechanisms explain most of it:
 
 1. *Corrupted routine, not just corrupted days.* The routine is learned from the recogniser's
    own output. When the live model fails to recognise the resident leaving home, hours spent
@@ -34,12 +34,23 @@ window recogniser on Aruba, detection collapses. Two mechanisms explain most of 
    cooking, so the meal never looks missed. This is partly a limit of injecting deviations
    through annotations, and partly a real ambiguity: from motion sensors alone, being in the
    kitchen and cooking are hard to separate.
+3. *Flickering episodes.* Live predictions switch activity many times within one real episode,
+   giving 13–14 times too many episodes on the raw stream (§5.2). The routine is then learned
+   from, and checked against, many short fake episodes. A past-only time-based cleanup removes
+   most of them and raises Aruba's live detection from 16 to 45 % at the same false-alert rate
+   (§5.3), so part of the collapse came from how episodes were built, not from recognition.
 
 Absence- and timing-based deviations that depend only on sensor silence or on clearly
 recognised activities survive better. This suggests a practical design rule: alerts that
 depend on *rare or short* activities (medication, washing up, leaving home) need either
 better recognition of those specific activities or a cross-check against the raw sensors
 before they reach a caregiver.
+
+**Judge live recognition by episodes, not events.** Per-event macro-F1 of about 42 suggests a
+recogniser too weak to build on, yet at the episode level the cleaned live stream finds 80 % of
+Aruba's annotated episodes at about the right rate per day, and inactivity and night-time
+deviations are detected almost as well as from annotations. A per-event score punishes every
+boundary error of a few events, which matters little to a routine measured in minutes and hours.
 
 **Milan versus Aruba.** The live pipeline holds up much better on Milan than on Aruba,
 although the two live recognisers have similar macro-F1 on the monitoring days (§5.3). Milan's

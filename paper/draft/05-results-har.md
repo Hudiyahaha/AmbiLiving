@@ -64,6 +64,8 @@ unlabelled washing-up, but not verifiable from the data.
 | **BiLSTM** (our final window model) | 41.9 ± 1.5 | **45.6 ± 0.6** |
 | Gradient Boosting + routine history | **43.8 ± 0.4** | 37.9 (one run) |
 | Gradient Boosting | 39.1 ± 0.2 | 38.1 ± 1.0 |
+| 1D-CNN (test window every 10th event) | 42.2 ± 0.9 | 43.7 ± 0.6 |
+| Transformer (test window every 10th event) | 37.1 ± 2.4 | 45.1 ± 0.7 |
 | LastAct (reported) [lastact2026] | 44.6 ± 1.9 | 40.1 ± 0.5 |
 | DeepCASAS (reported by LastAct) | 38.6 | 36.7 |
 
@@ -75,9 +77,45 @@ it lowered macro-F1 from 45.4 to 38.0 — so the plain BiLSTM was chosen <!-- C5
 Smoothing predictions over the last *k* windows lowered macro-F1 for every *k* tried
 <!-- C5c -->.
 
+**Architecture matters little here too.** A 1D-CNN and a Transformer trained under the same
+protocol (test window at every 10th event, three seeds) do not beat the BiLSTM, which scores
+42.1 ± 1.4 (Aruba) and 45.4 ± 0.2 (Milan) at the same test stride. The CNN ties on Aruba
+(42.2 ± 0.9) and is lower on Milan (43.7 ± 0.6). The Transformer ties on Milan (45.1 ± 0.7) but is
+lower and less stable on Aruba (37.1 ± 2.4; seeds 34.8–39.5). With about 19 000 (Aruba) and
+4 600 (Milan) training windows and no pretraining, the attention model has little data to learn
+from. The BiLSTM stays the window model <!-- C5d, E17 -->.
+
 Live recognition is far harder than the segment setting (about 42–46 versus about 92 macro-F1)
 <!-- C6 -->: without boundaries the model must decide when an activity has started, and short
 or rare activities are swamped by their neighbours. Wash_Dishes and the medication activities
 stay near zero F1. Part of Milan's gap is also a distribution shift: its monitoring days are
 the Christmas holiday, and the same Gradient Boosting model scores about 46 on the validation
 days but 38 on the test days <!-- C6b -->.
+
+**Per-event scores understate what routine detection needs.** Routine detection works on
+episodes (a meal, a night's sleep), not on single events. We grouped the BiLSTM's per-event test
+predictions into episodes (runs of the same predicted activity) and matched them with the
+annotated episodes (same activity, overlapping within ±15 minutes). The raw live stream touches
+almost every real episode (96 % on Aruba, 90 % on Milan) but flickers. It produces 13–14 times as
+many episodes as really happen (Aruba 390 per day against 29), so most predicted episodes are fake
+(precision 28 % and 46 %). Absorbing predicted runs shorter than two minutes into the run before
+them uses only the past, so it can run live. On Aruba it gives 30 episodes per day, with 80 % of
+real episodes found at 54 % precision. Meal_Preparation (89 % found / 68 % precision), Sleeping
+(95 / 61), Bed_to_Toilet (80 / 83) and Leave_Home (78 / 85) are recognised well at this level;
+Eating, Work, Wash_Dishes and Respirate stay weak <!-- C6e, E19 -->.
+
+**Table T3b — episode-level view of the live BiLSTM, mean over activities** (source:
+`ml/results/episodes.md`).
+
+| Home | Predicted stream | Episodes found | Precision | Episodes per day (true → predicted) |
+|---|---|---|---|---|
+| Aruba | raw (every event) | 96.2 | 28.1 | 29.2 → 389.8 |
+| Aruba | routine pipeline (every 10th event, runs < 3 merged) | 65.7 | 37.7 | 29.2 → 38.5 |
+| Aruba | runs < 2 min merged | 79.6 | 53.9 | 29.2 → 29.9 |
+| Milan | raw (every event) | 89.8 | 45.6 | 45.3 → 650.9 |
+| Milan | routine pipeline (every 10th event, runs < 3 merged) | 69.4 | 64.1 | 45.3 → 53.7 |
+| Milan | runs < 2 min merged | 66.3 | 63.1 | 45.3 → 45.5 |
+
+The episodes the routine pipeline used in §5.3 are as good as the two-minute cleanup on Milan, but
+clearly worse on Aruba (precision 38 against 54 %). §5.3 tests whether this explains part of the
+Aruba result.

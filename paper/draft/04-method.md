@@ -97,7 +97,11 @@ through the sensors. Detection then runs on three **activity streams** for the s
 (a) the annotations (perfect recognition, an upper bound), (b) the segment recogniser (Gradient
 Boosting + context with annotated boundaries), and (c) the live window recogniser (BiLSTM on the
 last 100 events, run every 10th event; runs shorter than three predictions are merged into the
-previous episode). Stream (c) is what a deployed system would see.
+previous episode). Stream (c) is what a deployed system would see. A variant (c′) replaces
+the three-prediction rule with a time rule: predicted runs shorter than *N* minutes are absorbed
+into the run before them (past only, so it can run live). *N* is chosen on the observation days
+only, by episode F1 against their annotations (grid 0.5–10 minutes); the monitoring days and the
+injections are never used (E20).
 
 All streams use the 60/20/20 day split: recognisers train on the first 60 % of days; each
 routine is learned from **its own stream** on the middle 20 % (the *observation period*, as

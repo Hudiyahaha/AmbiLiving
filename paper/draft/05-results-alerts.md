@@ -14,6 +14,7 @@ of at most three items. Timeline and order deviations stay on the **dashboard**.
 | Aruba | Annotations | 0.07 | 1.34 | **94 %** | 63 min | 83 % |
 | Aruba | Segment GB | 0.09 | 1.18 | 63 % | 68 min | 80 % |
 | Aruba | Live BiLSTM | 0.20 | 0.68 | 7 % | 84 min | 5 % |
+| Aruba | Live BiLSTM + 3-min cleanup | 0.27 | 0.57 | 34 % | 59 min | 49 % |
 | Milan | Annotations | 0.15 | 1.54 | 73 % | 43 min | 86 % |
 | Milan | Segment GB | 0.31 | 1.15 | **79 %** | 71 min | 83 % |
 | Milan | Live BiLSTM | 0.23 | 1.69 | 51 % | 55 min | 38 % |
@@ -36,3 +37,9 @@ when the moved cooking episode is recognised as another activity, the deviation 
 unusual, but it no longer reads as "cooking at 3 am", so it is routed to the summary instead of
 a notification <!-- C10b -->. A routing rule is only as reliable as the activity label it is
 conditioned on.
+
+With the live cleanup of §5.3 (source: `ml/results/alerts-e20.md`), the share of urgent
+deviations notified on Aruba rises from 7 % to 34 % (long inactivity 4 → 73 %), at 0.27
+notifications per clean day, about one every four days. On Milan the one-minute cleanup raises
+urgent notifications from 51 % to 64 % but triples notifications to 0.69 per clean day, so Milan
+keeps the original rule. The live demonstration uses this configuration <!-- C10c, E20 -->.
