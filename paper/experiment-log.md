@@ -45,7 +45,8 @@ One line per experiment. Details in the entries below. Update the status when an
 | E16 | Live-demo replay | 12/12 scenarios reproduce the evaluated stream | PASS |
 | E17 | CNN / Transformer on live windows | CNN does not beat BiLSTM | CNN FAIL · Transformer PENDING |
 | E18 | Save the final window model | reloaded model reproduces 100 % of test predictions | PASS |
-| E19 | Episode-level view of live recognition | raw stream flickers 13–14×; with a 2-min cleanup Aruba finds 80 % of episodes; Aruba anomaly-pipeline episodes worse than Milan's | PASS · lead OPEN |
+| E19 | Episode-level view of live recognition | raw stream flickers 13–14×; with a 2-min cleanup Aruba finds 80 % of episodes; Aruba anomaly-pipeline episodes worse than Milan's | PASS · lead tested in E20 |
+| E20 | Time-based cleanup of the live stream before routine detection | Aruba live detection 16 % → 45 % at the same false-alert rate; Milan no clear change | PASS (Aruba) · no gain (Milan) |
 
 ---
 
@@ -184,5 +185,23 @@ One line per experiment. Details in the entries below. Update the status when an
 1. The raw live stream flickers badly: 13× (Aruba) to 14× (Milan) more episodes than really happen. Almost every real episode is touched (found 90–96 %), but most predicted episodes are fake.
 2. With a simple 2-min cleanup, Aruba's main activities come out well at the episode level (e.g. Meal_Preparation found 89 % / precision 68 %, Sleeping 95 / 61, Bed_to_Toilet 80 / 83, Leave_Home 78 / 85). Eating, Work, Wash_Dishes and Respirate stay weak. This answers "how can you detect deviations if recognition is 42 F1": per-event F1 understates what the episode-level routine needs.
 3. **Lead**: on Milan the anomaly pipeline's episodes are as good as clean2 (64 vs 63 precision). On Aruba they are clearly worse (38 vs 54 precision, 66 vs 80 found). Milan's live detection works (63 %) and Aruba's does not (16 %), so the episode-building step may be part of the Aruba failure.
-**Status**: PASS (diagnosis). The lead in point 3 is OPEN. Next test: rerun the routine-deviation evaluation (E14) on Aruba with a cleanup chosen on the observation days, not the test days, and see whether live detection rises above 16 %.
+**Status**: PASS (diagnosis). The lead in point 3 was tested in E20. Next test: rerun the routine-deviation evaluation (E14) on Aruba with a cleanup chosen on the observation days, not the test days, and see whether live detection rises above 16 %.
+
+## E20 — Time-based cleanup of the live stream before routine detection  (21 Nov 2026, Aleeza)
+**Question**: E19 showed the anomaly pipeline's live episodes are much worse on Aruba than a simple time-based cleanup. Does a better cleanup raise Aruba's live routine-deviation detection (16 % in E14)?
+**Setup**: E14 protocol unchanged (same 603 / 166 day copies, routine model, 0.1 alerts per normal day per aspect, same matching rule). One extra live stream `winc`: predicted runs shorter than N minutes are absorbed into the run before (past only). N chosen **on the observation days only**, by episode F1 against the observation-day annotations (grid 0.5–10 min; monitoring days and injections never used): Aruba N = 3 (episode F1 0.498 vs 0.387 for the current 3-point rule), Milan N = 1 (0.679 vs 0.643). Saved BiLSTM (E18) reused. Generic baseline not rerun. Needed a pandas 3 fix in `anomaly_inject.day_events` (segment times cast to ns).
+**Command**: `py -m har.run_anomaly --dataset all --methods routine --win-clean auto --tag e20`
+**Result** (`ml/results/<home>/anomaly-e20/`; detection % at the operating point):
+
+| Home | Stream | Missed | Prolonged | Unusual time | Night toilet | Inactivity | Mean detection | F1 | False alerts / day |
+|---|---|---|---|---|---|---|---|---|---|
+| Aruba | win (current) | 5 | 11 | 13 | 39 | 11 | 16 | 16 | 1.30 |
+| Aruba | **winc (3 min)** | 21 | 20 | 17 | 81 | 86 | **45** | **38** | 1.34 |
+| Milan | win (current) | 77 | 33 | 56 | 49 | 100 | 63 | 48 | 3.08 |
+| Milan | winc (1 min) | 62 | 67 | 67 | 69 | 100 | 73 | 53 | 5.00 |
+
+Over the whole budget sweep (`sweep.csv`), Aruba `winc` is better at every false-alert level, e.g. 53 % vs 27 % at about 2.4 false alerts/day and 62 % vs 49 % at about 5. On Milan the two curves are about the same at matched false alerts (win 67 % at 4.1/day, winc 64 % at 3.3 and 73 % at 5.0): the gain at the operating point comes with more false alerts.
+Reproduction check: `gt` and `win` reproduce E14 exactly (Aruba 92 % / 16 %, Milan 88 % / 63 %). **`seg` does not**: Aruba 93 % here vs 87 % in E14 (prolonged 89 vs 68), Milan the same 88 %. Unexplained so far, possibly the pandas 3 environment; to check with Hudiya before quoting either number.
+**Takeaway**: Part of the Aruba live failure was the episode-building step, not recognition: with a cleanup chosen on observation days, inactivity (11 → 86 %) and night toilet trips (39 → 81 %) are found almost as often as with annotations, at the same false-alert rate. Missed meals, prolonged and unusual-time deviations stay weak (17–21 %); those need better recognition of the activities themselves. Milan, where the live stream already worked, does not gain.
+**Status**: PASS on Aruba (adopt the time-based cleanup for the live stream). No gain on Milan. OPEN: the `seg` mismatch.
 
