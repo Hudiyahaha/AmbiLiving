@@ -30,10 +30,10 @@ paper is mostly written by the time Phase 5 finishes.
 
 | # | Step | Done when | Paper |
 |---|---|---|---|
-| ☐ 0.1 | Commit `poster/` | It is on `main` | — |
+| ☑ 0.1 | Commit `poster/` | It is on `main` | — |
 | ☐ 0.2 | Refresh the result tables and "Known limitations" in [ml/README.md](ml/README.md) | Every number matches `ml/results/summary.md` / `windows.md` (they predate the 13 Oct macro-F1 fix; e.g. Milan temporal GB + ctx reads 84.65 there vs 90.69 in `summary.md`) | Reproducibility |
-| ☐ 0.3 | Replace the create-next-app [README.md](README.md) with a real project README (what, how to run both tracks, where results live) | A new teammate can run the app and one experiment from it alone | — |
-| ☐ 0.4 | Delete the unused [PagePlaceholder.tsx](src/components/ui/PagePlaceholder.tsx) | `npx tsc --noEmit` still clean | — |
+| ☑ 0.3 | Replace the create-next-app [README.md](README.md) with a real project README (what, how to run both tracks, where results live) | A new teammate can run the app and one experiment from it alone | — |
+| ☑ 0.4 | Delete the unused [PagePlaceholder.tsx](src/components/ui/PagePlaceholder.tsx) | `npx tsc --noEmit` still clean | — |
 | ☐ 0.5 | Tag the current results: `git tag har-results-v1` | Tag pushed; the paper's HAR numbers cite this tag | Reproducibility |
 
 ## Phase 1 — Freeze activity recognition
@@ -43,7 +43,7 @@ the paper written while the details are fresh.
 
 | # | Step | Done when | Paper |
 |---|---|---|---|
-| ☐ 1.1 | **Save trained models to disk.** No script persists a model today (only the parsed data is cached). Add a `--save` option for the final segment model (GB + ctx + history) and the final window model (BiLSTM), trained on the train days only | Model files load in a fresh process and reproduce the stored test predictions | Method §Implementation |
+| ☑ 1.1 | *(Done for the window BiLSTM: `har.saved_model`, `ml/models/`, checked in the experiment log; the segment model is not saved)* **Save trained models to disk.** No script persists a model today (only the parsed data is cached). Add a `--save` option for the final segment model (GB + ctx + history) and the final window model (BiLSTM), trained on the train days only | Model files load in a fresh process and reproduce the stored test predictions | Method §Implementation |
 | ☐ 1.2 | **Per-class table for the window setting** for the final BiLSTM, both homes, mean over 3 seeds | Table in `ml/results/windows.md`; rare classes (Wash_Dishes, Respirate, meds) reported explicitly | C6, Results §HAR-live |
 | ☐ 1.3 | **Confidence analysis.** `metrics.json` already stores mean confidence on right vs wrong answers and how many mistakes a 60 % / 80 % "unknown" cutoff catches. Summarise it for the final models | One small table: cutoff → % predictions kept, accuracy on kept | Feeds Phase 3 (alerts should not fire on low-confidence activities) |
 | ☐ 1.4 | *(Optional)* Transformer + context under cv on both homes — the only missing cell in the cv tables (~4 h CPU per home) | Row present in `summary.md`, or the gap stated in the paper | C1 |

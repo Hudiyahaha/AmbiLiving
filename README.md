@@ -1,36 +1,72 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# AmbiLiving
 
-## Getting Started
+**Ambient-sensor activity recognition and caregiver monitoring** — FYP F26-108
+(Aleeza Azhar · Hudiya e Zehra · Ibrahim Babar; supervisor Dr. Labiba Fahad).
 
-First, run the development server:
+Passive motion and door sensors in an elderly resident's home are turned into
+what the resident was *doing* (sleeping, cooking, leaving home, …), checked
+against their own routine, and shown to a caregiver as a few actionable alerts:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+```
+sensors → activity recognition → routine deviation → alert routing → caregiver dashboard
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Data: CASAS **Aruba** (1 resident, 2010–2011) and **Milan** (1 resident + pet, 2009–2010).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Repository
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Folder | What is in it |
+|---|---|
+| [`ml/har/`](ml/har/) | Python research code: data parsing, five recognition models, sliding windows, routine-deviation detection, alert routing, replay export |
+| [`ml/api/`](ml/api/) | Backend (FastAPI): live recognition, replay streaming, data for the dashboard |
+| [`ml/results/`](ml/results/) | Every archived experiment (`metrics.json`, per-class tables, confusion matrices) and the summary tables |
+| [`src/`](src/) | Caregiver dashboard (Next.js 16, React 19, Tailwind v4) |
+| [`paper/`](paper/) | Paper drafts, claims, decisions (D1…) and the experiment log |
+| [`poster/`](poster/) | FYP poster (`py build.py` renders `ambiliving-poster.html`) |
 
-## Learn More
+Where the project stands: [PROJECT_STATUS.md](PROJECT_STATUS.md). What is left, in order: [ROADMAP.md](ROADMAP.md).
 
-To learn more about Next.js, take a look at the following resources:
+## Run it
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+You need Node.js 20+ and Python 3.11+ (on Windows use the `py` launcher; `python` may be the Store stub).
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+**1. Backend** — from `ml/`:
 
-## Deploy on Vercel
+```bash
+py -m pip install -r requirements.txt
+py -m api                      # http://127.0.0.1:8000, interactive docs at /docs
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+The saved models (`ml/models/`) and exported data are in the repository, so the
+backend runs without the raw datasets.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+**2. Dashboard** — from the repository root, in a second terminal:
+
+```bash
+npm install
+npm run dev                    # http://localhost:3000
+```
+
+The dashboard reads the backend at `http://127.0.0.1:8000` (set
+`NEXT_PUBLIC_AMBILIVING_API` to change it). If the backend is not running it
+falls back to the data bundled with the app; the header badge says which.
+
+## Reproduce an experiment
+
+Put the raw CASAS files at `ml/data/raw/aruba.txt` and `ml/data/raw/milan.txt`
+(git-ignored), then from `ml/`:
+
+```bash
+py -m har.run --dataset aruba --model hgb --context          # known-boundary recognition
+py -m har.run_windows --dataset all --model bilstm --seeds 1  # live sliding-window recognition
+py -m pytest tests -q                                       # backend tests
+```
+
+All experiment commands and how to read their output: [ml/README.md](ml/README.md).
+
+## Checks
+
+```bash
+npx tsc --noEmit     # typecheck
+npm run lint
+```

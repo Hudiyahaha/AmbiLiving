@@ -1,0 +1,401 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>AmbiLiving FYP Poster</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap" rel="stylesheet">
+<style>
+  @page { size: 22.5in 34.5in; margin: 0; }
+  :root {
+    --pine: #1e2a24;
+    --moss: #3f6b52;
+    --sage: #abc6bd;
+    --sage-tint: #e7efec;
+    --linen: #f6f7f3;
+    --paper: #ffffff;
+    --ink: #1b211d;
+    --stone: #4f5b53;
+    --line: #d5ddd7;
+    --on-pine: #f1f4f2;
+    --on-pine-muted: #b9c8c0;
+    /* accents */
+    --teal: #1f9d8a;
+    --blue: #3478b5;
+    --amber: #e39a2d;
+    --coral: #d9583b;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 22.5in; height: 34.5in; }
+  body {
+    font-family: "Figtree", system-ui, sans-serif;
+    color: var(--ink);
+    background: var(--paper);
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .display { font-family: "Fraunces", Georgia, serif; font-weight: 600; letter-spacing: -0.01em; }
+  ul { list-style: none; }
+
+  /* ---------- Header ---------- */
+  header {
+    flex: none;
+    position: relative;
+    background: linear-gradient(180deg, #1e2a24 0%, #1e2a24 35%, #3f6b52 100%);
+    color: var(--on-pine);
+    padding: 0.52in 1.25in 1.5in;
+  }
+  .meta {
+    display: flex; justify-content: space-between; align-items: baseline;
+    font-size: 28pt; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--on-pine-muted);
+  }
+  .uni-logo { position: absolute; top: 0.5in; right: 1.25in; width: 2.05in; height: 2.05in; }
+  .brand { display: flex; align-items: center; gap: 0.36in; margin-top: 0.34in; }
+  .brand svg { width: 1.15in; height: 1.15in; flex: none; }
+  .brand h1 { font-size: 144pt; line-height: 0.95; }
+  .tagline { margin-top: 0.3in; font-size: 40pt; line-height: 1.25; font-weight: 500; color: var(--sage); }
+  .scene { display: block; width: 100%; height: auto; margin-top: 0.08in; }
+  .scene text { font-family: "Figtree", system-ui, sans-serif; }
+  .legend { display: flex; gap: 0.7in; margin-top: 0.2in; font-size: 28pt; font-weight: 600; color: var(--on-pine); }
+  .legend span { display: flex; align-items: center; gap: 0.16in; }
+  .legend i { width: 0.3in; height: 0.3in; border-radius: 50%; display: block; }
+
+  /* ---------- Body ---------- */
+  main {
+    flex: 1;
+    background: var(--paper);
+    padding: 0 1.25in 0.5in;
+    display: flex; flex-direction: column; justify-content: space-between;
+    gap: 0.26in;
+  }
+  .label {
+    font-size: 27pt; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--moss); margin-bottom: 0.22in;
+  }
+
+  /* Objective */
+  .objective { position: relative; margin-top: -1.05in; background: var(--paper); border-radius: 0.3in; padding: 0.44in 0.7in 0.5in; box-shadow: 0 0.1in 0.45in rgba(30,42,36,0.2); }
+  .objective p { font-size: 48pt; line-height: 1.2; color: var(--pine); }
+  .objective .hl-teal { color: var(--teal); }
+  .objective .hl-coral { color: var(--coral); }
+
+  /* Why ambient sensors */
+  .options { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.4in; }
+  .opt {
+    display: grid; grid-template-columns: 1.05in 1fr; align-items: center; column-gap: 0.32in;
+    border: 2px solid var(--line); border-radius: 0.25in; padding: 0.28in 0.4in; background: var(--paper);
+  }
+  .opt .ico { width: 1.05in; height: 1.05in; color: var(--stone); grid-row: span 2; }
+  .opt h3 { font-size: 35pt; font-weight: 700; line-height: 1.15; }
+  .verdict { display: flex; align-items: center; gap: 0.12in; margin-top: 0.08in; font-size: 28pt; font-weight: 600; color: var(--coral); }
+  .verdict svg { width: 0.42in; height: 0.42in; flex: none; }
+  .opt.chosen { background: var(--teal); border-color: var(--teal); color: #fff; }
+  .opt.chosen .ico, .opt.chosen .verdict { color: #fff; }
+
+  /* Architecture */
+  .flow { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.62in; }
+  .node {
+    position: relative; background: var(--linen); border: 2px solid var(--line); border-radius: 0.25in;
+    padding: 0.28in 0.2in 0.3in; text-align: center;
+  }
+  .node .ring {
+    width: 1.18in; height: 1.18in; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; margin: 0 auto; color: #fff;
+  }
+  .node .ring svg { width: 0.72in; height: 0.72in; }
+  .node h3 { font-size: 32pt; font-weight: 700; line-height: 1.15; margin-top: 0.2in; }
+  .node p { font-size: 27pt; line-height: 1.26; color: var(--stone); margin-top: 0.12in; }
+  .node:not(:last-child)::after, .iter:not(:last-child)::after {
+    content: ""; position: absolute; right: -0.52in; top: 50%;
+    width: 0.42in; height: 0.42in; transform: translateY(-50%);
+    background: no-repeat center / contain url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234f5b53' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 12h16M13 5l7 7-7 7'/%3E%3C/svg%3E");
+  }
+  .c-teal { background: var(--teal); } .c-blue { background: var(--blue); }
+  .c-amber { background: var(--amber); } .c-coral { background: var(--coral); } .c-moss { background: var(--moss); }
+  .node.end { background: var(--pine); border-color: var(--pine); color: var(--on-pine); }
+  .node.end p { color: var(--on-pine-muted); }
+  .shift { margin-top: 0.26in; display: flex; align-items: center; justify-content: center; gap: 0.4in; font-size: 33pt; }
+  .shift .from { color: var(--stone); }
+  .shift .to { font-weight: 700; color: var(--pine); }
+  .shift svg { width: 0.5in; height: 0.5in; color: var(--teal); flex: none; }
+
+  /* Plan */
+  .plan { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.62in; }
+  .iter { position: relative; border: 2px solid var(--line); border-radius: 0.25in; padding: 0.3in 0.42in 0.34in; background: var(--paper); }
+  .iter-top { display: flex; align-items: center; gap: 0.24in; }
+  .iter-badge { width: 0.82in; height: 0.82in; border-radius: 50%; color: #fff; font-size: 36pt; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+  .iter-num { font-size: 27pt; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--stone); }
+  .iter h3 { font-size: 36pt; white-space: nowrap; line-height: 1.12; margin-top: 0.2in; color: var(--pine); }
+  .iter .out-label { font-size: 25pt; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 0.22in; }
+  .iter p { font-size: 29pt; line-height: 1.28; margin-top: 0.08in; }
+  .t-blue { color: var(--blue); } .t-amber { color: #b97712; } .t-teal { color: var(--teal); }
+
+  /* Tools */
+  .tools { display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 0.3in; }
+  .tool { text-align: center; }
+  .tool svg { display: block; width: 0.92in; height: 0.92in; margin: 0 auto; }
+  .tool span { display: block; margin-top: 0.12in; font-size: 26pt; font-weight: 600; line-height: 1.1; color: var(--ink); }
+
+  /* Team band */
+  footer {
+    flex: none;
+    background: linear-gradient(180deg, #3f6b52 0%, #1e2a24 100%); color: var(--on-pine);
+    padding: 0.4in 1.25in 0.44in;
+    display: grid; grid-template-columns: repeat(4, 1fr); column-gap: 0.4in;
+  }
+  footer .label { color: var(--sage); margin-bottom: 0.16in; }
+  footer .l-team { grid-column: 1 / 4; }
+  footer .who { font-size: 36pt; font-weight: 700; line-height: 1.15; }
+  footer .roll { font-size: 28pt; font-weight: 500; color: var(--on-pine-muted); margin-top: 0.05in; }
+  footer .sup { border-left: 2px solid rgba(241,244,242,0.25); padding-left: 0.45in; }
+  footer .l-sup { padding-left: 0.45in; }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <g id="i-watch" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="7" y="7" width="10" height="10" rx="2.5"/><path d="M9 7l.6-3.5h4.8L15 7M9 17l.6 3.5h4.8L15 17"/>
+    </g>
+    <g id="i-camera" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="2.5" y="6.5" width="13" height="11" rx="2.5"/><path d="M15.5 10.5l6-3v9l-6-3"/>
+    </g>
+    <g id="i-sensor" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="18.5" r="1.3" fill="currentColor"/><path d="M8.3 15a5.3 5.3 0 0 1 7.4 0M5 11.6a10 10 0 0 1 14 0M1.8 8.2a14.6 14.6 0 0 1 20.4 0"/>
+    </g>
+    <g id="i-filter" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4 6h10M18 6h2M4 12h3M11 12h9M4 18h9M17 18h3"/><circle cx="16" cy="6" r="2"/><circle cx="9" cy="12" r="2"/><circle cx="15" cy="18" r="2"/>
+    </g>
+    <g id="i-activity" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M2.5 12h4l3-8 5 16 3-8h4"/>
+    </g>
+    <g id="i-alert" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 3.5L2.5 20h19z"/><path d="M12 10v4.5"/><circle cx="12" cy="17.3" r=".6" fill="currentColor"/>
+    </g>
+    <g id="i-dash" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3" y="3" width="8" height="10" rx="1.6"/><rect x="13" y="3" width="8" height="6" rx="1.6"/><rect x="13" y="11" width="8" height="10" rx="1.6"/><rect x="3" y="15" width="8" height="6" rx="1.6"/>
+    </g>
+    <g id="i-check" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="10"/><path d="M7.5 12.3l3 3 6-6.3"/>
+    </g>
+    <g id="i-cross" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="10"/><path d="M8.5 8.5l7 7M15.5 8.5l-7 7"/>
+    </g>
+    <g id="i-arrow" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4 12h16M13 5l7 7-7 7"/>
+    </g>
+    <!-- sensor marker with pulse rings, centred on 0,0 -->
+    <g id="pulse">
+      <circle r="46" fill="none" stroke="currentColor" stroke-width="4" opacity=".22"/>
+      <circle r="29" fill="none" stroke="currentColor" stroke-width="4" opacity=".5"/>
+      <circle r="13" fill="currentColor"/>
+    </g>
+  </defs>
+</svg>
+
+<header>
+  <div class="meta">
+    <span>F26-108</span>
+  </div>
+  <img class="uni-logo" src="fast-nuces-logo.png" alt="FAST NUCES logo">
+  <div class="brand">
+    <svg viewBox="0 0 100 100" role="img" aria-label="AmbiLiving logo">
+      <path d="M50 7 L91 39 V82 a11 11 0 0 1 -11 11 H20 a11 11 0 0 1 -11 -11 V39 Z" fill="#abc6bd" stroke="#abc6bd" stroke-width="6" stroke-linejoin="round"/>
+      <circle cx="50" cy="60" r="21" fill="none" stroke="#1e2a24" stroke-width="3.2" opacity=".28"/>
+      <circle cx="50" cy="60" r="13" fill="none" stroke="#1e2a24" stroke-width="3.2" opacity=".55"/>
+      <circle cx="50" cy="60" r="6" fill="#1e2a24"/>
+    </svg>
+    <h1 class="display">AmbiLiving</h1>
+  </div>
+  <p class="tagline">Helping elderly residents live safely and independently at home</p>
+
+  <!-- Overview illustration: the resident's home, its sensors, and the caregiver -->
+  <svg class="scene" viewBox="0 0 2000 620" role="img" aria-label="An elderly resident at home with ambient sensors that keep a caregiver informed">
+    <!-- ground -->
+    <path d="M0 580H2000" stroke="#3b5247" stroke-width="5" stroke-linecap="round"/>
+    <!-- house -->
+    <path d="M30 215 L710 40 L1390 215" fill="none" stroke="#abc6bd" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="80" y="215" width="1260" height="365" rx="12" fill="#2a3b32" stroke="#abc6bd" stroke-width="6"/>
+    <text x="710" y="165" text-anchor="middle" font-size="40" font-weight="600" fill="#abc6bd">Resident’s home</text>
+    <!-- room dividers -->
+    <path d="M480 215V440M910 215V440" stroke="#abc6bd" stroke-width="6" stroke-linecap="round" opacity=".75"/>
+
+    <!-- living room -->
+    <rect x="350" y="275" width="100" height="95" rx="8" fill="#3d6f8f" stroke="#abc6bd" stroke-width="5"/>
+    <path d="M400 275V370M350 322H450" stroke="#abc6bd" stroke-width="4"/>
+    <rect x="165" y="395" width="56" height="165" rx="20" fill="#1f9d8a"/>
+    <rect x="165" y="482" width="190" height="78" rx="22" fill="#1f9d8a"/>
+    <rect x="180" y="556" width="16" height="24" rx="6" fill="#abc6bd"/><rect x="322" y="556" width="16" height="24" rx="6" fill="#abc6bd"/>
+    <rect x="222" y="398" width="78" height="100" rx="30" fill="#e39a2d"/>
+    <circle cx="262" cy="358" r="36" fill="#f2d2b3"/>
+    <path d="M226 354a36 36 0 0 1 72 0c-22-18-50-18-72 0z" fill="#f1f4f2"/>
+    <rect x="252" y="470" width="124" height="38" rx="19" fill="#dfe6e2"/>
+    <rect x="344" y="482" width="36" height="92" rx="18" fill="#dfe6e2"/>
+    <rect x="336" y="560" width="62" height="20" rx="10" fill="#f1f4f2"/>
+    <g transform="rotate(-14 330 430)"><rect x="296" y="408" width="68" height="46" rx="5" fill="#f1f4f2"/><path d="M330 408v46" stroke="#abc6bd" stroke-width="3"/></g>
+
+    <!-- kitchen -->
+    <path d="M700 215V285" stroke="#abc6bd" stroke-width="5"/>
+    <path d="M662 330a38 38 0 0 1 76 0z" fill="#e39a2d"/>
+    <rect x="560" y="480" width="290" height="100" rx="8" fill="#3c5347"/>
+    <rect x="560" y="466" width="290" height="20" rx="6" fill="#abc6bd"/>
+    <rect x="610" y="430" width="52" height="36" rx="6" fill="#d9583b"/><path d="M662 440h14a8 8 0 0 1 0 16h-14" fill="none" stroke="#d9583b" stroke-width="6"/>
+    <circle cx="770" cy="524" r="20" fill="none" stroke="#abc6bd" stroke-width="5"/><circle cx="710" cy="524" r="20" fill="none" stroke="#abc6bd" stroke-width="5"/>
+
+    <!-- bedroom -->
+    <rect x="975" y="500" width="300" height="62" rx="12" fill="#3c5347"/>
+    <rect x="960" y="440" width="26" height="140" rx="8" fill="#abc6bd"/>
+    <rect x="994" y="470" width="86" height="36" rx="14" fill="#f1f4f2"/>
+    <rect x="1090" y="486" width="185" height="50" rx="12" fill="#3478b5"/>
+    <rect x="1262" y="556" width="14" height="24" rx="5" fill="#abc6bd"/>
+    <!-- front door -->
+    <rect x="1322" y="400" width="26" height="180" rx="6" fill="#6db8ff"/>
+
+    <!-- sensors -->
+    <g color="#5fe0a5"><use href="#pulse" x="262" y="262"/><use href="#pulse" x="590" y="262"/><use href="#pulse" x="1130" y="262"/></g>
+    <g color="#6db8ff"><use href="#pulse" x="1290" y="370"/></g>
+    <g color="#ffb454"><use href="#pulse" x="830" y="360"/></g>
+
+    <!-- signal to caregiver -->
+    <path d="M1410 350H1590" stroke="#abc6bd" stroke-width="7" stroke-linecap="round" stroke-dasharray="4 24"/>
+    <path d="M1576 328l26 22-26 22" fill="none" stroke="#abc6bd" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <!-- caregiver phone -->
+    <text x="1800" y="78" text-anchor="middle" font-size="40" font-weight="600" fill="#abc6bd">Caregiver</text>
+    <rect x="1630" y="108" width="340" height="472" rx="40" fill="#f6f7f3" stroke="#abc6bd" stroke-width="8"/>
+    <rect x="1750" y="130" width="100" height="12" rx="6" fill="#d5ddd7"/>
+    <g font-size="38" font-weight="600" fill="#1b211d">
+      <circle cx="1680" cy="212" r="13" fill="#3478b5"/><text x="1710" y="225">Sleeping</text>
+      <circle cx="1680" cy="290" r="13" fill="#e39a2d"/><text x="1710" y="303">Breakfast</text>
+      <circle cx="1680" cy="368" r="13" fill="#1f9d8a"/><text x="1710" y="381">Reading</text>
+    </g>
+    <path d="M1660 420H1940" stroke="#d5ddd7" stroke-width="4"/>
+    <rect x="1660" y="452" width="280" height="88" rx="44" fill="#1f9d8a"/>
+    <text x="1800" y="510" text-anchor="middle" font-size="38" font-weight="700" fill="#ffffff">All normal</text>
+  </svg>
+  <div class="legend">
+    <span><i style="background:#5fe0a5"></i>Motion sensor</span>
+    <span><i style="background:#6db8ff"></i>Door sensor</span>
+    <span><i style="background:#ffb454"></i>Temperature sensor</span>
+  </div>
+</header>
+
+<main>
+
+  <section class="objective">
+    <p class="display">Recognize an elder’s <span class="hl-teal">daily activities</span> from ambient sensors and <span class="hl-coral">alert caregivers</span> when routines change.</p>
+  </section>
+
+  <section>
+    <div class="label">Why ambient sensors</div>
+    <div class="options">
+      <div class="opt">
+        <svg class="ico" viewBox="0 0 24 24"><use href="#i-watch"/></svg>
+        <h3>Wearables</h3>
+        <div class="verdict"><svg viewBox="0 0 24 24"><use href="#i-cross"/></svg>Easy to forget</div>
+      </div>
+      <div class="opt">
+        <svg class="ico" viewBox="0 0 24 24"><use href="#i-camera"/></svg>
+        <h3>Cameras</h3>
+        <div class="verdict"><svg viewBox="0 0 24 24"><use href="#i-cross"/></svg>Invade privacy</div>
+      </div>
+      <div class="opt chosen">
+        <svg class="ico" viewBox="0 0 24 24"><use href="#i-sensor"/></svg>
+        <h3>Ambient sensors</h3>
+        <div class="verdict"><svg viewBox="0 0 24 24"><use href="#i-check"/></svg>Passive and private</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="label">System architecture</div>
+    <div class="flow">
+      <div class="node">
+        <div class="ring c-teal"><svg viewBox="0 0 24 24"><use href="#i-sensor"/></svg></div>
+        <h3>Ambient sensors</h3>
+        <p>Motion, door and temperature</p>
+      </div>
+      <div class="node">
+        <div class="ring c-blue"><svg viewBox="0 0 24 24"><use href="#i-filter"/></svg></div>
+        <h3>Data processing</h3>
+        <p>Cleaning and features</p>
+      </div>
+      <div class="node">
+        <div class="ring c-amber"><svg viewBox="0 0 24 24"><use href="#i-activity"/></svg></div>
+        <h3>Activity recognition</h3>
+        <p>ML and deep learning</p>
+      </div>
+      <div class="node">
+        <div class="ring c-coral"><svg viewBox="0 0 24 24"><use href="#i-alert"/></svg></div>
+        <h3>Anomaly detection</h3>
+        <p>Deviation from daily routine</p>
+      </div>
+      <div class="node end">
+        <div class="ring c-moss"><svg viewBox="0 0 24 24"><use href="#i-dash"/></svg></div>
+        <h3>Caregiver dashboard</h3>
+        <p>Monitoring, history and alerts</p>
+      </div>
+    </div>
+    <div class="shift">
+      <span class="from">“Which sensor fired?”</span>
+      <svg viewBox="0 0 24 24"><use href="#i-arrow"/></svg>
+      <span class="to">“What is happening, and does it need attention?”</span>
+    </div>
+  </section>
+
+  <section>
+    <div class="label">Project plan</div>
+    <div class="plan">
+      <div class="iter">
+        <div class="iter-top"><span class="iter-badge c-blue">1</span><span class="iter-num">Iteration 1</span></div>
+        <h3 class="display">Research and Planning</h3>
+        <div class="out-label t-blue">Deliverable</div>
+        <p>Dataset, approaches and system architecture finalized</p>
+      </div>
+      <div class="iter">
+        <div class="iter-top"><span class="iter-badge c-amber">2</span><span class="iter-num">Iteration 2</span></div>
+        <h3 class="display">Model Comparison</h3>
+        <div class="out-label t-amber">Deliverable</div>
+        <p>Models trained, compared and the best one selected</p>
+      </div>
+      <div class="iter">
+        <div class="iter-top"><span class="iter-badge c-teal">3</span><span class="iter-num">Iteration 3</span></div>
+        <h3 class="display">Prototype Integration</h3>
+        <div class="out-label t-teal">Deliverable</div>
+        <p>Working prototype, from sensors to caregiver alerts</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="label">Tools and technologies</div>
+    <div class="tools">
+      <div class="tool">{{ICON:python:#3776AB}}<span>Python</span></div>
+      <div class="tool">{{ICON:pytorch:#EE4C2C}}<span>PyTorch</span></div>
+      <div class="tool">{{ICON:scikitlearn:#F7931E}}<span>scikit-learn</span></div>
+      <div class="tool">{{ICON:pandas:#150458}}<span>pandas</span></div>
+      <div class="tool">{{ICON:nextdotjs:#000000}}<span>Next.js</span></div>
+      <div class="tool">{{ICON:react:#149ECA}}<span>React</span></div>
+      <div class="tool">{{ICON:typescript:#3178C6}}<span>TypeScript</span></div>
+      <div class="tool">{{ICON:tailwindcss:#06B6D4}}<span>Tailwind CSS</span></div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="label l-team">Team members</div>
+  <div class="label l-sup">Supervisor</div>
+  <div><div class="who">Ibrahim Babar</div><div class="roll">23I-0040</div></div>
+  <div><div class="who">Hudiya e Zehra</div><div class="roll">23I-0761</div></div>
+  <div><div class="who">Aleeza Azhar</div><div class="roll">23I-0765</div></div>
+  <div class="sup"><div class="who">Dr. Labiba Fahad</div></div>
+</footer>
+<script>document.body.setAttribute('data-h', 'footer bottom '+Math.round(document.querySelector('footer').getBoundingClientRect().bottom)+' of 3312')</script>
+</body>
+</html>

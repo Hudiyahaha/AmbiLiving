@@ -35,7 +35,7 @@ Ambient sensors → HAR model → recognised activity → routine deviation → 
 | **Research / ML** — routine deviation + alerts | [ml/har/anomaly.py](ml/har/anomaly.py), [alerts.py](ml/har/alerts.py) | **Done and evaluated.** Per-resident routine model (8 aspects incl. weekly drift) vs a generic anomaly-detection baseline, on three activity streams; alert routing (notify / evening summary / dashboard). Results: [anomaly.md](ml/results/anomaly.md), [alerts.md](ml/results/alerts.md). |
 | **Product / PoC** — caregiver dashboard | [src/](src/) | All six screens built. Monitoring and activity history play back **one real CASAS day per home** with model predictions; anomalies are the routine model's alerts on real days. Data comes from the backend API, with the bundled files as fallback. Typecheck clean. |
 | **Backend** | [ml/api/](ml/api/) | **Started (22 Nov, D16).** FastAPI service: homes, exported day and anomalies, replay scenarios streamed live (server-sent events), live recognition with the saved BiLSTM. Tests in `ml/tests/`. The dashboard uses it (ROADMAP 4.4): every page loads from the API, and Monitoring shows the live BiLSTM's answer for the last 100 events at the playback position. |
-| **Poster** | `poster/` | Draft rendered to `AmbiLiving-Poster.pdf`. **Not yet committed.** Concept/architecture only, no results. |
+| **Poster** | [poster/](poster/) | Draft rendered to `AmbiLiving-Poster.pdf`. Concept/architecture only, no results yet (ROADMAP 6.5). |
 
 **Git state.** All ML and app work is on `main` (PR #1 `babar`, 18 Oct; PRs #2 and #3 `aleeza`,
 14–18 Nov, including the final sliding-window results). Working branch for the roadmap and paper
@@ -143,7 +143,7 @@ Final results (macro-F1 %, mean ± std over 3 seeds; full table in [ml/results/w
 The ordered, step-by-step plan lives in **[ROADMAP.md](ROADMAP.md)** (single source of truth —
 do not duplicate it here). In short:
 
-0. Housekeeping — commit `poster/`, refresh `ml/README.md` tables, real README, tag results.
+0. Housekeeping — refresh `ml/README.md` tables, tag results (poster, README and cleanup done 22 Nov).
 1. Freeze activity recognition — save trained models, per-class window table, confidence analysis.
 2. ~~Routine-deviation detection~~ — done (D12–D14, E11–E14).
 3. ~~Alert routing~~ — done (D15, E15).
@@ -165,7 +165,6 @@ do not duplicate it here). In short:
 | **Label drift** | Aruba stops annotating Wash_Dishes from Mar 2011; Milan's test days are a holiday period (validation ~46 vs test ~38 for GB). Temporal per-class scores are noisy. |
 | **History feedback loop** | History features use the model's own earlier predictions; one wrong recognition can affect the next in a live system. |
 | **Research → product gap** | Narrower: the dashboard shows a real day and routine deviations found on real days, with how each was delivered. A live demo (`/live`) now replays days through the live BiLSTM and routine model, minute by minute (D17). A FastAPI backend now streams those replays and recognises activities from posted events (D16), and the dashboard reads from it (bundled files only as fallback), but the routine model does not yet run online. |
-| **Uncommitted work** | `poster/` is not on `main`. |
 
 ---
 

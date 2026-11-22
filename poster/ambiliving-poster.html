@@ -1,0 +1,401 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>AmbiLiving FYP Poster</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap" rel="stylesheet">
+<style>
+  @page { size: 22.5in 34.5in; margin: 0; }
+  :root {
+    --pine: #1e2a24;
+    --moss: #3f6b52;
+    --sage: #abc6bd;
+    --sage-tint: #e7efec;
+    --linen: #f6f7f3;
+    --paper: #ffffff;
+    --ink: #1b211d;
+    --stone: #4f5b53;
+    --line: #d5ddd7;
+    --on-pine: #f1f4f2;
+    --on-pine-muted: #b9c8c0;
+    /* accents */
+    --teal: #1f9d8a;
+    --blue: #3478b5;
+    --amber: #e39a2d;
+    --coral: #d9583b;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 22.5in; height: 34.5in; }
+  body {
+    font-family: "Figtree", system-ui, sans-serif;
+    color: var(--ink);
+    background: var(--paper);
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .display { font-family: "Fraunces", Georgia, serif; font-weight: 600; letter-spacing: -0.01em; }
+  ul { list-style: none; }
+
+  /* ---------- Header ---------- */
+  header {
+    flex: none;
+    position: relative;
+    background: linear-gradient(180deg, #1e2a24 0%, #1e2a24 35%, #3f6b52 100%);
+    color: var(--on-pine);
+    padding: 0.52in 1.25in 1.5in;
+  }
+  .meta {
+    display: flex; justify-content: space-between; align-items: baseline;
+    font-size: 28pt; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--on-pine-muted);
+  }
+  .uni-logo { position: absolute; top: 0.5in; right: 1.25in; width: 2.05in; height: 2.05in; }
+  .brand { display: flex; align-items: center; gap: 0.36in; margin-top: 0.34in; }
+  .brand svg { width: 1.15in; height: 1.15in; flex: none; }
+  .brand h1 { font-size: 144pt; line-height: 0.95; }
+  .tagline { margin-top: 0.3in; font-size: 40pt; line-height: 1.25; font-weight: 500; color: var(--sage); }
+  .scene { display: block; width: 100%; height: auto; margin-top: 0.08in; }
+  .scene text { font-family: "Figtree", system-ui, sans-serif; }
+  .legend { display: flex; gap: 0.7in; margin-top: 0.2in; font-size: 28pt; font-weight: 600; color: var(--on-pine); }
+  .legend span { display: flex; align-items: center; gap: 0.16in; }
+  .legend i { width: 0.3in; height: 0.3in; border-radius: 50%; display: block; }
+
+  /* ---------- Body ---------- */
+  main {
+    flex: 1;
+    background: var(--paper);
+    padding: 0 1.25in 0.5in;
+    display: flex; flex-direction: column; justify-content: space-between;
+    gap: 0.26in;
+  }
+  .label {
+    font-size: 27pt; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--moss); margin-bottom: 0.22in;
+  }
+
+  /* Objective */
+  .objective { position: relative; margin-top: -1.05in; background: var(--paper); border-radius: 0.3in; padding: 0.44in 0.7in 0.5in; box-shadow: 0 0.1in 0.45in rgba(30,42,36,0.2); }
+  .objective p { font-size: 48pt; line-height: 1.2; color: var(--pine); }
+  .objective .hl-teal { color: var(--teal); }
+  .objective .hl-coral { color: var(--coral); }
+
+  /* Why ambient sensors */
+  .options { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.4in; }
+  .opt {
+    display: grid; grid-template-columns: 1.05in 1fr; align-items: center; column-gap: 0.32in;
+    border: 2px solid var(--line); border-radius: 0.25in; padding: 0.28in 0.4in; background: var(--paper);
+  }
+  .opt .ico { width: 1.05in; height: 1.05in; color: var(--stone); grid-row: span 2; }
+  .opt h3 { font-size: 35pt; font-weight: 700; line-height: 1.15; }
+  .verdict { display: flex; align-items: center; gap: 0.12in; margin-top: 0.08in; font-size: 28pt; font-weight: 600; color: var(--coral); }
+  .verdict svg { width: 0.42in; height: 0.42in; flex: none; }
+  .opt.chosen { background: var(--teal); border-color: var(--teal); color: #fff; }
+  .opt.chosen .ico, .opt.chosen .verdict { color: #fff; }
+
+  /* Architecture */
+  .flow { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.62in; }
+  .node {
+    position: relative; background: var(--linen); border: 2px solid var(--line); border-radius: 0.25in;
+    padding: 0.28in 0.2in 0.3in; text-align: center;
+  }
+  .node .ring {
+    width: 1.18in; height: 1.18in; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; margin: 0 auto; color: #fff;
+  }
+  .node .ring svg { width: 0.72in; height: 0.72in; }
+  .node h3 { font-size: 32pt; font-weight: 700; line-height: 1.15; margin-top: 0.2in; }
+  .node p { font-size: 27pt; line-height: 1.26; color: var(--stone); margin-top: 0.12in; }
+  .node:not(:last-child)::after, .iter:not(:last-child)::after {
+    content: ""; position: absolute; right: -0.52in; top: 50%;
+    width: 0.42in; height: 0.42in; transform: translateY(-50%);
+    background: no-repeat center / contain url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234f5b53' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 12h16M13 5l7 7-7 7'/%3E%3C/svg%3E");
+  }
+  .c-teal { background: var(--teal); } .c-blue { background: var(--blue); }
+  .c-amber { background: var(--amber); } .c-coral { background: var(--coral); } .c-moss { background: var(--moss); }
+  .node.end { background: var(--pine); border-color: var(--pine); color: var(--on-pine); }
+  .node.end p { color: var(--on-pine-muted); }
+  .shift { margin-top: 0.26in; display: flex; align-items: center; justify-content: center; gap: 0.4in; font-size: 33pt; }
+  .shift .from { color: var(--stone); }
+  .shift .to { font-weight: 700; color: var(--pine); }
+  .shift svg { width: 0.5in; height: 0.5in; color: var(--teal); flex: none; }
+
+  /* Plan */
+  .plan { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.62in; }
+  .iter { position: relative; border: 2px solid var(--line); border-radius: 0.25in; padding: 0.3in 0.42in 0.34in; background: var(--paper); }
+  .iter-top { display: flex; align-items: center; gap: 0.24in; }
+  .iter-badge { width: 0.82in; height: 0.82in; border-radius: 50%; color: #fff; font-size: 36pt; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+  .iter-num { font-size: 27pt; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--stone); }
+  .iter h3 { font-size: 36pt; white-space: nowrap; line-height: 1.12; margin-top: 0.2in; color: var(--pine); }
+  .iter .out-label { font-size: 25pt; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 0.22in; }
+  .iter p { font-size: 29pt; line-height: 1.28; margin-top: 0.08in; }
+  .t-blue { color: var(--blue); } .t-amber { color: #b97712; } .t-teal { color: var(--teal); }
+
+  /* Tools */
+  .tools { display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 0.3in; }
+  .tool { text-align: center; }
+  .tool svg { display: block; width: 0.92in; height: 0.92in; margin: 0 auto; }
+  .tool span { display: block; margin-top: 0.12in; font-size: 26pt; font-weight: 600; line-height: 1.1; color: var(--ink); }
+
+  /* Team band */
+  footer {
+    flex: none;
+    background: linear-gradient(180deg, #3f6b52 0%, #1e2a24 100%); color: var(--on-pine);
+    padding: 0.4in 1.25in 0.44in;
+    display: grid; grid-template-columns: repeat(4, 1fr); column-gap: 0.4in;
+  }
+  footer .label { color: var(--sage); margin-bottom: 0.16in; }
+  footer .l-team { grid-column: 1 / 4; }
+  footer .who { font-size: 36pt; font-weight: 700; line-height: 1.15; }
+  footer .roll { font-size: 28pt; font-weight: 500; color: var(--on-pine-muted); margin-top: 0.05in; }
+  footer .sup { border-left: 2px solid rgba(241,244,242,0.25); padding-left: 0.45in; }
+  footer .l-sup { padding-left: 0.45in; }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <g id="i-watch" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="7" y="7" width="10" height="10" rx="2.5"/><path d="M9 7l.6-3.5h4.8L15 7M9 17l.6 3.5h4.8L15 17"/>
+    </g>
+    <g id="i-camera" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="2.5" y="6.5" width="13" height="11" rx="2.5"/><path d="M15.5 10.5l6-3v9l-6-3"/>
+    </g>
+    <g id="i-sensor" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="18.5" r="1.3" fill="currentColor"/><path d="M8.3 15a5.3 5.3 0 0 1 7.4 0M5 11.6a10 10 0 0 1 14 0M1.8 8.2a14.6 14.6 0 0 1 20.4 0"/>
+    </g>
+    <g id="i-filter" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4 6h10M18 6h2M4 12h3M11 12h9M4 18h9M17 18h3"/><circle cx="16" cy="6" r="2"/><circle cx="9" cy="12" r="2"/><circle cx="15" cy="18" r="2"/>
+    </g>
+    <g id="i-activity" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M2.5 12h4l3-8 5 16 3-8h4"/>
+    </g>
+    <g id="i-alert" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 3.5L2.5 20h19z"/><path d="M12 10v4.5"/><circle cx="12" cy="17.3" r=".6" fill="currentColor"/>
+    </g>
+    <g id="i-dash" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3" y="3" width="8" height="10" rx="1.6"/><rect x="13" y="3" width="8" height="6" rx="1.6"/><rect x="13" y="11" width="8" height="10" rx="1.6"/><rect x="3" y="15" width="8" height="6" rx="1.6"/>
+    </g>
+    <g id="i-check" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="10"/><path d="M7.5 12.3l3 3 6-6.3"/>
+    </g>
+    <g id="i-cross" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="10"/><path d="M8.5 8.5l7 7M15.5 8.5l-7 7"/>
+    </g>
+    <g id="i-arrow" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4 12h16M13 5l7 7-7 7"/>
+    </g>
+    <!-- sensor marker with pulse rings, centred on 0,0 -->
+    <g id="pulse">
+      <circle r="46" fill="none" stroke="currentColor" stroke-width="4" opacity=".22"/>
+      <circle r="29" fill="none" stroke="currentColor" stroke-width="4" opacity=".5"/>
+      <circle r="13" fill="currentColor"/>
+    </g>
+  </defs>
+</svg>
+
+<header>
+  <div class="meta">
+    <span>F26-108</span>
+  </div>
+  <img class="uni-logo" src="fast-nuces-logo.png" alt="FAST NUCES logo">
+  <div class="brand">
+    <svg viewBox="0 0 100 100" role="img" aria-label="AmbiLiving logo">
+      <path d="M50 7 L91 39 V82 a11 11 0 0 1 -11 11 H20 a11 11 0 0 1 -11 -11 V39 Z" fill="#abc6bd" stroke="#abc6bd" stroke-width="6" stroke-linejoin="round"/>
+      <circle cx="50" cy="60" r="21" fill="none" stroke="#1e2a24" stroke-width="3.2" opacity=".28"/>
+      <circle cx="50" cy="60" r="13" fill="none" stroke="#1e2a24" stroke-width="3.2" opacity=".55"/>
+      <circle cx="50" cy="60" r="6" fill="#1e2a24"/>
+    </svg>
+    <h1 class="display">AmbiLiving</h1>
+  </div>
+  <p class="tagline">Helping elderly residents live safely and independently at home</p>
+
+  <!-- Overview illustration: the resident's home, its sensors, and the caregiver -->
+  <svg class="scene" viewBox="0 0 2000 620" role="img" aria-label="An elderly resident at home with ambient sensors that keep a caregiver informed">
+    <!-- ground -->
+    <path d="M0 580H2000" stroke="#3b5247" stroke-width="5" stroke-linecap="round"/>
+    <!-- house -->
+    <path d="M30 215 L710 40 L1390 215" fill="none" stroke="#abc6bd" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="80" y="215" width="1260" height="365" rx="12" fill="#2a3b32" stroke="#abc6bd" stroke-width="6"/>
+    <text x="710" y="165" text-anchor="middle" font-size="40" font-weight="600" fill="#abc6bd">Resident’s home</text>
+    <!-- room dividers -->
+    <path d="M480 215V440M910 215V440" stroke="#abc6bd" stroke-width="6" stroke-linecap="round" opacity=".75"/>
+
+    <!-- living room -->
+    <rect x="350" y="275" width="100" height="95" rx="8" fill="#3d6f8f" stroke="#abc6bd" stroke-width="5"/>
+    <path d="M400 275V370M350 322H450" stroke="#abc6bd" stroke-width="4"/>
+    <rect x="165" y="395" width="56" height="165" rx="20" fill="#1f9d8a"/>
+    <rect x="165" y="482" width="190" height="78" rx="22" fill="#1f9d8a"/>
+    <rect x="180" y="556" width="16" height="24" rx="6" fill="#abc6bd"/><rect x="322" y="556" width="16" height="24" rx="6" fill="#abc6bd"/>
+    <rect x="222" y="398" width="78" height="100" rx="30" fill="#e39a2d"/>
+    <circle cx="262" cy="358" r="36" fill="#f2d2b3"/>
+    <path d="M226 354a36 36 0 0 1 72 0c-22-18-50-18-72 0z" fill="#f1f4f2"/>
+    <rect x="252" y="470" width="124" height="38" rx="19" fill="#dfe6e2"/>
+    <rect x="344" y="482" width="36" height="92" rx="18" fill="#dfe6e2"/>
+    <rect x="336" y="560" width="62" height="20" rx="10" fill="#f1f4f2"/>
+    <g transform="rotate(-14 330 430)"><rect x="296" y="408" width="68" height="46" rx="5" fill="#f1f4f2"/><path d="M330 408v46" stroke="#abc6bd" stroke-width="3"/></g>
+
+    <!-- kitchen -->
+    <path d="M700 215V285" stroke="#abc6bd" stroke-width="5"/>
+    <path d="M662 330a38 38 0 0 1 76 0z" fill="#e39a2d"/>
+    <rect x="560" y="480" width="290" height="100" rx="8" fill="#3c5347"/>
+    <rect x="560" y="466" width="290" height="20" rx="6" fill="#abc6bd"/>
+    <rect x="610" y="430" width="52" height="36" rx="6" fill="#d9583b"/><path d="M662 440h14a8 8 0 0 1 0 16h-14" fill="none" stroke="#d9583b" stroke-width="6"/>
+    <circle cx="770" cy="524" r="20" fill="none" stroke="#abc6bd" stroke-width="5"/><circle cx="710" cy="524" r="20" fill="none" stroke="#abc6bd" stroke-width="5"/>
+
+    <!-- bedroom -->
+    <rect x="975" y="500" width="300" height="62" rx="12" fill="#3c5347"/>
+    <rect x="960" y="440" width="26" height="140" rx="8" fill="#abc6bd"/>
+    <rect x="994" y="470" width="86" height="36" rx="14" fill="#f1f4f2"/>
+    <rect x="1090" y="486" width="185" height="50" rx="12" fill="#3478b5"/>
+    <rect x="1262" y="556" width="14" height="24" rx="5" fill="#abc6bd"/>
+    <!-- front door -->
+    <rect x="1322" y="400" width="26" height="180" rx="6" fill="#6db8ff"/>
+
+    <!-- sensors -->
+    <g color="#5fe0a5"><use href="#pulse" x="262" y="262"/><use href="#pulse" x="590" y="262"/><use href="#pulse" x="1130" y="262"/></g>
+    <g color="#6db8ff"><use href="#pulse" x="1290" y="370"/></g>
+    <g color="#ffb454"><use href="#pulse" x="830" y="360"/></g>
+
+    <!-- signal to caregiver -->
+    <path d="M1410 350H1590" stroke="#abc6bd" stroke-width="7" stroke-linecap="round" stroke-dasharray="4 24"/>
+    <path d="M1576 328l26 22-26 22" fill="none" stroke="#abc6bd" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <!-- caregiver phone -->
+    <text x="1800" y="78" text-anchor="middle" font-size="40" font-weight="600" fill="#abc6bd">Caregiver</text>
+    <rect x="1630" y="108" width="340" height="472" rx="40" fill="#f6f7f3" stroke="#abc6bd" stroke-width="8"/>
+    <rect x="1750" y="130" width="100" height="12" rx="6" fill="#d5ddd7"/>
+    <g font-size="38" font-weight="600" fill="#1b211d">
+      <circle cx="1680" cy="212" r="13" fill="#3478b5"/><text x="1710" y="225">Sleeping</text>
+      <circle cx="1680" cy="290" r="13" fill="#e39a2d"/><text x="1710" y="303">Breakfast</text>
+      <circle cx="1680" cy="368" r="13" fill="#1f9d8a"/><text x="1710" y="381">Reading</text>
+    </g>
+    <path d="M1660 420H1940" stroke="#d5ddd7" stroke-width="4"/>
+    <rect x="1660" y="452" width="280" height="88" rx="44" fill="#1f9d8a"/>
+    <text x="1800" y="510" text-anchor="middle" font-size="38" font-weight="700" fill="#ffffff">All normal</text>
+  </svg>
+  <div class="legend">
+    <span><i style="background:#5fe0a5"></i>Motion sensor</span>
+    <span><i style="background:#6db8ff"></i>Door sensor</span>
+    <span><i style="background:#ffb454"></i>Temperature sensor</span>
+  </div>
+</header>
+
+<main>
+
+  <section class="objective">
+    <p class="display">Recognize an elder’s <span class="hl-teal">daily activities</span> from ambient sensors and <span class="hl-coral">alert caregivers</span> when routines change.</p>
+  </section>
+
+  <section>
+    <div class="label">Why ambient sensors</div>
+    <div class="options">
+      <div class="opt">
+        <svg class="ico" viewBox="0 0 24 24"><use href="#i-watch"/></svg>
+        <h3>Wearables</h3>
+        <div class="verdict"><svg viewBox="0 0 24 24"><use href="#i-cross"/></svg>Easy to forget</div>
+      </div>
+      <div class="opt">
+        <svg class="ico" viewBox="0 0 24 24"><use href="#i-camera"/></svg>
+        <h3>Cameras</h3>
+        <div class="verdict"><svg viewBox="0 0 24 24"><use href="#i-cross"/></svg>Invade privacy</div>
+      </div>
+      <div class="opt chosen">
+        <svg class="ico" viewBox="0 0 24 24"><use href="#i-sensor"/></svg>
+        <h3>Ambient sensors</h3>
+        <div class="verdict"><svg viewBox="0 0 24 24"><use href="#i-check"/></svg>Passive and private</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="label">System architecture</div>
+    <div class="flow">
+      <div class="node">
+        <div class="ring c-teal"><svg viewBox="0 0 24 24"><use href="#i-sensor"/></svg></div>
+        <h3>Ambient sensors</h3>
+        <p>Motion, door and temperature</p>
+      </div>
+      <div class="node">
+        <div class="ring c-blue"><svg viewBox="0 0 24 24"><use href="#i-filter"/></svg></div>
+        <h3>Data processing</h3>
+        <p>Cleaning and features</p>
+      </div>
+      <div class="node">
+        <div class="ring c-amber"><svg viewBox="0 0 24 24"><use href="#i-activity"/></svg></div>
+        <h3>Activity recognition</h3>
+        <p>ML and deep learning</p>
+      </div>
+      <div class="node">
+        <div class="ring c-coral"><svg viewBox="0 0 24 24"><use href="#i-alert"/></svg></div>
+        <h3>Anomaly detection</h3>
+        <p>Deviation from daily routine</p>
+      </div>
+      <div class="node end">
+        <div class="ring c-moss"><svg viewBox="0 0 24 24"><use href="#i-dash"/></svg></div>
+        <h3>Caregiver dashboard</h3>
+        <p>Monitoring, history and alerts</p>
+      </div>
+    </div>
+    <div class="shift">
+      <span class="from">“Which sensor fired?”</span>
+      <svg viewBox="0 0 24 24"><use href="#i-arrow"/></svg>
+      <span class="to">“What is happening, and does it need attention?”</span>
+    </div>
+  </section>
+
+  <section>
+    <div class="label">Project plan</div>
+    <div class="plan">
+      <div class="iter">
+        <div class="iter-top"><span class="iter-badge c-blue">1</span><span class="iter-num">Iteration 1</span></div>
+        <h3 class="display">Research and Planning</h3>
+        <div class="out-label t-blue">Deliverable</div>
+        <p>Dataset, approaches and system architecture finalized</p>
+      </div>
+      <div class="iter">
+        <div class="iter-top"><span class="iter-badge c-amber">2</span><span class="iter-num">Iteration 2</span></div>
+        <h3 class="display">Model Comparison</h3>
+        <div class="out-label t-amber">Deliverable</div>
+        <p>Models trained, compared and the best one selected</p>
+      </div>
+      <div class="iter">
+        <div class="iter-top"><span class="iter-badge c-teal">3</span><span class="iter-num">Iteration 3</span></div>
+        <h3 class="display">Prototype Integration</h3>
+        <div class="out-label t-teal">Deliverable</div>
+        <p>Working prototype, from sensors to caregiver alerts</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="label">Tools and technologies</div>
+    <div class="tools">
+      <div class="tool"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#3776AB" d="M14.25.18l.9.2.73.26.59.3.45.32.34.34.25.34.16.33.1.3.04.26.02.2-.01.13V8.5l-.05.63-.13.55-.21.46-.26.38-.3.31-.33.25-.35.19-.35.14-.33.1-.3.07-.26.04-.21.02H8.77l-.69.05-.59.14-.5.22-.41.27-.33.32-.27.35-.2.36-.15.37-.1.35-.07.32-.04.27-.02.21v3.06H3.17l-.21-.03-.28-.07-.32-.12-.35-.18-.36-.26-.36-.36-.35-.46-.32-.59-.28-.73-.21-.88-.14-1.05-.05-1.23.06-1.22.16-1.04.24-.87.32-.71.36-.57.4-.44.42-.33.42-.24.4-.16.36-.1.32-.05.24-.01h.16l.06.01h8.16v-.83H6.18l-.01-2.75-.02-.37.05-.34.11-.31.17-.28.25-.26.31-.23.38-.2.44-.18.51-.15.58-.12.64-.1.71-.06.77-.04.84-.02 1.27.05zm-6.3 1.98l-.23.33-.08.41.08.41.23.34.33.22.41.09.41-.09.33-.22.23-.34.08-.41-.08-.41-.23-.33-.33-.22-.41-.09-.41.09zm13.09 3.95l.28.06.32.12.35.18.36.27.36.35.35.47.32.59.28.73.21.88.14 1.04.05 1.23-.06 1.23-.16 1.04-.24.86-.32.71-.36.57-.4.45-.42.33-.42.24-.4.16-.36.09-.32.05-.24.02-.16-.01h-8.22v.82h5.84l.01 2.76.02.36-.05.34-.11.31-.17.29-.25.25-.31.24-.38.2-.44.17-.51.15-.58.13-.64.09-.71.07-.77.04-.84.01-1.27-.04-1.07-.14-.9-.2-.73-.25-.59-.3-.45-.33-.34-.34-.25-.34-.16-.33-.1-.3-.04-.25-.02-.2.01-.13v-5.34l.05-.64.13-.54.21-.46.26-.38.3-.32.33-.24.35-.2.35-.14.33-.1.3-.06.26-.04.21-.02.13-.01h5.84l.69-.05.59-.14.5-.21.41-.28.33-.32.27-.35.2-.36.15-.36.1-.35.07-.32.04-.28.02-.21V6.07h2.09l.14.01zm-6.47 14.25l-.23.33-.08.41.08.41.23.33.33.23.41.08.41-.08.33-.23.23-.33.08-.41-.08-.41-.23-.33-.33-.23-.41-.08-.41.08z"/></svg><span>Python</span></div>
+      <div class="tool"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#EE4C2C" d="M12.005 0L4.952 7.053a9.865 9.865 0 000 14.022 9.866 9.866 0 0014.022 0c3.984-3.9 3.986-10.205.085-14.023l-1.744 1.743c2.904 2.905 2.904 7.634 0 10.538s-7.634 2.904-10.538 0-2.904-7.634 0-10.538l4.647-4.646.582-.665zm3.568 3.899a1.327 1.327 0 00-1.327 1.327 1.327 1.327 0 001.327 1.328A1.327 1.327 0 0016.9 5.226 1.327 1.327 0 0015.573 3.9z"/></svg><span>PyTorch</span></div>
+      <div class="tool"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#F7931E" d="M15.601 5.53c-1.91.035-3.981.91-5.63 2.56-2.93 2.93-2.083 8.53-1.088 9.525.805.804 6.595 1.843 9.526-1.088a9.74 9.74 0 0 0 .584-.643c.043-.292.205-.66.489-1.106a1.848 1.848 0 0 1-.537.176c-.144.265-.37.55-.676.855-.354.335-.607.554-.76.656a.795.795 0 0 1-.437.152c-.35 0-.514-.308-.494-.924-.22.316-.425.549-.612.7a.914.914 0 0 1-.578.224c-.194 0-.36-.09-.496-.273a1.03 1.03 0 0 1-.193-.507 4.016 4.016 0 0 1-.726.583c-.224.132-.47.197-.74.197-.3 0-.543-.096-.727-.288a.978.978 0 0 1-.257-.524v.004c-.3.276-.564.48-.79.611a1.295 1.295 0 0 1-.649.197.693.693 0 0 1-.571-.275c-.145-.183-.218-.43-.218-.739 0-.464.101-1.02.302-1.67.201-.65.445-1.25.733-1.797l.842-.312a.21.21 0 0 1 .06-.013c.063 0 .116.047.157.14.04.095.061.221.061.38 0 .451-.104.888-.312 1.31-.207.422-.532.873-.974 1.352-.018.23-.027.388-.027.474 0 .193.036.345.106.458.071.113.165.169.282.169a.71.71 0 0 0 .382-.13c.132-.084.333-.26.602-.523.028-.418.187-.798.482-1.142.324-.38.685-.569 1.08-.569.206 0 .37.054.494.16a.524.524 0 0 1 .186.417c0 .458-.486.829-1.459 1.114.088.43.32.646.693.646a.807.807 0 0 0 .417-.117c.129-.076.321-.243.575-.497.032-.252.118-.495.259-.728.182-.3.416-.544.701-.73.285-.185.537-.278.756-.278.276 0 .47.127.58.381l.677-.374h.186l-.292.971c-.15.488-.226.823-.226 1.004 0 .19.067.285.202.285.086 0 .181-.045.285-.137.104-.092.25-.232.437-.42v.001c.143-.155.274-.32.392-.494-.19-.084-.285-.21-.285-.375 0-.17.058-.352.174-.545.116-.194.275-.29.479-.29.172 0 .258.088.258.265 0 .139-.05.338-.149.596.367-.04.687-.32.961-.842l.228-.01c1.059-2.438.828-5.075-.83-6.732-1.019-1.02-2.408-1.5-3.895-1.471zm4.725 8.203a8.938 8.938 0 0 1-1.333 2.151 1.09 1.09 0 0 0-.012.147c0 .168.047.309.14.423.092.113.206.17.34.17.296 0 .714-.264 1.254-.787-.001.04-.003.08-.003.121 0 .146.012.368.036.666l.733-.172c0-.2.003-.357.01-.474.01-.157.033-.33.066-.517.02-.11.07-.216.152-.315l.186-.216a5.276 5.276 0 0 1 .378-.397c.062-.055.116-.099.162-.13a.26.26 0 0 1 .123-.046c.055 0 .083.035.083.106 0 .07-.052.236-.156.497-.194.486-.292.848-.292 1.084 0 .175.046.314.136.418a.45.45 0 0 0 .358.155c.365 0 .803-.269 1.313-.808v-.381c-.361.426-.623.64-.784.64-.109 0-.163-.067-.163-.2 0-.1.065-.316.195-.65.19-.486.285-.836.285-1.048a.464.464 0 0 0-.112-.319.36.36 0 0 0-.282-.127c-.165 0-.354.077-.567.233-.213.156-.5.436-.863.84.053-.262.165-.622.335-1.08l-.809.156a6.54 6.54 0 0 0-.399 1.074c-.04.156-.07.316-.092.48a7.447 7.447 0 0 1-.49.45.38.38 0 0 1-.229.08.208.208 0 0 1-.174-.082.352.352 0 0 1-.064-.222c0-.1.019-.214.056-.343.038-.13.12-.373.249-.731l.308-.849zm-17.21-2.927c-.863-.016-1.67.263-2.261.854-1.352 1.352-1.07 3.827.631 5.527 1.7 1.701 4.95 1.21 5.527.632.467-.466 1.07-3.827-.631-5.527-.957-.957-2.158-1.465-3.267-1.486zm12.285.358h.166v.21H15.4zm.427 0h.166v.865l.46-.455h.195l-.364.362.428.684h-.198l-.357-.575-.164.166v.41h-.166zm1.016 0h.166v.21h-.166zm.481.122h.166v.288h.172v.135h-.172v.717c0 .037.006.062.02.075.012.013.037.02.074.02a.23.23 0 0 0 .078-.01v.141a.802.802 0 0 1-.136.014.23.23 0 0 1-.15-.043.15.15 0 0 1-.052-.123v-.79h-.141v-.136h.141zm-3.562.258c.081 0 .15.012.207.038.057.024.1.061.13.11s.045.106.045.173h-.176c-.006-.111-.075-.167-.208-.167a.285.285 0 0 0-.164.041.134.134 0 0 0-.06.117c0 .035.015.065.045.088.03.024.08.044.15.06l.16.039a.47.47 0 0 1 .224.105c.047.046.07.108.07.186a.3.3 0 0 1-.052.175.327.327 0 0 1-.152.116.585.585 0 0 1-.226.041c-.136 0-.24-.03-.309-.088-.069-.059-.105-.149-.109-.269h.176c.004.037.01.065.017.084a.166.166 0 0 0 .034.054c.044.043.112.065.204.065a.31.31 0 0 0 .177-.045.139.139 0 0 0 .067-.119.116.116 0 0 0-.038-.09.287.287 0 0 0-.124-.055l-.156-.038a1.248 1.248 0 0 1-.159-.05.359.359 0 0 1-.098-.061.22.22 0 0 1-.058-.083.32.32 0 0 1-.016-.108c0-.096.036-.174.109-.232a.45.45 0 0 1 .29-.087zm1.035 0a.46.46 0 0 1 .202.043.351.351 0 0 1 .187.212.577.577 0 0 1 .023.126h-.168a.256.256 0 0 0-.078-.168.242.242 0 0 0-.17-.06.248.248 0 0 0-.155.05.306.306 0 0 0-.1.144.662.662 0 0 0-.034.224.58.58 0 0 0 .035.214.299.299 0 0 0 .101.135.261.261 0 0 0 .157.048c.142 0 .227-.084.256-.252h.167a.519.519 0 0 1-.065.22.35.35 0 0 1-.146.138.464.464 0 0 1-.216.048.448.448 0 0 1-.246-.066.441.441 0 0 1-.161-.192.703.703 0 0 1-.057-.293c0-.085.01-.163.032-.233a.522.522 0 0 1 .095-.182.403.403 0 0 1 .15-.117.453.453 0 0 1 .191-.04zm.603.03h.166v1.046H15.4zm1.443 0h.166v1.046h-.166zm-5.05.618c-.08 0-.2.204-.356.611-.155.407-.308.977-.459 1.71.281-.312.509-.662.683-1.05.175-.387.262-.72.262-.999a.455.455 0 0 0-.036-.197c-.025-.05-.056-.075-.093-.075zm4.662 1.797c-.221 0-.431.188-.629.563-.197.376-.296.722-.296 1.038 0 .12.029.216.088.29a.273.273 0 0 0 .223.111c.221 0 .43-.188.625-.565.196-.377.294-.725.294-1.043a.457.457 0 0 0-.083-.29.269.269 0 0 0-.222-.104zm-2.848.007c-.146 0-.285.11-.417.333-.133.222-.2.51-.2.866.566-.159.849-.452.849-.881 0-.212-.077-.318-.232-.318Z"/></svg><span>scikit-learn</span></div>
+      <div class="tool"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#150458" d="M16.922 0h2.623v18.104h-2.623zm-4.126 12.94h2.623v2.57h-2.623zm0-7.037h2.623v5.446h-2.623zm0 11.197h2.623v5.446h-2.623zM4.456 5.896h2.622V24H4.455zm4.213 2.559h2.623v2.57H8.67zm0 4.151h2.623v5.447H8.67zm0-11.187h2.623v5.446H8.67Z"/></svg><span>pandas</span></div>
+      <div class="tool"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#000000" d="M18.665 21.978C16.758 23.255 14.465 24 12 24 5.377 24 0 18.623 0 12S5.377 0 12 0s12 5.377 12 12c0 3.583-1.574 6.801-4.067 9.001L9.219 7.2H7.2v9.596h1.615V9.251l9.85 12.727Zm-3.332-8.533 1.6 2.061V7.2h-1.6v6.245Z"/></svg><span>Next.js</span></div>
+      <div class="tool"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#149ECA" d="M14.23 12.004a2.236 2.236 0 0 1-2.235 2.236 2.236 2.236 0 0 1-2.236-2.236 2.236 2.236 0 0 1 2.235-2.236 2.236 2.236 0 0 1 2.236 2.236zm2.648-10.69c-1.346 0-3.107.96-4.888 2.622-1.78-1.653-3.542-2.602-4.887-2.602-.41 0-.783.093-1.106.278-1.375.793-1.683 3.264-.973 6.365C1.98 8.917 0 10.42 0 12.004c0 1.59 1.99 3.097 5.043 4.03-.704 3.113-.39 5.588.988 6.38.32.187.69.275 1.102.275 1.345 0 3.107-.96 4.888-2.624 1.78 1.654 3.542 2.603 4.887 2.603.41 0 .783-.09 1.106-.275 1.374-.792 1.683-3.263.973-6.365C22.02 15.096 24 13.59 24 12.004c0-1.59-1.99-3.097-5.043-4.032.704-3.11.39-5.587-.988-6.38-.318-.184-.688-.277-1.092-.278zm-.005 1.09v.006c.225 0 .406.044.558.127.666.382.955 1.835.73 3.704-.054.46-.142.945-.25 1.44-.96-.236-2.006-.417-3.107-.534-.66-.905-1.345-1.727-2.035-2.447 1.592-1.48 3.087-2.292 4.105-2.295zm-9.77.02c1.012 0 2.514.808 4.11 2.28-.686.72-1.37 1.537-2.02 2.442-1.107.117-2.154.298-3.113.538-.112-.49-.195-.964-.254-1.42-.23-1.868.054-3.32.714-3.707.19-.09.4-.127.563-.132zm4.882 3.05c.455.468.91.992 1.36 1.564-.44-.02-.89-.034-1.345-.034-.46 0-.915.01-1.36.034.44-.572.895-1.096 1.345-1.565zM12 8.1c.74 0 1.477.034 2.202.093.406.582.802 1.203 1.183 1.86.372.64.71 1.29 1.018 1.946-.308.655-.646 1.31-1.013 1.95-.38.66-.773 1.288-1.18 1.87-.728.063-1.466.098-2.21.098-.74 0-1.477-.035-2.202-.093-.406-.582-.802-1.204-1.183-1.86-.372-.64-.71-1.29-1.018-1.946.303-.657.646-1.313 1.013-1.954.38-.66.773-1.286 1.18-1.868.728-.064 1.466-.098 2.21-.098zm-3.635.254c-.24.377-.48.763-.704 1.16-.225.39-.435.782-.635 1.174-.265-.656-.49-1.31-.676-1.947.64-.15 1.315-.283 2.015-.386zm7.26 0c.695.103 1.365.23 2.006.387-.18.632-.405 1.282-.66 1.933-.2-.39-.41-.783-.64-1.174-.225-.392-.465-.774-.705-1.146zm3.063.675c.484.15.944.317 1.375.498 1.732.74 2.852 1.708 2.852 2.476-.005.768-1.125 1.74-2.857 2.475-.42.18-.88.342-1.355.493-.28-.958-.646-1.956-1.1-2.98.45-1.017.81-2.01 1.085-2.964zm-13.395.004c.278.96.645 1.957 1.1 2.98-.45 1.017-.812 2.01-1.086 2.964-.484-.15-.944-.318-1.37-.5-1.732-.737-2.852-1.706-2.852-2.474 0-.768 1.12-1.742 2.852-2.476.42-.18.88-.342 1.356-.494zm11.678 4.28c.265.657.49 1.312.676 1.948-.64.157-1.316.29-2.016.39.24-.375.48-.762.705-1.158.225-.39.435-.788.636-1.18zm-9.945.02c.2.392.41.783.64 1.175.23.39.465.772.705 1.143-.695-.102-1.365-.23-2.006-.386.18-.63.406-1.282.66-1.933zM17.92 16.32c.112.493.2.968.254 1.423.23 1.868-.054 3.32-.714 3.708-.147.09-.338.128-.563.128-1.012 0-2.514-.807-4.11-2.28.686-.72 1.37-1.536 2.02-2.44 1.107-.118 2.154-.3 3.113-.54zm-11.83.01c.96.234 2.006.415 3.107.532.66.905 1.345 1.727 2.035 2.446-1.595 1.483-3.092 2.295-4.11 2.295-.22-.005-.406-.05-.553-.132-.666-.38-.955-1.834-.73-3.703.054-.46.142-.944.25-1.438zm4.56.64c.44.02.89.034 1.345.034.46 0 .915-.01 1.36-.034-.44.572-.895 1.095-1.345 1.565-.455-.47-.91-.993-1.36-1.565z"/></svg><span>React</span></div>
+      <div class="tool"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#3178C6" d="M1.125 0C.502 0 0 .502 0 1.125v21.75C0 23.498.502 24 1.125 24h21.75c.623 0 1.125-.502 1.125-1.125V1.125C24 .502 23.498 0 22.875 0zm17.363 9.75c.612 0 1.154.037 1.627.111a6.38 6.38 0 0 1 1.306.34v2.458a3.95 3.95 0 0 0-.643-.361 5.093 5.093 0 0 0-.717-.26 5.453 5.453 0 0 0-1.426-.2c-.3 0-.573.028-.819.086a2.1 2.1 0 0 0-.623.242c-.17.104-.3.229-.393.374a.888.888 0 0 0-.14.49c0 .196.053.373.156.529.104.156.252.304.443.444s.423.276.696.41c.273.135.582.274.926.416.47.197.892.407 1.266.628.374.222.695.473.963.753.268.279.472.598.614.957.142.359.214.776.214 1.253 0 .657-.125 1.21-.373 1.656a3.033 3.033 0 0 1-1.012 1.085 4.38 4.38 0 0 1-1.487.596c-.566.12-1.163.18-1.79.18a9.916 9.916 0 0 1-1.84-.164 5.544 5.544 0 0 1-1.512-.493v-2.63a5.033 5.033 0 0 0 3.237 1.2c.333 0 .624-.03.872-.09.249-.06.456-.144.623-.25.166-.108.29-.234.373-.38a1.023 1.023 0 0 0-.074-1.089 2.12 2.12 0 0 0-.537-.5 5.597 5.597 0 0 0-.807-.444 27.72 27.72 0 0 0-1.007-.436c-.918-.383-1.602-.852-2.053-1.405-.45-.553-.676-1.222-.676-2.005 0-.614.123-1.141.369-1.582.246-.441.58-.804 1.004-1.089a4.494 4.494 0 0 1 1.47-.629 7.536 7.536 0 0 1 1.77-.201zm-15.113.188h9.563v2.166H9.506v9.646H6.789v-9.646H3.375z"/></svg><span>TypeScript</span></div>
+      <div class="tool"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#06B6D4" d="M12.001,4.8c-3.2,0-5.2,1.6-6,4.8c1.2-1.6,2.6-2.2,4.2-1.8c0.913,0.228,1.565,0.89,2.288,1.624 C13.666,10.618,15.027,12,18.001,12c3.2,0,5.2-1.6,6-4.8c-1.2,1.6-2.6,2.2-4.2,1.8c-0.913-0.228-1.565-0.89-2.288-1.624 C16.337,6.182,14.976,4.8,12.001,4.8z M6.001,12c-3.2,0-5.2,1.6-6,4.8c1.2-1.6,2.6-2.2,4.2-1.8c0.913,0.228,1.565,0.89,2.288,1.624 c1.177,1.194,2.538,2.576,5.512,2.576c3.2,0,5.2-1.6,6-4.8c-1.2,1.6-2.6,2.2-4.2,1.8c-0.913-0.228-1.565-0.89-2.288-1.624 C10.337,13.382,8.976,12,6.001,12z"/></svg><span>Tailwind CSS</span></div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="label l-team">Team members</div>
+  <div class="label l-sup">Supervisor</div>
+  <div><div class="who">Ibrahim Babar</div><div class="roll">23I-0040</div></div>
+  <div><div class="who">Hudiya e Zehra</div><div class="roll">23I-0761</div></div>
+  <div><div class="who">Aleeza Azhar</div><div class="roll">23I-0765</div></div>
+  <div class="sup"><div class="who">Dr. Labiba Fahad</div></div>
+</footer>
+<script>document.body.setAttribute('data-h', 'footer bottom '+Math.round(document.querySelector('footer').getBoundingClientRect().bottom)+' of 3312')</script>
+</body>
+</html>
