@@ -1,0 +1,102 @@
+{
+  "dataset": "milan",
+  "model": "transformer+te10+s3",
+  "split": "window100-last",
+  "n_segments": 10794,
+  "n_classes": 15,
+  "classes": [
+    "Bed_to_Toilet",
+    "Chores",
+    "Desk_Activity",
+    "Dining_Rm_Activity",
+    "Eve_Meds",
+    "Guest_Bathroom",
+    "Kitchen_Activity",
+    "Leave_Home",
+    "Master_Bathroom",
+    "Master_Bedroom_Activity",
+    "Meditate",
+    "Morning_Meds",
+    "Read",
+    "Sleep",
+    "Watch_TV"
+  ],
+  "per_fold": [
+    {
+      "accuracy": 0.5949601630535483,
+      "macro_f1": 0.4537706191023942,
+      "weighted_f1": 0.6057786099902883,
+      "macro_precision": 0.46223560541992764,
+      "macro_recall": 0.48752438992111546
+    }
+  ],
+  "summary": {
+    "accuracy": {
+      "mean": 0.5949601630535483,
+      "std": 0.0
+    },
+    "macro_f1": {
+      "mean": 0.4537706191023942,
+      "std": 0.0
+    },
+    "weighted_f1": {
+      "mean": 0.6057786099902883,
+      "std": 0.0
+    },
+    "macro_precision": {
+      "mean": 0.46223560541992764,
+      "std": 0.0
+    },
+    "macro_recall": {
+      "mean": 0.48752438992111546,
+      "std": 0.0
+    }
+  },
+  "pooled": {
+    "accuracy": 0.5949601630535483,
+    "macro_f1": 0.4537706191023942,
+    "weighted_f1": 0.6057786099902883,
+    "macro_precision": 0.46223560541992764,
+    "macro_recall": 0.48752438992111546
+  },
+  "macro_over": "activities present in the test fold",
+  "config": {
+    "size": 100,
+    "train_stride": 50,
+    "test_stride": 10,
+    "label": "last",
+    "train_frac": 0.6,
+    "test_frac": 0.2,
+    "context": false,
+    "balance": "sqrt",
+    "history": false,
+    "history_mode": "full",
+    "history_step": 10,
+    "min_run": 3,
+    "smooth": 1,
+    "seed": 42,
+    "seeds": [
+      1,
+      2,
+      3
+    ],
+    "epochs": 40,
+    "verbose": false,
+    "run_seed": 3,
+    "train_windows": 4591,
+    "test_windows": 10794,
+    "train_until": "2009-12-12",
+    "test_from": "2009-12-25"
+  },
+  "train_seconds": 581.3,
+  "confidence": {
+    "mean_when_correct": 0.5734793543815613,
+    "mean_when_wrong": 0.43899402022361755,
+    "below_0.6": 0.6552714471002409,
+    "accuracy_at_or_above_0.6": 0.791722655200215,
+    "wrong_caught_below_0.6": 0.8227355901189387,
+    "below_0.8": 0.934408004446915,
+    "accuracy_at_or_above_0.8": 0.8742937853107344,
+    "wrong_caught_below_0.8": 0.9796431838975297
+  }
+}

@@ -1,0 +1,102 @@
+{
+  "dataset": "milan",
+  "model": "transformer+te10+s2",
+  "split": "window100-last",
+  "n_segments": 10794,
+  "n_classes": 15,
+  "classes": [
+    "Bed_to_Toilet",
+    "Chores",
+    "Desk_Activity",
+    "Dining_Rm_Activity",
+    "Eve_Meds",
+    "Guest_Bathroom",
+    "Kitchen_Activity",
+    "Leave_Home",
+    "Master_Bathroom",
+    "Master_Bedroom_Activity",
+    "Meditate",
+    "Morning_Meds",
+    "Read",
+    "Sleep",
+    "Watch_TV"
+  ],
+  "per_fold": [
+    {
+      "accuracy": 0.58532518065592,
+      "macro_f1": 0.4429165362781614,
+      "weighted_f1": 0.5930823943234894,
+      "macro_precision": 0.47403203843739766,
+      "macro_recall": 0.4769270504964446
+    }
+  ],
+  "summary": {
+    "accuracy": {
+      "mean": 0.58532518065592,
+      "std": 0.0
+    },
+    "macro_f1": {
+      "mean": 0.4429165362781614,
+      "std": 0.0
+    },
+    "weighted_f1": {
+      "mean": 0.5930823943234894,
+      "std": 0.0
+    },
+    "macro_precision": {
+      "mean": 0.47403203843739766,
+      "std": 0.0
+    },
+    "macro_recall": {
+      "mean": 0.4769270504964446,
+      "std": 0.0
+    }
+  },
+  "pooled": {
+    "accuracy": 0.58532518065592,
+    "macro_f1": 0.4429165362781614,
+    "weighted_f1": 0.5930823943234894,
+    "macro_precision": 0.47403203843739766,
+    "macro_recall": 0.4769270504964446
+  },
+  "macro_over": "activities present in the test fold",
+  "config": {
+    "size": 100,
+    "train_stride": 50,
+    "test_stride": 10,
+    "label": "last",
+    "train_frac": 0.6,
+    "test_frac": 0.2,
+    "context": false,
+    "balance": "sqrt",
+    "history": false,
+    "history_mode": "full",
+    "history_step": 10,
+    "min_run": 3,
+    "smooth": 1,
+    "seed": 42,
+    "seeds": [
+      1,
+      2,
+      3
+    ],
+    "epochs": 40,
+    "verbose": false,
+    "run_seed": 2,
+    "train_windows": 4591,
+    "test_windows": 10794,
+    "train_until": "2009-12-12",
+    "test_from": "2009-12-25"
+  },
+  "train_seconds": 410.5,
+  "confidence": {
+    "mean_when_correct": 0.5408068299293518,
+    "mean_when_wrong": 0.386306494474411,
+    "below_0.6": 0.7414304243098018,
+    "accuracy_at_or_above_0.6": 0.8316015764958796,
+    "wrong_caught_below_0.6": 0.8949955317247542,
+    "below_0.8": 0.9439503427830276,
+    "accuracy_at_or_above_0.8": 0.9057851239669421,
+    "wrong_caught_below_0.8": 0.9872654155495979
+  }
+}

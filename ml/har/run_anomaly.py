@@ -46,6 +46,8 @@ from .data import DATASETS, load_home
 from .features import encode_sequences, handcrafted_features
 from .models import classical
 from .run import RESULTS_DIR
+from .saved_model import load as load_saved
+from .saved_model import model_path
 from .models import sequence
 from .train import Trained
 from .train import fit as fit_sequence
@@ -85,6 +87,47 @@ def points_to_episodes(times: np.ndarray, labels: list[str], day_end, min_run: i
     out = [(lab, t, merged[i + 1][1] if i + 1 < len(merged) else day_end)
            for i, (lab, t, _) in enumerate(merged)]
     return pd.DataFrame(out, columns=["activity", "start", "end"])
+
+
+def minutes_to_episodes(times: np.ndarray, labels: list[str], day_end, min_minutes: float):
+    """Per-point predictions -> episodes, absorbing runs shorter than ``min_minutes``
+    (by clock time, not by number of points) into the run before (past only).
+    Alternative to ``points_to_episodes`` for the ``--win-clean`` option (E20)."""
+    from .episode_eval import clean
+    if len(times) == 0:
+        return pd.DataFrame(columns=["activity", "start", "end"])
+    lab = clean(np.asarray(times), np.asarray(labels, dtype=object), min_minutes)
+    change = np.r_[True, lab[1:] != lab[:-1]]
+    first = np.where(change)[0]
+    starts = pd.to_datetime(np.asarray(times)[first])
+    ends = list(starts[1:]) + [pd.Timestamp(day_end)]
+    return pd.DataFrame({"activity": lab[first], "start": starts, "end": ends})
+
+
+CLEAN_GRID = [0.5, 1, 2, 3, 5, 10]
+
+
+def choose_clean(ref_points, gt_ref) -> tuple[float, dict]:
+    """Pick the cleanup length on the observation days only: the value whose episodes
+    best match the annotated observation-day episodes (mean per-activity F1 of
+    episode recall and precision, +-15 min). Monitoring days and injected
+    deviations are never looked at."""
+    from .episode_eval import score
+    true_eps = pd.concat([d.eps for d in gt_ref], ignore_index=True)
+    n = len(gt_ref)
+
+    def f1(pred):
+        df = score(true_eps, pred, n, 15.0)
+        r, p = df["found_%"] / 100, (df["precision_%"] / 100).fillna(0)
+        return float(np.mean(np.where(r + p > 0, 2 * r * p / (r + p).replace(0, 1), 0)))
+
+    table = {"points3": f1(pd.concat([points_to_episodes(t, list(l), d + pd.Timedelta(days=1))
+                                      for d, t, l in ref_points], ignore_index=True))}
+    for m in CLEAN_GRID:
+        table[m] = f1(pd.concat([minutes_to_episodes(t, list(l), d + pd.Timedelta(days=1), m)
+                                 for d, t, l in ref_points], ignore_index=True))
+    best = max(CLEAN_GRID, key=lambda m: table[m])
+    return best, table
 
 
 def build_streams(dataset: str, args, out_dir) -> dict:
@@ -166,6 +209,11 @@ def build_streams(dataset: str, args, out_dir) -> dict:
             net.load_state_dict(ck["state"])
             model = Trained(net, ck["ctx_mean"], ck["ctx_std"])
             print("  BiLSTM loaded from", saved)
+        elif model_path(dataset, "bilstm", args.win_seed).exists():
+            wm = load_saved(model_path(dataset, "bilstm", args.win_seed))
+            assert wm.vocab == Xtr.vocab, "saved model vocabulary must match"
+            model = wm.trained
+            print("  BiLSTM loaded from", model_path(dataset, "bilstm", args.win_seed))
         else:
             model = fit_sequence("bilstm", Xtr, y_tr, len(classes), seed=args.win_seed,
                                  max_epochs=args.epochs, verbose=args.verbose)
@@ -182,9 +230,10 @@ def build_streams(dataset: str, args, out_dir) -> dict:
 
         ends_obs, lab_obs = predict(home, np.arange(train_end + 1, test_start + 1, args.stride))
         pt = home.times[ends_obs - 1]
-        ref = []
+        ref, pts_ref, pts_test = [], [], {}
         for i, day in enumerate(obs_days):
             m = (pt >= np.datetime64(day)) & (pt < np.datetime64(day + pd.Timedelta(days=1)))
+            pts_ref.append((pd.Timestamp(day), pt[m], lab_obs[m]))
             ref.append(DayData(-1 - i, pd.Timestamp(day), obs_times(day),
                                points_to_episodes(pt[m], list(lab_obs[m]),
                                                   pd.Timestamp(day) + pd.Timedelta(days=1))))
@@ -197,6 +246,7 @@ def build_streams(dataset: str, args, out_dir) -> dict:
             for v in vs:
                 m = (e_hi > v.lo) & (e_hi <= v.hi)
                 times = comb.times[e_hi[m] - 1] - v.offset.to_timedelta64()
+                pts_test[v.vid] = (v.day, times, lab[m])
                 test[v.vid] = DayData(v.vid, v.day, v.times,
                                       points_to_episodes(times, list(lab[m]),
                                                          v.day + pd.Timedelta(days=1)))
@@ -209,6 +259,7 @@ def build_streams(dataset: str, args, out_dir) -> dict:
             print(f"    predicted {min(c0 + chunk, len(variants))}/{len(variants)} day copies "
                   f"({time.time() - t0:.0f}s)")
         out["streams"]["win"] = (ref, test)
+        out["win_points"] = (pts_ref, pts_test)
         out["har"]["win"] = _har_scores(np.array(all_true), np.array(all_pred))
         print(f"  win stream ready ({time.time() - t0:.0f}s), clean-day macro-F1 "
               f"{out['har']['win']['macro_f1']:.3f}")
@@ -220,6 +271,32 @@ def _har_scores(y, p) -> dict:
     return {"accuracy": float(np.mean(y == p)),
             "macro_f1": float(f1_score(y, p, labels=labels, average="macro", zero_division=0)),
             "n": int(len(y))}
+
+
+def add_clean_stream(S: dict, how: str = "auto", verbose: bool = True) -> None:
+    """Add the ``winc`` stream to ``S`` (E20): live episodes rebuilt from the raw
+    points with runs shorter than N minutes absorbed; ``how="auto"`` picks N on the
+    observation days only (``choose_clean``), otherwise N = float(how)."""
+    if "win_points" not in S:
+        raise SystemExit("the cleaned stream needs the raw live points; rebuild without --reuse")
+    pts_ref, pts_test = S["win_points"]
+    if how == "auto":
+        m, table = choose_clean(pts_ref, S["streams"]["gt"][0])
+        if verbose:
+            print(f"  cleanup chosen on observation days: {m} min  (episode F1: "
+                  + ", ".join(f"{k}: {v:.3f}" for k, v in table.items()) + ")")
+    else:
+        m, table = float(how), {}
+    ref = [DayData(d.key, d.day, d.times, minutes_to_episodes(t, list(l),
+                                                              day + pd.Timedelta(days=1), m))
+           for d, (day, t, l) in zip(S["streams"]["win"][0], pts_ref)]
+    test = {vid: DayData(d.key, d.day, d.times,
+                         minutes_to_episodes(pts_test[vid][1], list(pts_test[vid][2]),
+                                             pts_test[vid][0] + pd.Timedelta(days=1), m))
+            for vid, d in S["streams"]["win"][1].items()}
+    S["streams"]["winc"] = (ref, test)
+    S["win_clean"] = {"minutes": m, "observation_episode_f1": {str(k): v
+                                                                for k, v in table.items()}}
 
 
 # --------------------------------------------------------------------------- detection
@@ -328,7 +405,7 @@ def summarise(rows: pd.DataFrame) -> dict:
 
 
 def run(dataset: str, args):
-    out_dir = RESULTS_DIR / dataset / "anomaly"
+    out_dir = RESULTS_DIR / dataset / ("anomaly" + (f"-{args.tag}" if args.tag else ""))
     out_dir.mkdir(parents=True, exist_ok=True)
     cache = out_dir / "streams.pkl"
     if args.reuse and cache.exists():
@@ -340,17 +417,21 @@ def run(dataset: str, args):
         with open(cache, "wb") as f:
             pickle.dump(S, f)
     variants = S["variants"]
+    if args.win_clean:
+        add_clean_stream(S, args.win_clean)
     pd.DataFrame([{"vid": v.vid, "day": v.day.date(), "kind": v.kind, "target": v.target,
                    "start": v.a_start, "end": v.a_end, "seq": v.seq, "pos": v.pos,
                    "note": v.note} for v in variants]
                  ).to_csv(out_dir / "injections.csv", index=False)
 
     summary = {"dataset": dataset, "operating_budget": OPERATING, "har": S["har"],
-               "n_observation_days": None, "n_monitoring_days":
+               "win_clean": S.get("win_clean"), "n_observation_days": None, "n_monitoring_days":
                    sum(v.kind == "clean" for v in variants), "results": {}}
     sweep = []
     kinds = {v.vid: v.kind for v in variants}
     for stream, (ref, test) in S["streams"].items():
+        if args.only and stream not in args.only:
+            continue
         summary["n_observation_days"] = len(ref)
         for method in args.methods:
             t0 = time.time()
@@ -400,6 +481,12 @@ def main(argv=None):
     p.add_argument("--win-seed", type=int, default=1, help="BiLSTM seed")
     p.add_argument("--epochs", type=int, default=40)
     p.add_argument("--reuse", action="store_true", help="reuse cached streams.pkl")
+    p.add_argument("--win-clean", default=None,
+                   help="add a 'winc' stream: live episodes with runs shorter than N minutes "
+                        "absorbed; 'auto' picks N on the observation days (E20)")
+    p.add_argument("--only", nargs="+", default=None,
+                   help="evaluate only these streams (e.g. win winc)")
+    p.add_argument("--tag", default="", help="write to results/<home>/anomaly-<tag>/")
     p.add_argument("--verbose", action="store_true")
     args = p.parse_args(argv)
     for ds in (list(DATASETS) if args.dataset == "all" else [args.dataset]):

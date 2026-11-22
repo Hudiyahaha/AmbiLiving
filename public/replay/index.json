@@ -64,17 +64,17 @@
     ]
   },
   "aruba": {
-    "recogniser": "BiLSTM, last 100 events, every 10th event",
+    "recogniser": "BiLSTM, last 100 events, every 10th event; runs shorter than 3 min absorbed",
     "recogniserMacroF1": 0.429,
     "routineLearnedFrom": "44 observation days",
-    "falseAlertsPerDay": 1.3,
-    "detectionRate": 0.157,
-    "urgentNotified": 0.06666666666666667,
+    "falseAlertsPerDay": 1.34,
+    "detectionRate": 0.45,
+    "urgentNotified": 0.3416666666666667,
     "scenarios": [
       {
         "id": "normal",
         "title": "A real day, nothing injected",
-        "day": "Tue 10 May 2011",
+        "day": "Thu 05 May 2011",
         "kind": "clean",
         "file": "aruba-normal.json",
         "reproduced": true,
@@ -83,7 +83,7 @@
       {
         "id": "inactivity",
         "title": "Long silence at home",
-        "day": "Thu 26 May 2011",
+        "day": "Sat 07 May 2011",
         "kind": "inactivity",
         "file": "aruba-inactivity.json",
         "reproduced": true,
@@ -92,7 +92,7 @@
       {
         "id": "bathroom",
         "title": "Very long bathroom visit",
-        "day": "Sun 08 May 2011",
+        "day": "Wed 08 Jun 2011",
         "kind": "prolonged",
         "file": "aruba-bathroom.json",
         "reproduced": true,
@@ -101,7 +101,7 @@
       {
         "id": "night",
         "title": "Out of bed and active at night",
-        "day": "Mon 02 May 2011",
+        "day": "Thu 05 May 2011",
         "kind": "unusual_time",
         "file": "aruba-night.json",
         "reproduced": true,
@@ -110,7 +110,7 @@
       {
         "id": "missed-meal",
         "title": "Meal not prepared",
-        "day": "Thu 09 Jun 2011",
+        "day": "Wed 11 May 2011",
         "kind": "missed",
         "file": "aruba-missed-meal.json",
         "reproduced": true,
@@ -119,7 +119,7 @@
       {
         "id": "toilet-trips",
         "title": "Extra night-time toilet trips",
-        "day": "Sun 01 May 2011",
+        "day": "Fri 29 Apr 2011",
         "kind": "night_frequency",
         "file": "aruba-toilet-trips.json",
         "reproduced": true,

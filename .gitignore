@@ -49,4 +49,5 @@ __pycache__/
 # ML caches
 ml/data/cache/
 ml/results/*/anomaly/streams.pkl
+ml/results/*/anomaly-*/streams.pkl
 ml/results/*/anomaly/bilstm.pt

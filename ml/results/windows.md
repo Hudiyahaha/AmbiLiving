@@ -21,6 +21,8 @@ segment results get the begin and end of each activity for free.
 | **BiLSTM** (final model) | 41.9 ± 1.5 | 63.8 | **45.6 ± 0.6** | 58.8 |
 | Gradient Boosting + routine history (`hgb+histpast+bal+tr10`) | **43.8 ± 0.4** | 69.8 | 37.9* | 54.9* |
 | Gradient Boosting (`hgb+tr10`) | 39.1 ± 0.2 | 67.1 | 38.1 ± 1.0 | 54.4 |
+| CNN (`cnn+te10`, test every 10th event) | 42.2 ± 0.9 | 66.6 | 43.7 ± 0.6 | 57.6 |
+| Transformer (`transformer+te10`, test every 10th event) | 37.1 ± 2.4 | 62.9 | 45.1 ± 0.7 | 58.1 |
 | LastAct (reported) | 44.6 ± 1.9 | | 40.1 ± 0.5 | |
 | DeepCASAS (reported by LastAct) | 38.6 | | 36.7 | |
 
