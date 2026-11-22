@@ -25,6 +25,7 @@ def _sse(text: str) -> list[tuple[str, dict]]:
 
 def test_health_and_homes():
     assert client.get("/health").json()["status"] == "ok"
+    assert client.get("/", follow_redirects=False).headers["location"] == "/docs"
     homes = {h["id"]: h for h in client.get("/homes").json()}
     assert set(homes) == {"aruba", "milan"}
     assert all(h["model"]["available"] for h in homes.values())

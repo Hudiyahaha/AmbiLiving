@@ -33,8 +33,8 @@ Ambient sensors → HAR model → recognised activity → routine deviation → 
 |---|---|---|
 | **Research / ML** — activity recognition | [ml/](ml/) | **Done for both settings.** All five models run on both homes under both protocols, with 3-seed repeats. Known-boundary (segment) results are ~92–95 macro-F1; the live sliding-window setting is finished and a final model chosen (BiLSTM). |
 | **Research / ML** — routine deviation + alerts | [ml/har/anomaly.py](ml/har/anomaly.py), [alerts.py](ml/har/alerts.py) | **Done and evaluated.** Per-resident routine model (8 aspects incl. weekly drift) vs a generic anomaly-detection baseline, on three activity streams; alert routing (notify / evening summary / dashboard). Results: [anomaly.md](ml/results/anomaly.md), [alerts.md](ml/results/alerts.md). |
-| **Product / PoC** — caregiver dashboard | [src/](src/) | All six screens built. Monitoring and activity history now play back **one real CASAS day per home** with model predictions. Anomalies are still sample data. Typecheck clean. |
-| **Backend** | [ml/api/](ml/api/) | **Started (22 Nov, D16).** FastAPI service: homes, exported day and anomalies, replay scenarios streamed live (server-sent events), live recognition with the saved BiLSTM. Tests in `ml/tests/`. The dashboard does not call it yet (ROADMAP 4.4). |
+| **Product / PoC** — caregiver dashboard | [src/](src/) | All six screens built. Monitoring and activity history play back **one real CASAS day per home** with model predictions; anomalies are the routine model's alerts on real days. Data comes from the backend API, with the bundled files as fallback. Typecheck clean. |
+| **Backend** | [ml/api/](ml/api/) | **Started (22 Nov, D16).** FastAPI service: homes, exported day and anomalies, replay scenarios streamed live (server-sent events), live recognition with the saved BiLSTM. Tests in `ml/tests/`. The dashboard uses it (ROADMAP 4.4): every page loads from the API, and Monitoring shows the live BiLSTM's answer for the last 100 events at the playback position. |
 | **Poster** | `poster/` | Draft rendered to `AmbiLiving-Poster.pdf`. **Not yet committed.** Concept/architecture only, no results. |
 
 **Git state.** All ML and app work is on `main` (PR #1 `babar`, 18 Oct; PRs #2 and #3 `aleeza`,
@@ -164,7 +164,7 @@ do not duplicate it here). In short:
 | **Rare / overlapping classes** | Solved with known boundaries (history), not in the window setting. Respirate has 6 instances in total — say so rather than hiding it in a macro average. |
 | **Label drift** | Aruba stops annotating Wash_Dishes from Mar 2011; Milan's test days are a holiday period (validation ~46 vs test ~38 for GB). Temporal per-class scores are noisy. |
 | **History feedback loop** | History features use the model's own earlier predictions; one wrong recognition can affect the next in a live system. |
-| **Research → product gap** | Narrower: the dashboard shows a real day and routine deviations found on real days, with how each was delivered. A live demo (`/live`) now replays days through the live BiLSTM and routine model, minute by minute (D17). A FastAPI backend now streams those replays and recognises activities from posted events (D16), but the dashboard still reads bundled JSON (ROADMAP 4.4) and the routine model does not yet run online. |
+| **Research → product gap** | Narrower: the dashboard shows a real day and routine deviations found on real days, with how each was delivered. A live demo (`/live`) now replays days through the live BiLSTM and routine model, minute by minute (D17). A FastAPI backend now streams those replays and recognises activities from posted events (D16), and the dashboard reads from it (bundled files only as fallback), but the routine model does not yet run online. |
 | **Uncommitted work** | `poster/` is not on `main`. |
 
 ---
@@ -174,7 +174,7 @@ do not duplicate it here). In short:
 **Frontend** (from the repo root)
 
 ```bash
-npm run dev          # dev server on :3000
+npm run dev          # dev server on :3000 (reads the API at NEXT_PUBLIC_AMBILIVING_API, default http://127.0.0.1:8000)
 npm run build
 npm run lint
 npx tsc --noEmit     # typecheck (currently clean)

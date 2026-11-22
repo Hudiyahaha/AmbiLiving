@@ -16,6 +16,7 @@ import {
 import { InteractiveFloorPlan } from "@/components/floorplan/InteractiveFloorPlan";
 import { useEnvironment } from "@/context/EnvironmentContext";
 import { DAY_SECONDS, useReplayClock } from "@/hooks/useReplayClock";
+import { api } from "@/lib/api";
 import { secondsToTime } from "@/lib/sensorState";
 import type { SensorEvent, SensorStateValue } from "@/types/home";
 import type {
@@ -72,27 +73,40 @@ export default function LiveDemoPage() {
   const home: ReplayHome | undefined = index?.[currentHome.id];
   const ref = home?.scenarios.find((s) => s.id === scenarioId) ?? home?.scenarios[0];
 
+  // From the backend API when it runs, else the files bundled in public/replay/.
   useEffect(() => {
-    fetch("/replay/index.json")
-      .then((r) => (r.ok ? r.json() : Promise.reject(new Error(r.statusText))))
+    api
+      .replayIndex()
+      .catch(() =>
+        fetch("/replay/index.json").then((r) =>
+          r.ok ? r.json() : Promise.reject(new Error(r.statusText)),
+        ),
+      )
       .then(setIndex)
       .catch(() => setError("Replay data not found. Run `python -m har.replay` in ml/."));
   }, []);
 
   const file = ref?.file;
+  const refId = ref?.id;
+  const homeId = currentHome.id;
   const scenario = loaded && loaded.file === file ? loaded.data : null;
 
   useEffect(() => {
-    if (!file) return;
+    if (!file || !refId) return;
     let live = true;
-    fetch(`/replay/${file}`)
-      .then((r) => r.json())
+    api
+      .scenario(homeId, refId)
+      .catch(() =>
+        fetch(`/replay/${file}`).then((r) =>
+          r.ok ? r.json() : Promise.reject(new Error(r.statusText)),
+        ),
+      )
       .then((data: ReplayScenario) => live && setLoaded({ file, data }))
       .catch(() => live && setError(`Could not load ${file}.`));
     return () => {
       live = false;
     };
-  }, [file]);
+  }, [file, homeId, refId]);
 
   const { seconds: t, playing, seek, togglePlay } = useReplayClock(
     speed,

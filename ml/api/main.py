@@ -11,7 +11,7 @@ from typing import Literal
 
 from fastapi import FastAPI, HTTPException, Query, Request
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse, StreamingResponse
+from fastapi.responses import JSONResponse, RedirectResponse, StreamingResponse
 from pydantic import BaseModel, Field
 
 from har.data import DATASETS
@@ -37,6 +37,11 @@ async def _not_found(_: Request, exc: store.NotFound):
 
 
 # --------------------------------------------------------------------------- homes
+
+@app.get("/", include_in_schema=False)
+def root():
+    return RedirectResponse("/docs")
+
 
 @app.get("/health", tags=["service"])
 def health():

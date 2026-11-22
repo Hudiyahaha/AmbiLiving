@@ -1,5 +1,6 @@
 "use client";
 
+import { DataOriginBadge } from "@/components/layout/DataOriginBadge";
 import { EnvironmentSelector } from "@/components/layout/EnvironmentSelector";
 import { useEnvironment } from "@/context/EnvironmentContext";
 
@@ -18,7 +19,10 @@ export function AppHeader({ title }: AppHeaderProps) {
         </h1>
         <p className="text-xs text-muted">{currentHome.name}</p>
       </div>
-      <EnvironmentSelector />
+      <div className="flex items-center gap-3">
+        <DataOriginBadge />
+        <EnvironmentSelector />
+      </div>
     </header>
   );
 }
