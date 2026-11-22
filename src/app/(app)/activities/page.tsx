@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import { X } from "lucide-react";
 import { useEnvironment } from "@/context/EnvironmentContext";
-import { formatClock, timeToSeconds } from "@/lib/sensorState";
+import { formatClock, secondsToTime, timeToSeconds } from "@/lib/sensorState";
 import type { RecognizedActivity } from "@/types/home";
 
 function formatDuration(rawMinutes: number): string {
@@ -185,6 +185,19 @@ export default function ActivitiesPage() {
             {source.model}, trained on {source.trainedOn}. This day was not
             used for training. Activity start and end times come from the
             dataset annotations; the model decides which activity it is.
+          </p>
+        </div>
+      ) : null}
+      {currentHome.live ? (
+        <div className="rounded-2xl border border-border bg-surface p-4 text-sm shadow-sm">
+          <p className="font-medium text-foreground">
+            Live: {currentHome.live.title}, {currentHome.live.dayLabel} · up to{" "}
+            {secondsToTime(currentHome.live.clock).slice(0, 5)}
+          </p>
+          <p className="mt-1 text-muted">
+            Activities as the live system sees them: {currentHome.live.recogniser},{" "}
+            {currentHome.live.episodeRule}. No annotations are used, so start and end
+            times are the model&apos;s own; the newest activity is still going on.
           </p>
         </div>
       ) : null}

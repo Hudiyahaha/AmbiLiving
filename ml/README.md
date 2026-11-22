@@ -210,6 +210,26 @@ A FastAPI service over the files and models above. CORS allows the Next.js dev s
 | `POST /homes/{home}/sessions` | Start live monitoring (`monitorFrom`: first day to monitor) |
 | `POST /sessions/{id}/events` | Push sensor events in time order (and optionally `now`): runs the BiLSTM every 10th event, the routine model every 2 min of the clock and D15 routing; returns new predictions, new alert IDs, the day's routed alerts and any days that ended |
 | `GET /sessions/{id}`, `DELETE` | Current activity, today's episodes and alerts, recently ended days |
+| `GET /homes/{home}/feeds` | Recorded days that can be played as a live sensor feed |
+| `POST /homes/{home}/simulations` | Play a recorded day into a live session at `speed`× from `startAt` (D19) |
+| `GET /simulations/{id}/stream` | Server-sent events: `snapshot` (the day so far), then a `tick` about every 0.5 s with new events/predictions, episodes, routed alerts and new alert IDs |
+| `POST /simulations/{id}/control`, `GET`, `DELETE` | Pause / resume / change speed; status (`?full=true`: the day so far); stop |
+
+### Live feeds (`har.feeds`, decision D19)
+
+    python -m har.feeds                         # -> feeds/<home>-<scenario>.json, then check them
+
+One file per live-demo scenario (real day + 5 injected types per home), rebuilt from the raw
+data with the evaluation's injection settings and full timestamps, plus 150 events from the
+evening before. The check plays each feed through `LiveMonitor` and requires the scenario's
+predictions and alerts (E23). The dashboard plays them through `/homes/{home}/simulations`.
+
+### Live window model report (`har.window_report`)
+
+    python -m har.window_report                 # -> results/windows_detail.md
+
+Per-class F1 over 3 seeds and a confidence analysis (cutoff sweep, reliability) for the final
+BiLSTM, from the stored test predictions (E22).
 
 ### Live routine model (`har.routine_live`, decision D18)
 

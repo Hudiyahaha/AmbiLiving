@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { InteractiveFloorPlan } from "@/components/floorplan/InteractiveFloorPlan";
 import { EventTimeline } from "@/components/monitoring/EventTimeline";
+import { LiveMonitoring } from "@/components/monitoring/LiveMonitoring";
 import { useEnvironment } from "@/context/EnvironmentContext";
 import { useSettings } from "@/context/SettingsContext";
 import { useEventPlayback } from "@/hooks/useEventPlayback";
@@ -18,7 +19,7 @@ import { getActivityAtTime } from "@/lib/timeline";
 type PlanSource = "reference" | "svg";
 
 export default function MonitoringPage() {
-  const { currentHome, dataOrigin } = useEnvironment();
+  const { currentHome, dataOrigin, live: liveFeed } = useEnvironment();
   const { settings } = useSettings();
   const [showIds, setShowIds] = useState(settings.showSensorIdsByDefault);
   const [planSource, setPlanSource] = useState<PlanSource>("reference");
@@ -73,12 +74,14 @@ export default function MonitoringPage() {
   const live = useLiveRecognition(
     currentHome,
     playback.eventIndex,
-    dataOrigin === "api" && currentHome.status === "active",
+    dataOrigin === "api" && currentHome.status === "active" && !currentHome.live,
   );
 
   const labelOf = (raw: string) =>
     currentHome.activityClasses.find((c) => c.id === raw.toLowerCase())?.label ??
     raw.replace(/_/g, " ");
+
+  if (currentHome.live) return <LiveMonitoring showIds={showIds} />;
 
   return (
     <div className="mx-auto max-w-6xl space-y-4">
@@ -88,9 +91,28 @@ export default function MonitoringPage() {
             {formatClock(playback.timestamp)}
           </p>
           <p className="mt-1 text-sm text-muted">
-            Time-controlled floor plan — play through the sensor stream for the
-            selected home.
+            Time-controlled floor plan — play through the exported sensor day for
+            the selected home.
           </p>
+          {dataOrigin === "api" && currentHome.status === "active" && (
+            <p className="mt-1 text-sm text-muted">
+              {liveFeed.enabled ? (
+                liveFeed.feed.error ? (
+                  <span className="text-danger">Live feed: {liveFeed.feed.error}</span>
+                ) : (
+                  "Connecting to the live feed…"
+                )
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => liveFeed.setEnabled(true)}
+                  className="font-medium text-accent underline-offset-2 hover:underline"
+                >
+                  Go live: play a recorded day through the live pipeline
+                </button>
+              )}
+            </p>
+          )}
         </div>
         <div className="flex flex-wrap gap-2">
           <label className="flex cursor-pointer items-center gap-2 rounded-lg border border-border bg-surface px-3 py-2 text-sm">

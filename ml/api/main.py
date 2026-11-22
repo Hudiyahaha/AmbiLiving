@@ -17,7 +17,7 @@ from pydantic import BaseModel, Field
 from har.data import DATASETS
 from har.routine_live import routine_path
 
-from . import live, sessions, store, stream
+from . import live, sessions, simulate, store, stream
 
 app = FastAPI(
     title="AmbiLiving API",
@@ -168,6 +168,76 @@ def session_state(session_id: str):
 @app.delete("/sessions/{session_id}", tags=["live"], status_code=204)
 def delete_session(session_id: str):
     sessions.delete(session_id)
+
+
+# --------------------------------------------------------------------------- simulated live homes
+
+@app.get("/homes/{home}/feeds", tags=["simulation"])
+def feeds(home: str):
+    """Recorded days that can be played as a live sensor feed (``har.feeds``)."""
+    return simulate.scenarios(home)
+
+
+class SimulationRequest(BaseModel):
+    scenario: str = Field("normal", description="Recorded day to play (see /homes/{home}/feeds)")
+    speed: float = Field(60, gt=0, le=3600, description="Simulated seconds per real second")
+    startAt: int = Field(6 * 3600, ge=0, lt=86_400,
+                         description="Second of the day to start at; the day before it is "
+                                     "processed at once")
+
+
+@app.post("/homes/{home}/simulations", tags=["simulation"], status_code=201)
+async def create_simulation(home: str, body: SimulationRequest | None = None):
+    """Play a recorded day into a live session, as if its sensors were sending events now.
+
+    Recognition, the routine model and alert routing run live on the feed. Follow it
+    with ``GET /simulations/{id}/stream``.
+    """
+    body = body or SimulationRequest()
+    sim = await simulate.create(home, body.scenario, body.speed, body.startAt)
+    return sim.meta()
+
+
+@app.get("/simulations/{sim_id}", tags=["simulation"])
+def simulation(sim_id: str, full: bool = Query(False, description="Include the day so far")):
+    """The simulation's status; with ``full=true`` also everything so far (as the stream's
+    first message)."""
+    sim = simulate.get(sim_id)
+    return sim.snapshot() if full and sim.status != "starting" else sim.meta()
+
+
+@app.get("/simulations/{sim_id}/stream", tags=["simulation"])
+def simulation_stream(sim_id: str):
+    """Server-sent events: ``snapshot`` (the day so far), then a ``tick`` about every half
+    second with new events and predictions (spliced in at ``eventsFrom`` /
+    ``predictionsFrom``), the current episodes, routed alerts and newly raised alert IDs."""
+    sim = simulate.get(sim_id)
+    return StreamingResponse(simulate.events(sim), media_type="text/event-stream",
+                             headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"})
+
+
+class ControlRequest(BaseModel):
+    action: Literal["pause", "resume", "speed"]
+    speed: float | None = Field(None, gt=0, le=3600)
+
+
+@app.post("/simulations/{sim_id}/control", tags=["simulation"])
+def control_simulation(sim_id: str, body: ControlRequest):
+    sim = simulate.get(sim_id)
+    if body.action == "pause":
+        sim.pause()
+    elif body.action == "resume":
+        sim.resume()
+    else:
+        if body.speed is None:
+            raise HTTPException(status_code=422, detail="speed is required")
+        sim.set_speed(body.speed)
+    return sim.meta()
+
+
+@app.delete("/simulations/{sim_id}", tags=["simulation"], status_code=204)
+def delete_simulation(sim_id: str):
+    simulate.stop(sim_id)
 
 
 # --------------------------------------------------------------------------- replay

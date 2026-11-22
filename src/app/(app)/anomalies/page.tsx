@@ -2,6 +2,7 @@
 
 import { AlertTriangle } from "lucide-react";
 import { useEnvironment } from "@/context/EnvironmentContext";
+import { secondsToTime } from "@/lib/sensorState";
 
 const severityStyles = {
   high: "bg-danger-soft text-danger",
@@ -41,9 +42,22 @@ export default function AnomaliesPage() {
         </p>
       )}
 
+      {currentHome.live && (
+        <p className="rounded-xl border border-border bg-surface-muted/50 px-4 py-3 text-xs text-muted">
+          Live: {currentHome.live.title}, {currentHome.live.dayLabel}, up to{" "}
+          {secondsToTime(currentHome.live.clock).slice(0, 5)}. Deviations appear the moment
+          the routine model (learned from {currentHome.live.routineLearnedFrom}) raises them,
+          checking every 2 minutes on the live activities. Possible emergencies are sent as
+          notifications; others wait for the 21:00 evening summary (at most 3) or stay on
+          this page.
+        </p>
+      )}
+
       {sorted.length === 0 ? (
         <p className="rounded-2xl border border-dashed border-border p-8 text-center text-sm text-muted">
-          No routine deviations recorded for this environment.
+          {currentHome.live
+            ? "No routine deviations so far today."
+            : "No routine deviations recorded for this environment."}
         </p>
       ) : (
         <ul className="space-y-4">

@@ -48,8 +48,12 @@ npm run dev                    # http://localhost:3000
 ```
 
 The dashboard reads the backend at `http://127.0.0.1:8000` (set
-`NEXT_PUBLIC_AMBILIVING_API` to change it). If the backend is not running it
-falls back to the data bundled with the app; the header badge says which.
+`NEXT_PUBLIC_AMBILIVING_API` to change it). With the backend running, the pages
+follow a **live feed**: a recorded CASAS day is sent to the backend event by event,
+as a sensor hub would, and the live pipeline (activity recognition, routine model,
+alert routing) runs on it as it arrives. Monitoring has the controls (which day,
+speed, start time, pause). If the backend is not running the app falls back to the
+data bundled with it; the header badge says which.
 
 ## Reproduce an experiment
 

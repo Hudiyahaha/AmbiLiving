@@ -221,3 +221,27 @@ Reproduction check: `gt` and `win` reproduce E14 exactly (Aruba 92 % / 16 %, Mil
 Latency: fitting 41 s (Aruba) / 8 s (Milan); re-running a whole day every 2 min 15.5 s / 23.2 s. Live session over HTTP: catch-up push of 3,998 events 4.2 s; single-event pushes median 10 ms, p95 32 ms (max 1.0 s when one push crossed a long silence); a clock-only push over 2 h (63 routine steps) 0.97 s.
 **Takeaway**: The live backend reproduces the evaluated live pipeline exactly, event by event, and keeps up with a real home by a wide margin (Aruba produces an event every ~15 s on average).
 **Status**: PASS. Feeds ROADMAP 5.2 (latency) and 5.1 (end-to-end test).
+
+## E22 — Per-class results and confidence of the final live window model  (22 Nov 2026, Hudiya)
+**Question**: Which activities does the final live BiLSTM recognise, and can its confidence tell right from wrong answers (ROADMAP 1.2, 1.3)?
+**Setup**: No retraining. Stored test predictions of `window100-last/experiments/bilstm+s{1,2,3}` (the runs behind C5: last 100 events, test window at every event), both homes. Per-class precision / recall / F1 averaged over seeds; a confidence cutoff sweep (predictions below it treated as unknown) and a reliability table.
+**Command**: `py -m har.window_report` → `ml/results/windows_detail.md`
+**Result**: Per-class F1 (3-seed mean): Aruba Relax 0.75, Meal_Preparation 0.68, Bed_to_Toilet 0.53, Sleeping 0.45, Enter_Home 0.45, Work 0.41, Eating 0.30, Respirate 0.30, Leave_Home 0.27, Wash_Dishes 0.06. Milan Read 0.77, Sleep 0.76, Desk_Activity 0.70, Kitchen_Activity 0.69, Watch_TV 0.61, Dining 0.53, Master_Bedroom 0.52, the bathrooms 0.46, Leave_Home 0.29, Bed_to_Toilet 0.28, Meditate 0.25, Morning_Meds 0.04, Eve_Meds 0.02. Confidence: accuracy rises steadily with confidence but stays above it (0.4–0.5 → 66–68 % right; 0.5–0.6 → 73–84 %); only 14–15 % of predictions reach 0.6.
+
+| Cutoff | Aruba kept / accuracy on kept / macro-F1 on kept | Milan kept / accuracy / macro-F1 |
+|---|---|---|
+| none | 100 / 63.8 / 41.9 | 100 / 58.8 / 45.6 |
+| 0.4 | 59 / 77.5 / 55.2 | 52 / 73.9 / 56.3 |
+| 0.5 | 39 / 82.9 / 61.9 | 30 / 79.2 / 60.2 |
+| 0.6 | 14 / 80.0 / 66.6 | 15 / 85.6 / 58.9 |
+
+**Takeaway**: Errors concentrate on the rare activities and on those that share sensors with frequent ones (Leave_Home vs Enter_Home, medicine vs kitchen). The model is under-confident, so the 0.6 cutoff in `metrics.json` is too strict; around 0.4 is the useful floor for "unknown" if one is added to alert routing.
+**Status**: PASS (analysis). Not yet applied to routing.
+
+## E23 — Recorded days as live sensor feeds  (22 Nov 2026, Hudiya)
+**Question**: Can the dashboard be driven live by recorded days without changing what the pipeline computes (D19)?
+**Setup**: `py -m har.feeds` rebuilds the 12 live-demo scenario days (per home: the real monitoring day + 5 injected types; injected days with the E14/E20 injection settings, 3 copies per type and day, seed 0, matched to the scenario by day, type, target, start and note) with full timestamps and 150 events from the evening before. Each feed is pushed through `LiveMonitor` with the saved models; one feed is also played over HTTP as a simulation at 3600× (`tests/test_api.py`), and the Aruba "long silence" day was watched in the browser at 60×→900×.
+**Command**: `py -m har.feeds`; `py -m pytest tests -q` (from `ml/`)
+**Result**: 12 / 12 feeds give exactly the scenario's predictions (Aruba 525–766 per day, Milan 386–1,159) and alerts (0–4 per day, same time raised, type, activity, tier, delivered). Feeds total 1.4 MB. In the browser the inactivity alert appeared live at 11:32 as a notification, as in the replay.
+**Takeaway**: The dashboard now shows the live pipeline itself, not a precomputed result, and on these days it is the evaluated pipeline.
+**Status**: PASS.

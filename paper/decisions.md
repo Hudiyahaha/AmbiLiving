@@ -172,6 +172,15 @@ Template:
 **Not covered**: sessions are in memory (lost on restart, at most 32, dropped after 1 h idle); no authentication; one resident per home.
 **Implemented in**: `ml/har/routine_live.py`, `ml/api/sessions.py`.
 
+## D19 — The live dashboard is driven by recorded days played as live sensor feeds  (22 Nov 2026)
+
+**Decision**: With no real sensors, "live" means: a recorded day's raw sensor events are sent to a live monitoring session (D18) at the pace they happened, sped up by a chosen factor, as a sensor hub would send them. `py -m har.feeds` writes one feed per live-demo scenario (`ml/feeds/<home>-<scenario>.json`): the real monitoring day and one day per injected deviation type, rebuilt with the evaluation's injection code, seed and settings, at full timestamp precision, plus 150 events from the evening before so the first recognition windows are full. The backend (`ml/api/simulate.py`) plays a feed into a session: every 0.5 s of real time it pushes the events whose time has come together with the simulated clock, and streams the result to the dashboard over server-sent events (a snapshot, then deltas). Speed, pause and resume change only the clock; the pipeline is not told it is a replay, nor where a deviation was injected.
+**Dashboard**: when the API is up, every caregiver page follows the current home's feed (one per home, kept across page changes and reloads): Monitoring shows the floor plan, current activity episode, latest deviation and controls; Activity History shows the live episodes (no annotated boundaries); Routine deviations shows alerts as they are raised, with their routing. "Show the exported day" switches back to the precomputed export; without the API the bundled files are shown.
+**Checks**: every feed played in one push gives exactly the scenario's predictions and alerts (12 / 12, E23), and a simulation at 3600× over HTTP does too (`tests/test_api.py`).
+**Why**: The only way to show the system working over time without hardware, while exercising the same code path a real sensor hub would (push events → session). The earlier precomputed replay (D17, now "Scenario replay") stays for scrubbing through a day.
+**Not covered**: one recorded day per feed (the simulation ends at midnight); simulations live in server memory (at most 8, dropped after 30 idle minutes).
+**Implemented in**: `ml/har/feeds.py`, `ml/api/simulate.py`, `src/hooks/useLiveFeed.ts`, `src/lib/liveHome.ts`, `src/components/monitoring/LiveMonitoring.tsx`.
+
 ## Open decisions (make these before the matching ROADMAP step)
 
 - None open.

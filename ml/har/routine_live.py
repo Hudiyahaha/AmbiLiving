@@ -156,6 +156,13 @@ def events_home(name: str, times: np.ndarray, sensors: np.ndarray, states: np.nd
 class DayResult:
     day: pd.Timestamp
     alerts: list[dict]  # routed
+    pred_times: np.ndarray = field(default_factory=lambda: np.array([], "datetime64[ns]"))
+    pred_labels: np.ndarray = field(default_factory=lambda: np.array([], object))
+    pred_conf: np.ndarray = field(default_factory=lambda: np.array([], float))
+    episodes: pd.DataFrame | None = None
+    times: np.ndarray = field(default_factory=lambda: np.array([], "datetime64[ns]"))
+    sensors: np.ndarray = field(default_factory=lambda: np.array([], object))
+    states: np.ndarray = field(default_factory=lambda: np.array([], object))
 
 
 class LiveMonitor:
@@ -241,7 +248,9 @@ class LiveMonitor:
             if self.clock < end:
                 break
             # The day is over: close it and start the next one.
-            closed.append(DayResult(day, route(self.first)))
+            closed.append(DayResult(day, route(self.first), pt, pl, np.asarray(self.pc, float),
+                                    self.routine.episodes(pt, pl, end), self.t[lo:hi].copy(),
+                                    self.s[lo:hi].copy(), self.v[lo:hi].copy()))
             self.closed = (self.closed + closed[-1:])[-self.keep_days:]
             keep = max(0, hi - self.wm.size)  # enough history for the next day's windows
             self.t, self.s, self.v = self.t[keep:], self.s[keep:], self.v[keep:]
@@ -249,6 +258,14 @@ class LiveMonitor:
         return {"predictions": new_preds, "alerts": new_alerts, "closed": closed}
 
     # ---- current state
+    def today(self) -> DayResult:
+        """The current day so far, in the same shape as a closed day."""
+        lo, hi = np.searchsorted(self.t, [self.day.to_datetime64(),
+                                          (self.day + pd.Timedelta(days=1)).to_datetime64()])
+        return DayResult(self.day, route(self.first), np.asarray(self.pt, "datetime64[ns]"),
+                         np.asarray(self.pl, dtype=object), np.asarray(self.pc, float),
+                         self.episodes(), self.t[lo:hi], self.s[lo:hi], self.v[lo:hi])
+
     def alerts(self) -> list[dict]:
         return route(self.first)
 

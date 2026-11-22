@@ -50,4 +50,15 @@ history helped on both homes, otherwise plain BiLSTM.
 - Milan's test days (25 Dec – 6 Jan) are a holiday period: validation macro-F1 was about
   46 and test about 38 for the same Gradient Boosting model.
 
+## Per-class results and confidence (final BiLSTM)
+
+Full tables: [`windows_detail.md`](windows_detail.md) (`python -m har.window_report`).
+
+- The frequent activities are recognised far better than the rare ones: Aruba Relax 0.75 and
+  Meal_Preparation 0.68 F1 vs Wash_Dishes 0.06, Leave_Home 0.27, Respirate 0.30; Milan Read
+  0.77 and Sleep 0.76 vs Eve_Meds 0.02, Morning_Meds 0.04, Meditate 0.25.
+- The model is under-confident: answers given at 40–50 % confidence are right 66–68 % of the
+  time. A 0.4 "unknown" cutoff keeps 52–59 % of predictions at 74–78 % accuracy; the 0.6
+  cutoff stored in `metrics.json` keeps only about 15 %.
+
 Per-seed outputs are in `<home>/window100-last/experiments/<model>+s<seed>/`.

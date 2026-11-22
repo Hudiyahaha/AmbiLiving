@@ -105,6 +105,24 @@ export interface AnomalySource {
   detectionRate: number;
 }
 
+/** Set when the home's data comes from a live feed (a simulated home, decision D19) */
+export interface LiveInfo {
+  status: "starting" | "running" | "paused" | "finished" | "error";
+  scenario: string;
+  title: string;
+  /** e.g. "Thu 05 May 2011" */
+  dayLabel: string;
+  speed: number;
+  /** Simulated second of the day */
+  clock: number;
+  recogniser: string;
+  episodeRule: string;
+  routineLearnedFrom: string;
+  injected: { target: string; start: number; end: number; note: string } | null;
+  /** Latest recogniser output (it runs every 10th sensor event) */
+  latest: { activityId: string; label: string; confidence: number; at: number } | null;
+}
+
 export interface DatasetStats {
   activityInstances: number;
   activityClasses: number;
@@ -133,4 +151,6 @@ export interface HomeEnvironment {
   dataSource?: DataSource;
   /** Set when anomalies are real detector output rather than sample data */
   anomalySource?: AnomalySource;
+  /** Set when events, activities and deviations come from a live feed */
+  live?: LiveInfo;
 }

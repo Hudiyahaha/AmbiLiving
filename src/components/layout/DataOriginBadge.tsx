@@ -1,17 +1,43 @@
 "use client";
 
+import Link from "next/link";
 import { RefreshCw } from "lucide-react";
 import { useEnvironment } from "@/context/EnvironmentContext";
+import { secondsToTime } from "@/lib/sensorState";
 
-/** Shows whether the pages show data from the backend API or the bundled files. */
+/**
+ * Where the pages' data comes from: a live feed, the backend API (exported day),
+ * or the files bundled with the app when the API is offline.
+ */
 export function DataOriginBadge() {
-  const { dataOrigin, apiError, apiBase, reload } = useEnvironment();
+  const { dataOrigin, apiError, apiBase, reload, currentHome, live } = useEnvironment();
 
-  if (dataOrigin === "loading") {
+  const waitingForLive =
+    dataOrigin === "api" && live.enabled && !currentHome.live && currentHome.status === "active";
+  if (dataOrigin === "loading" || (waitingForLive && !live.feed.error)) {
     return (
       <span className="whitespace-nowrap rounded-full border border-border px-2.5 py-1 text-xs text-muted">
-        Connecting to API…
+        {dataOrigin === "loading" ? "Connecting to API…" : "Connecting to live feed…"}
       </span>
+    );
+  }
+
+  if (dataOrigin === "api" && currentHome.live) {
+    const l = currentHome.live;
+    const running = l.status === "running";
+    return (
+      <Link
+        href="/monitoring"
+        className="flex items-center gap-1.5 whitespace-nowrap rounded-full bg-accent-soft px-2.5 py-1 text-xs font-medium tabular-nums text-accent transition hover:opacity-80"
+        title={`Live feed: ${l.title}, ${l.dayLabel} (${l.status})`}
+      >
+        <span
+          className={`h-1.5 w-1.5 rounded-full bg-accent ${running ? "animate-pulse" : "opacity-50"}`}
+          aria-hidden
+        />
+        Live {secondsToTime(l.clock).slice(0, 5)}
+        {l.status === "paused" ? " · paused" : l.status === "finished" ? " · day over" : ""}
+      </Link>
     );
   }
 
@@ -22,7 +48,7 @@ export function DataOriginBadge() {
         title={`Data from ${apiBase}`}
       >
         <span className="h-1.5 w-1.5 rounded-full bg-accent" aria-hidden />
-        Live API
+        API · exported day
       </span>
     );
   }

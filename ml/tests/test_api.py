@@ -158,6 +158,62 @@ def test_live_session_reproduces_replay_day():
     client.delete(f"/sessions/{sid}")
 
 
+def test_simulation_plays_a_feed_live():
+    """A recorded day played at 3600x through a simulation gives the replay's result,
+    and the stream delivers a snapshot followed by ticks with spliceable deltas."""
+    import time
+
+    sc = client.get("/replay/milan/toilet-trips").json()
+    feeds = {f["id"] for f in client.get("/homes/milan/feeds").json()}
+    assert {"normal", "toilet-trips"} <= feeds
+    with TestClient(app) as c:  # keeps the event loop alive for the background task
+        r = c.post("/homes/milan/simulations",
+                   json={"scenario": "toilet-trips", "speed": 3600, "startAt": 0})
+        assert r.status_code == 201, r.text
+        sim = r.json()["simulation"]
+
+        # Follow the stream for a few messages.
+        with c.stream("GET", f"/simulations/{sim}/stream") as s:
+            msgs, buf = [], ""
+            for chunk in s.iter_text():
+                buf += chunk
+                while "\n\n" in buf:
+                    block, buf = buf.split("\n\n", 1)
+                    if block.startswith(":"):
+                        continue
+                    lines = dict(line.split(": ", 1) for line in block.splitlines())
+                    msgs.append((lines["event"], json.loads(lines["data"])))
+                if sum(k == "tick" for k, _ in msgs) >= 3:
+                    break
+        kinds = [k for k, _ in msgs]
+        assert "snapshot" in kinds and kinds.index("snapshot") < kinds.index("tick")
+        snap = next(m for k, m in msgs if k == "snapshot")
+        events = list(snap["events"])
+        for k, m in msgs[kinds.index("snapshot") + 1:]:
+            if k == "tick" and "events" in m:
+                assert m["eventsFrom"] <= len(events)
+                events = events[:m["eventsFrom"]] + m["events"]
+        assert [e[0] for e in events] == sorted(e[0] for e in events)
+
+        deadline = time.time() + 240
+        while c.get(f"/simulations/{sim}").json()["status"] != "finished":
+            assert time.time() < deadline, "simulation did not finish"
+            time.sleep(1)
+        full = c.get(f"/simulations/{sim}", params={"full": True}).json()
+        c.delete(f"/simulations/{sim}")
+
+    assert len(full["predictions"]) == len(sc["predictions"])
+    labels = sc["labels"]
+    assert [(int(t), a) for t, a, _ in full["predictions"]] == \
+        [(t, labels[a]) for t, a, _ in sc["predictions"]]
+
+    def key(a):
+        return (a["raisedAt"], a["kind"], a["activity"], a["tier"], a["delivered"])
+
+    assert sorted(key(a) for a in full["alerts"]) == sorted(key(a) for a in sc["alerts"])
+    assert full["episodes"] and full["current"] is not None
+
+
 @pytest.mark.skipif(not (RAW_DIR / "aruba.txt").exists(), reason="raw CASAS data not present")
 def test_recognise_matches_saved_model():
     """The endpoint gives the same answer as the saved model on real Aruba events."""

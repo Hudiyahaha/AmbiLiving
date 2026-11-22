@@ -15,8 +15,30 @@ import {
   homes as bundledHomes,
   withApiData,
 } from "@/data/homes";
+import { useLiveFeed, type LiveFeed, type LiveFeedControls } from "@/hooks/useLiveFeed";
 import { api, API_BASE } from "@/lib/api";
+import { liveEvents, toLiveHome } from "@/lib/liveHome";
 import type { HomeEnvironment } from "@/types/home";
+
+const LIVE_PREF = "ambiliving.live";
+
+function readLivePref(): boolean {
+  if (typeof window === "undefined") return true;
+  try {
+    return window.localStorage.getItem(LIVE_PREF) !== "off";
+  } catch {
+    return true;
+  }
+}
+
+export interface LiveContext {
+  /** Whether pages follow a live feed (when the API is up) or show the exported day */
+  enabled: boolean;
+  setEnabled: (on: boolean) => void;
+  /** The current home's live feed */
+  feed: LiveFeed;
+  controls: LiveFeedControls;
+}
 
 /**
  * Where the current data comes from: the backend API, or the files bundled
@@ -34,6 +56,7 @@ interface EnvironmentContextValue {
   apiBase: string;
   /** Try the API again */
   reload: () => void;
+  live: LiveContext;
 }
 
 const EnvironmentContext = createContext<EnvironmentContextValue | null>(null);
@@ -85,12 +108,39 @@ export function EnvironmentProvider({ children }: { children: ReactNode }) {
     setAttempt((n) => n + 1);
   }, []);
 
-  const currentHome = useMemo(() => {
+  const baseHome = useMemo(() => {
     return (
       homes.find((h) => h.id === homeId) ??
       homes.find((h) => h.id === DEFAULT_HOME_ID)!
     );
   }, [homes, homeId]);
+
+  // Live feed (decision D19): a simulated home streamed from the backend.
+  const [liveEnabled, setLiveEnabledState] = useState(readLivePref);
+  const setLiveEnabled = useCallback((on: boolean) => {
+    setLiveEnabledState(on);
+    try {
+      window.localStorage.setItem(LIVE_PREF, on ? "on" : "off");
+    } catch {
+      // preference only lasts for this page then
+    }
+  }, []);
+  const [feed, controls] = useLiveFeed(
+    baseHome.id,
+    liveEnabled && dataOrigin === "api" && baseHome.status === "active",
+  );
+  const liveSensorEvents = useMemo(() => liveEvents(feed.events), [feed.events]);
+  const showLive = liveEnabled && dataOrigin === "api" && feed.ready && feed.meta !== null;
+
+  const currentHome = useMemo(
+    () => (showLive ? toLiveHome(baseHome, feed, liveSensorEvents) : baseHome),
+    [showLive, baseHome, feed, liveSensorEvents],
+  );
+
+  const live = useMemo<LiveContext>(
+    () => ({ enabled: liveEnabled, setEnabled: setLiveEnabled, feed, controls }),
+    [liveEnabled, setLiveEnabled, feed, controls],
+  );
 
   const value = useMemo(
     () => ({
@@ -101,8 +151,9 @@ export function EnvironmentProvider({ children }: { children: ReactNode }) {
       apiError,
       apiBase: API_BASE,
       reload,
+      live,
     }),
-    [homes, currentHome, setHomeId, dataOrigin, apiError, reload],
+    [homes, currentHome, setHomeId, dataOrigin, apiError, reload, live],
   );
 
   return (
