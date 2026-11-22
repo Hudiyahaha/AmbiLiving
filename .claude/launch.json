@@ -6,6 +6,12 @@
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "dev"],
       "port": 3000
+    },
+    {
+      "name": "api",
+      "runtimeExecutable": "py",
+      "runtimeArgs": ["-m", "uvicorn", "api.main:app", "--app-dir", "ml", "--port", "8000"],
+      "port": 8000
     }
   ]
 }

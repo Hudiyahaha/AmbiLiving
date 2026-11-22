@@ -154,6 +154,14 @@ Template:
 **Why**: It shows the system working over time, including absence and silence, which only become deviations as time passes. It needs no server, and its causality is checked rather than assumed. A real streaming backend (D16) is still needed for deployment, but adds nothing to the evidence.
 **Implemented in**: `ml/har/replay.py` → `public/replay/`; `src/app/(app)/live/page.tsx`.
 
+## D16 — Backend: a FastAPI service in `ml/api/`  (22 Nov 2026)
+
+**Decision**: The backend is a FastAPI (Python) service that lives next to the models in `ml/api/` and imports `har` directly. The Next.js app stays a pure frontend and calls it over HTTP; Next.js route handlers that start a Python process were considered and rejected.
+**First endpoints**: homes and their saved models; the exported dashboard day and real-day anomalies; the D17 replay scenarios, both whole and as a server-sent event stream in timestamp order at an adjustable speed (ROADMAP 4.2); and live recognition, where the saved window BiLSTM (`har.saved_model`) classifies the last 100 posted sensor events (ROADMAP 4.3).
+**Why**: Every model, the routine detector and the alert routing are Python, and `har.saved_model` already loads the BiLSTM in a fresh process. A Python service runs that code unchanged, keeps one model in memory instead of loading it for each request, and supports streaming. Calling Python from Next.js route handlers would mean a process start (and a torch import) on every request, or a second server anyway. Keeping the API separate also lets the frontend be deployed on its own (ROADMAP 5.4).
+**Not yet**: the routine model does not run online on posted events; the streamed alerts are the ones D17 precomputed causally. Running it per request needs the fitted routine model saved to disk, like the BiLSTM.
+**Implemented in**: `ml/api/` (run with `py -m api` from `ml/`).
+
 ## Open decisions (make these before the matching ROADMAP step)
 
-- **D16 — Backend technology** (ROADMAP 4.1)
+- None open.

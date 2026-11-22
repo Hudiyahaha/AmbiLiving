@@ -191,6 +191,25 @@ on only what has happened so far, so alerts appear when a live system would rais
 exporter checks that the replay reproduces the evaluated live stream and raises every batch
 alert (decision D17). The dashboard plays the files on the **Live demo** page (`/live`).
 
+## Backend API (`api/`, decision D16)
+
+    py -m api                                   # http://127.0.0.1:8000, docs at /docs
+    py -m pytest tests -q
+
+A FastAPI service over the files and models above. CORS allows the Next.js dev server
+(`AMBILIVING_CORS` overrides it).
+
+| Route | What it returns |
+|---|---|
+| `GET /homes` | Each home and whether its saved window model is available / loaded |
+| `GET /homes/{home}/day`, `/anomalies` | The exported dashboard day and real-day routine deviations |
+| `POST /homes/{home}/recognise` | Activity + confidence for the last 100 posted sensor events (saved BiLSTM, ~20 ms after the first call); `every=N` also returns a history |
+| `GET /replay`, `/replay/{home}/{scenario}` | The D17 replay index and one whole scenario |
+| `GET /replay/{home}/{scenario}/stream` | The scenario as server-sent events in timestamp order: `clock`, `event`, `prediction`, `alert` (at the second it was raised); `speed`, `start`, `end`, `only`, `tick` |
+
+Not yet: the routine model and alert routing do not run on posted events; alerts reach the
+API only through the precomputed replay.
+
 ## Results (5-fold CV, macro-F1 %)
 
 Full table with accuracy / weighted-F1 / P / R / timing: [`results/summary.md`](results/summary.md).
