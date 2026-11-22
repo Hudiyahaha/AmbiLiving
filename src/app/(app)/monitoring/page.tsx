@@ -7,7 +7,6 @@ import { LiveMonitoring } from "@/components/monitoring/LiveMonitoring";
 import { useEnvironment } from "@/context/EnvironmentContext";
 import { useSettings } from "@/context/SettingsContext";
 import { useEventPlayback } from "@/hooks/useEventPlayback";
-import { useLiveRecognition, WINDOW_EVENTS } from "@/hooks/useLiveRecognition";
 import { SENSOR_COLORS } from "@/lib/sensorColors";
 import {
   formatClock,
@@ -19,7 +18,7 @@ import { getActivityAtTime } from "@/lib/timeline";
 type PlanSource = "reference" | "svg";
 
 export default function MonitoringPage() {
-  const { currentHome, dataOrigin, live: liveFeed } = useEnvironment();
+  const { currentHome } = useEnvironment();
   const { settings } = useSettings();
   const [showIds, setShowIds] = useState(settings.showSensorIdsByDefault);
   const [planSource, setPlanSource] = useState<PlanSource>("reference");
@@ -71,17 +70,7 @@ export default function MonitoringPage() {
     [currentHome.activityHistory, playback.timestamp],
   );
 
-  const live = useLiveRecognition(
-    currentHome,
-    playback.eventIndex,
-    dataOrigin === "api" && currentHome.status === "active" && !currentHome.live,
-  );
-
-  const labelOf = (raw: string) =>
-    currentHome.activityClasses.find((c) => c.id === raw.toLowerCase())?.label ??
-    raw.replace(/_/g, " ");
-
-  if (currentHome.live) return <LiveMonitoring showIds={showIds} />;
+  if (currentHome.live) return <LiveMonitoring showIds={showIds} onShowIds={setShowIds} />;
 
   return (
     <div className="mx-auto max-w-6xl space-y-4">
@@ -90,28 +79,8 @@ export default function MonitoringPage() {
           <p className="font-display text-3xl font-semibold tabular-nums tracking-tight text-foreground">
             {formatClock(playback.timestamp)}
           </p>
-          <p className="mt-1 text-sm text-muted">
-            Time-controlled floor plan — play through the exported sensor day for
-            the selected home.
-          </p>
-          {dataOrigin === "api" && currentHome.status === "active" && (
-            <p className="mt-1 text-sm text-muted">
-              {liveFeed.enabled ? (
-                liveFeed.feed.error ? (
-                  <span className="text-danger">Live feed: {liveFeed.feed.error}</span>
-                ) : (
-                  "Connecting to the live feed…"
-                )
-              ) : (
-                <button
-                  type="button"
-                  onClick={() => liveFeed.setEnabled(true)}
-                  className="font-medium text-accent underline-offset-2 hover:underline"
-                >
-                  Go live: play a recorded day through the live pipeline
-                </button>
-              )}
-            </p>
+          {currentHome.dataSource && (
+            <p className="mt-1 text-sm text-muted">Recorded day · {currentHome.dataSource.date}</p>
           )}
         </div>
         <div className="flex flex-wrap gap-2">
@@ -153,7 +122,7 @@ export default function MonitoringPage() {
             showSensorIds={showIds}
           />
 
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-4 sm:grid-cols-2">
             <section className="rounded-2xl border border-border bg-surface p-4 shadow-sm">
               <h2 className="text-xs font-medium uppercase tracking-wide text-muted">
                 Current activity
@@ -163,17 +132,11 @@ export default function MonitoringPage() {
                   <p className="mt-1 font-display text-xl font-semibold text-foreground">
                     {currentActivity.label}
                   </p>
-                  <p className="mt-1 text-sm text-muted">
-                    Confidence: {Math.round(currentActivity.confidence * 100)}%
-                  </p>
                 </>
               ) : (
-                <p className="mt-1 text-sm text-muted">
-                  No recognized activity at this time.
-                </p>
+                <p className="mt-1 text-sm text-muted">Not known.</p>
               )}
             </section>
-            <LiveModelPanel state={live} labelOf={labelOf} />
             <section className="rounded-2xl border border-border bg-surface p-4 shadow-sm">
               <h2 className="text-xs font-medium uppercase tracking-wide text-muted">
                 Active sensors
@@ -212,60 +175,5 @@ export default function MonitoringPage() {
         </>
       )}
     </div>
-  );
-}
-
-function LiveModelPanel({
-  state,
-  labelOf,
-}: {
-  state: ReturnType<typeof useLiveRecognition>;
-  labelOf: (raw: string) => string;
-}) {
-  const shown =
-    state.status === "ok" ? state.result : state.status === "loading" ? state.last : undefined;
-
-  return (
-    <section className="rounded-2xl border border-border bg-surface p-4 shadow-sm">
-      <h2 className="text-xs font-medium uppercase tracking-wide text-muted">
-        Live model · last {WINDOW_EVENTS} events
-      </h2>
-      {state.status === "off" && (
-        <p className="mt-1 text-sm text-muted">
-          Needs the backend API (start it from ml/ with <code>py -m api</code>).
-        </p>
-      )}
-      {state.status === "warming-up" && (
-        <p className="mt-1 text-sm text-muted">
-          Waiting for {WINDOW_EVENTS} sensor events ({state.have} so far).
-        </p>
-      )}
-      {state.status === "error" && (
-        <p className="mt-1 text-sm text-danger">{state.message}</p>
-      )}
-      {shown && (
-        <div className={state.status === "loading" ? "opacity-60 transition" : "transition"}>
-          <p className="mt-1 font-display text-xl font-semibold text-foreground">
-            {labelOf(shown.activity)}
-          </p>
-          <p className="mt-1 text-sm text-muted">
-            Confidence: {Math.round(shown.confidence * 100)}%
-            {shown.top.length > 1 && (
-              <>
-                {" "}
-                · then{" "}
-                {shown.top
-                  .slice(1)
-                  .map((t) => `${labelOf(t.activity)} ${Math.round(t.confidence * 100)}%`)
-                  .join(", ")}
-              </>
-            )}
-          </p>
-        </div>
-      )}
-      {state.status === "loading" && !shown && (
-        <p className="mt-1 text-sm text-muted">Recognising…</p>
-      )}
-    </section>
   );
 }

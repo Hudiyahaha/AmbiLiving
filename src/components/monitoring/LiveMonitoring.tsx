@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { Bell, Pause, Play, Radio, RotateCcw } from "lucide-react";
+import { Bell, Pause, Play, RotateCcw } from "lucide-react";
 import { InteractiveFloorPlan } from "@/components/floorplan/InteractiveFloorPlan";
 import { useEnvironment } from "@/context/EnvironmentContext";
 import { DEFAULT_SPEED, DEFAULT_START } from "@/hooks/useLiveFeed";
@@ -13,45 +13,45 @@ import {
   isSensorVisuallyActive,
   secondsToTime,
 } from "@/lib/sensorState";
+import type { HomeEnvironment } from "@/types/home";
 
 const BTN =
-  "flex items-center gap-1.5 rounded-lg border border-border bg-surface px-3 py-2 text-sm font-medium text-foreground shadow-sm transition hover:bg-surface-muted";
+  "flex items-center gap-1.5 rounded-lg border border-border bg-surface px-3 py-2 text-sm font-medium text-foreground shadow-sm transition hover:bg-surface-muted disabled:opacity-50";
 const LABEL = "flex items-center gap-2 rounded-lg border border-border bg-surface px-3 py-2 text-sm";
 const SELECT = "rounded border border-border bg-surface px-2 py-1 text-sm outline-none";
 
-const SPEEDS = [
-  { value: 1, label: "Real time" },
-  { value: 10, label: "10×" },
-  { value: 60, label: "60× (1 min / s)" },
-  { value: 300, label: "300× (5 min / s)" },
-  { value: 900, label: "900× (15 min / s)" },
-];
-
-const STARTS = [0, 6, 12, 18].map((h) => ({ value: h * 3600, label: `${String(h).padStart(2, "0")}:00` }));
+const SPEEDS = [1, 10, 60, 300, 900];
+const STARTS = [0, 6, 12, 18];
 
 const STATUS_TEXT = {
-  starting: "Starting…",
+  starting: "Starting",
   running: "Live",
   paused: "Paused",
-  finished: "Day finished",
-  error: "Stopped by an error",
+  finished: "Day over",
+  error: "Stopped",
 } as const;
+
+type PlanSource = "reference" | "svg";
 
 function hhmm(sec: number) {
   return secondsToTime(sec).slice(0, 5);
 }
 
-/**
- * Monitoring while a live feed runs: the floor plan, current activity and alerts
- * follow the simulated clock (decision D19).
- */
-export function LiveMonitoring({ showIds }: { showIds: boolean }) {
+/** Monitoring while a live feed runs (decision D19). Explanations live in Settings. */
+export function LiveMonitoring({
+  showIds,
+  onShowIds,
+}: {
+  showIds: boolean;
+  onShowIds: (on: boolean) => void;
+}) {
   const { currentHome, live } = useEnvironment();
   const info = currentHome.live!;
   const { feed, controls } = live;
   const [scenarios, setScenarios] = useState<FeedScenario[]>([]);
   const [scenario, setScenario] = useState(info.scenario);
   const [startAt, setStartAt] = useState(DEFAULT_START);
+  const [planSource, setPlanSource] = useState<PlanSource>("reference");
 
   useEffect(() => {
     let ok = true;
@@ -63,6 +63,14 @@ export function LiveMonitoring({ showIds }: { showIds: boolean }) {
       ok = false;
     };
   }, [currentHome.id]);
+
+  const planHome = useMemo<HomeEnvironment>(() => {
+    const fp = currentHome.floorPlan;
+    if (planSource === "svg" && fp?.vectorSrc) {
+      return { ...currentHome, floorPlan: { ...fp, src: fp.vectorSrc } };
+    }
+    return currentHome;
+  }, [currentHome, planSource]);
 
   // 24:00 would read as noon on a 12-hour clock; a finished day ends at 23:59:59.
   const timestamp = secondsToTime(Math.min(info.clock, 86399));
@@ -77,72 +85,89 @@ export function LiveMonitoring({ showIds }: { showIds: boolean }) {
   const latestAlert = currentHome.anomalies[0] ?? null;
   const recent = currentHome.events.slice(-8).reverse();
   const running = info.status === "running";
+  const dayOptions = scenarios.length
+    ? scenarios
+    : [{ id: info.scenario, title: info.title, day: info.dayLabel, kind: "" }];
 
   return (
     <div className="mx-auto max-w-6xl space-y-4">
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <p className="flex items-center gap-2 text-xs font-medium uppercase tracking-wide text-accent">
-            <Radio className={`h-3.5 w-3.5 ${running ? "animate-pulse" : ""}`} aria-hidden />
-            {STATUS_TEXT[info.status]} · {info.speed === 1 ? "real time" : `${info.speed}×`}
+          <p className="flex items-center gap-1.5 text-xs font-medium uppercase tracking-wide text-accent">
+            <span
+              className={`h-1.5 w-1.5 rounded-full bg-accent ${running ? "animate-pulse" : "opacity-50"}`}
+              aria-hidden
+            />
+            {STATUS_TEXT[info.status]}
           </p>
           <p className="font-display text-3xl font-semibold tabular-nums tracking-tight text-foreground">
             {formatClock(timestamp)}
           </p>
-          <p className="mt-1 text-sm text-muted">
-            {info.title} — {info.dayLabel}, played as a live sensor feed.
-          </p>
+          <p className="mt-1 text-sm text-muted">{info.dayLabel}</p>
         </div>
-        <div className="flex flex-wrap items-center gap-2">
-          {info.status === "paused" ? (
-            <button type="button" onClick={controls.resume} className={BTN}>
-              <Play className="h-4 w-4" aria-hidden /> Resume
-            </button>
-          ) : (
-            <button
-              type="button"
-              onClick={controls.pause}
-              disabled={!running}
-              className={`${BTN} disabled:opacity-50`}
-            >
-              <Pause className="h-4 w-4" aria-hidden /> Pause
-            </button>
-          )}
-          <label className={LABEL}>
-            Speed
-            <select
-              value={info.speed}
-              onChange={(e) => controls.setSpeed(Number(e.target.value))}
-              className={SELECT}
-            >
-              {SPEEDS.map((s) => (
-                <option key={s.value} value={s.value}>
-                  {s.label}
-                </option>
-              ))}
-              {!SPEEDS.some((s) => s.value === info.speed) && (
-                <option value={info.speed}>{info.speed}×</option>
-              )}
-            </select>
+        <div className="flex flex-wrap gap-2">
+          <label className={`${LABEL} cursor-pointer`}>
+            <input
+              type="checkbox"
+              checked={showIds}
+              onChange={(e) => onShowIds(e.target.checked)}
+              className="accent-accent"
+            />
+            Show sensor IDs
           </label>
+          {currentHome.floorPlan?.vectorSrc && (
+            <label className={LABEL}>
+              Plan
+              <select
+                value={planSource}
+                onChange={(e) => setPlanSource(e.target.value as PlanSource)}
+                className={SELECT}
+              >
+                <option value="reference">Reference (exact)</option>
+                <option value="svg">SVG recreation</option>
+              </select>
+            </label>
+          )}
         </div>
       </div>
 
-      <section className="flex flex-wrap items-end gap-2 rounded-2xl border border-border bg-surface p-3 shadow-sm">
+      <div className="flex flex-wrap items-center gap-2">
+        {info.status === "paused" ? (
+          <button type="button" onClick={controls.resume} className={BTN}>
+            <Play className="h-4 w-4" aria-hidden /> Resume
+          </button>
+        ) : (
+          <button type="button" onClick={controls.pause} disabled={!running} className={BTN}>
+            <Pause className="h-4 w-4" aria-hidden /> Pause
+          </button>
+        )}
+        <label className={LABEL}>
+          Speed
+          <select
+            value={info.speed}
+            onChange={(e) => controls.setSpeed(Number(e.target.value))}
+            className={SELECT}
+          >
+            {(SPEEDS.includes(info.speed) ? SPEEDS : [...SPEEDS, info.speed]).map((s) => (
+              <option key={s} value={s}>
+                {s === 1 ? "Real time" : `${s}×`}
+              </option>
+            ))}
+          </select>
+        </label>
+        <span className="mx-1 hidden h-6 w-px bg-border sm:block" aria-hidden />
         <label className={LABEL}>
           Day
           <select
             value={scenario}
             onChange={(e) => setScenario(e.target.value)}
-            className={`${SELECT} max-w-[16rem]`}
+            className={`${SELECT} max-w-[14rem]`}
           >
-            {(scenarios.length ? scenarios : [{ id: info.scenario, title: info.title, day: info.dayLabel, kind: "" }]).map(
-              (s) => (
-                <option key={s.id} value={s.id}>
-                  {s.title}
-                </option>
-              ),
-            )}
+            {dayOptions.map((s) => (
+              <option key={s.id} value={s.id}>
+                {s.title}
+              </option>
+            ))}
           </select>
         </label>
         <label className={LABEL}>
@@ -152,9 +177,9 @@ export function LiveMonitoring({ showIds }: { showIds: boolean }) {
             onChange={(e) => setStartAt(Number(e.target.value))}
             className={SELECT}
           >
-            {STARTS.map((s) => (
-              <option key={s.value} value={s.value}>
-                {s.label}
+            {STARTS.map((h) => (
+              <option key={h} value={h * 3600}>
+                {String(h).padStart(2, "0")}:00
               </option>
             ))}
           </select>
@@ -164,28 +189,23 @@ export function LiveMonitoring({ showIds }: { showIds: boolean }) {
           onClick={() => controls.start({ scenario, startAt, speed: info.speed || DEFAULT_SPEED })}
           className={BTN}
         >
-          <RotateCcw className="h-4 w-4" aria-hidden /> Play this day
+          <RotateCcw className="h-4 w-4" aria-hidden /> Play
         </button>
-        <button
-          type="button"
-          onClick={() => live.setEnabled(false)}
-          className="ml-auto text-xs text-muted underline-offset-2 hover:underline"
-        >
-          Show the exported day instead
-        </button>
-      </section>
+        {info.injected && (
+          <span
+            className="rounded-full bg-warning-soft px-2.5 py-1 text-xs font-medium text-warning"
+            title={info.injected.note}
+          >
+            Test day · deviation inserted {hhmm(info.injected.start)}–{hhmm(info.injected.end)}
+          </span>
+        )}
+      </div>
 
-      {info.injected && (
-        <p className="rounded-lg bg-warning-soft px-3 py-2 text-sm text-warning">
-          Test day: a deviation was inserted into the raw sensor events — {info.injected.note} (
-          {hhmm(info.injected.start)}–{hhmm(info.injected.end)}). The pipeline is not told.
-        </p>
-      )}
       {feed.error && (
         <p className="rounded-lg bg-danger-soft px-3 py-2 text-sm text-danger">{feed.error}</p>
       )}
 
-      <InteractiveFloorPlan home={currentHome} timestamp={timestamp} showSensorIds={showIds} />
+      <InteractiveFloorPlan home={planHome} timestamp={timestamp} showSensorIds={showIds} />
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         <section className="rounded-2xl border border-border bg-surface p-4 shadow-sm">
@@ -197,21 +217,10 @@ export function LiveMonitoring({ showIds }: { showIds: boolean }) {
               <p className="mt-1 font-display text-xl font-semibold text-foreground">
                 {episode.label}
               </p>
-              <p className="mt-1 text-sm text-muted">
-                Since {formatClock(episode.start)} · mean confidence{" "}
-                {Math.round(episode.confidence * 100)}%
-              </p>
-              {info.latest && info.latest.activityId !== episode.activityId && (
-                <p className="mt-1 text-xs text-muted">
-                  Latest window says {info.latest.label} (
-                  {Math.round(info.latest.confidence * 100)}%), not yet a new activity.
-                </p>
-              )}
+              <p className="mt-1 text-sm text-muted">Since {formatClock(episode.start)}</p>
             </>
           ) : (
-            <p className="mt-1 text-sm text-muted">
-              Waiting for the first 100 sensor events of the day.
-            </p>
+            <p className="mt-1 text-sm text-muted">Not known yet.</p>
           )}
         </section>
 
@@ -243,13 +252,10 @@ export function LiveMonitoring({ showIds }: { showIds: boolean }) {
           {latestAlert ? (
             <>
               <p className="mt-1 font-medium text-foreground">{latestAlert.title}</p>
-              <p className="mt-1 text-sm text-muted">{latestAlert.observed}</p>
-              <p className="mt-1 text-xs text-muted">
-                {latestAlert.timestamp} · {latestAlert.delivery}
-              </p>
+              <p className="mt-1 text-xs text-muted">{latestAlert.timestamp}</p>
             </>
           ) : (
-            <p className="mt-1 text-sm text-muted">None so far today.</p>
+            <p className="mt-1 text-sm text-muted">None today.</p>
           )}
         </section>
       </div>
@@ -271,10 +277,6 @@ export function LiveMonitoring({ showIds }: { showIds: boolean }) {
         ) : (
           <p className="mt-1 text-sm text-muted">No events yet.</p>
         )}
-        <p className="mt-3 text-xs text-muted">
-          {info.recogniser}; {info.episodeRule}. Routine learned from {info.routineLearnedFrom};
-          checked every 2 minutes of the day.
-        </p>
       </section>
     </div>
   );

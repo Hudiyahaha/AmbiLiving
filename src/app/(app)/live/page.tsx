@@ -37,14 +37,9 @@ const PALETTE = [
   "#8f6b4f", "#5f7f2f", "#8f4f6f", "#4f8f5f", "#7a6a2f", "#2f5f8f",
   "#8f2f4f", "#5f5f5f", "#3f8f8f",
 ];
-const URGENT_KINDS = new Set(["inactivity", "unusual_time"]);
 
 function clock(s: number): string {
   return secondsToTime(s).slice(0, 5);
-}
-
-function pct(x: number | null | undefined): string {
-  return x == null ? "–" : `${Math.round(x * 100)}%`;
 }
 
 /** Last item whose first field is <= t (items sorted by it). */
@@ -171,10 +166,7 @@ export default function LiveDemoPage() {
           <p className="font-display text-3xl font-semibold tabular-nums tracking-tight text-foreground">
             {secondsToTime(t)}
           </p>
-          <p className="mt-1 text-sm text-muted">
-            {scenario?.day ?? ref.day} · replayed through the live pipeline,
-            minute by minute
-          </p>
+          <p className="mt-1 text-sm text-muted">{scenario?.day ?? ref.day}</p>
         </div>
         <div className="flex flex-wrap items-center gap-2">
           <button
@@ -239,7 +231,7 @@ export default function LiveDemoPage() {
         ))}
       </div>
 
-      {scenario && <ScenarioNote scenario={scenario} home={home} homeName={currentHome.name} labelOf={labelOf} />}
+      {scenario && <ScenarioNote scenario={scenario} labelOf={labelOf} />}
 
       {latestNotify && (
         <div
@@ -310,69 +302,29 @@ export default function LiveDemoPage() {
 
       {scenario && <CaregiverView scenario={scenario} t={t} raised={raised} />}
 
-      <p className="text-xs text-muted">
-        How this replay is made: the day&apos;s sensor events are fed to the live
-        recogniser ({home.recogniser}). Every 2 minutes the resident&apos;s routine
-        model ({home.routineLearnedFrom}) is re-run on what has happened so far,
-        and an alert is shown from the first minute it appears. Nothing on this page
-        uses events after the current time; the exporter checks that the replay
-        reproduces the evaluated live stream and raises every alert the batch
-        evaluation did. Dataset annotations and the injected interval are shown only
-        so you can check the system.
-      </p>
     </div>
   );
 }
 
 function ScenarioNote({
   scenario,
-  home,
-  homeName,
   labelOf,
 }: {
   scenario: ReplayScenario;
-  home: ReplayHome;
-  homeName: string;
   labelOf: (raw: string) => string;
 }) {
   const inj = scenario.injected;
-  const typ = scenario.typical;
-  const urgent =
-    URGENT_KINDS.has(scenario.kind) || (scenario.kind === "prolonged" && scenario.id === "bathroom");
-  const reached = urgent ? typ?.notified : typ?.surfaced;
+  if (!inj) return null;
   return (
-    <div className="space-y-2">
-      <p className="rounded-xl border border-border bg-surface-muted/50 px-4 py-3 text-sm text-foreground">
-        {inj ? (
-          <>
-            <span className="font-medium">Injected into this real day:</span> {inj.note.replace(/_/g, " ")}{" "}
-            ({inj.target ? `${labelOf(inj.target)}, ` : ""}from {clock(inj.start)}). Across all injected copies of {homeName}&apos;s
-            monitoring days, the live pipeline detected this kind of deviation{" "}
-            <span className="font-medium">{pct(typ?.detected)}</span> of the time and{" "}
-            {urgent ? "sent a notification" : "told the caregiver"}{" "}
-            <span className="font-medium">{pct(reached)}</span> of the time.{" "}
-            {typ?.thisOneCaught
-              ? "This day was picked from the ones it caught."
-              : "None were caught, so this day shows the failure."}
-          </>
-        ) : (
-          <>
-            <span className="font-medium">A real day, nothing injected.</span> Any alert here is
-            either a false alarm or a real change in routine. On normal days the live pipeline
-            raises {home.falseAlertsPerDay} deviations a day in total, most of them for the
-            dashboard or the evening summary; this day has the median number of
-            caregiver-facing alerts.
-          </>
-        )}
-      </p>
-      {homeName.toLowerCase().includes("aruba") && (
-        <p className="rounded-xl bg-warning-soft px-4 py-3 text-sm text-warning">
-          On Aruba the live recogniser is weak: it misses most leaving-home episodes, which
-          corrupts the routine it learns, and only {pct(home.detectionRate)} of injected deviations
-          are detected. Milan gives a more representative demo.
-        </p>
-      )}
-    </div>
+    <p className="text-xs">
+      <span
+        className="rounded-full bg-warning-soft px-2.5 py-1 font-medium text-warning"
+        title={inj.note.replace(/_/g, " ")}
+      >
+        Test day · {inj.target ? `${labelOf(inj.target)}: ` : ""}
+        {inj.note.replace(/_/g, " ")}
+      </span>
+    </p>
   );
 }
 

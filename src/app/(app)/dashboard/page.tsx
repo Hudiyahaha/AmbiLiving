@@ -43,13 +43,6 @@ export default function DashboardPage() {
 
   return (
     <div className="mx-auto max-w-6xl space-y-6">
-      <div>
-        <p className="text-sm text-muted">
-          What is happening in the home, is it normal, and does anything require
-          attention?
-        </p>
-      </div>
-
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
         <section className="rounded-2xl border border-border bg-surface p-5 shadow-sm">
           <p className="text-xs font-medium uppercase tracking-wide text-muted">

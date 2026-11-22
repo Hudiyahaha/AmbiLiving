@@ -71,11 +71,7 @@ export function deliveryLabel(a: LiveAlert, clock: number): string {
   return "Dashboard only";
 }
 
-export function liveAnomalies(
-  alerts: LiveAlert[],
-  dayLabel: string,
-  clock: number,
-): AnomalyRecord[] {
+export function liveAnomalies(alerts: LiveAlert[], clock: number): AnomalyRecord[] {
   return [...alerts]
     .sort((a, b) => b.raisedAt - a.raisedAt)
     .map((a) => ({
@@ -86,7 +82,7 @@ export function liveAnomalies(
       reason: a.reason,
       severity: SEVERITY[a.tier],
       relatedActivityId: a.activity.toLowerCase(),
-      timestamp: `${dayLabel} · raised ${secondsToTime(a.raisedAt).slice(0, 5)}`,
+      timestamp: secondsToTime(a.raisedAt).slice(0, 5),
       requiresAttention: a.tier === "notify" && a.delivered,
       delivery: deliveryLabel(a, clock),
     }));
@@ -105,7 +101,7 @@ export function toLiveHome(
     ...home,
     events,
     activityHistory,
-    anomalies: liveAnomalies(feed.alerts, meta.dayLabel, meta.clock),
+    anomalies: liveAnomalies(feed.alerts, meta.clock),
     currentActivityId: activityHistory.at(-1)?.id ?? null,
     dataSource: undefined,
     anomalySource: undefined,
