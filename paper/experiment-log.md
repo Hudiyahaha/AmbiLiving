@@ -207,3 +207,17 @@ Reproduction check: `gt` and `win` reproduce E14 exactly (Aruba 92 % / 16 %, Mil
 **Alert routing on E20** (`py -m har.alerts --folder anomaly-e20`, `ml/results/alerts-e20.md`): Aruba urgent deviations notified 7 % → 34 %, notifications per normal day 0.20 → 0.27. Milan urgent 51 % → 64 % but notifications per normal day 0.23 → 0.69 (one every ~1.5 days), so Milan keeps the 3-point rule.
 **Adopted in the live demo** (21 Nov): `py -m har.replay` now reads `anomaly-e20` and replays Aruba with the 3-min cleanup (`winc`) and Milan with the original rule (`win`). All 12 scenarios reproduce the evaluated stream, 0 batch alerts missing live; Milan's files are byte-identical to before. Aruba example days changed because they are picked among the copies the cleaned stream catches.
 
+## E21 — Live routine monitoring on pushed events  (22 Nov 2026, Hudiya)
+**Question**: Does the backend's live pipeline (saved BiLSTM + saved routine model + D15 routing, run incrementally on pushed events, D18) give the same activities and alerts as the evaluated replay, and is it fast enough to run live?
+**Setup**: Routine model refitted and saved with the E20 operating point (`py -m har.routine_live`): Aruba `winc` (3 min) on 44 observation days (2011-03-16 – 2011-04-28), Milan `win` on 13 (2009-12-12 – 2009-12-24), the same numbers of days as E20. Check: each home's real monitoring day in `public/replay/` (Aruba 2011-05-05, Milan 2009-12-29) taken from the raw data, with 150 earlier events as history, pushed (a) as a whole-day re-run every 2 min, (b) in 1-hour (Milan) / 7-minute (Aruba) batches through `LiveMonitor`, (c) over HTTP in 2-hour batches with a clock time (`tests/test_api.py`). Timing over HTTP on the dev laptop (CPU): Aruba, catch-up to 18:00 in one push, then 300 single-event pushes.
+**Command**: `py -m har.routine_live --check`; `py -m pytest tests -q` (from `ml/`)
+**Result**:
+
+| Home | Predictions (ours / replay) | Identical | Alerts (ours / replay) | Same time raised, type, activity, tier, delivered |
+|---|---|---|---|---|
+| Aruba | 551 / 551 | 100 % | 2 / 2 | yes (a, b) |
+| Milan | 1,159 / 1,159 | 100 % | 3 / 3 | yes (a, b, c) |
+
+Latency: fitting 41 s (Aruba) / 8 s (Milan); re-running a whole day every 2 min 15.5 s / 23.2 s. Live session over HTTP: catch-up push of 3,998 events 4.2 s; single-event pushes median 10 ms, p95 32 ms (max 1.0 s when one push crossed a long silence); a clock-only push over 2 h (63 routine steps) 0.97 s.
+**Takeaway**: The live backend reproduces the evaluated live pipeline exactly, event by event, and keeps up with a real home by a wide margin (Aruba produces an event every ~15 s on average).
+**Status**: PASS. Feeds ROADMAP 5.2 (latency) and 5.1 (end-to-end test).

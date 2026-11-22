@@ -6,7 +6,7 @@ Interactive documentation is served at ``/docs`` while the server runs.
 from __future__ import annotations
 
 import os
-from datetime import datetime
+from datetime import date, datetime
 from typing import Literal
 
 from fastapi import FastAPI, HTTPException, Query, Request
@@ -15,8 +15,9 @@ from fastapi.responses import JSONResponse, RedirectResponse, StreamingResponse
 from pydantic import BaseModel, Field
 
 from har.data import DATASETS
+from har.routine_live import routine_path
 
-from . import live, store, stream
+from . import live, sessions, store, stream
 
 app = FastAPI(
     title="AmbiLiving API",
@@ -28,7 +29,7 @@ app = FastAPI(
 # The Next.js dev server; override with a comma-separated AMBILIVING_CORS.
 _origins = os.environ.get("AMBILIVING_CORS", "http://localhost:3000,http://127.0.0.1:3000")
 app.add_middleware(CORSMiddleware, allow_origins=[o.strip() for o in _origins.split(",")],
-                   allow_methods=["GET", "POST"], allow_headers=["*"])
+                   allow_methods=["GET", "POST", "DELETE"], allow_headers=["*"])
 
 
 @app.exception_handler(store.NotFound)
@@ -51,7 +52,8 @@ def health():
 @app.get("/homes", tags=["homes"])
 def homes():
     """The homes the backend knows and whether their live model is available."""
-    return [{"id": h, "model": live.model_info(h)} for h in DATASETS]
+    return [{"id": h, "model": live.model_info(h),
+             "routine": {"available": routine_path(h).is_file()}} for h in DATASETS]
 
 
 @app.get("/homes/{home}/day", tags=["homes"])
@@ -109,6 +111,63 @@ def _recognised(r: live.Recognised) -> dict:
     return {"timestamp": r.timestamp.isoformat(), "eventIndex": r.end - 1,
             "activity": r.activity, "confidence": round(r.confidence, 4),
             "top": [{"activity": a, "confidence": round(c, 4)} for a, c in r.top]}
+
+
+# --------------------------------------------------------------------------- live monitoring
+
+@app.get("/homes/{home}/routine", tags=["live"])
+def routine(home: str):
+    """The saved routine model: observation period, stream rule, thresholds, usual day."""
+    return sessions.routine_info(home)
+
+
+class SessionRequest(BaseModel):
+    monitorFrom: date | None = Field(
+        None, description="First day to monitor (from midnight). Events before it only fill "
+                          "the first recognition windows. Default: the day of the first event.")
+
+
+@app.post("/homes/{home}/sessions", tags=["live"], status_code=201)
+def create_session(home: str, body: SessionRequest | None = None):
+    """Start live monitoring of a home: then push events to ``/sessions/{id}/events``."""
+    s = sessions.create(home, body.monitorFrom if body else None)
+    return sessions.state_json(s) | {"routine": sessions.routine_info(home)}
+
+
+class PushRequest(BaseModel):
+    events: list[SensorEvent] = Field(default_factory=list, max_length=200_000)
+    now: datetime | None = Field(
+        None, description="Current clock time, if later than the last event. Lets the "
+                          "routine model notice silences while no events arrive.")
+
+
+@app.post("/sessions/{session_id}/events", tags=["live"])
+def push_events(session_id: str, body: PushRequest):
+    """Add sensor events (in time order, none earlier than the session clock).
+
+    Runs recognition every 10th event and the routine model every 2 minutes of the
+    clock, as a deployed system would. Returns the new predictions, the IDs of newly
+    raised alerts, the day's routed alerts so far, and any days that ended.
+    """
+    s = sessions.get(session_id)
+    ev = body.events
+    try:
+        result = s.push([e.timestamp for e in ev], [e.sensor for e in ev],
+                        [e.state for e in ev], body.now)
+    except ValueError as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
+    return sessions.push_json(s, result)
+
+
+@app.get("/sessions/{session_id}", tags=["live"])
+def session_state(session_id: str):
+    """Current activity, today's episodes and routed alerts, and recently ended days."""
+    return sessions.state_json(sessions.get(session_id))
+
+
+@app.delete("/sessions/{session_id}", tags=["live"], status_code=204)
+def delete_session(session_id: str):
+    sessions.delete(session_id)
 
 
 # --------------------------------------------------------------------------- replay

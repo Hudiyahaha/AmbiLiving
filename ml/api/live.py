@@ -14,6 +14,7 @@ import numpy as np
 import pandas as pd
 
 from har.data import Home
+from har.routine_live import events_home
 from har.saved_model import WindowModel, load, model_path
 
 from .store import ROOT, NotFound, check_home
@@ -66,8 +67,8 @@ class Recognised:
     top: list[tuple[str, float]]
 
 
-def to_home(home: str, timestamps, sensors, states) -> Home:
-    """Build a ``Home`` from posted events, sorted by time (stable for equal times)."""
+def normalise(timestamps, states) -> tuple[np.ndarray, list[str]]:
+    """Naive datetime64 times and raw CASAS states for posted events."""
     times = pd.to_datetime(pd.Series(list(timestamps)), utc=False)
     if getattr(times.dt, "tz", None) is not None:
         times = times.dt.tz_localize(None)
@@ -78,15 +79,16 @@ def to_home(home: str, timestamps, sensors, states) -> Home:
             raise ValueError(f"unknown sensor state '{s}'; use ON/OFF/OPEN/CLOSE "
                              "(or active/inactive/open/closed)")
         mapped.append(m)
-    order = np.argsort(times.to_numpy(), kind="stable")
-    sensors = np.asarray([str(s) for s in sensors], dtype=object)[order]
-    segments = pd.DataFrame({"activity": pd.Series(dtype=object),
-                             "start": pd.Series(dtype="datetime64[ns]"),
-                             "end": pd.Series(dtype="datetime64[ns]"),
-                             "lo": pd.Series(dtype=np.int64), "hi": pd.Series(dtype=np.int64)})
-    return Home(name=home, times=times.to_numpy(dtype="datetime64[ns]")[order], sensors=sensors,
-                states=np.asarray(mapped, dtype=object)[order], segments=segments,
-                sensor_list=sorted(set(sensors)))
+    return times.to_numpy(dtype="datetime64[ns]"), mapped
+
+
+def to_home(home: str, timestamps, sensors, states) -> Home:
+    """Build a ``Home`` from posted events, sorted by time (stable for equal times)."""
+    times, mapped = normalise(timestamps, states)
+    order = np.argsort(times, kind="stable")
+    return events_home(home, times[order],
+                       np.asarray([str(s) for s in sensors], dtype=object)[order],
+                       np.asarray(mapped, dtype=object)[order])
 
 
 def recognise(home: str, timestamps, sensors, states, every: int | None = None,

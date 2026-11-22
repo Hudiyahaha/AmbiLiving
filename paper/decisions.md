@@ -159,8 +159,18 @@ Template:
 **Decision**: The backend is a FastAPI (Python) service that lives next to the models in `ml/api/` and imports `har` directly. The Next.js app stays a pure frontend and calls it over HTTP; Next.js route handlers that start a Python process were considered and rejected.
 **First endpoints**: homes and their saved models; the exported dashboard day and real-day anomalies; the D17 replay scenarios, both whole and as a server-sent event stream in timestamp order at an adjustable speed (ROADMAP 4.2); and live recognition, where the saved window BiLSTM (`har.saved_model`) classifies the last 100 posted sensor events (ROADMAP 4.3).
 **Why**: Every model, the routine detector and the alert routing are Python, and `har.saved_model` already loads the BiLSTM in a fresh process. A Python service runs that code unchanged, keeps one model in memory instead of loading it for each request, and supports streaming. Calling Python from Next.js route handlers would mean a process start (and a torch import) on every request, or a second server anyway. Keeping the API separate also lets the frontend be deployed on its own (ROADMAP 5.4).
-**Not yet**: the routine model does not run online on posted events; the streamed alerts are the ones D17 precomputed causally. Running it per request needs the fitted routine model saved to disk, like the BiLSTM.
+**Since**: the routine model runs online too (D18).
 **Implemented in**: `ml/api/` (run with `py -m api` from `ml/`).
+
+## D18 — Live monitoring as server-side sessions over pushed events  (22 Nov 2026)
+
+**Decision**: The whole live pipeline runs in the backend on events as they arrive. A client opens a session for a home (`POST /homes/{home}/sessions`, optionally with the first day to monitor) and pushes sensor events in time order (`POST /sessions/{id}/events`), optionally with the current clock time. The session (`har.routine_live.LiveMonitor`) runs the saved BiLSTM every 10th event of the day, re-runs the saved routine model every 2 minutes of the clock on only what happened before that minute, and routes alerts with D15. At midnight the day is closed with its final routing and the next day starts.
+**Saved routine model**: `py -m har.routine_live` fits it exactly as the E20 operating point: observation days = the middle 20 % of days (Aruba 44, Milan 13), live predictions from the saved BiLSTM, episodes with the E20 stream rule (Aruba `winc`, runs under 3 min absorbed; Milan `win`, 3-point rule), thresholds at 0.1 alerts per normal day per aspect by leave-one-day-out calibration. Stored in `ml/models/<home>/routine.pkl` with a readable `routine.json`.
+**Equivalence**: incremental processing must give exactly what re-running the whole day gives. Checked on each home's real monitoring day from `public/replay/` (E21).
+**Clock**: an explicit `now` lets the routine model see a silence while no events arrive; events may not be earlier than the session clock, so a minute that has been evaluated is never revised. Summary items stay provisional until the 21:00 summary, as in D15.
+**Why**: Inactivity and missed activities only exist as time passes, so the model must be re-run on the clock, not per request. Keeping the state in the server avoids re-running the day so far on every push (15–23 s for a whole day; one 2-minute step costs ~15–30 ms).
+**Not covered**: sessions are in memory (lost on restart, at most 32, dropped after 1 h idle); no authentication; one resident per home.
+**Implemented in**: `ml/har/routine_live.py`, `ml/api/sessions.py`.
 
 ## Open decisions (make these before the matching ROADMAP step)
 

@@ -206,9 +206,20 @@ A FastAPI service over the files and models above. CORS allows the Next.js dev s
 | `POST /homes/{home}/recognise` | Activity + confidence for the last 100 posted sensor events (saved BiLSTM, ~20 ms after the first call); `every=N` also returns a history |
 | `GET /replay`, `/replay/{home}/{scenario}` | The D17 replay index and one whole scenario |
 | `GET /replay/{home}/{scenario}/stream` | The scenario as server-sent events in timestamp order: `clock`, `event`, `prediction`, `alert` (at the second it was raised); `speed`, `start`, `end`, `only`, `tick` |
+| `GET /homes/{home}/routine` | The saved routine model: observation period, stream rule, thresholds, usual day |
+| `POST /homes/{home}/sessions` | Start live monitoring (`monitorFrom`: first day to monitor) |
+| `POST /sessions/{id}/events` | Push sensor events in time order (and optionally `now`): runs the BiLSTM every 10th event, the routine model every 2 min of the clock and D15 routing; returns new predictions, new alert IDs, the day's routed alerts and any days that ended |
+| `GET /sessions/{id}`, `DELETE` | Current activity, today's episodes and alerts, recently ended days |
 
-Not yet: the routine model and alert routing do not run on posted events; alerts reach the
-API only through the precomputed replay.
+### Live routine model (`har.routine_live`, decision D18)
+
+    python -m har.routine_live --check          # fit + save models/<home>/routine.pkl, then verify
+
+Fits the routine model as at the E20 operating point (observation days, live BiLSTM
+predictions, Aruba 3-minute cleanup / Milan 3-point rule, 0.1 alerts per normal day) and
+saves it next to the BiLSTM. `--check` replays each home's real monitoring day from the raw
+data and requires the same predictions and alerts as `public/replay/` (E21). Live sessions
+in the API use `LiveMonitor`, which processes pushed events incrementally with the same result.
 
 ## Results (5-fold CV, macro-F1 %)
 

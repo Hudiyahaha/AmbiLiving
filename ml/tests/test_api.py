@@ -92,6 +92,72 @@ def test_recognise_rejects_short_or_bad_input():
     assert client.post("/homes/aruba/recognise", json={"events": ev}).status_code == 422
 
 
+def test_routine_and_session_basics():
+    r = client.get("/homes/milan/routine").json()
+    assert r["observation_days"] == 13 and r["stream"] == "win" and r["usual_day"]
+    assert all(h["routine"]["available"] for h in client.get("/homes").json())
+
+    s = client.post("/homes/aruba/sessions", json={"monitorFrom": "2011-05-05"})
+    assert s.status_code == 201
+    sid = s.json()["session"]
+    assert s.json()["started"] is False and s.json()["routine"]["stream"] == "winc"
+    ev = [{"timestamp": f"2011-05-05T08:00:{i:02d}", "sensor": "M003", "state": "ON"}
+          for i in range(5)]
+    r = client.post(f"/sessions/{sid}/events", json={"events": ev}).json()
+    assert r["day"] == "2011-05-05" and r["predictions"] == []  # fewer than 100 events yet
+    # Events must not go back in time.
+    old = [{"timestamp": "2011-05-05T07:00:00", "sensor": "M003", "state": "ON"}]
+    assert client.post(f"/sessions/{sid}/events", json={"events": old}).status_code == 422
+    assert client.delete(f"/sessions/{sid}").status_code == 204
+    assert client.get(f"/sessions/{sid}").status_code == 404
+
+
+@pytest.mark.skipif(not (RAW_DIR / "milan.txt").exists(), reason="raw CASAS data not present")
+def test_live_session_reproduces_replay_day():
+    """Pushing a real day in 2-hour batches gives the replay's predictions and alerts."""
+    import pandas as pd
+
+    from har.data import load_home
+
+    sc = client.get("/replay/milan/normal").json()
+    day = pd.Timestamp(sc["day"]).normalize()
+    home = load_home("milan")
+    lo, hi = np.searchsorted(home.times, [day.to_datetime64(),
+                                          (day + pd.Timedelta(days=1)).to_datetime64()])
+
+    def events(a, b):
+        return [{"timestamp": str(t), "sensor": s, "state": v}
+                for t, s, v in zip(home.times[a:b], home.sensors[a:b], home.states[a:b])]
+
+    sid = client.post("/homes/milan/sessions",
+                      json={"monitorFrom": str(day.date())}).json()["session"]
+    r = client.post(f"/sessions/{sid}/events", json={"events": events(lo - 150, lo)}).json()
+    assert r["predictions"] == [] and r["alerts"] == []  # history only
+    n_pred, raised = 0, set()
+    for h in range(0, 24, 2):
+        g, g2 = day + pd.Timedelta(hours=h), day + pd.Timedelta(hours=h + 2)
+        a, b = np.searchsorted(home.times, [g.to_datetime64(), g2.to_datetime64()])
+        r = client.post(f"/sessions/{sid}/events",
+                        json={"events": events(a, b), "now": g2.isoformat()})
+        assert r.status_code == 200, r.text
+        r = r.json()
+        n_pred += len(r["predictions"])
+        raised |= set(r["newAlerts"])
+    assert n_pred == len(sc["predictions"])
+    assert [c["day"] for c in r["closed"]] == [str(day.date())]
+    closed = r["closed"][0]["alerts"]
+    assert {a["id"] for a in closed} == raised
+
+    def key(a, sec):
+        return (sec, a["kind"], a["activity"], a["tier"], a["delivered"])
+
+    ours = sorted(key(a, int((pd.Timestamp(a["raisedAt"]) - day).total_seconds())) for a in closed)
+    ref = sorted(key(a, a["raisedAt"]) for a in sc["alerts"])
+    assert ours == ref
+    assert r["day"] == str((day + pd.Timedelta(days=1)).date())  # moved on to the next day
+    client.delete(f"/sessions/{sid}")
+
+
 @pytest.mark.skipif(not (RAW_DIR / "aruba.txt").exists(), reason="raw CASAS data not present")
 def test_recognise_matches_saved_model():
     """The endpoint gives the same answer as the saved model on real Aruba events."""
