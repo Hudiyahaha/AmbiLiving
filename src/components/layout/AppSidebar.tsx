@@ -2,23 +2,13 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import {
-  Activity,
-  AlertTriangle,
-  Home,
-  LayoutDashboard,
-  PlayCircle,
-  Radar,
-  Settings,
-} from "lucide-react";
+import { CalendarDays, Home, LayoutDashboard, Radar, Settings } from "lucide-react";
 import { useSettings } from "@/context/SettingsContext";
 
 const navItems = [
-  { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
+  { href: "/dashboard", label: "Today", icon: LayoutDashboard },
   { href: "/monitoring", label: "Monitoring", icon: Radar },
-  { href: "/live", label: "Scenario replay", icon: PlayCircle },
-  { href: "/activities", label: "Activity History", icon: Activity },
-  { href: "/anomalies", label: "Routine deviations", icon: AlertTriangle },
+  { href: "/days", label: "Past days", icon: CalendarDays },
   { href: "/homes", label: "Homes", icon: Home },
   { href: "/settings", label: "Settings", icon: Settings },
 ] as const;

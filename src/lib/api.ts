@@ -59,6 +59,8 @@ export const api = {
       `/replay/${encodeURIComponent(home)}/${encodeURIComponent(id)}`,
       { timeoutMs: 20000 },
     ),
+  routine: (home: string) =>
+    request<RoutineInfo>(`/homes/${encodeURIComponent(home)}/routine`),
   feeds: (home: string) =>
     request<FeedScenario[]>(`/homes/${encodeURIComponent(home)}/feeds`),
   createSimulation: (home: string, body: SimulationRequest) =>
@@ -91,6 +93,12 @@ export const api = {
       timeoutMs: 15000,
     }),
 };
+
+/** The saved routine model's summary (ml/models/<home>/routine.json) */
+export interface RoutineInfo {
+  observation_days: number;
+  usual_day: { activity: string; usualFirst: string; pDay: number }[];
+}
 
 // ---- simulated live homes (ml/api/simulate.py, decision D19)
 

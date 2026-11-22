@@ -24,7 +24,7 @@ const DEFAULT_SETTINGS: CaregiverSettings = {
   caregiverName: "Aleeza",
   notifyAnomalies: true,
   notifyLeaveHome: true,
-  showSensorIdsByDefault: false,
+  showSensorIdsByDefault: true,
   playbackIntervalMs: 550,
   quietHoursEnabled: true,
   quietHoursStart: "22:00",

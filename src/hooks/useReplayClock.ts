@@ -14,13 +14,14 @@ interface ClockState {
 
 /**
  * A simulated clock for replaying one day: `speed` home-seconds per real second.
- * Resets to midnight when `resetKey` changes.
+ * Resets to `initial` (midnight by default) when `resetKey` changes.
  */
-export function useReplayClock(speed: number, resetKey: string) {
-  const [state, setState] = useState<ClockState>({ key: resetKey, seconds: 0, playing: false });
+export function useReplayClock(speed: number, resetKey: string, initial = 0) {
+  const start = Math.max(0, Math.min(initial, END));
+  const [state, setState] = useState<ClockState>({ key: resetKey, seconds: start, playing: false });
   // Reset during render when the scenario changes (no effect, no extra commit).
   if (state.key !== resetKey) {
-    setState({ key: resetKey, seconds: 0, playing: false });
+    setState({ key: resetKey, seconds: start, playing: false });
   }
 
   useEffect(() => {

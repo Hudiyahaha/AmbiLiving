@@ -1,13 +1,20 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { Suspense, useEffect, useMemo, useState } from "react";
 import { InteractiveFloorPlan } from "@/components/floorplan/InteractiveFloorPlan";
 import { EventTimeline } from "@/components/monitoring/EventTimeline";
 import { LiveMonitoring } from "@/components/monitoring/LiveMonitoring";
+import { ActivitiesPanel, AlertsPanel } from "@/components/monitoring/MonitoringPanels";
+import {
+  MapOptions,
+  MonitoringShell,
+  RoomsCard,
+  useMonitoringTab,
+  withPlan,
+} from "@/components/monitoring/MonitoringShell";
 import { useEnvironment } from "@/context/EnvironmentContext";
 import { useSettings } from "@/context/SettingsContext";
 import { useEventPlayback } from "@/hooks/useEventPlayback";
-import { SENSOR_COLORS } from "@/lib/sensorColors";
 import {
   formatClock,
   getSensorStatesAtTime,
@@ -15,152 +22,100 @@ import {
 } from "@/lib/sensorState";
 import { getActivityAtTime } from "@/lib/timeline";
 
-type PlanSource = "reference" | "svg";
-
 export default function MonitoringPage() {
+  return (
+    <Suspense fallback={null}>
+      <Monitoring />
+    </Suspense>
+  );
+}
+
+function Monitoring() {
   const { currentHome } = useEnvironment();
   const { settings } = useSettings();
   const [showIds, setShowIds] = useState(settings.showSensorIdsByDefault);
-  const [planSource, setPlanSource] = useState<PlanSource>("reference");
 
   useEffect(() => {
     setShowIds(settings.showSensorIdsByDefault);
   }, [settings.showSensorIdsByDefault]);
+
+  if (currentHome.status === "placeholder") {
+    return (
+      <p className="mx-auto max-w-6xl rounded-lg bg-warning-soft px-3 py-2 text-sm text-warning">
+        This home is not set up yet.
+      </p>
+    );
+  }
+  if (currentHome.live) return <LiveMonitoring showIds={showIds} onShowIds={setShowIds} />;
+  return <RecordedMonitoring showIds={showIds} onShowIds={setShowIds} />;
+}
+
+/** The exported day, played back event by event. */
+function RecordedMonitoring({
+  showIds,
+  onShowIds,
+}: {
+  showIds: boolean;
+  onShowIds: (on: boolean) => void;
+}) {
+  const { currentHome } = useEnvironment();
+  const { settings } = useSettings();
+  const tab = useMonitoringTab();
+  const [planSource, setPlanSource] = useState<"reference" | "svg">("svg");
 
   const playback = useEventPlayback({
     events: currentHome.events,
     resetKey: currentHome.id,
     intervalMs: settings.playbackIntervalMs,
   });
-
-  const previewHome = useMemo(() => {
-    if (!currentHome.floorPlan) return currentHome;
-    if (planSource === "svg" && currentHome.floorPlan.vectorSrc) {
-      return {
-        ...currentHome,
-        floorPlan: {
-          ...currentHome.floorPlan,
-          src: currentHome.floorPlan.vectorSrc,
-        },
-      };
-    }
-    return currentHome;
-  }, [currentHome, planSource]);
-
   const states = useMemo(
-    () =>
-      getSensorStatesAtTime(
-        currentHome.sensors,
-        currentHome.events,
-        playback.timestamp,
-      ),
+    () => getSensorStatesAtTime(currentHome.sensors, currentHome.events, playback.timestamp),
     [currentHome.sensors, currentHome.events, playback.timestamp],
   );
-
-  const activeSensors = useMemo(
-    () =>
-      currentHome.sensors.filter((sensor) =>
-        isSensorVisuallyActive(sensor, states[sensor.id]),
-      ),
-    [currentHome.sensors, states],
-  );
-
-  const currentActivity = useMemo(
+  const active = currentHome.sensors.filter((s) => isSensorVisuallyActive(s, states[s.id]));
+  const now = useMemo(
     () => getActivityAtTime(currentHome.activityHistory, playback.timestamp),
     [currentHome.activityHistory, playback.timestamp],
   );
 
-  if (currentHome.live) return <LiveMonitoring showIds={showIds} onShowIds={setShowIds} />;
-
   return (
-    <div className="mx-auto max-w-6xl space-y-4">
-      <div className="flex flex-wrap items-end justify-between gap-3">
-        <div>
-          <p className="font-display text-3xl font-semibold tabular-nums tracking-tight text-foreground">
-            {formatClock(playback.timestamp)}
-          </p>
-          {currentHome.dataSource && (
-            <p className="mt-1 text-sm text-muted">Recorded day · {currentHome.dataSource.date}</p>
-          )}
-        </div>
-        <div className="flex flex-wrap gap-2">
-          <label className="flex cursor-pointer items-center gap-2 rounded-lg border border-border bg-surface px-3 py-2 text-sm">
-            <input
-              type="checkbox"
-              checked={showIds}
-              onChange={(e) => setShowIds(e.target.checked)}
-              className="accent-accent"
-            />
-            Show sensor IDs
-          </label>
-          {currentHome.floorPlan?.vectorSrc && (
-            <label className="flex items-center gap-2 rounded-lg border border-border bg-surface px-3 py-2 text-sm">
-              Plan
-              <select
-                value={planSource}
-                onChange={(e) => setPlanSource(e.target.value as PlanSource)}
-                className="rounded border border-border bg-surface px-2 py-1 text-sm outline-none"
-              >
-                <option value="reference">Reference (exact)</option>
-                <option value="svg">SVG recreation</option>
-              </select>
-            </label>
-          )}
-        </div>
-      </div>
-
-      {currentHome.status === "placeholder" ? (
-        <p className="rounded-lg bg-warning-soft px-3 py-2 text-sm text-warning">
-          This environment is a placeholder. Switch to an active home to use
-          monitoring.
-        </p>
-      ) : (
-        <>
-          <InteractiveFloorPlan
-            home={previewHome}
-            timestamp={playback.timestamp}
-            showSensorIds={showIds}
-          />
-
+    <MonitoringShell
+      home={currentHome}
+      clock={formatClock(playback.timestamp)}
+      subtitle={currentHome.dataSource ? `Recorded day · ${currentHome.dataSource.date}` : undefined}
+    >
+      {tab === "home" && (
+        <div className="space-y-4">
           <div className="grid gap-4 sm:grid-cols-2">
             <section className="rounded-2xl border border-border bg-surface p-4 shadow-sm">
-              <h2 className="text-xs font-medium uppercase tracking-wide text-muted">
-                Current activity
-              </h2>
-              {currentActivity ? (
+              <h2 className="text-xs font-medium uppercase tracking-wide text-muted">Now</h2>
+              {now ? (
                 <>
                   <p className="mt-1 font-display text-xl font-semibold text-foreground">
-                    {currentActivity.label}
+                    {now.label}
+                  </p>
+                  <p className="mt-0.5 text-sm text-muted">
+                    since {formatClock(now.start).replace(/:\d\d /, " ")}
                   </p>
                 </>
               ) : (
-                <p className="mt-1 text-sm text-muted">Not known.</p>
+                <p className="mt-1 text-sm text-muted">Not known</p>
               )}
             </section>
-            <section className="rounded-2xl border border-border bg-surface p-4 shadow-sm">
-              <h2 className="text-xs font-medium uppercase tracking-wide text-muted">
-                Active sensors
-              </h2>
-              <p className="mt-2 flex flex-wrap gap-2">
-                {activeSensors.length > 0 ? (
-                  activeSensors.map((sensor) => (
-                    <span
-                      key={sensor.id}
-                      className="rounded-md px-2 py-1 text-xs font-semibold text-white"
-                      style={{
-                        backgroundColor: SENSOR_COLORS[sensor.type].fill,
-                      }}
-                    >
-                      {sensor.id}
-                    </span>
-                  ))
-                ) : (
-                  <span className="text-sm text-muted">None</span>
-                )}
-              </p>
-            </section>
+            <RoomsCard active={active} />
           </div>
-
+          <MapOptions
+            home={currentHome}
+            showIds={showIds}
+            onShowIds={onShowIds}
+            planSource={planSource}
+            onPlanSource={setPlanSource}
+          />
+          <InteractiveFloorPlan
+            home={withPlan(currentHome, planSource)}
+            timestamp={playback.timestamp}
+            showSensorIds={showIds}
+          />
           <EventTimeline
             events={currentHome.events}
             timestamp={playback.timestamp}
@@ -172,8 +127,10 @@ export default function MonitoringPage() {
             onNext={playback.next}
             onTogglePlay={playback.togglePlay}
           />
-        </>
+        </div>
       )}
-    </div>
+      {tab === "activities" && <ActivitiesPanel home={currentHome} />}
+      {tab === "alerts" && <AlertsPanel home={currentHome} />}
+    </MonitoringShell>
   );
 }
