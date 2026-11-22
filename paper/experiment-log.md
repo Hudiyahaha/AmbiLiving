@@ -207,3 +207,49 @@ Reproduction check: `gt` and `win` reproduce E14 exactly (Aruba 92 % / 16 %, Mil
 **Alert routing on E20** (`py -m har.alerts --folder anomaly-e20`, `ml/results/alerts-e20.md`): Aruba urgent deviations notified 7 % → 34 %, notifications per normal day 0.20 → 0.27. Milan urgent 51 % → 64 % but notifications per normal day 0.23 → 0.69 (one every ~1.5 days), so Milan keeps the 3-point rule.
 **Adopted in the live demo** (21 Nov): `py -m har.replay` now reads `anomaly-e20` and replays Aruba with the 3-min cleanup (`winc`) and Milan with the original rule (`win`). All 12 scenarios reproduce the evaluated stream, 0 batch alerts missing live; Milan's files are byte-identical to before. Aruba example days changed because they are picked among the copies the cleaned stream catches.
 
+## E21 — Live routine monitoring on pushed events  (22 Nov 2026, Hudiya)
+**Question**: Does the backend's live pipeline (saved BiLSTM + saved routine model + D15 routing, run incrementally on pushed events, D18) give the same activities and alerts as the evaluated replay, and is it fast enough to run live?
+**Setup**: Routine model refitted and saved with the E20 operating point (`py -m har.routine_live`): Aruba `winc` (3 min) on 44 observation days (2011-03-16 – 2011-04-28), Milan `win` on 13 (2009-12-12 – 2009-12-24), the same numbers of days as E20. Check: each home's real monitoring day in `public/replay/` (Aruba 2011-05-05, Milan 2009-12-29) taken from the raw data, with 150 earlier events as history, pushed (a) as a whole-day re-run every 2 min, (b) in 1-hour (Milan) / 7-minute (Aruba) batches through `LiveMonitor`, (c) over HTTP in 2-hour batches with a clock time (`tests/test_api.py`). Timing over HTTP on the dev laptop (CPU): Aruba, catch-up to 18:00 in one push, then 300 single-event pushes.
+**Command**: `py -m har.routine_live --check`; `py -m pytest tests -q` (from `ml/`)
+**Result**:
+
+| Home | Predictions (ours / replay) | Identical | Alerts (ours / replay) | Same time raised, type, activity, tier, delivered |
+|---|---|---|---|---|
+| Aruba | 551 / 551 | 100 % | 2 / 2 | yes (a, b) |
+| Milan | 1,159 / 1,159 | 100 % | 3 / 3 | yes (a, b, c) |
+
+Latency: fitting 41 s (Aruba) / 8 s (Milan); re-running a whole day every 2 min 15.5 s / 23.2 s. Live session over HTTP: catch-up push of 3,998 events 4.2 s; single-event pushes median 10 ms, p95 32 ms (max 1.0 s when one push crossed a long silence); a clock-only push over 2 h (63 routine steps) 0.97 s.
+**Takeaway**: The live backend reproduces the evaluated live pipeline exactly, event by event, and keeps up with a real home by a wide margin (Aruba produces an event every ~15 s on average).
+**Status**: PASS. Feeds ROADMAP 5.2 (latency) and 5.1 (end-to-end test).
+
+## E22 — Per-class results and confidence of the final live window model  (22 Nov 2026, Hudiya)
+**Question**: Which activities does the final live BiLSTM recognise, and can its confidence tell right from wrong answers (ROADMAP 1.2, 1.3)?
+**Setup**: No retraining. Stored test predictions of `window100-last/experiments/bilstm+s{1,2,3}` (the runs behind C5: last 100 events, test window at every event), both homes. Per-class precision / recall / F1 averaged over seeds; a confidence cutoff sweep (predictions below it treated as unknown) and a reliability table.
+**Command**: `py -m har.window_report` → `ml/results/windows_detail.md`
+**Result**: Per-class F1 (3-seed mean): Aruba Relax 0.75, Meal_Preparation 0.68, Bed_to_Toilet 0.53, Sleeping 0.45, Enter_Home 0.45, Work 0.41, Eating 0.30, Respirate 0.30, Leave_Home 0.27, Wash_Dishes 0.06. Milan Read 0.77, Sleep 0.76, Desk_Activity 0.70, Kitchen_Activity 0.69, Watch_TV 0.61, Dining 0.53, Master_Bedroom 0.52, the bathrooms 0.46, Leave_Home 0.29, Bed_to_Toilet 0.28, Meditate 0.25, Morning_Meds 0.04, Eve_Meds 0.02. Confidence: accuracy rises steadily with confidence but stays above it (0.4–0.5 → 66–68 % right; 0.5–0.6 → 73–84 %); only 14–15 % of predictions reach 0.6.
+
+| Cutoff | Aruba kept / accuracy on kept / macro-F1 on kept | Milan kept / accuracy / macro-F1 |
+|---|---|---|
+| none | 100 / 63.8 / 41.9 | 100 / 58.8 / 45.6 |
+| 0.4 | 59 / 77.5 / 55.2 | 52 / 73.9 / 56.3 |
+| 0.5 | 39 / 82.9 / 61.9 | 30 / 79.2 / 60.2 |
+| 0.6 | 14 / 80.0 / 66.6 | 15 / 85.6 / 58.9 |
+
+**Takeaway**: Errors concentrate on the rare activities and on those that share sensors with frequent ones (Leave_Home vs Enter_Home, medicine vs kitchen). The model is under-confident, so the 0.6 cutoff in `metrics.json` is too strict; around 0.4 is the useful floor for "unknown" if one is added to alert routing.
+**Status**: PASS (analysis). Not yet applied to routing.
+
+## E23 — Recorded days as live sensor feeds  (22 Nov 2026, Hudiya)
+**Question**: Can the dashboard be driven live by recorded days without changing what the pipeline computes (D19)?
+**Setup**: `py -m har.feeds` rebuilds the 12 live-demo scenario days (per home: the real monitoring day + 5 injected types; injected days with the E14/E20 injection settings, 3 copies per type and day, seed 0, matched to the scenario by day, type, target, start and note) with full timestamps and 150 events from the evening before. Each feed is pushed through `LiveMonitor` with the saved models; one feed is also played over HTTP as a simulation at 3600× (`tests/test_api.py`), and the Aruba "long silence" day was watched in the browser at 60×→900×.
+**Command**: `py -m har.feeds`; `py -m pytest tests -q` (from `ml/`)
+**Result**: 12 / 12 feeds give exactly the scenario's predictions (Aruba 525–766 per day, Milan 386–1,159) and alerts (0–4 per day, same time raised, type, activity, tier, delivered). Feeds total 1.4 MB. In the browser the inactivity alert appeared live at 11:32 as a notification, as in the replay.
+**Takeaway**: The dashboard now shows the live pipeline itself, not a precomputed result, and on these days it is the evaluated pipeline.
+**Status**: PASS.
+
+## E24 — A week of consecutive days through the live session  (22 Nov 2026, Hudiya)
+**Question**: Does the live session carry on correctly across midnight over several days, and does a scenario day give the same result inside a week as on its own (D20)?
+**Setup**: `py -m har.feeds` builds one week per home (7 consecutive test days; injected copies on Aruba 07 and 11 May, Milan 25 and 30 Dec; the rest real) and pushes each week through `LiveMonitor` in one go. Days with a replay scenario (the injected days and each home's real `normal` day) are compared with it. `tests/test_api.py` also plays the Milan week over HTTP at 3600× from 23:00 across midnight, and the Aruba week was watched crossing midnight in the browser.
+**Command**: `py -m har.feeds`; `py -m pytest tests -q` (from `ml/`)
+**Result**: 7 / 7 days closed per home. All 6 scenario days inside the weeks give exactly their replay's predictions and alerts (Aruba 05 May 551 predictions / 2 alerts, 07 May 525 / 1, 11 May 546 / 4; Milan 25 Dec 479 / 1, 29 Dec 1,159 / 3, 30 Dec 745 / 1). Untouched days raised 0–4 alerts each (Aruba 06–10 May: 0, 4, 1, 3; Milan 26–28 and 31 Dec: 2, 3, 3, 1), all from ordinary days. Pushing a whole week takes 53 s (Aruba) and 89 s (Milan) on a laptop CPU. Over HTTP the first day closed at midnight, a snapshot of 26 Dec followed, and the 25 Dec day report equalled the replay. Week feeds are 0.8 MB (Aruba) and 1.0 MB (Milan).
+**Takeaway**: The live pipeline runs over consecutive days without a restart, and a deviation is caught the same way inside a week as on its own. The alerts on untouched days are what a caregiver would really receive: Aruba's 4 alerts on 08 May are worth inspecting before a pilot.
+**Status**: PASS.

@@ -1,0 +1,45 @@
+{
+  "format": 1,
+  "home": "aruba",
+  "stream": "winc",
+  "clean_minutes": 3.0,
+  "recogniser": "window100-bilstm-s1.pt",
+  "stride": 10,
+  "operating_alerts_per_day": 0.1,
+  "observation_days": 44,
+  "observed_from": "2011-03-16",
+  "observed_until": "2011-04-28",
+  "expected_observation_days": 44,
+  "fit_seconds": 40.7,
+  "theta": {
+    "missed": 2.8679,
+    "prolonged": 2.952,
+    "unusual_time": 2.3004,
+    "frequency": 2.2651,
+    "unusual_order": 6.5806,
+    "timeline": 2.9968,
+    "inactivity": 1.4989
+  },
+  "usual_day": [
+    {
+      "activity": "Meal_Preparation",
+      "usualFirst": "07:07",
+      "pDay": 1.0
+    },
+    {
+      "activity": "Work",
+      "usualFirst": "09:42",
+      "pDay": 0.93
+    },
+    {
+      "activity": "Eating",
+      "usualFirst": "09:53",
+      "pDay": 0.75
+    },
+    {
+      "activity": "Enter_Home",
+      "usualFirst": "12:10",
+      "pDay": 0.8
+    }
+  ]
+}

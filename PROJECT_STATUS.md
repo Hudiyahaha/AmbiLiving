@@ -33,8 +33,9 @@ Ambient sensors → HAR model → recognised activity → routine deviation → 
 |---|---|---|
 | **Research / ML** — activity recognition | [ml/](ml/) | **Done for both settings.** All five models run on both homes under both protocols, with 3-seed repeats. Known-boundary (segment) results are ~92–95 macro-F1; the live sliding-window setting is finished and a final model chosen (BiLSTM). |
 | **Research / ML** — routine deviation + alerts | [ml/har/anomaly.py](ml/har/anomaly.py), [alerts.py](ml/har/alerts.py) | **Done and evaluated.** Per-resident routine model (8 aspects incl. weekly drift) vs a generic anomaly-detection baseline, on three activity streams; alert routing (notify / evening summary / dashboard). Results: [anomaly.md](ml/results/anomaly.md), [alerts.md](ml/results/alerts.md). |
-| **Product / PoC** — caregiver dashboard | [src/](src/) | All six screens built. Monitoring and activity history now play back **one real CASAS day per home** with model predictions. Anomalies are still sample data. No backend. Typecheck clean. |
-| **Poster** | `poster/` | Draft rendered to `AmbiLiving-Poster.pdf`. **Not yet committed.** Concept/architecture only, no results. |
+| **Product / PoC** — caregiver dashboard | [src/](src/) | All six screens built. **Live (D19):** with the API running, every caregiver page follows a recorded day played as a live sensor feed through the live pipeline (BiLSTM, routine model, routing), by default a week of consecutive days that runs on past midnight (D20: each closed day appears in Past days), with speed, pause and recording controls on Monitoring; the exported day and the bundled files remain as fallbacks. Typecheck clean. |
+| **Backend** | [ml/api/](ml/api/) | **Started (22 Nov, D16).** FastAPI service: homes, exported day and anomalies, replay scenarios streamed live (server-sent events), live recognition with the saved BiLSTM, and live monitoring sessions that run recognition, the saved routine model and alert routing on pushed events (D18; identical to the evaluated replay, ~10 ms per event, E21). Tests in `ml/tests/`. Simulations (D19) play recorded feeds (`ml/feeds/`) into sessions and stream them to the dashboard (E23: identical to the evaluated replay on all 12 days). |
+| **Poster** | [poster/](poster/) | Draft rendered to `AmbiLiving-Poster.pdf`. Concept/architecture only, no results yet (ROADMAP 6.5). |
 
 **Git state.** All ML and app work is on `main` (PR #1 `babar`, 18 Oct; PRs #2 and #3 `aleeza`,
 14–18 Nov, including the final sliding-window results). Working branch for the roadmap and paper
@@ -142,7 +143,7 @@ Final results (macro-F1 %, mean ± std over 3 seeds; full table in [ml/results/w
 The ordered, step-by-step plan lives in **[ROADMAP.md](ROADMAP.md)** (single source of truth —
 do not duplicate it here). In short:
 
-0. Housekeeping — commit `poster/`, refresh `ml/README.md` tables, real README, tag results.
+0. Housekeeping — refresh `ml/README.md` tables, tag results (poster, README and cleanup done 22 Nov).
 1. Freeze activity recognition — save trained models, per-class window table, confidence analysis.
 2. ~~Routine-deviation detection~~ — done (D12–D14, E11–E14).
 3. ~~Alert routing~~ — done (D15, E15).
@@ -163,8 +164,7 @@ do not duplicate it here). In short:
 | **Rare / overlapping classes** | Solved with known boundaries (history), not in the window setting. Respirate has 6 instances in total — say so rather than hiding it in a macro average. |
 | **Label drift** | Aruba stops annotating Wash_Dishes from Mar 2011; Milan's test days are a holiday period (validation ~46 vs test ~38 for GB). Temporal per-class scores are noisy. |
 | **History feedback loop** | History features use the model's own earlier predictions; one wrong recognition can affect the next in a live system. |
-| **Research → product gap** | Narrower: the dashboard shows a real day and routine deviations found on real days, with how each was delivered. A live demo (`/live`) now replays days through the live BiLSTM and routine model, minute by minute (D17). Still no streaming backend (ROADMAP 4.1). |
-| **Uncommitted work** | `poster/` is not on `main`. |
+| **Research → product gap** | Narrower: the dashboard shows a real day and routine deviations found on real days, with how each was delivered. A live demo (`/live`) now replays days through the live BiLSTM and routine model, minute by minute (D17). A FastAPI backend now streams those replays and recognises activities from posted events (D16), and the dashboard reads from it (bundled files only as fallback), and live monitoring sessions run the whole pipeline on pushed events (D18), which the dashboard now follows live (D19). What remains is real sensor input, persistence, delivery of notifications and accounts. |
 
 ---
 
@@ -173,10 +173,17 @@ do not duplicate it here). In short:
 **Frontend** (from the repo root)
 
 ```bash
-npm run dev          # dev server on :3000
+npm run dev          # dev server on :3000 (reads the API at NEXT_PUBLIC_AMBILIVING_API, default http://127.0.0.1:8000)
 npm run build
 npm run lint
 npx tsc --noEmit     # typecheck (currently clean)
+```
+
+**Backend** (from `ml/`; `py -m pip install -r requirements.txt` adds FastAPI and uvicorn)
+
+```bash
+py -m api                          # http://127.0.0.1:8000, interactive docs at /docs
+py -m pytest tests -q              # backend tests (one needs ml/data/raw/aruba.txt)
 ```
 
 **ML** (from `ml/`; raw CASAS files go in `ml/data/raw/`, git-ignored). On this machine `python`

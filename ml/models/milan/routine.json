@@ -1,0 +1,70 @@
+{
+  "format": 1,
+  "home": "milan",
+  "stream": "win",
+  "clean_minutes": null,
+  "recogniser": "window100-bilstm-s1.pt",
+  "stride": 10,
+  "operating_alerts_per_day": 0.1,
+  "observation_days": 13,
+  "observed_from": "2009-12-12",
+  "observed_until": "2009-12-24",
+  "expected_observation_days": 13,
+  "fit_seconds": 8.5,
+  "theta": {
+    "missed": 3.2581,
+    "prolonged": 2.8508,
+    "unusual_time": 3.6911,
+    "frequency": 3.2836,
+    "unusual_order": 6.9412,
+    "timeline": 2.8618,
+    "inactivity": 1.8688
+  },
+  "usual_day": [
+    {
+      "activity": "Kitchen_Activity",
+      "usualFirst": "08:24",
+      "pDay": 1.0
+    },
+    {
+      "activity": "Morning_Meds",
+      "usualFirst": "08:25",
+      "pDay": 0.92
+    },
+    {
+      "activity": "Read",
+      "usualFirst": "08:53",
+      "pDay": 1.0
+    },
+    {
+      "activity": "Master_Bathroom",
+      "usualFirst": "09:39",
+      "pDay": 1.0
+    },
+    {
+      "activity": "Chores",
+      "usualFirst": "09:47",
+      "pDay": 0.54
+    },
+    {
+      "activity": "Leave_Home",
+      "usualFirst": "10:20",
+      "pDay": 0.85
+    },
+    {
+      "activity": "Master_Bedroom_Activity",
+      "usualFirst": "11:14",
+      "pDay": 0.77
+    },
+    {
+      "activity": "Guest_Bathroom",
+      "usualFirst": "11:47",
+      "pDay": 1.0
+    },
+    {
+      "activity": "Watch_TV",
+      "usualFirst": "13:32",
+      "pDay": 1.0
+    }
+  ]
+}

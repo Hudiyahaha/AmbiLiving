@@ -191,6 +191,59 @@ on only what has happened so far, so alerts appear when a live system would rais
 exporter checks that the replay reproduces the evaluated live stream and raises every batch
 alert (decision D17). The dashboard plays the files on the **Live demo** page (`/live`).
 
+## Backend API (`api/`, decision D16)
+
+    py -m api                                   # http://127.0.0.1:8000, docs at /docs
+    py -m pytest tests -q
+
+A FastAPI service over the files and models above. CORS allows the Next.js dev server
+(`AMBILIVING_CORS` overrides it).
+
+| Route | What it returns |
+|---|---|
+| `GET /homes` | Each home and whether its saved window model is available / loaded |
+| `GET /homes/{home}/day`, `/anomalies` | The exported dashboard day and real-day routine deviations |
+| `POST /homes/{home}/recognise` | Activity + confidence for the last 100 posted sensor events (saved BiLSTM, ~20 ms after the first call); `every=N` also returns a history |
+| `GET /replay`, `/replay/{home}/{scenario}` | The D17 replay index and one whole scenario |
+| `GET /replay/{home}/{scenario}/stream` | The scenario as server-sent events in timestamp order: `clock`, `event`, `prediction`, `alert` (at the second it was raised); `speed`, `start`, `end`, `only`, `tick` |
+| `GET /homes/{home}/routine` | The saved routine model: observation period, stream rule, thresholds, usual day |
+| `POST /homes/{home}/sessions` | Start live monitoring (`monitorFrom`: first day to monitor) |
+| `POST /sessions/{id}/events` | Push sensor events in time order (and optionally `now`): runs the BiLSTM every 10th event, the routine model every 2 min of the clock and D15 routing; returns new predictions, new alert IDs, the day's routed alerts and any days that ended |
+| `GET /sessions/{id}`, `DELETE` | Current activity, today's episodes and alerts, recently ended days |
+| `GET /homes/{home}/feeds` | Recorded days that can be played as a live sensor feed |
+| `POST /homes/{home}/simulations` | Play a recorded feed into a live session at `speed`× from `startAt` on its first day: `week` (default, D20) or one day (D19) |
+| `GET /simulations/{id}/days/{date}` | A day that has ended, as a day report in the replay scenario's shape |
+| `GET /simulations/{id}/stream` | Server-sent events: `snapshot` (the day so far, and again at each midnight), then a `tick` about every 0.5 s with new events/predictions, episodes, routed alerts and new alert IDs |
+| `POST /simulations/{id}/control`, `GET`, `DELETE` | Pause / resume / change speed; status (`?full=true`: the day so far); stop |
+
+### Live feeds (`har.feeds`, decision D19)
+
+    python -m har.feeds                         # -> feeds/<home>-<scenario>.json, then check them
+
+One file per live-demo scenario (real day + 5 injected types per home), rebuilt from the raw
+data with the evaluation's injection settings and full timestamps, plus 150 events from the
+evening before, and one week per home (`<home>-week.json`, D20): seven consecutive days with
+the injected copies on their scenario dates. The check plays each feed through `LiveMonitor`
+and requires the scenario's predictions and alerts, on every scenario day of a week too (E23,
+E24). The dashboard plays them through `/homes/{home}/simulations`.
+
+### Live window model report (`har.window_report`)
+
+    python -m har.window_report                 # -> results/windows_detail.md
+
+Per-class F1 over 3 seeds and a confidence analysis (cutoff sweep, reliability) for the final
+BiLSTM, from the stored test predictions (E22).
+
+### Live routine model (`har.routine_live`, decision D18)
+
+    python -m har.routine_live --check          # fit + save models/<home>/routine.pkl, then verify
+
+Fits the routine model as at the E20 operating point (observation days, live BiLSTM
+predictions, Aruba 3-minute cleanup / Milan 3-point rule, 0.1 alerts per normal day) and
+saves it next to the BiLSTM. `--check` replays each home's real monitoring day from the raw
+data and requires the same predictions and alerts as `public/replay/` (E21). Live sessions
+in the API use `LiveMonitor`, which processes pushed events incrementally with the same result.
+
 ## Results (5-fold CV, macro-F1 %)
 
 Full table with accuracy / weighted-F1 / P / R / timing: [`results/summary.md`](results/summary.md).

@@ -1,16 +1,111 @@
 "use client";
 
+import { useEnvironment } from "@/context/EnvironmentContext";
 import { useSettings } from "@/context/SettingsContext";
+
+function DataSourceSection() {
+  const { dataOrigin, live, homes, currentHome, reload } = useEnvironment();
+  const base = homes.find((h) => h.id === currentHome.id) ?? currentHome;
+  const src = base.dataSource;
+  const option = (on: boolean, title: string, text: string) => (
+    <label className="flex cursor-pointer items-start gap-3 rounded-xl border border-border p-3 text-sm has-[:checked]:border-accent">
+      <input
+        type="radio"
+        name="data-source"
+        checked={live.enabled === on}
+        onChange={() => live.setEnabled(on)}
+        className="mt-0.5 accent-accent"
+      />
+      <span>
+        <span className="font-medium text-foreground">{title}</span>
+        <span className="mt-0.5 block text-muted">{text}</span>
+      </span>
+    </label>
+  );
+
+  return (
+    <section className="rounded-2xl border border-border bg-surface p-5 shadow-sm">
+      <h2 className="font-display text-lg font-semibold text-foreground">Data source</h2>
+      {dataOrigin === "bundled" && (
+        <p className="mt-2 text-sm text-warning">
+          The backend is offline, so the app shows the data bundled with it.{" "}
+          <button type="button" onClick={reload} className="font-medium underline">
+            Retry
+          </button>
+        </p>
+      )}
+      <div className="mt-4 space-y-2">
+        {option(true, "Live feed", "A recorded day played event by event through the live system.")}
+        {option(false, "Recorded day", "One exported day per home, with the dataset's annotations.")}
+      </div>
+
+      <details className="group mt-4 text-sm">
+        <summary className="cursor-pointer font-medium text-foreground">How it works</summary>
+        <dl className="mt-3 space-y-3 text-muted">
+          <div>
+            <dt className="font-medium text-foreground">Live feed</dt>
+            <dd>
+              There are no real sensors, so a recorded CASAS day is sent to the backend event
+              by event, as a sensor hub would send it, at the chosen speed. Activity
+              recognition, routine checks and alerts run on it as it arrives. On test days one
+              deviation was inserted into the raw sensor events; the system is not told.
+            </dd>
+          </div>
+          <div>
+            <dt className="font-medium text-foreground">Activity recognition</dt>
+            <dd>
+              A BiLSTM reads the last 100 sensor events, every 10th event. Very short
+              predicted activities are merged into the one before, so a stray guess does not
+              start a new activity.
+            </dd>
+          </div>
+          <div>
+            <dt className="font-medium text-foreground">Routine deviations</dt>
+            <dd>
+              Each resident&apos;s routine is learned from their own observation days: which
+              activities happen daily and by when, how long, how often, at what time, in what
+              order, and how long the home is usually quiet. Every 2 minutes the day so far is
+              compared with it.
+            </dd>
+          </div>
+          <div>
+            <dt className="font-medium text-foreground">Alerts</dt>
+            <dd>
+              Possible emergencies (a long silence, a very long bathroom visit, going out or
+              cooking at night, missed medicine) are sent as notifications, at most once per 2
+              hours. Others go into the 21:00 evening summary (at most 3) or stay on the
+              Routine deviations page.
+            </dd>
+          </div>
+          <div>
+            <dt className="font-medium text-foreground">Recorded day</dt>
+            <dd>
+              {src
+                ? `${src.dataset}, ${src.date}: ${src.model}, trained on ${src.trainedOn}; ${src.correct} of ${src.total} activities recognised correctly. `
+                : ""}
+              Activity start and end times come from the dataset annotations, so this view
+              shows the model at its best; the live feed shows it without that help.
+            </dd>
+          </div>
+          <div>
+            <dt className="font-medium text-foreground">Scenario replay</dt>
+            <dd>
+              The same test days, computed in advance so you can scrub through them, with
+              the dataset annotations shown next to the live system&apos;s view.
+            </dd>
+          </div>
+        </dl>
+      </details>
+    </section>
+  );
+}
 
 export default function SettingsPage() {
   const { settings, updateSettings, resetSettings } = useSettings();
 
   return (
     <div className="mx-auto max-w-2xl space-y-6">
-      <p className="text-sm text-muted">
-        Caregiver preferences for this PoC. Changes apply immediately in the
-        current session.
-      </p>
+      <DataSourceSection />
 
       <section className="rounded-2xl border border-border bg-surface p-5 shadow-sm">
         <h2 className="font-display text-lg font-semibold text-foreground">

@@ -7,9 +7,9 @@ import { EnvironmentProvider } from "@/context/EnvironmentContext";
 import { SettingsProvider } from "@/context/SettingsContext";
 
 const pageTitles: Record<string, string> = {
-  "/dashboard": "Dashboard",
+  "/dashboard": "Today",
   "/monitoring": "Monitoring",
-  "/live": "Live demo",
+  "/days": "Past days",
   "/activities": "Activity History",
   "/anomalies": "Routine deviations",
   "/homes": "Homes",

@@ -30,10 +30,10 @@ paper is mostly written by the time Phase 5 finishes.
 
 | # | Step | Done when | Paper |
 |---|---|---|---|
-| ☐ 0.1 | Commit `poster/` | It is on `main` | — |
+| ☑ 0.1 | Commit `poster/` | It is on `main` | — |
 | ☐ 0.2 | Refresh the result tables and "Known limitations" in [ml/README.md](ml/README.md) | Every number matches `ml/results/summary.md` / `windows.md` (they predate the 13 Oct macro-F1 fix; e.g. Milan temporal GB + ctx reads 84.65 there vs 90.69 in `summary.md`) | Reproducibility |
-| ☐ 0.3 | Replace the create-next-app [README.md](README.md) with a real project README (what, how to run both tracks, where results live) | A new teammate can run the app and one experiment from it alone | — |
-| ☐ 0.4 | Delete the unused [PagePlaceholder.tsx](src/components/ui/PagePlaceholder.tsx) | `npx tsc --noEmit` still clean | — |
+| ☑ 0.3 | Replace the create-next-app [README.md](README.md) with a real project README (what, how to run both tracks, where results live) | A new teammate can run the app and one experiment from it alone | — |
+| ☑ 0.4 | Delete the unused [PagePlaceholder.tsx](src/components/ui/PagePlaceholder.tsx) | `npx tsc --noEmit` still clean | — |
 | ☐ 0.5 | Tag the current results: `git tag har-results-v1` | Tag pushed; the paper's HAR numbers cite this tag | Reproducibility |
 
 ## Phase 1 — Freeze activity recognition
@@ -43,9 +43,9 @@ the paper written while the details are fresh.
 
 | # | Step | Done when | Paper |
 |---|---|---|---|
-| ☐ 1.1 | **Save trained models to disk.** No script persists a model today (only the parsed data is cached). Add a `--save` option for the final segment model (GB + ctx + history) and the final window model (BiLSTM), trained on the train days only | Model files load in a fresh process and reproduce the stored test predictions | Method §Implementation |
-| ☐ 1.2 | **Per-class table for the window setting** for the final BiLSTM, both homes, mean over 3 seeds | Table in `ml/results/windows.md`; rare classes (Wash_Dishes, Respirate, meds) reported explicitly | C6, Results §HAR-live |
-| ☐ 1.3 | **Confidence analysis.** `metrics.json` already stores mean confidence on right vs wrong answers and how many mistakes a 60 % / 80 % "unknown" cutoff catches. Summarise it for the final models | One small table: cutoff → % predictions kept, accuracy on kept | Feeds Phase 3 (alerts should not fire on low-confidence activities) |
+| ☑ 1.1 | *(Done for the window BiLSTM: `har.saved_model`, `ml/models/`, checked in the experiment log; the segment model is not saved)* **Save trained models to disk.** No script persists a model today (only the parsed data is cached). Add a `--save` option for the final segment model (GB + ctx + history) and the final window model (BiLSTM), trained on the train days only | Model files load in a fresh process and reproduce the stored test predictions | Method §Implementation |
+| ☑ 1.2 | *(Done 22 Nov, E22: `py -m har.window_report` → `ml/results/windows_detail.md`)* **Per-class table for the window setting** for the final BiLSTM, both homes, mean over 3 seeds | Table in `ml/results/windows.md`; rare classes (Wash_Dishes, Respirate, meds) reported explicitly | C6, Results §HAR-live |
+| ☑ 1.3 | *(Done 22 Nov, E22: same report; the BiLSTM is under-confident, see C6c)* **Confidence analysis.** `metrics.json` already stores mean confidence on right vs wrong answers and how many mistakes a 60 % / 80 % "unknown" cutoff catches. Summarise it for the final models | One small table: cutoff → % predictions kept, accuracy on kept | Feeds Phase 3 (alerts should not fire on low-confidence activities) |
 | ☐ 1.4 | *(Optional)* Transformer + context under cv on both homes — the only missing cell in the cv tables (~4 h CPU per home) | Row present in `summary.md`, or the gap stated in the paper | C1 |
 | ☐ 1.5 | **Draft paper sections: Dataset, HAR method, HAR results (both settings)** | Drafts in `paper/draft/` cite only numbers listed in `paper/claims.md` | §3, §4.1–4.3, §5.1–5.2 |
 
@@ -75,11 +75,13 @@ Decide it before building models, and record the decision in [paper/decisions.md
 
 | # | Step | Done when | Paper |
 |---|---|---|---|
-| ☐ 4.1 | **Decide the backend**: FastAPI (Python, loads the models from 1.1 directly) vs Next.js route handlers calling a Python process. FastAPI is the simpler fit since all models are Python | Decision + reason in `paper/decisions.md` | §4.7 System |
-| ☑ 4.2 | *(Done as a precomputed causal replay, D17: `har.replay` + `/live`; a streaming endpoint is still open with 4.1)* **Replay service:** stream a recorded CASAS day event by event (adjustable speed) as if it were live | Endpoint emits events in timestamp order | — |
-| ◐ 4.3 | *(Offline in `har.replay`: BiLSTM every 10th event + routine model + routing, re-run every 2 min of the day)* **Live inference:** window model classifies the last 100 events at each event; anomaly + alert modules run on its output | Endpoints for current activity, activity history, anomalies | §4.7 |
-| ☐ 4.4 | **Connect the dashboard:** replace the generated JSON ([realData.ts](src/data/homes/realData.ts)) and the sample anomalies (`arubaMock.ts`, `milanMock.ts`) with API calls | Monitoring, Activities, Anomalies and Dashboard pages show live API data | — |
-| ☐ 4.5 | **Researcher / Evaluation view** (spec §13): HAR and anomaly metrics, per-class tables, confusion matrices, kept apart from the caregiver screens | Page reads the archived `metrics.json` files | Demo |
+| ☑ 4.1 | *(Done, D16: FastAPI in `ml/api/`, run with `py -m api` from `ml/`)* **Decide the backend**: FastAPI (Python, loads the models from 1.1 directly) vs Next.js route handlers calling a Python process. FastAPI is the simpler fit since all models are Python | Decision + reason in `paper/decisions.md` | §4.7 System |
+| ☑ 4.2 | *(Done: D17 precomputes the causal replay; `GET /replay/{home}/{scenario}/stream` sends it as server-sent events with `speed`, `start`/`end` and a per-minute clock)* **Replay service:** stream a recorded CASAS day event by event (adjustable speed) as if it were live | Endpoint emits events in timestamp order | — |
+| ☑ 4.3 | *(Done 22 Nov, D18 / E21: routine model saved by `har.routine_live`; live sessions — `POST /homes/{home}/sessions`, then `POST /sessions/{id}/events` — run BiLSTM + routine + routing on pushed events and reproduce the replay exactly; `POST /homes/{home}/recognise` for one-off recognition)* **Live inference:** window model classifies the last 100 events at each event; anomaly + alert modules run on its output | Endpoints for current activity, activity history, anomalies | §4.7 |
+| ☑ 4.4 | *(Done 22 Nov: `EnvironmentContext` loads each home's day and anomalies from the API and falls back to the bundled files when it is offline (header badge says which); Monitoring adds a live-model panel that posts the last 100 events to `/recognise`; `/live` loads scenarios from the API)* **Connect the dashboard:** replace the generated JSON ([realData.ts](src/data/homes/realData.ts)) and the sample anomalies (`arubaMock.ts`, `milanMock.ts`) with API calls | Monitoring, Activities, Anomalies and Dashboard pages show live API data | — |
+| ✗ 4.5 | *(Dropped 22 Nov by team decision: results stay in `ml/results/` and the paper)* **Researcher / Evaluation view** (spec §13): HAR and anomaly metrics, per-class tables, confusion matrices, kept apart from the caregiver screens | Page reads the archived `metrics.json` files | Demo |
+| ☑ 4.7 | *(Added and done 22 Nov, D19 / E23)* **Live dashboard:** recorded days (`ml/feeds/`, `har.feeds`) played as live sensor feeds into live sessions (`/homes/{home}/simulations`, server-sent events); Dashboard, Monitoring, Activity History and Routine deviations follow the live pipeline | Every page shows live data; a played day gives the replay's predictions and alerts | §4.7 |
+| ☑ 4.8 | *(Added and done 22 Nov, D20 / E24)* **Past midnight:** a week of consecutive days per home (`ml/feeds/<home>-week.json`) is the default live feed; at midnight the day closes and the next starts; Past days shows the days the live system closed (`/simulations/{id}/days/{date}`) | A week plays through; scenario days inside it give their replay's result | §4.7 |
 | ☐ 4.6 | *(Optional)* Kasteren as a placeholder third home (spec §12) | Listed with `status: "placeholder"` | — |
 
 ## Phase 5 — System evaluation & deployment

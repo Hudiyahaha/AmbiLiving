@@ -3,8 +3,18 @@ import { arubaActivityClasses } from "@/data/homes/arubaMock";
 import { arubaSensors } from "@/data/homes/arubaSensors";
 import { milanActivityClasses } from "@/data/homes/milanMock";
 import { milanSensors } from "@/data/homes/milanSensors";
-import { arubaRealDay, milanRealDay } from "@/data/homes/realData";
-import { arubaRealAnomalies, milanRealAnomalies } from "@/data/homes/realAnomalies";
+import {
+  arubaRealDay,
+  milanRealDay,
+  toRealDay,
+  type ExportedDay,
+} from "@/data/homes/realData";
+import {
+  arubaRealAnomalies,
+  milanRealAnomalies,
+  toRealAnomalies,
+  type ExportedAnomalies,
+} from "@/data/homes/realAnomalies";
 
 // Sensor events and recognised activities are one real dataset day with model
 // predictions (see realData.ts). Anomalies are the routine model's alerts on the
@@ -75,6 +85,30 @@ export const homes: HomeEnvironment[] = [
 ];
 
 export const DEFAULT_HOME_ID = "aruba";
+
+/**
+ * The same home with its day and anomalies taken from the API (`/homes/{id}/day`,
+ * `/homes/{id}/anomalies`) instead of the bundled files. Both go through the
+ * transforms used for the bundled files, so pages see the same shapes.
+ */
+export function withApiData(
+  home: HomeEnvironment,
+  day: ExportedDay,
+  anomalies: ExportedAnomalies,
+): HomeEnvironment {
+  const dataset = home.dataSource?.dataset ?? home.name;
+  const real = toRealDay(day, dataset, home.activityClasses);
+  const found = toRealAnomalies(anomalies);
+  return {
+    ...home,
+    events: real.events,
+    activityHistory: real.activityHistory,
+    currentActivityId: real.currentActivityId,
+    dataSource: real.dataSource,
+    anomalies: found.anomalies,
+    anomalySource: found.source,
+  };
+}
 
 export function getHomeById(id: string): HomeEnvironment | undefined {
   return homes.find((home) => home.id === id);

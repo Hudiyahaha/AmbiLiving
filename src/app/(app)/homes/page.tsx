@@ -7,10 +7,6 @@ export default function HomesPage() {
 
   return (
     <div className="mx-auto max-w-5xl space-y-4">
-      <p className="text-sm text-muted">
-        CASAS smart-home environments available in this PoC. Switching updates
-        floor plan, sensors, activities, and routine deviations across the app.
-      </p>
 
       <ul className="grid gap-4 md:grid-cols-2">
         {homes.map((home) => {
