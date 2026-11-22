@@ -110,8 +110,11 @@ export interface LiveInfo {
   status: "starting" | "running" | "paused" | "finished" | "error";
   scenario: string;
   title: string;
-  /** e.g. "Thu 05 May 2011" */
+  /** The day being monitored, e.g. "Thu 05 May 2011" */
   dayLabel: string;
+  /** Which day of the recorded feed this is (0-based), of `days` */
+  dayIndex: number;
+  days: number;
   speed: number;
   /** Simulated second of the day */
   clock: number;

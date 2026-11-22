@@ -245,3 +245,11 @@ Latency: fitting 41 s (Aruba) / 8 s (Milan); re-running a whole day every 2 min 
 **Result**: 12 / 12 feeds give exactly the scenario's predictions (Aruba 525–766 per day, Milan 386–1,159) and alerts (0–4 per day, same time raised, type, activity, tier, delivered). Feeds total 1.4 MB. In the browser the inactivity alert appeared live at 11:32 as a notification, as in the replay.
 **Takeaway**: The dashboard now shows the live pipeline itself, not a precomputed result, and on these days it is the evaluated pipeline.
 **Status**: PASS.
+
+## E24 — A week of consecutive days through the live session  (22 Nov 2026, Hudiya)
+**Question**: Does the live session carry on correctly across midnight over several days, and does a scenario day give the same result inside a week as on its own (D20)?
+**Setup**: `py -m har.feeds` builds one week per home (7 consecutive test days; injected copies on Aruba 07 and 11 May, Milan 25 and 30 Dec; the rest real) and pushes each week through `LiveMonitor` in one go. Days with a replay scenario (the injected days and each home's real `normal` day) are compared with it. `tests/test_api.py` also plays the Milan week over HTTP at 3600× from 23:00 across midnight, and the Aruba week was watched crossing midnight in the browser.
+**Command**: `py -m har.feeds`; `py -m pytest tests -q` (from `ml/`)
+**Result**: 7 / 7 days closed per home. All 6 scenario days inside the weeks give exactly their replay's predictions and alerts (Aruba 05 May 551 predictions / 2 alerts, 07 May 525 / 1, 11 May 546 / 4; Milan 25 Dec 479 / 1, 29 Dec 1,159 / 3, 30 Dec 745 / 1). Untouched days raised 0–4 alerts each (Aruba 06–10 May: 0, 4, 1, 3; Milan 26–28 and 31 Dec: 2, 3, 3, 1), all from ordinary days. Pushing a whole week takes 53 s (Aruba) and 89 s (Milan) on a laptop CPU. Over HTTP the first day closed at midnight, a snapshot of 26 Dec followed, and the 25 Dec day report equalled the replay. Week feeds are 0.8 MB (Aruba) and 1.0 MB (Milan).
+**Takeaway**: The live pipeline runs over consecutive days without a restart, and a deviation is caught the same way inside a week as on its own. The alerts on untouched days are what a caregiver would really receive: Aruba's 4 alerts on 08 May are worth inspecting before a pilot.
+**Status**: PASS.

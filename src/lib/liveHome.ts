@@ -110,6 +110,8 @@ export function toLiveHome(
       scenario: meta.scenario,
       title: meta.title,
       dayLabel: meta.dayLabel,
+      dayIndex: meta.dayIndex ?? 0,
+      days: meta.days ?? 1,
       speed: meta.speed,
       clock: meta.clock,
       recogniser: meta.recogniser,

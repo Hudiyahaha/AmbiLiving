@@ -179,11 +179,12 @@ def feeds(home: str):
 
 
 class SimulationRequest(BaseModel):
-    scenario: str = Field("normal", description="Recorded day to play (see /homes/{home}/feeds)")
+    scenario: str = Field("week", description="Recorded feed to play: a week of consecutive "
+                                              "days, or one day (see /homes/{home}/feeds)")
     speed: float = Field(60, gt=0, le=3600, description="Simulated seconds per real second")
     startAt: int = Field(6 * 3600, ge=0, lt=86_400,
-                         description="Second of the day to start at; the day before it is "
-                                     "processed at once")
+                         description="Second of the first day to start at; everything before "
+                                     "it is processed at once")
 
 
 @app.post("/homes/{home}/simulations", tags=["simulation"], status_code=201)
@@ -208,8 +209,8 @@ def simulation(sim_id: str, full: bool = Query(False, description="Include the d
 
 @app.get("/simulations/{sim_id}/stream", tags=["simulation"])
 def simulation_stream(sim_id: str):
-    """Server-sent events: ``snapshot`` (the day so far), then a ``tick`` about every half
-    second with new events and predictions (spliced in at ``eventsFrom`` /
+    """Server-sent events: ``snapshot`` (the day so far, and again when a new day starts
+    at midnight), then a ``tick`` about every half second with new events and predictions (spliced in at ``eventsFrom`` /
     ``predictionsFrom``), the current episodes, routed alerts and newly raised alert IDs."""
     sim = simulate.get(sim_id)
     return StreamingResponse(simulate.events(sim), media_type="text/event-stream",
@@ -219,6 +220,13 @@ def simulation_stream(sim_id: str):
 class ControlRequest(BaseModel):
     action: Literal["pause", "resume", "speed"]
     speed: float | None = Field(None, gt=0, le=3600)
+
+
+@app.get("/simulations/{sim_id}/days/{day}", tags=["simulation"])
+def simulation_day(sim_id: str, day: date):
+    """A day that has ended in the simulation, as a day report (the shape of a replay
+    scenario): events, predictions, episodes, the routed alerts and the usual day."""
+    return simulate.closed_day(sim_id, f"{day:%Y-%m-%d}")
 
 
 @app.post("/simulations/{sim_id}/control", tags=["simulation"])

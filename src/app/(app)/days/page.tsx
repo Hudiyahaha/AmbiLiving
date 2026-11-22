@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Bell, CheckCircle2, Circle, Clock, Inbox, LayoutList, Pause, Play } from "lucide-react";
 import { DayTimeline } from "@/components/DayTimeline";
 import { useEnvironment } from "@/context/EnvironmentContext";
@@ -61,9 +61,16 @@ function headline(sc: ReplayScenario): Headline {
 
 const DOT = { high: "bg-danger", medium: "bg-warning", ok: "bg-accent" } as const;
 
-/** Past days: a report per day of what happened and what the caregiver was told. */
+/** Past days: a report per day of what happened and what the caregiver was told.
+ *  While the home is live, the days the live system has closed come first (D20),
+ *  then the recorded days from before them. */
 export default function PastDaysPage() {
-  const { currentHome } = useEnvironment();
+  const { currentHome, live } = useEnvironment();
+  const meta = currentHome.live ? live.feed.meta : null;
+  const simId = meta?.simulation ?? null;
+  const closedKey = (meta?.closedDays ?? []).map((c) => c.day).join(",");
+  const [liveDays, setLiveDays] = useState<Record<string, ReplayScenario>>({});
+  const requested = useRef(new Set<string>());
   const [index, setIndex] = useState<ReplayIndex | null>(null);
   const [days, setDays] = useState<Record<string, ReplayScenario>>({});
   const [selected, setSelected] = useState<string | null>(null);
@@ -97,6 +104,31 @@ export default function PastDaysPage() {
     };
   }, [refs, currentHome.id]);
 
+  // Days the live session has closed, fetched once each.
+  useEffect(() => {
+    if (!simId || !closedKey) return;
+    const todo = closedKey
+      .split(",")
+      .map((day) => `${simId}/${day}`)
+      .filter((k) => !requested.current.has(k));
+    if (!todo.length) return;
+    todo.forEach((k) => requested.current.add(k));
+    Promise.all(
+      todo.map((k) =>
+        api
+          .simulationDay(simId, k.split("/")[1])
+          .then((sc) => [k, sc] as const)
+          .catch(() => {
+            requested.current.delete(k);
+            return null;
+          }),
+      ),
+    ).then((pairs) => {
+      const got = pairs.filter((x): x is readonly [string, ReplayScenario] => x !== null);
+      if (got.length) setLiveDays((d) => ({ ...d, ...Object.fromEntries(got) }));
+    });
+  }, [simId, closedKey]);
+
   // One report per date, newest first. Where several recorded days share a date,
   // keep the untouched day, else the one with a notification, else the first.
   const ordered = useMemo(() => {
@@ -113,29 +145,49 @@ export default function PastDaysPage() {
       (a, b) => Date.parse(days[b.id].day) - Date.parse(days[a.id].day),
     );
   }, [refs, days]);
-  const current = (selected && days[selected] ? selected : ordered[0]?.id) ?? null;
-  const sc = current ? days[current] : null;
+  // While live: the closed live days, then recorded days from before the live week.
+  const entries = useMemo(() => {
+    const recorded = ordered.map((r) => ({ key: r.id, sc: days[r.id] }));
+    if (!meta) return recorded;
+    const closed = meta.closedDays ?? [];
+    const firstDay = Date.parse(closed[0]?.dayLabel ?? meta.dayLabel);
+    const fromLive = closed
+      .map((c) => ({ key: `live/${c.day}`, sc: liveDays[`${meta.simulation}/${c.day}`] }))
+      .filter((e) => e.sc)
+      .reverse();
+    return [...fromLive, ...recorded.filter((e) => Date.parse(e.sc.day) < firstDay)];
+  }, [ordered, days, meta, liveDays]);
+  const pick = entries.find((e) => e.key === selected) ?? entries[0] ?? null;
+  const current = pick?.key ?? null;
+  const sc = pick?.sc ?? null;
 
-  if (error) return <p className="mx-auto max-w-6xl text-sm text-muted">{error}</p>;
-  if (!ordered.length) return <p className="mx-auto max-w-6xl text-sm text-muted">Loading…</p>;
+  if (!entries.length) {
+    return (
+      <p className="mx-auto max-w-6xl text-sm text-muted">
+        {meta
+          ? `Days appear here once they are over. ${meta.dayLabel} ends at midnight.`
+          : (error ?? "Loading…")}
+      </p>
+    );
+  }
 
   return (
     <div className="mx-auto grid max-w-6xl gap-4 lg:grid-cols-[260px_1fr]">
       <ul className="space-y-2">
-        {ordered.map((r) => {
-          const h = headline(days[r.id]);
-          const on = r.id === current;
+        {entries.map((e) => {
+          const h = headline(e.sc);
+          const on = e.key === current;
           return (
-            <li key={r.id}>
+            <li key={e.key}>
               <button
                 type="button"
-                onClick={() => setSelected(r.id)}
+                onClick={() => setSelected(e.key)}
                 className={[
                   "w-full rounded-xl border p-3 text-left transition",
                   on ? "border-accent bg-accent-soft/60" : "border-border bg-surface hover:bg-surface-muted/50",
                 ].join(" ")}
               >
-                <p className="text-sm font-medium text-foreground">{days[r.id].day}</p>
+                <p className="text-sm font-medium text-foreground">{e.sc.day}</p>
                 <p className="mt-1 flex items-center gap-1.5 text-xs text-foreground">
                   <span className={`h-2 w-2 shrink-0 rounded-full ${DOT[h.tone]}`} aria-hidden />
                   {h.text}

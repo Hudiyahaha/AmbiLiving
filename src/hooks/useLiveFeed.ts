@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   api,
+  ApiError,
   type LiveAlert,
   type LiveCurrent,
   type LiveEpisode,
@@ -14,8 +15,9 @@ import {
 } from "@/lib/api";
 
 /**
- * Follows a simulated live home (decision D19): the backend plays a recorded day
- * into a live session and streams what the live pipeline produces. One simulation
+ * Follows a simulated live home (decisions D19, D20): the backend plays a recorded
+ * week (or day) into a live session and streams what the live pipeline produces for
+ * the current day; at midnight a new snapshot starts the next day. One simulation
  * per home; its id is kept in sessionStorage so a page reload re-attaches to it.
  */
 
@@ -42,6 +44,8 @@ export interface LiveFeedControls {
 }
 
 export const DEFAULT_SPEED = 60;
+/** A week of consecutive days; homes without one fall back to their real day */
+export const DEFAULT_SCENARIO = "week";
 export const DEFAULT_START = 6 * 3600;
 
 export const EMPTY_FEED: LiveFeed = {
@@ -86,6 +90,8 @@ function writeStored(home: string, id: string | null) {
 
 function applyTick(feed: LiveFeed, t: SimulationTick): LiveFeed {
   if (!feed.meta) return feed;
+  // A tick about another day: the next day's snapshot is on its way.
+  if (t.day && t.day !== feed.meta.day) return feed;
   return {
     ...feed,
     meta: {
@@ -131,11 +137,18 @@ export function useLiveFeed(home: string, enabled: boolean): [LiveFeed, LiveFeed
     (options) => {
       const previous = simRef.current;
       setState((s) => ({ home, simId: null, epoch: s.epoch + 1, feed: EMPTY_FEED }));
+      const body = {
+        scenario: options?.scenario ?? DEFAULT_SCENARIO,
+        speed: options?.speed ?? DEFAULT_SPEED,
+        startAt: options?.startAt ?? DEFAULT_START,
+      };
       api
-        .createSimulation(home, {
-          scenario: options?.scenario ?? "normal",
-          speed: options?.speed ?? DEFAULT_SPEED,
-          startAt: options?.startAt ?? DEFAULT_START,
+        .createSimulation(home, body)
+        .catch((err: unknown) => {
+          if (!options?.scenario && err instanceof ApiError && err.status === 404) {
+            return api.createSimulation(home, { ...body, scenario: "normal" });
+          }
+          throw err;
         })
         .then((meta) => {
           if (previous) void api.deleteSimulation(previous);

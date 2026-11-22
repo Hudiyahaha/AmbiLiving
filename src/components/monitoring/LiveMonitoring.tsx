@@ -24,7 +24,7 @@ import {
 const BTN =
   "flex items-center gap-1.5 rounded-lg border border-border bg-surface px-3 py-1.5 text-sm font-medium text-foreground transition hover:bg-surface-muted disabled:opacity-50";
 const SELECT = "w-full rounded border border-border bg-surface px-2 py-1 text-sm outline-none";
-const SPEEDS = [1, 10, 60, 300, 900];
+const SPEEDS = [1, 10, 60, 300, 900, 3600];
 const STATUS_TEXT = {
   starting: "Connecting",
   running: "Live",
@@ -71,7 +71,7 @@ export function LiveMonitoring({
             className={`h-1.5 w-1.5 rounded-full bg-accent ${running ? "animate-pulse" : "opacity-50"}`}
             aria-hidden
           />
-          {STATUS_TEXT[info.status]}
+          {info.status === "finished" && info.days > 1 ? "Week over" : STATUS_TEXT[info.status]}
         </p>
       }
       actions={<PlaybackMenu />}
@@ -158,7 +158,7 @@ function PlaybackMenu() {
 
   const days = scenarios.length
     ? scenarios
-    : [{ id: info.scenario, title: info.title, day: info.dayLabel, kind: "" }];
+    : [{ id: info.scenario, title: info.title, day: info.dayLabel, kind: "", days: info.days }];
 
   return (
     <div className="relative flex items-center gap-2">
@@ -198,19 +198,19 @@ function PlaybackMenu() {
             </select>
           </label>
           <div className="border-t border-border pt-3">
-            <p className="text-xs font-medium text-foreground">Play another recorded day</p>
+            <p className="text-xs font-medium text-foreground">Start again</p>
             <label className="mt-2 block">
-              <span className="text-xs text-muted">Day</span>
+              <span className="text-xs text-muted">Recording</span>
               <select value={scenario} onChange={(e) => setScenario(e.target.value)} className={SELECT}>
                 {days.map((s) => (
                   <option key={s.id} value={s.id}>
-                    {s.day} · {s.title}
+                    {(s.days ?? 1) > 1 ? `${s.title} · ${s.day}` : `${s.day} · ${s.title}`}
                   </option>
                 ))}
               </select>
             </label>
             <label className="mt-2 block">
-              <span className="text-xs text-muted">From</span>
+              <span className="text-xs text-muted">{(scenarios.find((s) => s.id === scenario)?.days ?? 1) > 1 ? "First day from" : "From"}</span>
               <select
                 value={startAt}
                 onChange={(e) => setStartAt(Number(e.target.value))}

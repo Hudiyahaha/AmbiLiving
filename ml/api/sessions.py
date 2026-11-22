@@ -45,6 +45,7 @@ class Session:
     id: str
     home: str
     monitor_from: pd.Timestamp | None
+    keep_days: int = 7  # closed days the session keeps
     monitor: LiveMonitor | None = None
     lock: threading.Lock = field(default_factory=threading.Lock)
     created: float = field(default_factory=time.time)
@@ -61,7 +62,7 @@ class Session:
                         raise ValueError("the first push needs events or a clock time")
                     start = pd.Timestamp(times.min() if len(times) else now)
                 self.monitor = LiveMonitor(live.get_model(self.home), get_routine(self.home),
-                                           start)
+                                           start, keep_days=self.keep_days)
             return self.monitor.push(times, sensors, mapped, now)
 
 
@@ -75,7 +76,7 @@ def _expire() -> None:
         del _sessions[sid]
 
 
-def create(home: str, monitor_from=None) -> Session:
+def create(home: str, monitor_from=None, keep_days: int = 7) -> Session:
     check_home(home)
     get_routine(home)  # fail now, not on the first push
     with _lock:
@@ -84,7 +85,7 @@ def create(home: str, monitor_from=None) -> Session:
             oldest = min(_sessions.values(), key=lambda s: s.used)
             del _sessions[oldest.id]
         s = Session(secrets.token_hex(8), home,
-                    pd.Timestamp(monitor_from).normalize() if monitor_from else None)
+                    pd.Timestamp(monitor_from).normalize() if monitor_from else None, keep_days)
         _sessions[s.id] = s
         return s
 

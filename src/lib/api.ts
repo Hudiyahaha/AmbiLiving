@@ -81,6 +81,12 @@ export const api = {
     fetch(`${API_BASE}/simulations/${encodeURIComponent(id)}`, { method: "DELETE" }).catch(
       () => undefined,
     ),
+  /** A day that has ended in the simulation, in the shape of a replay scenario */
+  simulationDay: (id: string, day: string) =>
+    request<ReplayScenario>(
+      `/simulations/${encodeURIComponent(id)}/days/${encodeURIComponent(day)}`,
+      { timeoutMs: 20000 },
+    ),
   simulationStreamUrl: (id: string) =>
     `${API_BASE}/simulations/${encodeURIComponent(id)}/stream`,
   recognise: (home: string, body: RecogniseRequest, signal?: AbortSignal) =>
@@ -107,13 +113,15 @@ export interface FeedScenario {
   title: string;
   day: string;
   kind: string;
+  /** Consecutive days in the feed (7 for the week) */
+  days?: number;
 }
 
 export interface SimulationRequest {
   scenario: string;
   /** Simulated seconds per real second */
   speed: number;
-  /** Second of the day to start at */
+  /** Second of the first day to start at */
   startAt: number;
 }
 
@@ -126,8 +134,15 @@ export interface SimulationMeta {
   scenario: string;
   title: string;
   kind: string;
+  /** The day being monitored now (YYYY-MM-DD) and its label */
   day: string;
   dayLabel: string;
+  /** Which day of the feed it is (0-based), of `days` */
+  dayIndex?: number;
+  days?: number;
+  feedLabel?: string;
+  /** Days of the feed that have ended, oldest first */
+  closedDays?: { day: string; dayLabel: string }[];
   injected: { target: string; start: number; end: number; note: string } | null;
   typical: {
     detected: number | null;
@@ -139,7 +154,7 @@ export interface SimulationMeta {
   error: string | null;
   speed: number;
   startAt: number;
-  /** Simulated second of the day */
+  /** Simulated second of the current day */
   clock: number;
   recogniser: string;
   episodeRule: string;
@@ -199,6 +214,7 @@ export interface SimulationTick {
   error: string | null;
   speed?: number;
   clock: number;
+  day?: string;
   eventsFrom?: number;
   predictionsFrom?: number;
   events?: LiveEvent[];

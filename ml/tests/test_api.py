@@ -214,6 +214,53 @@ def test_simulation_plays_a_feed_live():
     assert full["episodes"] and full["current"] is not None
 
 
+def test_simulation_week_runs_past_midnight():
+    """The week feed carries on past midnight (D20): a new snapshot starts the next day,
+    and the closed day's report equals the replay of the scenario played on it."""
+    feeds = {f["id"]: f for f in client.get("/homes/milan/feeds").json()}
+    assert feeds["week"]["days"] == 7
+    sc = client.get("/replay/milan/inactivity").json()  # played on the week's first day
+    with TestClient(app) as c:
+        r = c.post("/homes/milan/simulations",
+                   json={"scenario": "week", "speed": 3600, "startAt": 23 * 3600})
+        assert r.status_code == 201, r.text
+        sim = r.json()["simulation"]
+        snaps = []
+        with c.stream("GET", f"/simulations/{sim}/stream") as s:
+            buf = ""
+            for chunk in s.iter_text():
+                buf += chunk
+                while "\n\n" in buf:
+                    block, buf = buf.split("\n\n", 1)
+                    if block.startswith(":"):
+                        continue
+                    lines = dict(line.split(": ", 1) for line in block.splitlines())
+                    if lines["event"] == "snapshot":
+                        snaps.append(json.loads(lines["data"]))
+                if len(snaps) >= 2:
+                    break
+        c.post(f"/simulations/{sim}/control", json={"action": "pause"})
+        first, second = snaps[0], snaps[1]
+        assert (first["day"], first["dayIndex"]) == ("2009-12-25", 0)
+        assert (second["day"], second["dayIndex"]) == ("2009-12-26", 1)
+        assert second["closedDays"][0]["day"] == "2009-12-25"
+        assert all(e[0] < 86400 for e in second["events"])
+        report = c.get(f"/simulations/{sim}/days/2009-12-25").json()
+        missing = c.get(f"/simulations/{sim}/days/2009-12-28")
+        c.delete(f"/simulations/{sim}")
+
+    assert missing.status_code == 404
+    labels = report["labels"]
+    assert [(int(t), labels[a]) for t, a, _ in report["predictions"]] == \
+        [(t, sc["labels"][a]) for t, a, _ in sc["predictions"]]
+
+    def key(a):
+        return (a["raisedAt"], a["kind"], a["activity"], a["tier"], a["delivered"])
+
+    assert sorted(key(a) for a in report["alerts"]) == sorted(key(a) for a in sc["alerts"])
+    assert report["episodes"] and report["daily"] and len(report["usual"]) == 48
+
+
 @pytest.mark.skipif(not (RAW_DIR / "aruba.txt").exists(), reason="raw CASAS data not present")
 def test_recognise_matches_saved_model():
     """The endpoint gives the same answer as the saved model on real Aruba events."""

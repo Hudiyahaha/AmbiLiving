@@ -1,11 +1,16 @@
-"""Simulated live homes: recorded feeds played into live sessions (decision D19).
+"""Simulated live homes: recorded feeds played into live sessions (decisions D19, D20).
 
-A simulation plays one recorded day (``har.feeds``) into a live monitoring session
-(D18) at ``speed`` times real time. Every ``TICK`` seconds it pushes the events
-whose time has come, together with the simulated clock, so the BiLSTM, the routine
-model and alert routing run exactly as they would on a real sensor feed. Clients
-follow it over server-sent events: a full ``snapshot`` first, then ``tick``
-messages with only what changed.
+A simulation plays a recorded feed (``har.feeds``: one day, or a week of consecutive
+days) into a live monitoring session (D18) at ``speed`` times real time. Every
+``TICK`` seconds it pushes the events whose time has come, together with the
+simulated clock, so the BiLSTM, the routine model and alert routing run exactly as
+they would on a real sensor feed. Clients follow it over server-sent events: a full
+``snapshot`` first, then ``tick`` messages with only what changed.
+
+Everything a client is sent is about the day the session monitors now (times are
+seconds of that day). When the clock passes midnight the session closes the day
+(its last routine check and the final routing) and a new ``snapshot`` starts the
+next day. Closed days stay available as day reports (``closed_day``).
 """
 
 from __future__ import annotations
@@ -20,24 +25,32 @@ import numpy as np
 import pandas as pd
 from starlette.concurrency import run_in_threadpool
 
-from har.feeds import decode, feed_path
+from har.anomaly import BINS
+from har.feeds import WEEK_ID, decode, feed_days, feed_path
 from har.feeds import load as load_feed
+from har.replay import STATE, STATE_NAMES, SUMMARY_AT
 from har.routine_live import DayResult
 
-from . import sessions
+from . import live, sessions
 from .store import NotFound, check_home, replay_index
 
 TICK = 0.5  # seconds of real time between pushes
 MAX_SIMULATIONS = 8
 IDLE_SECONDS = 1800  # drop simulations nobody watched for this long
 QUEUE = 256  # messages a slow client may fall behind before it is dropped
+DAY = 86400.0
 
 
 def scenarios(home: str) -> list[dict]:
-    """Scenarios that have a recorded feed, with the replay index's details."""
+    """Recorded feeds that can be played: the week first, then the single days."""
     entry = replay_index().get(check_home(home), {})
-    return [{"id": s["id"], "title": s["title"], "day": s["day"], "kind": s["kind"]}
-            for s in entry.get("scenarios", []) if feed_path(home, s["id"]).is_file()]
+    out = [{"id": s["id"], "title": s["title"], "day": s["day"], "kind": s["kind"], "days": 1}
+           for s in entry.get("scenarios", []) if feed_path(home, s["id"]).is_file()]
+    if feed_path(home, WEEK_ID).is_file():
+        f = load_feed(home, WEEK_ID)
+        out.insert(0, {"id": WEEK_ID, "title": f["title"], "day": f["dayLabel"],
+                       "kind": f["kind"], "days": len(feed_days(f))})
+    return out
 
 
 # --------------------------------------------------------------------------- views
@@ -82,6 +95,35 @@ def current_view(d: DayResult) -> dict | None:
             "episodeSince": _sec(last["start"], d.day) if last is not None else None}
 
 
+def day_report(home: str, d: DayResult) -> dict:
+    """A closed day in the shape of a replay scenario (``public/replay``), for Past days."""
+    model = sessions.get_routine(home).model
+    usual = [model._expected_states([b]) for b in range(BINS)]
+    daily = sessions.get_routine(home).usual_day()
+    eps = d.episodes if d.episodes is not None else pd.DataFrame(
+        {"activity": [], "start": [], "end": []})
+    names = (list(live.get_model(home).classes) + list(d.pred_labels) + list(eps["activity"])
+             + [a for u in usual for a in u] + [x["activity"] for x in daily])
+    labels = list(dict.fromkeys(names))
+    li = {n: i for i, n in enumerate(labels)}
+    sens = sorted(set(d.sensors))
+    si = {x: i for i, x in enumerate(sens)}
+    return {
+        "home": home, "id": f"live-{d.day:%Y-%m-%d}", "title": f"{d.day:%a %d %b %Y}",
+        "kind": "live", "day": f"{d.day:%a %d %b %Y}", "date": f"{d.day:%Y-%m-%d}",
+        "injected": None, "typical": None,
+        "sensors": sens, "states": STATE_NAMES, "labels": labels,
+        "events": [[_sec(t, d.day), si[x], STATE[v]]
+                   for t, x, v in zip(d.times, d.sensors, d.states) if v in STATE],
+        "predictions": [[_sec(t, d.day), li[n], round(float(c), 2)]
+                        for t, n, c in zip(d.pred_times, d.pred_labels, d.pred_conf)],
+        "episodes": [[_sec(e.start, d.day), min(_sec(e.end, d.day), DAY), li[e.activity]]
+                     for e in eps.itertuples()],
+        "annotations": [], "usual": usual, "daily": daily, "summaryAt": SUMMARY_AT,
+        "alerts": [{k: v for k, v in a.items() if k != "severity"} for a in alerts_view(d)],
+    }
+
+
 # --------------------------------------------------------------------------- simulation
 
 @dataclass
@@ -95,27 +137,41 @@ class Simulation:
     states: np.ndarray
     session: sessions.Session
     speed: float
-    start_at: int  # second of the day the simulation starts at
+    start_at: int  # second of the first day the simulation starts at
     status: str = "starting"  # starting | running | paused | finished | error
     error: str | None = None
     pos: int = 0  # next feed event to push
-    sim_anchor: float = 0.0  # simulated second of the day at wall_anchor
+    sim_anchor: float = 0.0  # simulated seconds since the first midnight at wall_anchor
     wall_anchor: float = 0.0
-    sent_events: int = 0  # day events already sent to clients
+    sent_events: int = 0  # events of the shown day already sent to clients
     sent_preds: int = 0
+    shown_day: pd.Timestamp | None = None  # the day clients were last sent
     subscribers: set = field(default_factory=set)
     task: asyncio.Task | None = None
     used: float = field(default_factory=time.time)
 
     @property
-    def day(self) -> pd.Timestamp:
+    def first(self) -> pd.Timestamp:
         return pd.Timestamp(self.feed["day"])
 
+    @property
+    def days(self) -> list[dict]:
+        return feed_days(self.feed)
+
+    @property
+    def end(self) -> pd.Timestamp:
+        return self.first + pd.Timedelta(days=len(self.days))
+
     def clock(self) -> float:
-        """Simulated second of the day now."""
+        """Simulated seconds since the feed's first midnight."""
+        top = DAY * len(self.days)
         if self.status != "running":
-            return self.sim_anchor
-        return min(86400.0, self.sim_anchor + (time.monotonic() - self.wall_anchor) * self.speed)
+            return min(top, self.sim_anchor)
+        return min(top, self.sim_anchor + (time.monotonic() - self.wall_anchor) * self.speed)
+
+    def day_clock(self, day: pd.Timestamp) -> float:
+        """Simulated second of ``day`` now (86400 once it is over)."""
+        return max(0.0, min(DAY, self.clock() - (day - self.first).total_seconds()))
 
     def _reanchor(self) -> None:
         self.sim_anchor = self.clock()
@@ -137,22 +193,44 @@ class Simulation:
 
     # ---- what clients see
     def day_result(self) -> DayResult:
+        """The day being monitored now (the last day once the feed is over)."""
         m = self.session.monitor
         if m is None:
-            return DayResult(self.day, [])
-        if m.day > self.day:  # the feed's day has ended
-            done = [d for d in m.closed if d.day == self.day]
-            return done[-1] if done else DayResult(self.day, [])
+            return DayResult(self.first, [])
+        if m.day >= self.end:  # every day of the feed has ended
+            return m.closed[-1] if m.closed else DayResult(self.first, [])
         return m.today()
 
-    def meta(self) -> dict:
+    def closed_days(self) -> list[DayResult]:
+        m = self.session.monitor
+        return [d for d in m.closed if self.first <= d.day < self.end] if m else []
+
+    def day_label(self, day: pd.Timestamp) -> str:
+        key = f"{day:%Y-%m-%d}"
+        return next((d["dayLabel"] for d in self.days if d["day"] == key), f"{day:%a %d %b %Y}")
+
+    def meta(self, d: DayResult | None = None) -> dict:
         f = self.feed
         r = sessions.get_routine(self.home)
+        if d is None:
+            with self.session.lock:
+                d = self.day_result()
+                closed = self.closed_days()
+        else:
+            closed = self.closed_days()
+        single = len(self.days) == 1
         return {"simulation": self.id, "session": self.session.id, "home": self.home,
                 "scenario": self.scenario, "title": f["title"], "kind": f["kind"],
-                "day": f["day"], "dayLabel": f["dayLabel"], "injected": f["injected"],
-                "typical": f["typical"], "status": self.status, "error": self.error,
-                "speed": self.speed, "startAt": self.start_at, "clock": round(self.clock(), 1),
+                "day": f"{d.day:%Y-%m-%d}", "dayLabel": self.day_label(d.day),
+                "dayIndex": (d.day - self.first).days, "days": len(self.days),
+                "feedLabel": f["dayLabel"],
+                "injected": f["injected"] if single else None,
+                "typical": f["typical"] if single else None,
+                "closedDays": [{"day": f"{c.day:%Y-%m-%d}", "dayLabel": self.day_label(c.day)}
+                               for c in closed],
+                "status": self.status, "error": self.error,
+                "speed": self.speed, "startAt": self.start_at,
+                "clock": round(self.day_clock(d.day), 1),
                 "recogniser": "BiLSTM on the last 100 sensor events, every 10th event",
                 "episodeRule": (f"runs shorter than {r.clean_minutes:g} min merged"
                                 if r.stream == "winc" else "runs shorter than 3 predictions merged"),
@@ -160,13 +238,14 @@ class Simulation:
                                       f"({r.meta['observed_from']} – {r.meta['observed_until']})"}
 
     def snapshot(self) -> dict:
-        """Everything so far today (for a client that connects or reconnects)."""
+        """Everything so far on the current day (for a client that connects or reconnects,
+        and for everyone when a new day starts)."""
         with self.session.lock:
             d = self.day_result()
-            return {"type": "snapshot", **self.meta(),
-                    "events": [[_sec(t, self.day), s, v]
+            return {"type": "snapshot", **self.meta(d),
+                    "events": [[_sec(t, d.day), s, v]
                                for t, s, v in zip(d.times, d.sensors, d.states)],
-                    "predictions": [[_sec(t, self.day), n, round(float(c), 3)]
+                    "predictions": [[_sec(t, d.day), n, round(float(c), 3)]
                                     for t, n, c in zip(d.pred_times, d.pred_labels, d.pred_conf)],
                     "episodes": episodes_view(d), "alerts": alerts_view(d),
                     "current": current_view(d)}
@@ -181,11 +260,12 @@ class Simulation:
             pr = slice(min(self.sent_preds, len(d.pred_times)), len(d.pred_times))
             self.sent_events, self.sent_preds = len(d.times), len(d.pred_times)
             return {"type": "tick", "status": self.status, "error": self.error,
-                    "speed": self.speed, "clock": round(self.clock(), 1),
+                    "speed": self.speed, "clock": round(self.day_clock(d.day), 1),
+                    "day": f"{d.day:%Y-%m-%d}",
                     "eventsFrom": ev.start, "predictionsFrom": pr.start,
-                    "events": [[_sec(t, self.day), s, v] for t, s, v in
+                    "events": [[_sec(t, d.day), s, v] for t, s, v in
                                zip(d.times[ev], d.sensors[ev], d.states[ev])],
-                    "predictions": [[_sec(t, self.day), n, round(float(c), 3)] for t, n, c in
+                    "predictions": [[_sec(t, d.day), n, round(float(c), 3)] for t, n, c in
                                     zip(d.pred_times[pr], d.pred_labels[pr], d.pred_conf[pr])],
                     "episodes": episodes_view(d), "alerts": alerts_view(d),
                     "newAlerts": new_alerts, "current": current_view(d)}
@@ -202,27 +282,36 @@ class Simulation:
                 q.put_nowait(None)
 
     # ---- the loop
+    def _current_day(self) -> pd.Timestamp:
+        with self.session.lock:
+            return self.day_result().day
+
+    async def _send_snapshot(self) -> None:
+        snap = await run_in_threadpool(self.snapshot)
+        self.sent_events, self.sent_preds = len(snap["events"]), len(snap["predictions"])
+        self.shown_day = pd.Timestamp(snap["day"])
+        self.broadcast(snap)
+
     async def run(self) -> None:
-        day = self.day
-        end = day + pd.Timedelta(days=1)
+        first, end = self.first, self.end
         try:
-            # History and the part of the day before start_at, in one catch-up push.
-            target = day + pd.Timedelta(seconds=self.start_at)
-            await self._push_until(target)
+            # History and the part of the first day before start_at, in one catch-up push.
+            await self._push_until(first + pd.Timedelta(seconds=self.start_at))
             self.sim_anchor, self.wall_anchor = float(self.start_at), time.monotonic()
             self.status = "running"
-            snap = await run_in_threadpool(self.snapshot)
-            self.sent_events, self.sent_preds = len(snap["events"]), len(snap["predictions"])
-            self.broadcast(snap)
+            await self._send_snapshot()
             while True:
                 if self.status == "paused":
                     await asyncio.sleep(TICK)
                     continue
-                now = day + pd.Timedelta(seconds=self.clock())
+                now = first + pd.Timedelta(seconds=self.clock())
                 new = await self._push_until(now)
                 if now >= end:
-                    self.status, self.sim_anchor = "finished", 86400.0
-                self.broadcast(await run_in_threadpool(self.tick_message, new))
+                    self.status, self.sim_anchor = "finished", DAY * len(self.days)
+                if self._current_day() != self.shown_day:
+                    await self._send_snapshot()  # past midnight: the next day starts
+                else:
+                    self.broadcast(await run_in_threadpool(self.tick_message, new))
                 if self.status == "finished":
                     return
                 await asyncio.sleep(TICK)
@@ -231,7 +320,7 @@ class Simulation:
         except Exception as exc:  # report it to clients instead of dying silently
             self.status, self.error = "error", f"{type(exc).__name__}: {exc}"
             self.broadcast({"type": "tick", "status": self.status, "error": self.error,
-                            "clock": round(self.clock(), 1)})
+                            "clock": round(self.clock() % DAY, 1)})
 
     async def _push_until(self, now: pd.Timestamp) -> list[str]:
         hi = int(np.searchsorted(self.times, now.to_datetime64(), side="right"))
@@ -262,7 +351,7 @@ async def create(home: str, scenario: str, speed: float, start_at: int) -> Simul
         stop(min(_sims.values(), key=lambda s: s.used).id)
     feed = load_feed(home, scenario)
     times, sensors, states = decode(feed)
-    session = sessions.create(home, feed["day"])
+    session = sessions.create(home, feed["day"], keep_days=max(7, len(feed_days(feed))))
     sim = Simulation(secrets.token_hex(8), home, scenario, feed, times, sensors, states,
                      session, speed, start_at, sim_anchor=float(start_at))
     _sims[sim.id] = sim
@@ -277,6 +366,17 @@ def get(sim_id: str) -> Simulation:
                        f"{IDLE_SECONDS // 60} minutes)")
     s.used = time.time()
     return s
+
+
+def closed_day(sim_id: str, day: str) -> dict:
+    """A day the simulation's session has closed, as a day report."""
+    sim = get(sim_id)
+    with sim.session.lock:
+        done = [d for d in sim.closed_days() if f"{d.day:%Y-%m-%d}" == day]
+        have = ", ".join(f"{d.day:%Y-%m-%d}" for d in sim.closed_days()) or "none yet"
+    if not done:
+        raise NotFound(f"day {day} has not ended in simulation '{sim_id}' (ended: {have})")
+    return day_report(sim.home, done[-1])
 
 
 def stop(sim_id: str) -> None:
@@ -304,7 +404,8 @@ async def events(sim: Simulation):
             if snap["status"] in ("finished", "error"):
                 return  # nothing more will happen
         else:
-            yield _sse("status", json.dumps({"type": "status", **sim.meta()}, default=str))
+            meta = await run_in_threadpool(sim.meta)
+            yield _sse("status", json.dumps({"type": "status", **meta}, default=str))
         while True:
             try:
                 item = await asyncio.wait_for(q.get(), timeout=15)
@@ -316,7 +417,7 @@ async def events(sim: Simulation):
             kind, text = item
             yield _sse(kind, text)
             sim.used = time.time()
-            if kind == "tick" and sim.status in ("finished", "error"):
+            if kind in ("tick", "snapshot") and sim.status in ("finished", "error"):
                 return
     finally:
         sim.subscribers.discard(q)
